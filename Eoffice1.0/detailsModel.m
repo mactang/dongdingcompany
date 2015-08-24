@@ -1,0 +1,24 @@
+//
+//  detailsModel.m
+//  Eoffice1.0
+//
+//  Created by gyz on 15/8/6.
+//  Copyright (c) 2015年 gl. All rights reserved.
+//
+
+#import "detailsModel.h"
+
+@implementation detailsModel
++(detailsModel *)modelWithDic:(NSDictionary *)dic{
+    return [[self alloc]initWithDic:dic];
+}
+
+-(id)initWithDic:(NSDictionary *)dic{
+    if (self = [super init]) {
+        self.price = dic[@"price"];
+        self.wGoodsId = dic[@"wGoodsId"];
+    }
+    
+    return self;
+}
+@end

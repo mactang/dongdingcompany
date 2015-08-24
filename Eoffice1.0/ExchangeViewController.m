@@ -1,0 +1,490 @@
+//
+//  ExchangeViewController.m
+//  Eoffice1.0
+//
+//  Created by gyz on 15/7/29.
+//  Copyright (c) 2015年 gl. All rights reserved.
+//
+
+#define TCP_FAIL @"socketFail"
+
+#import "ExchangeViewController.h"
+#import "HMSegmentedControl.h"
+#import "RDVTabBarController.h"
+#import "ExchageSuccessController.h"
+#import "MXPullDownMenu.h"
+#import "AFNetworking.h"
+#import "SingleModel.h"
+#import "BackReasonModel.h"
+#import "ReturnSuccessController.h"
+#import "DynamicScrollView.h"
+
+
+@interface ExchangeViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UITextViewDelegate,MXPullDownMenuDelegate,UIActionSheetDelegate,UIApplicationDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@property (nonatomic, strong) HMSegmentedControl *segmentedControl;
+@property(nonatomic,strong)UITableView *tableView;
+@property(nonatomic,assign)BOOL isle;
+@property(nonatomic,strong)UILabel *validateLB;
+@property(nonatomic,strong)NSMutableArray *datas;
+@property(nonatomic,strong)UIImageView *imageView ;
+@property(nonatomic,strong)UITextView *explainTextView;
+@property(nonatomic,strong)UITextView *reasonId;
+@end
+
+@implementation ExchangeViewController
+{
+  DynamicScrollView *dynamicScrollView;
+    
+     NSArray *images;
+    
+}
+-(NSMutableArray *)datas{
+    if (_datas == nil) {
+        _datas = [NSMutableArray array];
+    }
+    return _datas;
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+    self.navigationItem.title = @"申请退换货";
+    [self downData];
+    UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang11(1)"];
+    [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    ligthButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
+    self.isle = YES;
+    
+    HMSegmentedControl *segmentedControl2 = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"申请换货", @"申请退货"]];
+    segmentedControl2.frame = CGRectMake(0, 60, self.view.frame.size.width, 40);
+    segmentedControl2.selectionIndicatorHeight = 4.0f;
+    segmentedControl2.backgroundColor = [UIColor whiteColor];
+    segmentedControl2.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    segmentedControl2.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+    [segmentedControl2 addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+    [self.view addSubview:segmentedControl2];
+    
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(segmentedControl2.frame), 320, 480) style:UITableViewStylePlain];
+    _tableView.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    
+   
+    // Do any additional setup after loading the view.
+}
+- (void)downData{
+    
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:BACKBEASON,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSArray *array = dic[@"data"];
+        
+        for(NSDictionary *subDict in array)
+        {
+            BackReasonModel *model = [BackReasonModel modelWithDic:subDict];
+            [self.datas addObject: model];
+            NSLog(@"%@",self.datas);
+            
+        }
+        
+        
+        [_tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+
+- (void)segmentedControlChangedValue:(HMSegmentedControl*)segmentedControl{
+    
+    if (segmentedControl.selectedSegmentIndex == 0) {
+        _validateLB.text = @"退货原因";
+        
+        self.isle = YES;
+        
+    }
+    if (segmentedControl.selectedSegmentIndex == 1) {
+        
+        _validateLB.text = @"换货原因";
+        NSLog(@"bbb");
+        self.isle = NO;
+      //   [_tableView reloadData];
+    }
+   // [_tableView reloadData];
+    
+    
+}
+- (void)leftItemClicked{
+    
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 2;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.datas.count-1;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        return 530;
+    }
+    return 150;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    return 1;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
+    return 20;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    static NSString *identity = @"cell";
+    
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
+    
+    cell.clipsToBounds = YES;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
+     NSLog(@"datas--%@",self.datas);
+    if (indexPath.section == 0) {
+        _validateLB = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 70, 20)];
+        _validateLB.font = [UIFont systemFontOfSize:12];
+        _validateLB.text = @"退货原因：";
+        _validateLB.textColor = [UIColor blackColor];
+        [cell addSubview:_validateLB];
+        
+        UILabel *validateField = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_validateLB.frame)-10,10, 240, 35)];
+        validateField.backgroundColor = [UIColor whiteColor];
+        validateField.clipsToBounds = YES;
+        validateField.layer.cornerRadius = 3;
+        validateField.layer.borderWidth = 1;
+        validateField.layer.borderColor = [[UIColor grayColor]CGColor];
+        [cell addSubview:validateField];
+        
+        NSMutableArray *testArray = [NSMutableArray array];
+        
+        for (int i = 0; i<self.datas.count; i++) {
+            BackReasonModel *model = self.datas[i];
+            
+            [testArray addObject:model.title];
+            NSLog(@"datas--%@",testArray[i]);
+            
+        }
+        
+        
+        NSLog(@"datas--%@",testArray);
+        
+        
+        
+        MXPullDownMenu *menu = [[MXPullDownMenu alloc] initWithArray:testArray selectedColor:[UIColor grayColor]];
+        menu.delegate = self;
+        menu.clipsToBounds = YES;
+        menu.layer.cornerRadius = 3;
+        menu.layer.borderColor = [[UIColor blackColor]CGColor];
+        menu.layer.borderWidth = 1;
+        menu.frame = CGRectMake(CGRectGetMaxX(_validateLB.frame)-10,10, 240, 35);
+        [cell addSubview:menu];
+        
+        UILabel *explainLB = [[UILabel alloc]initWithFrame:CGRectMake(35, CGRectGetMaxY(menu.frame)+20, 40, 20)];
+        explainLB.font = [UIFont systemFontOfSize:12];
+        explainLB.text = @"说明：";
+        explainLB.textColor = [UIColor blackColor];
+        [cell addSubview:explainLB];
+        
+        _explainTextView = [[UITextView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(explainLB.frame)-5, CGRectGetMaxY(menu.frame)+10, 240, 120)];
+        _explainTextView.clipsToBounds = YES;
+        _explainTextView.layer.cornerRadius = 5;
+        _explainTextView.layer.borderWidth = 1;
+        _explainTextView.layer.borderColor = [[UIColor grayColor]CGColor];
+        _explainTextView.delegate = self;
+        // TextView.text = @"最多输入100个汉字";
+        [cell addSubview:_explainTextView];
+        UILabel *photoLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_explainTextView.frame)+15, 120, 20)];
+        photoLB.font = [UIFont systemFontOfSize:12];
+        photoLB.text = @"上传问题商品图片：";
+        photoLB.textColor = [UIColor blackColor];
+        [cell addSubview:photoLB];
+        
+        UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoLB.frame)-10, CGRectGetMaxY(_explainTextView.frame)+10, 30, 30)];
+        [photoBtn setImage:[UIImage imageNamed:@"xiangji"] forState:UIControlStateNormal];
+       // photoBtn.backgroundColor = [UIColor redColor];
+        [photoBtn addTarget:self action:@selector(addPhoto) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:photoBtn];
+        
+        dynamicScrollView = [[DynamicScrollView alloc] initWithFrame:CGRectMake(60, CGRectGetMaxY(photoBtn.frame)+10, 230, 55) withImages:nil];
+        [cell addSubview:dynamicScrollView];
+        
+        
+        UILabel *nameLB = [[UILabel alloc]initWithFrame:CGRectMake(35, CGRectGetMaxY(photoBtn.frame)+85, 40, 20)];
+        nameLB.font = [UIFont systemFontOfSize:12];
+        nameLB.text = @"姓名：";
+        nameLB.textColor = [UIColor blackColor];
+        [cell addSubview:nameLB];
+        
+        UITextField *nameField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLB.frame)-5,CGRectGetMaxY(photoBtn.frame)+80, 240, 35)];
+        nameField.backgroundColor = [UIColor whiteColor];
+        nameField.clipsToBounds = YES;
+        nameField.delegate = self;
+        nameField.layer.cornerRadius = 3;
+        nameField.layer.borderWidth = 1;
+        nameField.layer.borderColor = [[UIColor grayColor]CGColor];
+        [cell addSubview:nameField];
+        
+        UILabel *phoneLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(nameField.frame)+15, 70, 20)];
+        phoneLB.font = [UIFont systemFontOfSize:12];
+        phoneLB.text = @"联系电话：";
+        phoneLB.textColor = [UIColor blackColor];
+        [cell addSubview:phoneLB];
+        
+        UITextField *phoneField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(phoneLB.frame)-10,CGRectGetMaxY(nameField.frame)+10, 240, 35)];
+        phoneField.backgroundColor = [UIColor whiteColor];
+        phoneField.clipsToBounds = YES;
+        phoneField.delegate = self;
+        phoneField.layer.cornerRadius = 3;
+        phoneField.layer.borderWidth = 1;
+        phoneField.layer.borderColor = [[UIColor grayColor]CGColor];
+        [cell addSubview:phoneField];
+        
+        
+        UILabel *addressLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(phoneField.frame)+15, 70, 20)];
+        addressLB.font = [UIFont systemFontOfSize:12];
+        addressLB.text = @"你的地址：";
+        addressLB.textColor = [UIColor blackColor];
+        [cell addSubview:addressLB];
+        
+        UITextView *addressTextView = [[UITextView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(explainLB.frame)-5, CGRectGetMaxY(phoneField.frame)+10, 240, 80)];
+        addressTextView.clipsToBounds = YES;
+        addressTextView.layer.cornerRadius = 5;
+        addressTextView.layer.borderWidth = 1;
+        addressTextView.layer.borderColor = [[UIColor grayColor]CGColor];
+        addressTextView.delegate = self;
+        // TextView.text = @"最多输入100个汉字";
+        [cell addSubview:addressTextView];
+        
+        UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(addressTextView.frame)+20, 300, 40)];
+        sureBtn.clipsToBounds = YES;
+        sureBtn.layer.cornerRadius = 5;
+        [sureBtn setTitle:@"提交申请" forState:UIControlStateNormal];
+        [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sureBtn addTarget:self action:@selector(surePress) forControlEvents:UIControlEventTouchUpInside];
+        sureBtn.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+        [cell addSubview:sureBtn];
+    }
+    
+    return cell;
+}
+// 实现代理.
+#pragma mark - MXPullDownMenuDelegate
+
+- (void)PullDownMenu:(MXPullDownMenu *)pullDownMenu didSelectRowAtColumn:(NSInteger)column row:(NSInteger)row
+{
+    NSLog(@"%d -- %d", column, row);
+}
+
+
+
+-(void)addPhoto{
+    int i = rand()%4;
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"添 加 图 片"
+                                  delegate:self
+                                  cancelButtonTitle:@"取 消"
+                                  destructiveButtonTitle:@"打 开 照 相 机"
+                                  otherButtonTitles:@"打 开 相 册",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [actionSheet showInView:self.view];
+    
+}
+-(void)surePress{
+    
+    if (self.isle == YES) {
+    
+        [self exchageDatas];
+    ExchageSuccessController *exs = [[ExchageSuccessController alloc]init];
+    [self.navigationController pushViewController:exs animated:YES];
+    }
+    else{
+    
+        ReturnSuccessController *returnS = [[ReturnSuccessController alloc]init];
+        [self.navigationController pushViewController:returnS animated:YES];
+    }
+    
+}
+-(void)exchageDatas{
+    
+
+        
+    
+        
+    SingleModel *model = [SingleModel sharedSingleModel];
+    int i = [(model.reasonId)intValue];
+    
+    NSLog(@"%d",i);
+    BackReasonModel *backReason = self.datas[i];
+    
+    NSLog(@"%@",backReason.reasonId);
+    NSString *path= [NSString stringWithFormat:RETUNGOODSEXPLAIN,model.jsessionid,model.userkey,model.orderId];
+    NSLog(@"%@",_reasonId);
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        
+        [manager POST:path parameters:@{@"content":_explainTextView.text,@"reasonId":model.reasonId} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            
+        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+            NSLog(@"%@",string);
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@",error);
+        }];
+        
+    
+
+}
+/**
+ *  打开ActionSheet
+ *
+ *  @param actionSheet 对象
+ *  @param buttonIndex 按钮的索引
+ */
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //照相机
+    if (buttonIndex == 0)
+    {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.delegate = self;
+        [self presentModalViewController:imagePicker animated:YES];
+        [self removeNofify];
+    }
+    //相册
+    else if (buttonIndex == 1)
+    {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.delegate = self;
+        [self presentModalViewController:imagePicker animated:YES];
+        [self removeNofify];
+    }
+    else
+    {
+        
+    }
+}
+
+/**
+ *  选中照片
+ *
+ *  @param picker 选择器
+ *  @param info   字典
+ */
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    //媒体格式：图片和视频
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    NSString *name = [userDefault objectForKey:@"name"];
+    
+    if ([mediaType isEqualToString:@"public.image"])
+    {
+        
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        if (image == nil)
+        {
+            return;
+        }
+        
+       [dynamicScrollView addImageView:image];
+        
+        
+        
+        NSLog(@"%@",image);
+    }
+    else if ([mediaType isEqualToString:@"public.movie"])
+    {
+        NSLog(@"不支持视频！");
+    }
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+/**
+ *  取消相册
+ *
+ *  @param picker picker
+ */
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+/**
+ *  删除通知
+ */
+-(void)removeNofify
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"picUpload" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"textUpload" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:TCP_FAIL object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    
+    [super viewWillDisappear:animated];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end
