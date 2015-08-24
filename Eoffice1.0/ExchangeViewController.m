@@ -29,13 +29,17 @@
 @property(nonatomic,strong)UIImageView *imageView ;
 @property(nonatomic,strong)UITextView *explainTextView;
 @property(nonatomic,strong)UITextView *reasonId;
+@property(nonatomic,strong)UITextField  *nameField;
+@property(nonatomic,strong)UITextField *phoneField;
+@property(nonatomic,strong)UITextView *addressTextView;
+
 @end
 
 @implementation ExchangeViewController
 {
-  DynamicScrollView *dynamicScrollView;
+    DynamicScrollView *dynamicScrollView;
     
-     NSArray *images;
+    NSArray *images;
     
 }
 -(NSMutableArray *)datas{
@@ -74,7 +78,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-   
+    
     // Do any additional setup after loading the view.
 }
 - (void)downData{
@@ -127,9 +131,9 @@
         _validateLB.text = @"换货原因";
         NSLog(@"bbb");
         self.isle = NO;
-      //   [_tableView reloadData];
+        //   [_tableView reloadData];
     }
-   // [_tableView reloadData];
+    // [_tableView reloadData];
     
     
 }
@@ -143,7 +147,7 @@
     return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.datas.count-1;
+    return self.datas.count-self.datas.count+1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -170,7 +174,7 @@
     cell.clipsToBounds = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-     NSLog(@"datas--%@",self.datas);
+    NSLog(@"datas--%@",self.datas);
     if (indexPath.section == 0) {
         _validateLB = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 70, 20)];
         _validateLB.font = [UIFont systemFontOfSize:12];
@@ -232,7 +236,7 @@
         
         UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoLB.frame)-10, CGRectGetMaxY(_explainTextView.frame)+10, 30, 30)];
         [photoBtn setImage:[UIImage imageNamed:@"xiangji"] forState:UIControlStateNormal];
-       // photoBtn.backgroundColor = [UIColor redColor];
+        // photoBtn.backgroundColor = [UIColor redColor];
         [photoBtn addTarget:self action:@selector(addPhoto) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:photoBtn];
         
@@ -246,47 +250,47 @@
         nameLB.textColor = [UIColor blackColor];
         [cell addSubview:nameLB];
         
-        UITextField *nameField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLB.frame)-5,CGRectGetMaxY(photoBtn.frame)+80, 240, 35)];
-        nameField.backgroundColor = [UIColor whiteColor];
-        nameField.clipsToBounds = YES;
-        nameField.delegate = self;
-        nameField.layer.cornerRadius = 3;
-        nameField.layer.borderWidth = 1;
-        nameField.layer.borderColor = [[UIColor grayColor]CGColor];
-        [cell addSubview:nameField];
+        _nameField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLB.frame)-5,CGRectGetMaxY(photoBtn.frame)+80, 240, 35)];
+        _nameField.backgroundColor = [UIColor whiteColor];
+        _nameField.clipsToBounds = YES;
+        _nameField.delegate = self;
+        _nameField.layer.cornerRadius = 3;
+        _nameField.layer.borderWidth = 1;
+        _nameField.layer.borderColor = [[UIColor grayColor]CGColor];
+        [cell addSubview:_nameField];
         
-        UILabel *phoneLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(nameField.frame)+15, 70, 20)];
+        UILabel *phoneLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_nameField.frame)+15, 70, 20)];
         phoneLB.font = [UIFont systemFontOfSize:12];
         phoneLB.text = @"联系电话：";
         phoneLB.textColor = [UIColor blackColor];
         [cell addSubview:phoneLB];
         
-        UITextField *phoneField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(phoneLB.frame)-10,CGRectGetMaxY(nameField.frame)+10, 240, 35)];
-        phoneField.backgroundColor = [UIColor whiteColor];
-        phoneField.clipsToBounds = YES;
-        phoneField.delegate = self;
-        phoneField.layer.cornerRadius = 3;
-        phoneField.layer.borderWidth = 1;
-        phoneField.layer.borderColor = [[UIColor grayColor]CGColor];
-        [cell addSubview:phoneField];
+        _phoneField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(phoneLB.frame)-10,CGRectGetMaxY(_nameField.frame)+10, 240, 35)];
+        _phoneField.backgroundColor = [UIColor whiteColor];
+        _phoneField.clipsToBounds = YES;
+        _phoneField.delegate = self;
+        _phoneField.layer.cornerRadius = 3;
+        _phoneField.layer.borderWidth = 1;
+        _phoneField.layer.borderColor = [[UIColor grayColor]CGColor];
+        [cell addSubview:_phoneField];
         
         
-        UILabel *addressLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(phoneField.frame)+15, 70, 20)];
+        UILabel *addressLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_phoneField.frame)+15, 70, 20)];
         addressLB.font = [UIFont systemFontOfSize:12];
         addressLB.text = @"你的地址：";
         addressLB.textColor = [UIColor blackColor];
         [cell addSubview:addressLB];
         
-        UITextView *addressTextView = [[UITextView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(explainLB.frame)-5, CGRectGetMaxY(phoneField.frame)+10, 240, 80)];
-        addressTextView.clipsToBounds = YES;
-        addressTextView.layer.cornerRadius = 5;
-        addressTextView.layer.borderWidth = 1;
-        addressTextView.layer.borderColor = [[UIColor grayColor]CGColor];
-        addressTextView.delegate = self;
+        _addressTextView = [[UITextView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(explainLB.frame)-5, CGRectGetMaxY(_phoneField.frame)+10, 240, 80)];
+        _addressTextView.clipsToBounds = YES;
+        _addressTextView.layer.cornerRadius = 5;
+        _addressTextView.layer.borderWidth = 1;
+        _addressTextView.layer.borderColor = [[UIColor grayColor]CGColor];
+        _addressTextView.delegate = self;
         // TextView.text = @"最多输入100个汉字";
-        [cell addSubview:addressTextView];
+        [cell addSubview:_addressTextView];
         
-        UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(addressTextView.frame)+20, 300, 40)];
+        UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_addressTextView.frame)+20, 300, 40)];
         sureBtn.clipsToBounds = YES;
         sureBtn.layer.cornerRadius = 5;
         [sureBtn setTitle:@"提交申请" forState:UIControlStateNormal];
@@ -323,13 +327,13 @@
 -(void)surePress{
     
     if (self.isle == YES) {
-    
+        
         [self exchageDatas];
-    ExchageSuccessController *exs = [[ExchageSuccessController alloc]init];
-    [self.navigationController pushViewController:exs animated:YES];
+        ExchageSuccessController *exs = [[ExchageSuccessController alloc]init];
+        [self.navigationController pushViewController:exs animated:YES];
     }
     else{
-    
+        
         ReturnSuccessController *returnS = [[ReturnSuccessController alloc]init];
         [self.navigationController pushViewController:returnS animated:YES];
     }
@@ -337,10 +341,10 @@
 }
 -(void)exchageDatas{
     
-
-        
     
-        
+    
+    
+    
     SingleModel *model = [SingleModel sharedSingleModel];
     int i = [(model.reasonId)intValue];
     
@@ -350,24 +354,24 @@
     NSLog(@"%@",backReason.reasonId);
     NSString *path= [NSString stringWithFormat:RETUNGOODSEXPLAIN,model.jsessionid,model.userkey,model.orderId];
     NSLog(@"%@",_reasonId);
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        
-        
-        [manager POST:path parameters:@{@"content":_explainTextView.text,@"reasonId":model.reasonId} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            
-        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-            NSLog(@"%@",string);
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@",error);
-        }];
-        
     
-
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"content":_explainTextView.text,@"reasonId":model.reasonId,@"name":_nameField.text,@"phone":_phoneField,@"address":_addressTextView} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+    
+    
 }
 /**
  *  打开ActionSheet
@@ -423,7 +427,7 @@
             return;
         }
         
-       [dynamicScrollView addImageView:image];
+        [dynamicScrollView addImageView:image];
         
         
         
@@ -478,13 +482,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
