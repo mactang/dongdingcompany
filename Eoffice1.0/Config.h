@@ -69,7 +69,8 @@
 #define ADDRESSDELTE @"http://192.168.0.65:8080/eoffice/phone/order!delAddress.action?id=%@"
 
 #define ADDRESSDETAIL @"http://192.168.0.65:8080/eoffice/phone/order!getAddressDetail.action?id=%@"
-
+//增加地址
+#define ADDRESSEDADD @"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action?address=%@&telPhone=%@&receiver=%@&post=%@&id=%@"
 //退货原因
 #define  RETUNGOODSEXPLAIN @"http://192.168.0.65:8080/eoffice/phone/return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
 #define  BACKBEASON @"http://192.168.0.65:8080/eoffice/phone/return!getReasonList.action;jsessionid=%@?userkey=%@"

@@ -194,7 +194,6 @@
 		619A7E041B69EF53005F4DA4 /* ServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 619A7E031B69EF53005F4DA4 /* ServiceViewController.m */; };
 		619A7E071B69FADE005F4DA4 /* ServiceSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 619A7E061B69FADE005F4DA4 /* ServiceSuccessController.m */; };
 		619FCCDB1B86B3FA0075A0AA /* AddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 619FCCDA1B86B3FA0075A0AA /* AddressModel.m */; };
-		619FCCDE1B86BF880075A0AA /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 619FCCDD1B86BF880075A0AA /* ChangeAddrssController.m */; };
 		619FCCE11B86C6890075A0AA /* AddressDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 619FCCE01B86C6890075A0AA /* AddressDetailModel.m */; };
 		61A0A2801B5918FE00C4496A /* PayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A0A27F1B5918FE00C4496A /* PayViewController.m */; };
 		61A1FFD71B67122700AFC8C2 /* logo-2(2).png in Resources */ = {isa = PBXBuildFile; fileRef = 61A1FFD61B67122700AFC8C2 /* logo-2(2).png */; };
@@ -237,6 +236,8 @@
 		61EBC6CF1B68E9D2002D0373 /* ExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EBC6CE1B68E9D2002D0373 /* ExchangeViewController.m */; };
 		96821FCA1B8AF5DC00EC7276 /* citychoose.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96821FC71B8AF5DC00EC7276 /* citychoose.plist */; };
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
+		96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E61B8C598700AB448B /* ChangeAddrssController.m */; };
+		96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -507,8 +508,6 @@
 		619A7E061B69FADE005F4DA4 /* ServiceSuccessController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceSuccessController.m; sourceTree = "<group>"; };
 		619FCCD91B86B3FA0075A0AA /* AddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressModel.h; sourceTree = "<group>"; };
 		619FCCDA1B86B3FA0075A0AA /* AddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressModel.m; sourceTree = "<group>"; };
-		619FCCDC1B86BF880075A0AA /* ChangeAddrssController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddrssController.h; sourceTree = "<group>"; };
-		619FCCDD1B86BF880075A0AA /* ChangeAddrssController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddrssController.m; sourceTree = "<group>"; };
 		619FCCDF1B86C6890075A0AA /* AddressDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressDetailModel.h; sourceTree = "<group>"; };
 		619FCCE01B86C6890075A0AA /* AddressDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressDetailModel.m; sourceTree = "<group>"; };
 		61A0A27E1B5918FE00C4496A /* PayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayViewController.h; sourceTree = "<group>"; };
@@ -576,7 +575,11 @@
 		791DCCBB2AD078D5D692C874 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		96821FC71B8AF5DC00EC7276 /* citychoose.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = citychoose.plist; sourceTree = "<group>"; };
 		96821FC81B8AF5DC00EC7276 /* CityChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseView.h; sourceTree = "<group>"; };
-		96821FC91B8AF5DC00EC7276 /* CityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityChooseView.m; sourceTree = "<group>"; };
+		96821FC91B8AF5DC00EC7276 /* CityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CityChooseView.m; sourceTree = "<group>"; usesTabs = 0; };
+		96EC75E51B8C598700AB448B /* ChangeAddrssController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddrssController.h; sourceTree = "<group>"; };
+		96EC75E61B8C598700AB448B /* ChangeAddrssController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddrssController.m; sourceTree = "<group>"; };
+		96EC75E81B8C5AC500AB448B /* ChangeAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddressCell.h; sourceTree = "<group>"; };
+		96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddressCell.m; sourceTree = "<group>"; };
 		D51261F4F5A952364CD5B06F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1070,9 +1073,8 @@
 				617FE45C1B609A92007EBFB2 /* AddressViewController.m */,
 				6172F5411B6C6ADB007BDBD2 /* AddAddressController.h */,
 				6172F5421B6C6ADB007BDBD2 /* AddAddressController.m */,
+				96EC75E41B8C598700AB448B /* ChangeAddress */,
 				96821FC61B8AF5DC00EC7276 /* citychoose */,
-				619FCCDC1B86BF880075A0AA /* ChangeAddrssController.h */,
-				619FCCDD1B86BF880075A0AA /* ChangeAddrssController.m */,
 				61A1FFEC1B67A1BD00AFC8C2 /* ShoppingCarController.h */,
 				61A1FFED1B67A1BD00AFC8C2 /* ShoppingCarController.m */,
 			);
@@ -1228,6 +1230,17 @@
 				96821FC91B8AF5DC00EC7276 /* CityChooseView.m */,
 			);
 			path = citychoose;
+			sourceTree = "<group>";
+		};
+		96EC75E41B8C598700AB448B /* ChangeAddress */ = {
+			isa = PBXGroup;
+			children = (
+				96EC75E51B8C598700AB448B /* ChangeAddrssController.h */,
+				96EC75E61B8C598700AB448B /* ChangeAddrssController.m */,
+				96EC75E81B8C5AC500AB448B /* ChangeAddressCell.h */,
+				96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */,
+			);
+			path = ChangeAddress;
 			sourceTree = "<group>";
 		};
 		E9B244D1F97F763A8E23705E /* Pods */ = {
@@ -1580,9 +1593,9 @@
 				61793A701B54A7F100CFD83A /* UIView+Shortcut.m in Sources */,
 				61B0FF991B5F2DC1002CF349 /* DatePickView.m in Sources */,
 				6183424C1B5658720097E8A4 /* LewPopupBackgroundView.m in Sources */,
-				619FCCDE1B86BF880075A0AA /* ChangeAddrssController.m in Sources */,
 				6197F0841B58DD29000EC83E /* RDVTabBarController.m in Sources */,
 				61D54ABE1B7D7DB1002DE544 /* LTableViewCell.m in Sources */,
+				96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */,
 				61EBC6CF1B68E9D2002D0373 /* ExchangeViewController.m in Sources */,
 				6172F5431B6C6ADB007BDBD2 /* AddAddressController.m in Sources */,
 				618342501B5658720097E8A4 /* LewPopupViewAnimationSpring.m in Sources */,
@@ -1595,6 +1608,7 @@
 				619A7E041B69EF53005F4DA4 /* ServiceViewController.m in Sources */,
 				618149321B5E29DE00E39900 /* NickNameController.m in Sources */,
 				618FD7541B8717FD00090608 /* MXPullDownMenu.m in Sources */,
+				96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */,
 				61B0FF9F1B5F6739002CF349 /* ContrastViewController.m in Sources */,
 				6183424E1B5658720097E8A4 /* LewPopupViewAnimationFade.m in Sources */,
 				6160F2211B7CAAF100D55489 /* ShopCarModel.m in Sources */,

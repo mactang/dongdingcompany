@@ -50,10 +50,8 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-    
     [self downData];
-    
-    
+
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -63,7 +61,7 @@
     UIButton *addBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 510, 300, 40)];
     addBtn.backgroundColor = [UIColor redColor];
     [addBtn setTitle:@"新增收获地址" forState:UIControlStateNormal];
-    addBtn.font = [UIFont systemFontOfSize:18];
+    addBtn.titleLabel.font = [UIFont systemFontOfSize:18];
     addBtn.clipsToBounds = YES;
     addBtn.layer.cornerRadius = 5;
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -83,30 +81,21 @@
     
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    
-    
     NSString *path= [NSString stringWithFormat:ADDRESS,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSArray *array = dic[@"data"];
-        
-        for(NSDictionary *subDict in array)
-        {
-            NSLog(@"%@",subDict);
-            AddressModel *model = [AddressModel modelWithDic:subDict];
-            [self.datas addObject:model];
-            
+        NSLog(@"%@",dic);
+        if (dic[@"data"] !=[NSNull null]) {
+            NSArray *array = dic[@"data"];
+            for(NSDictionary *subDict in array)
+            {
+                AddressModel *model = [AddressModel modelWithDic:subDict];
+                [self.datas addObject:model];
+            }
         }
-        
-        
         [_tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -154,22 +143,36 @@
     _addressId = model.addressId;
     
     
+//    @interface AddressModel : NSObject
+//    @property (copy,nonatomic) NSString *receiver;
+//    @property (copy,nonatomic) NSString *fullAddress;
+//    @property (copy,nonatomic) NSString *address;
+//    @property (copy,nonatomic) NSString *addressId;
+//    @property (copy,nonatomic) NSString *telphone;
+//    @property (copy,nonatomic) NSString *post;
+//    
+//    
+//    
+//    +(AddressModel *)modelWithDic:(NSDictionary *)dic;
+//    -(id)initWithDic:(NSDictionary *)dic;
+//    
+//    @end
     
     UILabel *nameLB = [[UILabel alloc]initWithFrame:CGRectMake(20, 15, 100, 20)];
     nameLB.font = [UIFont systemFontOfSize:18];
-    nameLB.text = _nameDatas[indexPath.row];
+    nameLB.text = model.address;
     nameLB.textColor = [UIColor blackColor];
     [cell addSubview:nameLB];
     
     UILabel *phoneLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLB.frame)+35, 15, 150, 20)];
     phoneLB.font = [UIFont systemFontOfSize:18];
-    phoneLB.text = _phoneDatas[indexPath.row];
+    phoneLB.text = model.telphone;
     phoneLB.textColor = [UIColor blackColor];
     [cell addSubview:phoneLB];
     
     UILabel *addressLB = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(nameLB.frame)+5, 250, 40)];
     addressLB.font = [UIFont systemFontOfSize:13];
-    addressLB.text = _addressDatas[indexPath.row];
+    addressLB.text = model.fullAddress;
     addressLB.numberOfLines = 2;
     addressLB.textColor = [UIColor blackColor];
     [cell addSubview:addressLB];
