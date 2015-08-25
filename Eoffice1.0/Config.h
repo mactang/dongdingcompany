@@ -74,4 +74,17 @@
 #define  RETUNGOODSEXPLAIN @"http://192.168.0.65:8080/eoffice/phone/return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
 #define  BACKBEASON @"http://192.168.0.65:8080/eoffice/phone/return!getReasonList.action;jsessionid=%@?userkey=%@"
 
+#define  RETUNGOODSSTATE @"http://192.168.0.65:8080/eoffice/phone/replace!returnStatus.action;jsessionid=%@?userkey=%@&returnId=%@"
+
+//个人信息
+#define   PERSONCONME @"http://192.168.0.65:8080/eoffice/phone/user!toUpdateMyMsg.action;jsessionid=%@?userkey=%@"
+#define   PERSONREVISE @"http://192.168.0.65:8080/eoffice/phone/user!updateMyMsg.action;jsessionid=%@?userkey=%@"
+
+//安全设置
+#define SAFEVALIDATE @"http://192.168.0.65:8080/eoffice/phone/sms!getPhoneSms.action;jsessionid=%@?userkey=%@"
+
+//信息反馈
+#define FEEDBACK @"http://192.168.0.65:8080/eoffice/phone/feedback!add.action;jsessionid=%@?userkey=%@"
+
+
 #endif

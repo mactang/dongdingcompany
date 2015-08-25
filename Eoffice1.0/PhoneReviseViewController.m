@@ -1,25 +1,26 @@
 //
-//  PassWordViewController.m
+//  PhoneReviseViewController.m
 //  Eoffice1.0
 //
-//  Created by gyz on 15/7/28.
+//  Created by gyz on 15/8/25.
 //  Copyright (c) 2015年 gl. All rights reserved.
 //
 
-#import "PassWordViewController.h"
+#import "PhoneReviseViewController.h"
 #import "RDVTabBarController.h"
 #import "SingleModel.h"
 #import "AFNetworking.h"
-@interface PassWordViewController ()<UITextFieldDelegate>
-
+@interface PhoneReviseViewController ()
+@property(nonatomic,strong)UILabel *phoneField;
 @end
 
-@implementation PassWordViewController
+@implementation PhoneReviseViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-    self.navigationItem.title = @"修改密码";
+    self.navigationItem.title = @"修改手机号码";
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 290)];
     view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
@@ -32,32 +33,40 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-    UILabel *photoLB = [[UILabel alloc]initWithFrame:CGRectMake(20, 80, 150, 20)];
-    photoLB.font = [UIFont systemFontOfSize:14];
-    photoLB.text = @"手机号：13618090081";
+    UILabel *photoLB = [[UILabel alloc]initWithFrame:CGRectMake(10, 80, 70, 20)];
+    photoLB.font = [UIFont systemFontOfSize:12];
+    photoLB.text = @"原手机号码:";
     photoLB.textColor = [UIColor blackColor];
     [self.view addSubview:photoLB];
     
-    UIButton *validateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoLB.frame)+10,photoLB.frame.origin.y-5, 100, 35)];
+    _phoneField = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoLB.frame), 75, 155, 30)];
+    _phoneField.backgroundColor = [UIColor whiteColor];
+    _phoneField.clipsToBounds = YES;
+    [_phoneField setText:@"13618090081"];
+    _phoneField.layer.cornerRadius = 3;
+    _phoneField.layer.borderWidth = 1;
+    _phoneField.layer.borderColor = [[UIColor grayColor]CGColor];
+    [self.view addSubview:_phoneField];
+    
+    UIButton *validateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_phoneField.frame)+5,photoLB.frame.origin.y-5, 70, 30)];
     validateButton.backgroundColor = [UIColor whiteColor];
-    validateButton.clipsToBounds = YES;
+    validateButton.clipsToBounds =YES;
     validateButton.layer.cornerRadius = 3;
     validateButton.layer.borderColor = [[UIColor grayColor]CGColor];
     validateButton.layer.borderWidth = 1;
-    validateButton.font = [UIFont systemFontOfSize:14];
-    
+    validateButton.font = [UIFont systemFontOfSize:12];
     [validateButton addTarget:self action:@selector(validatePress) forControlEvents:UIControlEventTouchUpInside];
     [validateButton setTitle:@"发送验证码" forState:UIControlStateNormal];
     [validateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:validateButton];
     
-    UILabel *validateLB = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(photoLB.frame)+30, 60, 20)];
-    validateLB.font = [UIFont systemFontOfSize:14];
+    UILabel *validateLB = [[UILabel alloc]initWithFrame:CGRectMake(30, CGRectGetMaxY(photoLB.frame)+30, 50, 20)];
+    validateLB.font = [UIFont systemFontOfSize:12];
     validateLB.text = @"验证码：";
     validateLB.textColor = [UIColor blackColor];
     [self.view addSubview:validateLB];
     
-    UITextField *validateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(validateLB.frame), CGRectGetMaxY(photoLB.frame)+23, 220, 35)];
+    UITextField *validateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(validateLB.frame), CGRectGetMaxY(photoLB.frame)+23, 155, 30)];
     validateField.backgroundColor = [UIColor whiteColor];
     validateField.clipsToBounds = YES;
     validateField.delegate = self;
@@ -66,42 +75,51 @@
     validateField.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.view addSubview:validateField];
     
-    UILabel *newValidateLB = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(validateLB.frame)+30, 60, 20)];
-    newValidateLB.font = [UIFont systemFontOfSize:14];
-    newValidateLB.text = @"新密码：";
+    UILabel *newValidateLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(validateField.frame)+30, 70, 20)];
+    newValidateLB.font = [UIFont systemFontOfSize:12];
+    newValidateLB.text = @"新手机号码:";
     newValidateLB.textColor = [UIColor blackColor];
     [self.view addSubview:newValidateLB];
     
-    UITextField *newValidateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(validateField.frame)+15, 220, 35)];
-    newValidateField.backgroundColor = [UIColor whiteColor];
-    newValidateField.clipsToBounds = YES;
-    newValidateField.delegate = self;
-    newValidateField.clearButtonMode = UITextFieldViewModeAlways;
-    newValidateField.secureTextEntry = YES;
-    newValidateField.layer.cornerRadius = 3;
-    newValidateField.layer.borderWidth = 1;
-    newValidateField.layer.borderColor = [[UIColor grayColor]CGColor];
-    [self.view addSubview:newValidateField];
+    UITextField *newPhoneField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(validateField.frame)+25, 155, 30)];
+    newPhoneField.backgroundColor = [UIColor whiteColor];
+    newPhoneField.clipsToBounds = YES;
+    newPhoneField.delegate = self;
+    newPhoneField.layer.cornerRadius = 3;
+    newPhoneField.layer.borderWidth = 1;
+    newPhoneField.layer.borderColor = [[UIColor grayColor]CGColor];
+    [self.view addSubview:newPhoneField];
     
-    UILabel *sureValidateLB = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(newValidateLB.frame)+30, 70, 20)];
-    sureValidateLB.font = [UIFont systemFontOfSize:14];
-    sureValidateLB.text = @"确认密码：";
-    sureValidateLB.textColor = [UIColor blackColor];
-    [self.view addSubview:sureValidateLB];
+    UIButton *newNalidateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newPhoneField.frame)+5,newPhoneField.frame.origin.y, 70, 30)];
+    newNalidateButton.backgroundColor = [UIColor whiteColor];
+    newNalidateButton.clipsToBounds =YES;
+    newNalidateButton.layer.cornerRadius = 3;
+    newNalidateButton.layer.borderColor = [[UIColor grayColor]CGColor];
+    newNalidateButton.layer.borderWidth = 1;
+    newNalidateButton.font = [UIFont systemFontOfSize:12];
+    [newNalidateButton addTarget:self action:@selector(validatePress) forControlEvents:UIControlEventTouchUpInside];
+    [newNalidateButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+    [newNalidateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.view addSubview:newNalidateButton];
     
-    UITextField *sureValidateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(sureValidateLB.frame), CGRectGetMaxY(newValidateField.frame)+15, 220, 35)];
-    sureValidateField.backgroundColor = [UIColor whiteColor];
-    sureValidateField.clipsToBounds = YES;
-    sureValidateField.delegate = self;
-    sureValidateField.secureTextEntry = YES;
-    sureValidateField.clearButtonMode = UITextFieldViewModeAlways;
-    sureValidateField.layer.cornerRadius = 3;
-    sureValidateField.layer.borderWidth = 1;
-    sureValidateField.layer.borderColor = [[UIColor grayColor]CGColor];
-    [self.view addSubview:sureValidateField];
+    UILabel *newNalidateLB = [[UILabel alloc]initWithFrame:CGRectMake(30, CGRectGetMaxY(newValidateLB.frame)+30, 50, 20)];
+    newNalidateLB.font = [UIFont systemFontOfSize:12];
+    newNalidateLB.text = @"验证码：";
+    newNalidateLB.textColor = [UIColor blackColor];
+    [self.view addSubview:newNalidateLB];
+    
+    UITextField *newNalidateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(newValidateLB.frame)+23, 155, 30)];
+    newNalidateField.backgroundColor = [UIColor whiteColor];
+    newNalidateField.clipsToBounds = YES;
+    newNalidateField.delegate = self;
+    newNalidateField.layer.cornerRadius = 3;
+    newNalidateField.layer.borderWidth = 1;
+    newNalidateField.layer.borderColor = [[UIColor grayColor]CGColor];
+    [self.view addSubview:newNalidateField];
+
     
     
-    UIButton *sureButton = [[UIButton alloc]initWithFrame:CGRectMake(10,CGRectGetMaxY(sureValidateField.frame)+20, 300, 40)];
+    UIButton *sureButton = [[UIButton alloc]initWithFrame:CGRectMake(10,CGRectGetMaxY(newNalidateField.frame)+20, 300, 40)];
     sureButton.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     sureButton.clipsToBounds = YES;
     sureButton.layer.cornerRadius = 5;
@@ -126,7 +144,7 @@
     return YES;
 }
 -(void)validatePress{
-
+    
     [self valiData];
 }
 
@@ -144,7 +162,7 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:@{@"phoneNo":@"13618090081"} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:@{@"phoneNo":_phoneField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -157,7 +175,7 @@
 }
 
 -(void)surePress{
-
+    
     
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -174,6 +192,7 @@
     
     [super viewWillDisappear:animated];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

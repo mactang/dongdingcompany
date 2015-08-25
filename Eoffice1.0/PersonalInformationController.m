@@ -14,16 +14,30 @@
 #import "DatePickView.h"
 #import "RDVTabBarController.h"
 #import "LoginViewController.h"
+#import "AFNetworking.h"
+#import "SingleModel.h"
+#import "PersonInformationModel.h"
 @interface PersonalInformationController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIApplicationDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong)UIImage *imageName;
-
+@property(nonatomic, strong)NSMutableArray *datas;
 @property(nonatomic,strong)DatePickView *pickview;
-
 @property(nonatomic,strong)UIImageView *imageView ;
+
+@property(nonatomic,strong)UILabel *nameBl;
+@property(nonatomic,strong)UITextField *nickName;
+
+
 @end
 
 @implementation PersonalInformationController
+
+-(NSMutableArray *)datas{
+    if (_datas == nil) {
+        _datas = [NSMutableArray array];
+    }
+    return _datas;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,8 +49,19 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton addTarget:self action:@selector(rightItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton setTitle:@"确定" forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    rightButton.frame = CGRectMake(0, 0, 40, 40);
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    [self.navigationItem setRightBarButtonItem:rightItem];
+    
      self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     self.navigationItem.title = @"个人信息";
+    
+    [self downData];
+    
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 390) style:UITableViewStylePlain];
     _tableView.scrollEnabled = NO;
     _tableView.delegate = self;
@@ -62,13 +87,75 @@
     
     // Do any additional setup after loading the view.
 }
+-(void)rightItemClicked{
+
+    [self reviseData];
+    
+}
+-(void)reviseData{
+
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:PERSONREVISE,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"nike":_nickName.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+
+}
+- (void)downData{
+    
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:PERSONCONME,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+       NSDictionary *array = dic[@"data"];
+        PersonInformationModel *model = [PersonInformationModel modelWithDic:array];
+        
+        [self.datas addObject: model];
+                
+        NSLog(@"%@",self.datas);
+        [_tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+
 -(void)backPress{
     //LoginViewController *login = [[LoginViewController alloc]init];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 6;
+    return self.datas.count*6;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -94,6 +181,8 @@
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
+    PersonInformationModel *model = self.datas[0];
+      NSLog(@"%@",model.name);
     if (indexPath.row == 0) {
         cell.textLabel.text = @"头像";
         
@@ -101,19 +190,19 @@
     if (indexPath.row == 1) {
         cell.textLabel.text = @"用户名";
         
-        UILabel *nameBl = [[UILabel alloc]initWithFrame:CGRectMake(250, 10, 60, 20)];
-        nameBl.font = [UIFont systemFontOfSize:12];
-        [nameBl setText:@"dongding"];
-        [cell addSubview:nameBl];
+        _nameBl = [[UILabel alloc]initWithFrame:CGRectMake(250, 10, 60, 20)];
+        _nameBl.font = [UIFont systemFontOfSize:12];
+        [_nameBl setText:[NSString stringWithFormat:@"%@",model.name]];
+        [cell addSubview:_nameBl];
     }
     if (indexPath.row == 2) {
         cell.textLabel.text = @"昵称";
-        UITextField *nickName = [[UITextField alloc]initWithFrame:CGRectMake(250, 10, 70, 30)];
-        nickName.backgroundColor = [UIColor whiteColor];
-        nickName.placeholder = @"东鼎";
-        nickName.clearButtonMode = UITextFieldViewModeAlways;
-        nickName.delegate = self;
-        [cell addSubview:nickName];
+        _nickName = [[UITextField alloc]initWithFrame:CGRectMake(250, 10, 70, 30)];
+        _nickName.backgroundColor = [UIColor whiteColor];
+        _nickName.placeholder = [NSString stringWithFormat:@"%@",model.shortname];
+        _nickName.clearButtonMode = UITextFieldViewModeAlways;
+        _nickName.delegate = self;
+        [cell addSubview:_nickName];
 
        
     }

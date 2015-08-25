@@ -15,6 +15,7 @@
 #import "SingleModel.h"
 #import "AFNetworking.h"
 #import "OrderModel.h"
+#import "AFNetworking.h"
 
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate>
 @property(nonatomic,strong)UITableView *tableView;
@@ -22,6 +23,7 @@
 @property(nonatomic,assign)NSInteger row;
 @property(nonatomic,assign)NSInteger btnNumber;
 @property(nonatomic,assign)NSInteger orderId;
+@property(nonatomic,assign)NSString *returnId;
 @end
 
 @implementation OrderViewController
@@ -135,6 +137,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.datas.count;
+   
 }
 
 
@@ -169,7 +172,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
     
     cell.clipsToBounds = YES;
-    NSLog(@"%@",self.datas[indexPath.row]);
+    NSLog(@"%@",self.datas);
     OrderModel *model = self.datas[indexPath.row];
     NSLog(@"%@",model.orderDescription);
     cell.textLabel.font = [UIFont systemFontOfSize:15];
@@ -269,7 +272,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-        
+        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn3.tag = 1000;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -302,7 +306,7 @@
         btn2.layer.borderWidth = 1;
         btn2.layer.borderColor = [[UIColor grayColor]CGColor];
         [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1000;
+        btn2.tag = 1001;
         [cell addSubview:btn2];
 
         UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -311,7 +315,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-        
+        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+            btn2.tag = 1002;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -343,7 +348,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-
+        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn3.tag = 1003;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -375,8 +381,8 @@
         btn2.layer.cornerRadius = 3;
         btn2.layer.borderWidth = 1;
         btn2.layer.borderColor = [[UIColor grayColor]CGColor];
-        [btn2 addTarget:self action:@selector(btn2Press) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1000;
+        [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn2.tag = 1004;
         [cell addSubview:btn2];
 
         UIButton *btn4 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -387,8 +393,8 @@
         btn4.layer.cornerRadius = 3;
         btn4.layer.borderWidth = 1;
         btn4.layer.borderColor = [[UIColor grayColor]CGColor];
-        [btn4 addTarget:self action:@selector(servicePress) forControlEvents:UIControlEventTouchUpInside];
-        btn4.tag = 1000;
+        [btn4 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn4.tag = 1005;
         [cell addSubview:btn4];
 
         UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn4.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -397,7 +403,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-        
+            [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+            btn3.tag = 1005;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -427,9 +434,11 @@
         btn2.font = [UIFont systemFontOfSize:12];
         btn2.layer.cornerRadius = 3;
         btn2.layer.borderWidth = 1;
+            OrderModel *model = self.datas[indexPath.row];
+            _returnId = model.orderId;
         btn2.layer.borderColor = [[UIColor grayColor]CGColor];
         [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1000;
+        btn2.tag = 1006;
         [cell addSubview:btn2];
 
         UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -438,7 +447,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-        
+        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn3.tag = 1007;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -515,20 +525,10 @@
 
 
 }
--(void)servicePress{
-    
-    ServiceViewController *ser = [[ServiceViewController alloc]init];
-    [self.navigationController pushViewController:ser animated:YES];
-    
-}
--(void)btn2Press{
-    ExchangeViewController *exc = [[ExchangeViewController alloc]init];
-    
-    [self.navigationController pushViewController:exc animated:YES];
-    
-}
+
 -(void)buttonPress:(UIButton *)btn{
-    if (btn.tag == 1000) {
+    //查看物流
+    if (btn.tag == 1001) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
 
@@ -537,7 +537,61 @@
         [self.navigationController pushViewController:lg animated:YES];
         NSLog(@",,");
     }
+    
+    //退换货
+    if (btn.tag == 1004) {
+        ExchangeViewController *exc = [[ExchangeViewController alloc]init];
+        
+        [self.navigationController pushViewController:exc animated:YES];
+    }
+    //维修
+    if (btn.tag == 1005) {
+        ServiceViewController *ser = [[ServiceViewController alloc]init];
+        [self.navigationController pushViewController:ser animated:YES];
+    }
+    if (btn.tag == 1006) {
+        [self exchageStateDatas];
+    }
 }
+-(void)exchageStateDatas{
+    
+    
+    
+    
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    int i = [(model.reasonId)intValue];
+    
+    NSString *path= [NSString stringWithFormat:RETUNGOODSSTATE,model.jsessionid,model.userkey,_returnId];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSArray *array = dic[@"status"];
+        NSString *string = [NSString stringWithFormat:@"%@",array];
+        NSLog(@"array--%@",string);
+        if ([string isEqualToString:@"1"]) {
+            
+            
+        }
+        else{
+        }
+        
+
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];

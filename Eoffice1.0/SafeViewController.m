@@ -9,6 +9,7 @@
 #import "SafeViewController.h"
 #import "PassWordViewController.h"
 #import "RDVTabBarController.h"
+#import "PhoneReviseViewController.h"
 @interface SafeViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @end
@@ -27,6 +28,7 @@
     ligthButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
+    self.navigationItem.title = @"安全设置";
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -1, 320, 540) style:UITableViewStyleGrouped];
     
@@ -94,7 +96,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
     if (indexPath.section == 0&&indexPath.row == 0) {
-        
+     
+        PhoneReviseViewController *ph = [[PhoneReviseViewController alloc]init];
+        [self.navigationController pushViewController:ph animated:YES];
     }
     else{
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
