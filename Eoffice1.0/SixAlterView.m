@@ -171,6 +171,7 @@
         cell.textLabel.text = @"男";
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
+        payBtn.tag = 1000;
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
@@ -180,6 +181,7 @@
         cell.textLabel.text = @"女";
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
+        payBtn.tag = 1001;
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
@@ -189,6 +191,7 @@
         cell.textLabel.text = @"保密";
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
+        payBtn.tag = 1002;
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
@@ -199,7 +202,8 @@
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
-    btn.selected = !btn.selected;
+        btn.selected = !btn.selected;
+
     
 }
 - (void)leftbtnclicked:(id)sender

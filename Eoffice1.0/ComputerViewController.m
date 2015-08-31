@@ -112,6 +112,7 @@ static const CGFloat MJDuration = 2.0;
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
         NSLog(@"array--%@",array);
         for(NSDictionary *subDict in array)
@@ -119,6 +120,7 @@ static const CGFloat MJDuration = 2.0;
             detailsModel *model = [detailsModel modelWithDic:subDict];
             [self.datas addObject:model];
             NSLog(@"model.name--%@",self.datas);
+        }
         }
         //刷新表
        // [_collectionView reloadData];

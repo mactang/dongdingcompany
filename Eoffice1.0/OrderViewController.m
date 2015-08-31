@@ -15,13 +15,19 @@
 #import "SingleModel.h"
 #import "AFNetworking.h"
 #import "OrderModel.h"
+#import "AFNetworking.h"
 
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
+@property(nonatomic,strong)NSMutableArray *classifyDatas;
+
 @property(nonatomic,assign)NSInteger row;
 @property(nonatomic,assign)NSInteger btnNumber;
 @property(nonatomic,assign)NSInteger orderId;
+@property(nonatomic,assign)NSString *returnId;
+@property(nonatomic,assign)NSInteger serviceOrderId;
+@property(nonatomic,assign)NSString *docstatus;
 @end
 
 @implementation OrderViewController
@@ -29,6 +35,9 @@
 
     NSArray *dropDownMenuList;
      DropDown1 *dd1;
+    BOOL isClssify;
+    NSString *docstatus;
+    OrderModel *model1;
     
 }
 -(NSMutableArray *)datas{
@@ -38,6 +47,12 @@
     return _datas;
 }
 
+-(NSMutableArray *)classifyDatas{
+    if (_classifyDatas == nil) {
+        _classifyDatas = [NSMutableArray array];
+    }
+    return _classifyDatas;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -52,6 +67,7 @@
     self.view.backgroundColor = [UIColor grayColor];
     [self.navigationItem setTitle:@"我的订单"];
     
+    isClssify = NO;
     [self downData];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, 320, 430) style:UITableViewStyleGrouped];
@@ -83,14 +99,30 @@
         
         [dd1.textButton setTitle:[NSString stringWithFormat:@"%@",selection] forState:UIControlStateNormal];
         //dropDownMenu.title = [NSString stringWithFormat:@"%@▼",selection];
-        
+        NSLog(@"%@",dd1.textButton.titleLabel.text);
+        isClssify = YES;
+        if ([dd1.textButton.titleLabel.text isEqualToString:@"全部"]) {
+            _docstatus = @"-1";
+        }
+        if ([dd1.textButton.titleLabel.text isEqualToString:@"待发货"]) {
+            _docstatus = @"1";
+        }
+        if ([dd1.textButton.titleLabel.text isEqualToString:@"退换货/维修"]) {
+            _docstatus = @"2";
+        }
+        if ([dd1.textButton.titleLabel.text isEqualToString:@"待评价"]) {
+            _docstatus = @"3";
+        }
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
            
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
+                
+                [self classifyData];
+//                [self.tableView reloadData];
+                [self.classifyDatas removeAllObjects];
             });
             
         });
@@ -98,6 +130,44 @@
     
 }
 
+-(void)classifyData{
+    
+    
+    NSLog(@"%@",_docstatus);
+
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"docstatus":_docstatus} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+        NSArray *array = dic[@"data"];
+        
+        for(NSDictionary *subDict in array)
+        {
+            NSLog(@"%@",subDict);
+            OrderModel *model = [OrderModel modelWithDic:subDict];
+            [self.classifyDatas addObject:model];
+            
+        }
+        
+        }
+        [_tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
 - (void)downData{
     
     
@@ -115,6 +185,7 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
        
         for(NSDictionary *subDict in array)
@@ -124,7 +195,7 @@
             [self.datas addObject:model];
             
         }
-
+        }
        
         [_tableView reloadData];
         
@@ -134,7 +205,15 @@
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.datas.count;
+    
+    if (isClssify == NO) {
+        return self.datas.count;
+    }
+    else{
+    
+        return self.classifyDatas.count;
+    }
+   
 }
 
 
@@ -168,14 +247,22 @@
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
     
-    cell.clipsToBounds = YES;
-    NSLog(@"%@",self.datas[indexPath.row]);
-    OrderModel *model = self.datas[indexPath.row];
-    NSLog(@"%@",model.orderDescription);
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    NSString *docstatus = [NSString stringWithFormat:@"%@",model.docstatus];
+    cell.clipsToBounds = YES;
+    NSLog(@"%@",self.datas);
+    if (isClssify == NO) {
+    model1 = self.datas[indexPath.row];
+    NSLog(@"%@",model1.orderDescription);
     
-  
+        
+    
+    }
+    if (isClssify == YES) {
+        model1 = self.classifyDatas[indexPath.row];
+        
+    }
+        docstatus = [NSString stringWithFormat:@"%@",model1.docstatus];
+    
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"dingdanxiaotu"]];
         imageView.frame = CGRectMake(10, 5, 40, 40);
         [cell addSubview:imageView];
@@ -212,7 +299,7 @@
         
         UILabel *lb6 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+40, lb1.frame.origin.y, 60, 20)];
         lb6.font = [UIFont systemFontOfSize:10];
-        lb6.text = lb6.text = [NSString stringWithFormat:@"%@",model.price];;
+        lb6.text = lb6.text = [NSString stringWithFormat:@"%@",model1.price];;
         [cell addSubview:lb6];
         
         UILabel *lb7 = [[UILabel alloc]initWithFrame:CGRectMake(lb6.frame.origin.x+40, CGRectGetMaxY(lb6.frame)+10, 60, 20)];
@@ -253,9 +340,9 @@
         [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         
         btn1.clipsToBounds = YES;
-        _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+        _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
             SingleModel *single = [SingleModel sharedSingleModel];
-            single.orderId = model.orderId;
+            single.orderId = model1.orderId;
             NSLog(@"%ld",(long)btn1.tag);
         btn1.tag = indexPath.row;
         btn1.font = [UIFont systemFontOfSize:12];
@@ -269,7 +356,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-        
+        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn3.tag = 1000;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -284,7 +372,7 @@
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
             NSLog(@"%ld",(long)_row);
         btn1.tag = indexPath.row;
         btn1.font = [UIFont systemFontOfSize:12];
@@ -302,7 +390,7 @@
         btn2.layer.borderWidth = 1;
         btn2.layer.borderColor = [[UIColor grayColor]CGColor];
         [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1000;
+        btn2.tag = 1001;
         [cell addSubview:btn2];
 
         UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -311,7 +399,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-        
+        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+            btn2.tag = 1002;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -326,7 +415,7 @@
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
          NSLog(@"model.orderId--%ld",(long)_row);
         btn1.tag = indexPath.row;
             
@@ -343,7 +432,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-
+        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn3.tag = 1003;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -358,7 +448,7 @@
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
             NSLog(@"%ld",(long)btn1.tag);
              btn1.tag = indexPath.row;
         btn1.font = [UIFont systemFontOfSize:12];
@@ -375,8 +465,8 @@
         btn2.layer.cornerRadius = 3;
         btn2.layer.borderWidth = 1;
         btn2.layer.borderColor = [[UIColor grayColor]CGColor];
-        [btn2 addTarget:self action:@selector(btn2Press) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1000;
+        [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn2.tag = 1004;
         [cell addSubview:btn2];
 
         UIButton *btn4 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -387,8 +477,9 @@
         btn4.layer.cornerRadius = 3;
         btn4.layer.borderWidth = 1;
         btn4.layer.borderColor = [[UIColor grayColor]CGColor];
-        [btn4 addTarget:self action:@selector(servicePress) forControlEvents:UIControlEventTouchUpInside];
-        btn4.tag = 1000;
+        [btn4 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn4.tag = 1005;
+        _serviceOrderId = indexPath.row;
         [cell addSubview:btn4];
 
         UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn4.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -397,7 +488,8 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-        
+            [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+            btn3.tag = 1005;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -411,7 +503,7 @@
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
             NSLog(@"model.orderId--%ld",(long)_row);
          btn1.tag = indexPath.row;
         btn1.font = [UIFont systemFontOfSize:12];
@@ -427,9 +519,11 @@
         btn2.font = [UIFont systemFontOfSize:12];
         btn2.layer.cornerRadius = 3;
         btn2.layer.borderWidth = 1;
+            OrderModel *model = self.datas[indexPath.row];
+            _returnId = model.orderId;
         btn2.layer.borderColor = [[UIColor grayColor]CGColor];
         [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1000;
+        btn2.tag = 1006;
         [cell addSubview:btn2];
 
         UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -438,15 +532,18 @@
         btn3.clipsToBounds = YES;
         btn3.font = [UIFont systemFontOfSize:12];
         btn3.layer.cornerRadius = 3;
-        
+        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
+        btn3.tag = 1007;
         btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [cell addSubview:btn3];
-
+        
          
     }
+    
+    
 
 
     
@@ -515,20 +612,10 @@
 
 
 }
--(void)servicePress{
-    
-    ServiceViewController *ser = [[ServiceViewController alloc]init];
-    [self.navigationController pushViewController:ser animated:YES];
-    
-}
--(void)btn2Press{
-    ExchangeViewController *exc = [[ExchangeViewController alloc]init];
-    
-    [self.navigationController pushViewController:exc animated:YES];
-    
-}
+
 -(void)buttonPress:(UIButton *)btn{
-    if (btn.tag == 1000) {
+    //查看物流
+    if (btn.tag == 1001) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
 
@@ -537,7 +624,66 @@
         [self.navigationController pushViewController:lg animated:YES];
         NSLog(@",,");
     }
+    
+    //退换货
+    if (btn.tag == 1004) {
+        
+        SingleModel *model = [SingleModel sharedSingleModel];
+        model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
+        ExchangeViewController *exc = [[ExchangeViewController alloc]init];
+        
+        [self.navigationController pushViewController:exc animated:YES];
+    }
+    //维修
+    if (btn.tag == 1005) {
+        SingleModel *model = [SingleModel sharedSingleModel];
+        model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
+        ServiceViewController *ser = [[ServiceViewController alloc]init];
+        [self.navigationController pushViewController:ser animated:YES];
+    }
+    if (btn.tag == 1006) {
+        [self exchageStateDatas];
+    }
 }
+-(void)exchageStateDatas{
+    
+    
+    
+    
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    int i = [(model.reasonId)intValue];
+    
+    NSString *path= [NSString stringWithFormat:RETUNGOODSSTATE,model.jsessionid,model.userkey,_returnId];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSArray *array = dic[@"status"];
+        NSString *string = [NSString stringWithFormat:@"%@",array];
+        NSLog(@"array--%@",string);
+        if ([string isEqualToString:@"1"]) {
+            
+            
+        }
+        else{
+        }
+        
+
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];

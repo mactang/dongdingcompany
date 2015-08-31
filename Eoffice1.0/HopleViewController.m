@@ -9,6 +9,8 @@
 #import "HopleViewController.h"
 #import "RDVTabBarController.h"
 #import "photoAlterView.h"
+#import "SingleModel.h"
+#import "AFNetworking.h"
 @interface HopleViewController ()<UITextViewDelegate>
 
 @end
@@ -103,6 +105,8 @@
     alter.rightBlock=^()
     {
         NSLog(@"右边按钮被点击");
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://123456789"]];
     };
     alter.leftBlock=^()
     {
@@ -116,6 +120,32 @@
 }
 -(void)surePress{
 
+    [self feedData];
+}
+
+-(void)feedData{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:FEEDBACK,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"content":TextView.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
     
 }
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

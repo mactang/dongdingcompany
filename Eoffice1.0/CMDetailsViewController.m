@@ -33,7 +33,7 @@
 #import "AFNetworking.h"
 #import "SingleModel.h"
 #import "detailsModel.h"
-
+#import "BBBadgeBarButtonItem.h"
 
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
@@ -54,7 +54,9 @@
 
 @property(nonatomic,strong)UIView *carView;
 
-@property(nonatomic,strong)UILabel *number;
+@property(nonatomic,strong)UIButton *number;
+
+@property (nonatomic, strong) BBBadgeBarButtonItem *messageItem;
 
 @end
 
@@ -167,12 +169,15 @@
     [shopCarBtn addSubview:lb1];
     
     
-    _number = [[UILabel alloc]initWithFrame:CGRectMake(15, 3, 30, 10)];
+    _number = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
     _number.font = [UIFont systemFontOfSize:10];
-    _number.text = [NSString stringWithFormat:@"%d",number
-                    ];;
-    _number.textColor = [UIColor orangeColor];
-    [shopCarBtn1 addSubview:_number];
+    [_number setTitle:[NSString stringWithFormat:@"%d",number
+                      ] forState:UIControlStateNormal];
+    _number.clipsToBounds = YES;
+    _number.layer.cornerRadius = 10;
+    [_number setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _number.backgroundColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:0/255.0 alpha:1];
+    [_carView addSubview:_number];
     
     UIButton *InShopBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shopCarBtn.frame)+8, 5, 120, 40)];
     [InShopBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
@@ -203,8 +208,7 @@
     }
     else if (btn.tag == 2001){
         
-        _number.text = [NSString stringWithFormat:@"%d",number
-                        +1];
+        [_number setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
         number = number +1;
         
         [self data];
@@ -225,16 +229,17 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,model.jsessionid,model.userkey,model.wGoodsId];
     NSLog(@"path--%@",path);
-    NSLog(@"wGoodsId--%@",model.wGoodsId);
-    NSLog(@"_number--%@",_number.text);
+    NSLog(@"wGoodsId--%@",_number.titleLabel.text);
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-       [manager POST:path parameters:@{@"count":_number.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+       [manager POST:path parameters:@{@"count":_number.titleLabel.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        
         NSLog(@"%@",string);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

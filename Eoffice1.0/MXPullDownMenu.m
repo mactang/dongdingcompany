@@ -71,6 +71,7 @@
             CGRect position = CGRectMake(0, 10, 150, 20);
             
             CATextLayer *title = [self creatTextLayerWithNSString:nil withColor:_menuColor andPosition:position];
+            
             [self.layer addSublayer:title];
             
             [_titles addObject:title];
@@ -305,7 +306,8 @@
     CGSize size = [self calculateTitleSizeWithString:title.string];
     CGFloat sizeWidth = (size.width < (self.frame.size.width / _numOfMenu) - 25) ? size.width : self.frame.size.width / _numOfMenu - 25;
     title.bounds = CGRectMake(0, 0, sizeWidth, size.height);
-    
+    //点击后标题内容位置
+    title.frame = CGRectMake(0, 10, 120, 20);
     
     complete();
 }
@@ -355,8 +357,8 @@
     CAShapeLayer *layer = [CAShapeLayer new];
     
     UIBezierPath *path = [UIBezierPath new];
-    [path moveToPoint:CGPointMake(160,0)];
-    [path addLineToPoint:CGPointMake(160, 20)];
+    [path moveToPoint:CGPointMake(120,0)];
+    [path addLineToPoint:CGPointMake(120, 20)];
     
     layer.path = path.CGPath;
     layer.lineWidth = 1.0;

@@ -8,12 +8,18 @@
 
 #import "PassWordViewController.h"
 #import "RDVTabBarController.h"
+#import "SingleModel.h"
+#import "AFNetworking.h"
 @interface PassWordViewController ()<UITextFieldDelegate>
 
 @end
 
 @implementation PassWordViewController
+{
 
+    UITextField *validateField;
+    UITextField *sureValidateField;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
@@ -32,7 +38,7 @@
     
     UILabel *photoLB = [[UILabel alloc]initWithFrame:CGRectMake(20, 80, 150, 20)];
     photoLB.font = [UIFont systemFontOfSize:14];
-    photoLB.text = @"手机号：1234567890";
+    photoLB.text = @"手机号：13618090081";
     photoLB.textColor = [UIColor blackColor];
     [self.view addSubview:photoLB];
     
@@ -55,7 +61,7 @@
     validateLB.textColor = [UIColor blackColor];
     [self.view addSubview:validateLB];
     
-    UITextField *validateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(validateLB.frame), CGRectGetMaxY(photoLB.frame)+23, 220, 35)];
+    validateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(validateLB.frame), CGRectGetMaxY(photoLB.frame)+23, 220, 35)];
     validateField.backgroundColor = [UIColor whiteColor];
     validateField.clipsToBounds = YES;
     validateField.delegate = self;
@@ -87,7 +93,7 @@
     sureValidateLB.textColor = [UIColor blackColor];
     [self.view addSubview:sureValidateLB];
     
-    UITextField *sureValidateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(sureValidateLB.frame), CGRectGetMaxY(newValidateField.frame)+15, 220, 35)];
+    sureValidateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(sureValidateLB.frame), CGRectGetMaxY(newValidateField.frame)+15, 220, 35)];
     sureValidateField.backgroundColor = [UIColor whiteColor];
     sureValidateField.clipsToBounds = YES;
     sureValidateField.delegate = self;
@@ -106,7 +112,7 @@
     
     sureButton.font = [UIFont systemFontOfSize:15];
     
-    [sureButton addTarget:self action:@selector(surePress) forControlEvents:UIControlEventTouchUpInside];
+    [sureButton addTarget:self action:@selector(revisePassword) forControlEvents:UIControlEventTouchUpInside];
     [sureButton setTitle:@"确定" forState:UIControlStateNormal];
     [sureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:sureButton];
@@ -125,12 +131,70 @@
 }
 -(void)validatePress{
 
-    
+    [self valiData];
 }
--(void)surePress{
 
+-(void)valiData{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:SAFEVALIDATE,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"phoneNo":@"13618090081"} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
     
 }
+-(void) revisePassword{
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:SAFERIVESE,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"phone":@"13618090081",@"rand":validateField.text,@"password":sureValidateField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+        NSArray *array = dic[@"status"];
+        NSString *string = [NSString stringWithFormat:@"%@",array];
+        NSLog(@"array--%@",string);
+        if ([string isEqualToString:@"1"]) {
+            
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            
+        }
+        else{
+            
+        }
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+
+
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
@@ -141,7 +205,7 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
     [super viewWillDisappear:animated];
 }
