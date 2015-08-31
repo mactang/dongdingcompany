@@ -15,8 +15,7 @@
 @property (copy,nonatomic) NSString *addressId;
 @property (copy,nonatomic) NSString *telphone;
 @property (copy,nonatomic) NSString *post;
-
-
+@property (copy,nonatomic) NSString *defaultsign;
 
 +(AddressModel *)modelWithDic:(NSDictionary *)dic;
 -(id)initWithDic:(NSDictionary *)dic;

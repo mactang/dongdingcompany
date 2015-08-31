@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "CityChooseView.h"
 #import "Config.h"
+
 @interface AddAddressController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,citychoosedelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *addressLB;
@@ -103,7 +104,6 @@
     return 1;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     
     static NSString *identity = @"cell";
     

@@ -74,5 +74,6 @@
 //退货原因
 #define  RETUNGOODSEXPLAIN @"http://192.168.0.65:8080/eoffice/phone/return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
 #define  BACKBEASON @"http://192.168.0.65:8080/eoffice/phone/return!getReasonList.action;jsessionid=%@?userkey=%@"
-
+//默认地址设置
+#define DEFAULTADDREDD  @"http://192.168.0.65:8080/eoffice/phone/order!setDefalutAdress.action;id=%@?userkey=%@"
 #endif

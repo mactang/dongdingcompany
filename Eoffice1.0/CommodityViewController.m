@@ -48,21 +48,38 @@
     cbt.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:cbt];
     
-    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 64, 300, 40)];
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(30, 69, SCREEN_WIDTH-40, 30)];
     [self.view addSubview:self.searchBar];
     
-    self.searchBar.clipsToBounds = YES;
-    self.searchBar.layer.cornerRadius = 5;
-    self.searchBar.layer.borderColor = [[UIColor whiteColor]CGColor];
-    self.searchBar.layer.borderWidth = 5;
-    
-    // self.searchBar.backgroundImage = [UIImage imageNamed:@"sousuobeijing"];
-    // [self.searchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"sousuobeijing"] forState:UIControlStateNormal];
-    
-    self.searchBar.backgroundColor = [UIColor whiteColor];
+    self.searchBar.backgroundColor = [UIColor lightGrayColor];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"输入商家、分类和产品";
+    for (UIView *view in self.searchBar.subviews) {
+        // for before iOS7.0
+        if ([view isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [view removeFromSuperview];
+            break;
+        }
+        // for later iOS7.0(include)
+        if ([view isKindOfClass:NSClassFromString(@"UIView")] && view.subviews.count > 0) {
+            [[view.subviews objectAtIndex:0] removeFromSuperview];
+            break;
+        }
+    }
+    UIColor *innerColor = [UIColor lightGrayColor];
+    for (UIView* subview in [[self.searchBar.subviews lastObject] subviews]) {
+        if ([subview isKindOfClass:[UITextField class]]) {
+            UITextField *textField = (UITextField*)subview;
+            textField.backgroundColor = innerColor;
+        }
+    }
+    self.searchBar.clipsToBounds = YES;
+    self.searchBar.layer.masksToBounds = YES;
+    self.searchBar.layer.cornerRadius = 15;
     
+    self.searchBar.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.searchBar.layer.borderWidth = 1;
+
     [self button];
     
     UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 280, 320, 80)];
@@ -124,7 +141,7 @@
         }
         //刷新表
         
-        [self button];
+//        [self button];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
