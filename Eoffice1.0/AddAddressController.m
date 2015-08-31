@@ -18,6 +18,7 @@
 @property(nonatomic,strong)UITextField *nameLB;
 @property(nonatomic,strong)UITextField *phoneLB;
 @property(nonatomic,strong)UITextField *emailLB;
+@property(nonatomic,strong)UITextField *street;
 @end
 
 @implementation AddAddressController
@@ -42,10 +43,49 @@
     _tableView.scrollEnabled = NO;
     [self.view addSubview:_tableView];
     
+    UIButton *confirmbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    confirmbutton.frame = CGRectMake(10, CGRectGetMaxY(_tableView.frame)+20, SCREEN_WIDTH-20, 40);
+    confirmbutton.backgroundColor = [UIColor orangeColor];
+    [confirmbutton setTitle:@"确定" forState:UIControlStateNormal];
+    confirmbutton.titleLabel.font = [UIFont systemFontOfSize:17];
+    [confirmbutton addTarget:self action:@selector(confirmbuttonPresed) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:confirmbutton];
     // Do any additional setup after loading the view.
 }
+-(void)confirmbuttonPresed{
+    
+    //增加地址
+//#define ADDRESSEDADD @"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action?address=%@&telPhone=%@&receiver=%@&post=%@&id=%@"
+    UILabel *addresslabel = (UILabel *)[self.view viewWithTag:10];
+//    NSString *datastring = [NSString stringWithFormat:ADDRESSEDADD,addresslabel.text,_phoneLB.text,_nameLB.text,_emailLB.text,@"110101"];
+    
+    
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    NSString *path= [NSString stringWithFormat:@"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action;jsessionid=%@?userkey=%@",model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
 
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+   //    NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:addresslabel.text,@"address",_phoneLB.text,@"telPhone",_nameLB.text,@"receiver",_emailLB.text,@"post",@"110101",@"id",nil];
+//    NSLog(@"%@",dicdata);
+    NSDictionary *parameter=@{@"address":addresslabel.text,@"telPhone":_phoneLB.text,@"receiver":_nameLB.text,@"post":_emailLB.text,@"id":@"110101"};
+    [manager POST:path parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+//        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+//        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
 
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 6;
 }
@@ -71,7 +111,7 @@
     
     cell.clipsToBounds = YES;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row == 0) {
         UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 280, 20)];
         LB.font = [UIFont systemFontOfSize:17];
@@ -86,16 +126,23 @@
         [cell addSubview:LB1];
     }
     if (indexPath.row == 1) {
-        UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 280, 20)];
-        LB.font = [UIFont systemFontOfSize:17];
-        LB.text = @"请选择街道";
-        LB.textColor = [UIColor grayColor];
-        [cell addSubview:LB];
-        UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(LB.frame)+5, 280, 20)];
-        LB1.font = [UIFont systemFontOfSize:12];
-        LB1.text = @"街道";
-        LB1.textColor = [UIColor grayColor];
-        [cell addSubview:LB1];
+        self.street = [[UITextField alloc]initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH-20, 30)];
+        self.street.backgroundColor = [UIColor whiteColor];
+        self.street.placeholder = @"请输入街道名称";
+        self.street.font = [UIFont systemFontOfSize:17];
+        self.street.delegate = self;
+//      self.street.clearButtonMode = UITextFieldViewModeAlways;
+        [cell addSubview:self.street];
+//        UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 280, 20)];
+//        LB.font = [UIFont systemFontOfSize:17];
+//        LB.text = @"请选择街道";
+//        LB.textColor = [UIColor grayColor];
+//        [cell addSubview:LB];
+//        UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(LB.frame)+5, 280, 20)];
+//        LB1.font = [UIFont systemFontOfSize:12];
+//        LB1.text = @"街道";
+//        LB1.textColor = [UIColor grayColor];
+//        [cell addSubview:LB1];
     }
     if (indexPath.row == 2) {
         _addressLB = [[UITextField alloc]initWithFrame:CGRectMake(10, 10, 300, 30)];
@@ -137,7 +184,6 @@
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld",indexPath.row);
     if (indexPath.row==0) {
         CityChooseView *cithchoose = [[CityChooseView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
         cithchoose.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.4];

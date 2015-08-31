@@ -21,10 +21,7 @@
         self.addressId = dic[@"addressId"];
         self.telphone = dic[@"telphone"];
         self.post = dic[@"post"];
-        
-        
     }
-    
     return self;
 }
 

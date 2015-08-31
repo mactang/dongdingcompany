@@ -230,8 +230,6 @@
             [self.datas addObject:model];
             
         }
-        
-        
         [_tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

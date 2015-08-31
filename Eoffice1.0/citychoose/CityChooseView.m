@@ -30,7 +30,8 @@
     self.thirdPickerArray = [NSMutableArray array];
     self = [super initWithFrame:frame];
     if (self) {
-        [self datarequest];
+//      [self datarequest];
+        [self initalizaApperance];
     }
     return self;
 }
@@ -56,7 +57,7 @@
 //        NSLog(@"%@",self.pickerArray);
 //        NSLog(@"%@+++",self.subPickerArray);
 //        NSLog(@"%@---",self.thirdPickerArray);
-      [self initalizaApperance];
+//      [self initalizaApperance];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -70,20 +71,20 @@
     self.pickerView.showsSelectionIndicator=YES;
     self.pickerView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.pickerView];
-//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"citychoose" ofType:@"plist"];
-//    self.dataArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
-////  NSLog(@"%@", self.dataArray);//直接打印数据。
-//    for (NSInteger i=0; i<self.dataArray.count; i++) {
-//        [self.pickerArray addObject:self.dataArray[i][@"state"]];
-//    }
-//    self.subPickerArray = [self.dataArray objectAtIndex:0][@"cities"];
-//    if ([[self.subPickerArray objectAtIndex:0][@"areas"] count]!=0) {
-//        self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"areas"];
-//    }
-//    else{
-//        self.area = @"";
-//    }
-//    NSLog(@"%@",self.subPickerArray);
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"citychoose" ofType:@"plist"];
+    self.dataArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
+//  NSLog(@"%@", self.dataArray);//直接打印数据。
+    for (NSInteger i=0; i<self.dataArray.count; i++) {
+        [self.pickerArray addObject:self.dataArray[i][@"state"]];
+    }
+    self.subPickerArray = [self.dataArray objectAtIndex:0][@"cities"];
+    if ([[self.subPickerArray objectAtIndex:0][@"areas"] count]!=0) {
+        self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"areas"];
+    }
+    else{
+        self.area = @"";
+    }
+    NSLog(@"%@",self.subPickerArray);
     UIView *linghtView = [[UIView alloc]initWithFrame:CGRectMake(0, widgetboundsHeight(self)-210, SCREEN_WIDTH, 30)];
     linghtView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:linghtView];
@@ -136,13 +137,13 @@
        return [self.pickerArray objectAtIndex:row];
     }
     if (component==1) {
-        self.city = [self.subPickerArray objectAtIndex:row][@"name"];
-        return [self.subPickerArray objectAtIndex:row][@"name"];
+        self.city = [self.subPickerArray objectAtIndex:row][@"city"];
+        return [self.subPickerArray objectAtIndex:row][@"city"];
     }
     else{
         if ([self.thirdPickerArray count]!=0) {
-            self.area = [self.thirdPickerArray objectAtIndex:row][@"name"];
-            return [self.thirdPickerArray objectAtIndex:row][@"name"];
+            self.area = [self.thirdPickerArray objectAtIndex:row];
+            return [self.thirdPickerArray objectAtIndex:row];
         }
         else{
             self.area = @"";
@@ -155,12 +156,12 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
 //    NSLog(@"%ld",row);
     if (component==0) {
-        self.subPickerArray = [self.dataArray objectAtIndex:row][@"city"];
-        self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"county"];
+        self.subPickerArray = [self.dataArray objectAtIndex:row][@"cities"];
+        self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"areas"];
         self.prvoice = [self.pickerArray objectAtIndex:row];
-        self.city = [self.subPickerArray objectAtIndex:0][@"name"];
+        self.city = [self.subPickerArray objectAtIndex:0][@"city"];
         if ([self.thirdPickerArray count] !=0) {
-           self.area = [self.thirdPickerArray objectAtIndex:0][@"name"];
+           self.area = [self.thirdPickerArray objectAtIndex:0];
         }
         else{
             self.area = @"";
@@ -171,10 +172,10 @@
         [pickerView reloadComponent:2];
     }
     else if (component==1) {
-        self.thirdPickerArray = [self.subPickerArray objectAtIndex:row][@"county"];
-        self.city = [self.subPickerArray objectAtIndex:row][@"name"];
+        self.thirdPickerArray = [self.subPickerArray objectAtIndex:row][@"areas"];
+        self.city = [self.subPickerArray objectAtIndex:row][@"city"];
         if ([self.thirdPickerArray count] !=0) {
-            self.area = [self.thirdPickerArray objectAtIndex:0][@"name"];
+            self.area = [self.thirdPickerArray objectAtIndex:0];
         }
         else{
             self.area = @"";
@@ -184,7 +185,7 @@
     }
     else{
         if ([self.thirdPickerArray count] !=0) {
-            self.area = [self.thirdPickerArray objectAtIndex:row][@"name"];
+            self.area = [self.thirdPickerArray objectAtIndex:row];
         }
         else{
             self.area = @"";
