@@ -156,6 +156,7 @@ static const CGFloat MJDuration = 2.0;
             detailsModel *model = self.datas[i];
             [weakSelf.datas insertObject:model atIndex:0];
             [_collectionView reloadData];
+            
         }
         
         // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
@@ -175,11 +176,13 @@ static const CGFloat MJDuration = 2.0;
             detailsModel *model = self.datas[i];
             [weakSelf.datas addObject:model];
             [_collectionView reloadData];
+            
         }
         
         // 模拟延迟加载数据，因此2秒后才调用（真实开发中，可以移除这段gcd代码）
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [weakSelf.collectionView reloadData];
+            
             
             // 结束刷新
             [weakSelf.collectionView.footer endRefreshing];
@@ -221,14 +224,15 @@ static const CGFloat MJDuration = 2.0;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     static NSString *cellName = @"cell";
     // 如复用池中没有则会自动实例化
     
    
-    ComputerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellName forIndexPath:indexPath];
+    ComputerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
   //  cell.titleLabel.text = [NSString stringWithFormat:@"%ld - %ld",(long)indexPath.section,(long)indexPath.row];
 //    if (indexPath.row < 4) {
-        
     
     detailsModel *model = self.datas[indexPath.row];
     //  NSLog(@"%@",model.price);
@@ -236,6 +240,9 @@ static const CGFloat MJDuration = 2.0;
     
     imageView.image = [UIImage imageNamed:@"computer1"];
     [cell addSubview:imageView];
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
     
     UIButton *price = [[UIButton alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+20, 80, 20)];
     //[price setTitle:@"322" forState:UIControlStateNormal];
@@ -251,7 +258,6 @@ static const CGFloat MJDuration = 2.0;
     lb1.text = @"Apple MacBook Pro MF839CH/A 13.3英寸宽屏笔记本电脑 128GB 闪存";
     [cell addSubview:lb1];
  //   }
-    
     
     return cell;
 }

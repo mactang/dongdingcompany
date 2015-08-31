@@ -180,12 +180,42 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+<<<<<<< HEAD:Eoffice1.0/AddressViewController.m
+
+//-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//
+//    if (buttonIndex == 0) {
+//        NSLog(@"....");
+//    }else{
+//        [_tableView setEditing:!self.tableView.editing animated:YES];
+//        
+//        //将保存选中行的数组清空
+//        [self.selectedCellIndexes removeAllObjects];
+//        //刷新表
+//        [self.tableView reloadData];
+//
+//    }
+//}
+- (void)isPublicBtnPress:(UIButton*)btn{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"确定删除这条地址吗" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    //设置提示框样式（可以输入账号，密码）
+    alertView.alertViewStyle = UIAlertViewStyleDefault;
+    alertView.delegate = self;
+    [alertView show];
+    btn.selected = !btn.selected;
+    _btnNumber = btn.tag;
+    
+    NSLog(@"aaa");
+    
+    
+=======
 #pragma mark buttondelegate methds
 -(void)buttondelegate:(UIButton *)button{
     anotherButton.selected  = NO;
     self.signbutton = button.tag-100;
     button.selected = YES;
     anotherButton = button;
+>>>>>>> 9d485e7261549113bc728c352968808692aa86c6:Eoffice1.0/manageAddress/AddressViewController.m
 }
 -(void)delegatedata:(NSInteger)buttontag{
     _btnNumber = buttontag;
