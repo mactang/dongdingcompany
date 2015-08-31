@@ -176,6 +176,7 @@
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"status"];
         NSString *string = [NSString stringWithFormat:@"%@",array];
         NSLog(@"array--%@",string);
@@ -186,6 +187,7 @@
         }
         else{
             
+        }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);

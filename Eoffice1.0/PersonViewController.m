@@ -68,11 +68,12 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
         NSDictionary *array = dic[@"data"];
         PersonInformationModel *model = [PersonInformationModel modelWithDic:array];
         
         [self.datas addObject: model];
-        
+        }
         NSLog(@"%@",self.datas);
         [_tableView reloadData];
         
@@ -90,7 +91,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 6*self.datas.count;
+    return 6;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -162,10 +163,12 @@
         [cell addSubview:imageView];
     }
     if (indexPath.row == 5) {
+        
         cell.textLabel.text = @"       帮助与反馈";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"帮助与反馈"];
         [cell addSubview:imageView];
+        
     }
     return cell;
 }

@@ -133,12 +133,14 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
        NSDictionary *array = dic[@"data"];
         PersonInformationModel *model = [PersonInformationModel modelWithDic:array];
         
         [self.datas addObject: model];
                 
         NSLog(@"%@",self.datas);
+        }
         [_tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

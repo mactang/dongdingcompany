@@ -119,6 +119,7 @@
     [manager GET:path1 parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
         
         for(NSDictionary *subDict in array)
@@ -126,6 +127,7 @@
             CategoryBig *model = [CategoryBig modelWithDic:subDict];
             [self.detailDatas addObject:model];
             
+        }
         }
         
         [self category];

@@ -164,6 +164,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
         NSLog(@"array--%@",array);
         for(NSDictionary *subDict in array)
@@ -173,7 +174,7 @@
             NSLog(@"model.name--%@",self.datas);
         }
         //刷新表
-        
+        }
         [self button];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
