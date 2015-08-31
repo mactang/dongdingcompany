@@ -69,7 +69,7 @@
     validateBtn.layer.cornerRadius = 3;
     validateBtn.layer.borderWidth = 1;
     validateBtn.layer.borderColor = [[UIColor grayColor]CGColor];
-    validateBtn.font = [UIFont systemFontOfSize:11];
+    validateBtn.titleLabel.font = [UIFont systemFontOfSize:11];
     [validateBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
     [validateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [validateBtn addTarget:self action:@selector(identifyingBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -86,7 +86,7 @@
     registerButton.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     registerButton.clipsToBounds = YES;
     registerButton.layer.cornerRadius = 5;
-    registerButton.font = [UIFont systemFontOfSize:18];
+    registerButton.titleLabel.font = [UIFont systemFontOfSize:18];
     [registerButton addTarget:self action:@selector(surePress) forControlEvents:UIControlEventTouchUpInside];
     [registerButton setTitle:@"注 册" forState:UIControlStateNormal];
     [registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -97,7 +97,7 @@
     loginButton.backgroundColor = [UIColor whiteColor];
     loginButton.clipsToBounds = YES;
     loginButton.layer.cornerRadius = 5;
-    loginButton.font = [UIFont systemFontOfSize:18];
+    loginButton.titleLabel.font = [UIFont systemFontOfSize:18];
     [loginButton setTitle:@"登 录" forState:UIControlStateNormal];
     [loginButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [loginButton addTarget:self action:@selector(backLogin) forControlEvents:UIControlEventTouchUpInside];

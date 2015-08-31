@@ -239,6 +239,11 @@
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
 		9690D6021B8D85C000B47495 /* ChangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9690D6011B8D85C000B47495 /* ChangeModel.m */; };
 		96A70D091B9429C800C0F1F5 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A70D081B9429C800C0F1F5 /* search.png */; };
+		96A70D0C1B943E9A00C0F1F5 /* PersonInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */; };
+		96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */; };
+		96A70D111B943F5A00C0F1F5 /* massegeNumber.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A70D101B943F5A00C0F1F5 /* massegeNumber.png */; };
+		96A70D141B943FCD00C0F1F5 /* PhoneReviseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D131B943FCD00C0F1F5 /* PhoneReviseViewController.m */; };
+		96A70D171B94400000C0F1F5 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D161B94400000C0F1F5 /* BBBadgeBarButtonItem.m */; };
 		96BA8F2C1B8EADDC0062C8D8 /* Mobliejudge.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BA8F2B1B8EADDC0062C8D8 /* Mobliejudge.m */; };
 		96BA8F2E1B8EBA650062C8D8 /* 蓝色确认40.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BA8F2D1B8EBA650062C8D8 /* 蓝色确认40.png */; };
 		96BA8F301B8EBAE70062C8D8 /* 确认40灰色.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */; };
@@ -587,6 +592,15 @@
 		9690D6001B8D85C000B47495 /* ChangeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeModel.h; sourceTree = "<group>"; };
 		9690D6011B8D85C000B47495 /* ChangeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeModel.m; sourceTree = "<group>"; };
 		96A70D081B9429C800C0F1F5 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		96A70D0A1B943E9A00C0F1F5 /* PersonInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInformationModel.h; sourceTree = "<group>"; };
+		96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInformationModel.m; sourceTree = "<group>"; };
+		96A70D0D1B943F1500C0F1F5 /* OrderStateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderStateModel.h; sourceTree = "<group>"; };
+		96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderStateModel.m; sourceTree = "<group>"; };
+		96A70D101B943F5A00C0F1F5 /* massegeNumber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = massegeNumber.png; sourceTree = "<group>"; };
+		96A70D121B943FCD00C0F1F5 /* PhoneReviseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneReviseViewController.h; sourceTree = "<group>"; };
+		96A70D131B943FCD00C0F1F5 /* PhoneReviseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneReviseViewController.m; sourceTree = "<group>"; };
+		96A70D151B943FF600C0F1F5 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
+		96A70D161B94400000C0F1F5 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
 		96BA8F2A1B8EADDC0062C8D8 /* Mobliejudge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mobliejudge.h; sourceTree = "<group>"; };
 		96BA8F2B1B8EADDC0062C8D8 /* Mobliejudge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mobliejudge.m; sourceTree = "<group>"; };
 		96BA8F2D1B8EBA650062C8D8 /* 蓝色确认40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蓝色确认40.png"; sourceTree = "<group>"; };
@@ -740,6 +754,7 @@
 			children = (
 				96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */,
 				96BA8F2D1B8EBA650062C8D8 /* 蓝色确认40.png */,
+				96A70D101B943F5A00C0F1F5 /* massegeNumber.png */,
 				612C57C01B8AC7AD0048FF28 /* deleteButton.png */,
 				612C57BE1B8AC6A30048FF28 /* deletbutton.png */,
 				6186F3521B84582700571679 /* colorSelectNO.png */,
@@ -899,10 +914,14 @@
 				615B29B01B4FB27A004E7546 /* LeaseController.m */,
 				615B29B11B4FB27A004E7546 /* LogisticsController.h */,
 				615B29B21B4FB27A004E7546 /* LogisticsController.m */,
+				96A70D151B943FF600C0F1F5 /* BBBadgeBarButtonItem.h */,
+				96A70D161B94400000C0F1F5 /* BBBadgeBarButtonItem.m */,
 				615B29B31B4FB27A004E7546 /* MaintainController.h */,
 				615B29B41B4FB27A004E7546 /* MaintainController.m */,
 				615B29B51B4FB27A004E7546 /* PersonController.h */,
 				615B29B61B4FB27A004E7546 /* PersonController.m */,
+				96A70D121B943FCD00C0F1F5 /* PhoneReviseViewController.h */,
+				96A70D131B943FCD00C0F1F5 /* PhoneReviseViewController.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -983,6 +1002,10 @@
 				96BA8F291B8EADDC0062C8D8 /* input limited */,
 				61E971111B7367A1007F42B6 /* SingleModel.h */,
 				61E971121B7367A1007F42B6 /* SingleModel.m */,
+				96A70D0D1B943F1500C0F1F5 /* OrderStateModel.h */,
+				96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */,
+				96A70D0A1B943E9A00C0F1F5 /* PersonInformationModel.h */,
+				96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */,
 				61E971131B7367A1007F42B6 /* detailsModel.h */,
 				61E971141B7367A1007F42B6 /* detailsModel.m */,
 				61793A721B54A81600CFD83A /* Comment.h */,
@@ -1505,6 +1528,7 @@
 				617FE4D11B60D5B8007EBFB2 /* 椭圆-1.png in Resources */,
 				61C7CFF11B637629003F6629 /* weibo.png in Resources */,
 				612C57BF1B8AC6A30048FF28 /* deletbutton.png in Resources */,
+				96A70D111B943F5A00C0F1F5 /* massegeNumber.png in Resources */,
 				617FE4F91B60D5EF007EBFB2 /* 选中.png in Resources */,
 				617FE4DA1B60D5B8007EBFB2 /* dayingji.png in Resources */,
 				96BA8F2E1B8EBA650062C8D8 /* 蓝色确认40.png in Resources */,
@@ -1579,6 +1603,7 @@
 				61A1FFE01B67179300AFC8C2 /* SafeViewController.m in Sources */,
 				615B29B81B4FB27A004E7546 /* FixController.m in Sources */,
 				615B29A21B4FB22B004E7546 /* MainViewController.m in Sources */,
+				96A70D141B943FCD00C0F1F5 /* PhoneReviseViewController.m in Sources */,
 				61793A691B54A7B000CFD83A /* BuyInfoCell.m in Sources */,
 				6184F1DC1B686E9600021F18 /* ScreenViewController.m in Sources */,
 				61E0FB161B53A7430080F41B /* Control.m in Sources */,
@@ -1593,6 +1618,7 @@
 				615B29A41B4FB22B004E7546 /* OrderViewController.m in Sources */,
 				61793A6C1B54A7B000CFD83A /* AdvanceCommentCell.m in Sources */,
 				61793A761B54A81600CFD83A /* Comment.m in Sources */,
+				96A70D171B94400000C0F1F5 /* BBBadgeBarButtonItem.m in Sources */,
 				61EBC6CC1B68CEF5002D0373 /* ScreenMainTainController.m in Sources */,
 				615B294B1B4FAE4B004E7546 /* AppDelegate.m in Sources */,
 				6181493B1B5E443500E39900 /* SixAlterView.m in Sources */,
@@ -1624,6 +1650,7 @@
 				6173B7701B621BAE00E4F23A /* photoAlterView.m in Sources */,
 				61793A891B54B70700CFD83A /* BigPhotoModel.m in Sources */,
 				6189BFFF1B78341800BB9694 /* OrderModel.m in Sources */,
+				96A70D0C1B943E9A00C0F1F5 /* PersonInformationModel.m in Sources */,
 				615B29A91B4FB24F004E7546 /* LeftSortsViewController.m in Sources */,
 				615B29A51B4FB22B004E7546 /* PersonViewController.m in Sources */,
 				61B0FFA31B5F7EB0002CF349 /* DropDown1.m in Sources */,
@@ -1653,6 +1680,7 @@
 				619A7E041B69EF53005F4DA4 /* ServiceViewController.m in Sources */,
 				618149321B5E29DE00E39900 /* NickNameController.m in Sources */,
 				618FD7541B8717FD00090608 /* MXPullDownMenu.m in Sources */,
+				96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */,
 				96BA8F2C1B8EADDC0062C8D8 /* Mobliejudge.m in Sources */,
 				96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */,
 				61B0FF9F1B5F6739002CF349 /* ContrastViewController.m in Sources */,
@@ -1809,6 +1837,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Eoffice1.0Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eoffice1.0.app/Eoffice1.0";
@@ -1824,6 +1853,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Eoffice1.0Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eoffice1.0.app/Eoffice1.0";
