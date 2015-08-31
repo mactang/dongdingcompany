@@ -84,7 +84,7 @@
     else{
         self.area = @"";
     }
-    NSLog(@"%@",self.subPickerArray);
+//    NSLog(@"%@",self.subPickerArray);
     UIView *linghtView = [[UIView alloc]initWithFrame:CGRectMake(0, widgetboundsHeight(self)-210, SCREEN_WIDTH, 30)];
     linghtView.backgroundColor = [UIColor lightGrayColor];
     [self addSubview:linghtView];

@@ -327,10 +327,7 @@
     
     NSString *path= [NSString stringWithFormat:LOGIN,name_field.text,pwd_field.text ];
     NSLog(@"%@",path);
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
@@ -348,12 +345,9 @@
 
         }
         else{
-            
-          
             NSDictionary *subDic = dic[@"data"];
             NSString *userkey = subDic[@"userkey"];
             NSString *jsessionid = subDic[@"jsessionId"];
-            
             NSLog(@"jsessionid--%@",jsessionid);
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
@@ -366,6 +360,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
+        
     }];
 
 }

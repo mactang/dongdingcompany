@@ -21,6 +21,7 @@
         self.addressId = dic[@"addressId"];
         self.telphone = dic[@"telphone"];
         self.post = dic[@"post"];
+        self.defaultsign = dic[@"defaultAD"];
     }
     return self;
 }

@@ -11,11 +11,13 @@
 #import "AddAddressController.h"
 #import "AFNetworking.h"
 #import "SingleModel.h"
-
 #import "AddressModel.h"
 #import "SingleModel.h"
 #import "ChangeAddrssController.h"
-@interface AddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate>
+#import "ManageAddressCell.h"
+@interface AddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,buttondelegate>{
+     UIButton *anotherButton;
+}
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)NSMutableArray *nameDatas;
 @property(nonatomic, strong)NSMutableArray *phoneDatas;
@@ -24,7 +26,8 @@
 @property(nonatomic,assign)NSInteger btnNumber;
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic, strong)NSString *addressId;
-
+@property(nonatomic,assign)NSInteger signbutton;
+@property(nonatomic,strong)NSMutableArray *dataarray;
 @end
 
 @implementation AddressViewController
@@ -38,9 +41,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.signbutton = 0;
+    self.dataarray = [NSMutableArray array];
     self.navigationItem.title = @"管理收货地址";
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+    
+    UIBarButtonItem *releaseButon=[[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(releaseInfo:)];
+    self.navigationItem.rightBarButtonItem = releaseButon;
     
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -77,9 +84,26 @@
     _selectedCellIndexes = [NSMutableArray array];
     // Do any additional setup after loading the view.
 }
+-(void)releaseInfo:(UIBarButtonItem *)button{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,self.dataarray[self.signbutton][@"addressId"],model.userkey];
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic[@"info"]);
+        [_tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+
+
+}
 - (void)downData{
-    
-    
+
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:ADDRESS,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
@@ -87,8 +111,14 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
+      
         if (dic[@"data"] !=[NSNull null]) {
+            for (NSInteger i=0; i<[dic[@"data"]count]; i++) {
+                if (![dic[@"data"][i][@"defaultAD"]isKindOfClass:[NSNull class]]) {
+                    self.signbutton = i;
+                }
+            }
+            [self.dataarray addObjectsFromArray:dic[@"data"]];
             NSArray *array = dic[@"data"];
             for(NSDictionary *subDict in array)
             {
@@ -129,79 +159,20 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-    static NSString *identity = @"cell";
-    
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
-    
-    cell.clipsToBounds = YES;
-  //  cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
+    ManageAddressCell *cell = [ManageAddressCell cellWithTableView:tableView];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    AddressModel *model = self.datas[indexPath.row];
-    _addressId = model.addressId;
-    
-    
-//    @interface AddressModel : NSObject
-//    @property (copy,nonatomic) NSString *receiver;
-//    @property (copy,nonatomic) NSString *fullAddress;
-//    @property (copy,nonatomic) NSString *address;
-//    @property (copy,nonatomic) NSString *addressId;
-//    @property (copy,nonatomic) NSString *telphone;
-//    @property (copy,nonatomic) NSString *post;
-//    
-//    
-//    
-//    +(AddressModel *)modelWithDic:(NSDictionary *)dic;
-//    -(id)initWithDic:(NSDictionary *)dic;
-//    
-//    @end
-    
-    UILabel *nameLB = [[UILabel alloc]initWithFrame:CGRectMake(20, 15, 100, 20)];
-    nameLB.font = [UIFont systemFontOfSize:18];
-    nameLB.text = model.address;
-    nameLB.textColor = [UIColor blackColor];
-    [cell addSubview:nameLB];
-    
-    UILabel *phoneLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLB.frame)+35, 15, 150, 20)];
-    phoneLB.font = [UIFont systemFontOfSize:18];
-    phoneLB.text = model.telphone;
-    phoneLB.textColor = [UIColor blackColor];
-    [cell addSubview:phoneLB];
-    
-    UILabel *addressLB = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(nameLB.frame)+5, 250, 40)];
-    addressLB.font = [UIFont systemFontOfSize:13];
-    addressLB.text = model.fullAddress;
-    addressLB.numberOfLines = 2;
-    addressLB.textColor = [UIColor blackColor];
-    [cell addSubview:addressLB];
-    [_selectedCellIndexes removeObject:indexPath];
-
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(20, 90, 20, 20);
-    [btn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
-    [btn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
-    
-    [cell addSubview:btn];
-    
-    UILabel *defaultLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+3, 80, 100, 40)];
-    defaultLB.font = [UIFont systemFontOfSize:13];
-    defaultLB.text = @"默认地址";
-    defaultLB.numberOfLines = 2;
-    defaultLB.textColor = [UIColor blackColor];
-    [cell addSubview:defaultLB];
-    
-    UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn1.frame = CGRectMake(CGRectGetMaxX(defaultLB.frame)+100, 90, 60, 20);
-    [btn1 setTitle:@"删除" forState:UIControlStateNormal];
-    [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [btn1 addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-    btn1.tag = indexPath.row;
-    [cell addSubview:btn1];
-    
+    cell.buttontag = indexPath.row;
+    cell.model = self.datas[indexPath.row];
+    cell.delegate = self;
+    if (indexPath.row == self.signbutton) {
+        cell.clickbutton.selected = YES;
+        anotherButton = cell.clickbutton;
+    }
     return cell;
+}
+-(void)checkPressed:(UIButton *)button{
+   
 }
 - (void)leftItemClicked{
     
@@ -209,6 +180,7 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
+<<<<<<< HEAD:Eoffice1.0/AddressViewController.m
 
 //-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 //
@@ -236,32 +208,57 @@
     NSLog(@"aaa");
     
     
+=======
+#pragma mark buttondelegate methds
+-(void)buttondelegate:(UIButton *)button{
+    anotherButton.selected  = NO;
+    self.signbutton = button.tag-100;
+    button.selected = YES;
+    anotherButton = button;
+>>>>>>> 9d485e7261549113bc728c352968808692aa86c6:Eoffice1.0/manageAddress/AddressViewController.m
 }
-
--(void)delegateBtn:(UIButton *)btn{
-    
-   
-    
-    _btnNumber = btn.tag;
-    
-    
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"删除订单" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消",nil];
-    //设置提示框样式（可以输入账号密码）
-    alert.alertViewStyle = UIAlertViewStyleDefault;
-    
-    [alert show];
-    
+-(void)delegatedata:(NSInteger)buttontag{
+    _btnNumber = buttontag;
+    UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"你确定要删除该地址吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+    alertview.alertViewStyle = UIAlertViewStyleDefault;
+    alertview.delegate = self;
+    [alertview show];
 }
+//- (void)isPublicBtnPress:(UIButton*)btn{
+//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"确定删除这条地址吗" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    //设置提示框样式（可以输入账号，密码）
+//    alertView.alertViewStyle = UIAlertViewStyleDefault;
+//    alertView.delegate = self;
+//    [alertView show];
+//    btn.selected = !btn.selected;
+//    _btnNumber = btn.tag;
+//        NSLog(@"aaa");
+//    
+//    
+//}
+//
+//-(void)delegateBtn:(UIButton *)btn{
+//    
+//   
+//    _btnNumber = btn.tag;
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"删除订单" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消",nil];
+//    //设置提示框样式（可以输入账号密码）
+//    alert.alertViewStyle = UIAlertViewStyleDefault;
+//    
+//    [alert show];
+//    
+//}
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    if (buttonIndex == 0) {
+    if (buttonIndex == 1) {
         NSLog(@"....");
     }else{
         
-        
+         NSIndexPath *path = [NSIndexPath indexPathForRow:_btnNumber inSection:0];
         [self.datas removeObjectAtIndex:_btnNumber];
-        
-        [_tableView reloadData];
+        [_tableView beginUpdates];
+        [_tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
+        [_tableView endUpdates];
         [self deleteData];
         
     }
@@ -269,8 +266,9 @@
 -(void)deleteData{
     
     NSLog(@"row--%@",_addressId);
+//    http://192.168.0.170:8080/eoffice/phone/order!delAddress.action?id=?
     
-    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,_addressId];
+    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,self.dataarray[_btnNumber][@"addressId"]];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -281,10 +279,10 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (dic[@"data"] !=[NSNull null]){
+        NSLog(@"%@",dic);
         NSArray *array = dic[@"status"];
         NSString *string = [NSString stringWithFormat:@"%@",array];
-        NSLog(@"array--%@",string);
+//        NSLog(@"array--%@",string);
         if ([string isEqualToString:@"1"]) {
             
             
@@ -293,7 +291,7 @@
         }
         
         
-        }
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);

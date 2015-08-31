@@ -23,15 +23,9 @@
 @property(nonatomic, strong)UISearchBar *searchBar;
 
 @property(nonatomic, strong)NSMutableArray *datas;
-@property(nonatomic, strong)UIButton *userBtn;
 @end
 
 @implementation CommodityViewController
-{
-
-    UITextField *searchField;
-}
-
 //懒加载
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -53,38 +47,39 @@
     [cbt setImage:[UIImage imageNamed:@"椭圆-5.png"] forState:UIControlStateNormal];
     cbt.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:cbt];
-//    
-//    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(20, 64, 300, 40)];
-//    [self.view addSubview:self.searchBar];
-//    self.searchBar.clipsToBounds = YES;
-//    //self.searchBar.layer.cornerRadius = 10;
-////    self.searchBar.layer.borderColor = [[UIColor whiteColor]CGColor];
-////    self.searchBar.layer.borderWidth = 5;
-//
-//    // self.searchBar.backgroundImage = [UIImage imageNamed:@"sousuobeijing"];
-//    // [self.searchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"sousuobeijing"] forState:UIControlStateNormal];
-//    
-//    self.searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-//    self.searchBar.autocapitalizationType = UIKeyboardAppearanceDefault;
-//   // [self.searchBar setShowsCancelButton:YES animated:YES];
-//    self.searchBar.backgroundColor = [UIColor grayColor];
-//    self.searchBar.delegate = self;
-//    self.searchBar.placeholder = @"输入商家、分类和产品";
-//   // self.searchBar.backgroundImage = [UIImage imageNamed:@"link.jpg"];
-//   // self.searchBar.tintColor = [UIColor grayColor];
-//    NSUInteger numViews = [self.searchBar.subviews count];
-//    for(int i = 0; i < numViews; i++) {
-//        if([[self.searchBar.subviews objectAtIndex:i] isKindOfClass:[UITextField class]]) {
-//            searchField = [self.searchBar.subviews objectAtIndex:i];
-//        }
-//    }
-//    if(!(searchField == nil)) {
-//        searchField.textColor = [UIColor whiteColor];
-//        [searchField setBackground: [UIImage imageNamed:@"link.jpg"]];//在这添加灰色的图片
-//        [searchField setBorderStyle:UITextBorderStyleNone];
-//    }
+    
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(30, 69, SCREEN_WIDTH-40, 30)];
+    [self.view addSubview:self.searchBar];
+    
+    self.searchBar.backgroundColor = [UIColor lightGrayColor];
+    self.searchBar.delegate = self;
+    self.searchBar.placeholder = @"输入商家、分类和产品";
+    for (UIView *view in self.searchBar.subviews) {
+        // for before iOS7.0
+        if ([view isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [view removeFromSuperview];
+            break;
+        }
+        // for later iOS7.0(include)
+        if ([view isKindOfClass:NSClassFromString(@"UIView")] && view.subviews.count > 0) {
+            [[view.subviews objectAtIndex:0] removeFromSuperview];
+            break;
+        }
+    }
+    UIColor *innerColor = [UIColor lightGrayColor];
+    for (UIView* subview in [[self.searchBar.subviews lastObject] subviews]) {
+        if ([subview isKindOfClass:[UITextField class]]) {
+            UITextField *textField = (UITextField*)subview;
+            textField.backgroundColor = innerColor;
+        }
+    }
+    self.searchBar.clipsToBounds = YES;
+    self.searchBar.layer.masksToBounds = YES;
+    self.searchBar.layer.cornerRadius = 15;
+    
+    self.searchBar.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.searchBar.layer.borderWidth = 1;
 
-    [self createSearch];
     [self button];
     
     UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 280, 320, 80)];
@@ -111,34 +106,6 @@
     [view addSubview:imageview2];
     
 }
--(void)createSearch{
-    
-    UIView *searchView = [[UIView alloc]initWithFrame:CGRectMake(20, 44, 300, 60)];
-    //蓝色
-    //    searchView.backgroundColor = [UIColor colorWithRed:0.24f green:0.67f blue:0.91f alpha:1.00f];
-    
-    searchView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:searchView];
-    _searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(0, 20,  300 , 40)];
-    _searchBar.backgroundColor = [UIColor clearColor];
-    [_searchBar setBackgroundImage:[UIImage imageNamed:@"qq"]];
-    _searchBar.autocorrectionType = UITextAutocorrectionTypeNo;
-    _searchBar.autocapitalizationType = UIKeyboardAppearanceDefault;
-    _searchBar.placeholder = @"输入商家、分类和产品";
-    _searchBar.delegate = self;
-    
-    for (UIView *subView in _searchBar.subviews) {
-        //如果 子视图是uiview 并且子视图数量大于0,那么删除子视图
-        if ([subView isKindOfClass:NSClassFromString(@"UIView")] && subView.subviews.count > 0) {
-            [[subView.subviews objectAtIndex:0] removeFromSuperview];
-            break;
-        }
-    }
-    
-    
-    
-    [searchView addSubview:_searchBar];
-}
 -(void)btntuPress{
     CMDetailsViewController *cm = [[CMDetailsViewController alloc]init];
     [self.navigationController pushViewController:cm animated:YES];
@@ -164,7 +131,6 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
         NSLog(@"array--%@",array);
         for(NSDictionary *subDict in array)
@@ -174,8 +140,8 @@
             NSLog(@"model.name--%@",self.datas);
         }
         //刷新表
-        }
-        [self button];
+        
+//        [self button];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
