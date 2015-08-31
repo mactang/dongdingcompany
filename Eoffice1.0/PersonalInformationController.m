@@ -52,14 +52,13 @@
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton addTarget:self action:@selector(rightItemClicked) forControlEvents:UIControlEventTouchUpInside];
     [rightButton setTitle:@"确定" forState:UIControlStateNormal];
-    [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [rightButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     rightButton.frame = CGRectMake(0, 0, 40, 40);
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     [self.navigationItem setRightBarButtonItem:rightItem];
     
      self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     self.navigationItem.title = @"个人信息";
-    
     [self downData];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 390) style:UITableViewStylePlain];
@@ -152,6 +151,7 @@
 -(void)backPress{
     //LoginViewController *login = [[LoginViewController alloc]init];
     [self.navigationController popToRootViewControllerAnimated:YES];
+    
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -197,7 +197,7 @@
     }
     if (indexPath.row == 2) {
         cell.textLabel.text = @"昵称";
-        _nickName = [[UITextField alloc]initWithFrame:CGRectMake(250, 10, 70, 30)];
+        _nickName = [[UITextField alloc]initWithFrame:CGRectMake(210, 10, 100, 30)];
         _nickName.backgroundColor = [UIColor whiteColor];
         _nickName.placeholder = [NSString stringWithFormat:@"%@",model.shortname];
         _nickName.clearButtonMode = UITextFieldViewModeAlways;
@@ -217,6 +217,7 @@
         UITextField *computerName = [[UITextField alloc]initWithFrame:CGRectMake(200, 10, 120, 30)];
         computerName.backgroundColor = [UIColor whiteColor];
         computerName.placeholder = @"东鼎泰和科技有限公司";
+        computerName.clearsOnBeginEditing = YES;
         computerName.clearButtonMode = UITextFieldViewModeAlways;
         computerName.delegate = self;
         [cell addSubview:computerName];
@@ -376,8 +377,9 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     self.navigationController.navigationBarHidden = NO;
+    
     
     [super viewWillDisappear:animated];
 }

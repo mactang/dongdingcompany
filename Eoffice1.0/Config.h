@@ -36,11 +36,17 @@
 #define PASSWORD_ICON 1025
 #define SET_TXT 1030
 
+//注册界面
+#define VERIFICATION 1010
+
+
 //用户登录接口
 #define LOGIN @"http://192.168.0.65:8080/eoffice/phone/user!Login.action?username=%@&password=%@"
 
 //用户注册接口
 #define REGISTER @"http://192.168.0.65:8080/eoffice/phone/user!Register.action?username=TTTTT&password=test"
+//注册手机验证码
+#define REGISTERVERIF @"http://192.168.0.65:8080/eoffice/phone/sms!getPhoneSms.action"
 
 //商品
 #define COMMODITYMIDDLE @"http://192.168.0.65:8080/eoffice/phone/product!getMidCategory.action"
@@ -64,27 +70,44 @@
 
 #define DELETEORDER @"http://192.65.0.65:8080/eoffice/phone/order!deleteOrder.action?orderId=%@"
 
+#define ORDERCLASSIFY @"http://192.168.0.65:8080/eoffice/phone/order!getList.action;jsessionid=%@?userkey=%@"
+
 //收货地址
 #define ADDRESS @"http://192.168.0.65:8080/eoffice/phone/order!addressList.action;jsessionid=%@?userkey=%@"
 #define ADDRESSDELTE @"http://192.168.0.65:8080/eoffice/phone/order!delAddress.action?id=%@"
 
 #define ADDRESSDETAIL @"http://192.168.0.65:8080/eoffice/phone/order!getAddressDetail.action?id=%@"
 
-//退货原因
+//退货
 #define  RETUNGOODSEXPLAIN @"http://192.168.0.65:8080/eoffice/phone/return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
 #define  BACKBEASON @"http://192.168.0.65:8080/eoffice/phone/return!getReasonList.action;jsessionid=%@?userkey=%@"
 
 #define  RETUNGOODSSTATE @"http://192.168.0.65:8080/eoffice/phone/replace!returnStatus.action;jsessionid=%@?userkey=%@&returnId=%@"
 
+//换货
+#define  REPLACEEXPLAIN @"http://192.168.0.65:8080/eoffice/phone/replace!getReasonList.action;jsessionid=%@?userkey=%@"
+#define  EXPLACE @"http://192.168.0.65:8080/eoffice/phone/replace!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
+
+//维修
+#define  SERVICEREASON @"http://192.168.0.65:8080/eoffice/phone/repair!getReasonList.action;jsessionid=%@?userkey=%@"
+#define  SERVICESUBMIT @"http://192.168.0.65:8080/eoffice/phone/repair!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
+
+
 //个人信息
 #define   PERSONCONME @"http://192.168.0.65:8080/eoffice/phone/user!toUpdateMyMsg.action;jsessionid=%@?userkey=%@"
 #define   PERSONREVISE @"http://192.168.0.65:8080/eoffice/phone/user!updateMyMsg.action;jsessionid=%@?userkey=%@"
 
+
 //安全设置
 #define SAFEVALIDATE @"http://192.168.0.65:8080/eoffice/phone/sms!getPhoneSms.action;jsessionid=%@?userkey=%@"
+#define SAFENEWPHONE @"http://192.168.0.65:8080/eoffice/phone/user!updatePhone.action;jsessionid=%@?userkey=%@"
+#define SAFERIVESE @"http://192.168.0.65:8080/eoffice/phone/user!updatePassword.action;jsessionid=%@?userkey=%@"
 
 //信息反馈
 #define FEEDBACK @"http://192.168.0.65:8080/eoffice/phone/feedback!add.action;jsessionid=%@?userkey=%@"
+
+
+
 
 
 #endif

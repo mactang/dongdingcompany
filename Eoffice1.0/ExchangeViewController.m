@@ -26,6 +26,7 @@
 @property(nonatomic,assign)BOOL isle;
 @property(nonatomic,strong)UILabel *validateLB;
 @property(nonatomic,strong)NSMutableArray *datas;
+@property(nonatomic,strong)NSMutableArray *exchageDatas;
 @property(nonatomic,strong)UIImageView *imageView ;
 @property(nonatomic,strong)UITextView *explainTextView;
 @property(nonatomic,strong)UITextView *reasonId;
@@ -40,6 +41,7 @@
     DynamicScrollView *dynamicScrollView;
     
     NSArray *images;
+    MXPullDownMenu *menu;
     
 }
 -(NSMutableArray *)datas{
@@ -48,11 +50,17 @@
     }
     return _datas;
 }
+-(NSMutableArray *)exchageDatas{
+    if (_exchageDatas == nil) {
+        _exchageDatas = [NSMutableArray array];
+    }
+    return _exchageDatas;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     self.navigationItem.title = @"申请退换货";
-    [self downData];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang11(1)"];
@@ -60,6 +68,10 @@
     ligthButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
+    
+    [self exchageData];
+    [self returnData];
+    
     self.isle = YES;
     
     HMSegmentedControl *segmentedControl2 = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"申请换货", @"申请退货"]];
@@ -81,7 +93,9 @@
     
     // Do any additional setup after loading the view.
 }
-- (void)downData{
+
+//退货原因
+- (void)returnData{
     
     
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -117,23 +131,57 @@
     
 }
 
+//换货原因
+- (void)exchageData{
+    
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    NSString *path= [NSString stringWithFormat:REPLACEEXPLAIN,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSArray *array = dic[@"data"];
+        
+        for(NSDictionary *subDict in array)
+        {
+            BackReasonModel *model = [BackReasonModel modelWithDic:subDict];
+            [self.exchageDatas addObject: model];
+            NSLog(@"%@",self.datas);
+            
+        }
+        
+        
+        [_tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
 
 - (void)segmentedControlChangedValue:(HMSegmentedControl*)segmentedControl{
     
     if (segmentedControl.selectedSegmentIndex == 0) {
-        _validateLB.text = @"退货原因";
         
         self.isle = YES;
         
     }
     if (segmentedControl.selectedSegmentIndex == 1) {
         
-        _validateLB.text = @"换货原因";
+        
         NSLog(@"bbb");
         self.isle = NO;
-        //   [_tableView reloadData];
+        
     }
-    // [_tableView reloadData];
+     [_tableView reloadData];
     
     
 }
@@ -147,11 +195,19 @@
     return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.datas.count-self.datas.count+1;
+    
+    if (_isle == YES) {
+        return self.datas.count-self.datas.count+1;
+    }
+    else{
+    
+        return self.exchageDatas.count-self.exchageDatas.count+1;
+    }
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 530;
+        return 580;
     }
     return 150;
 }
@@ -178,34 +234,23 @@
     if (indexPath.section == 0) {
         _validateLB = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 70, 20)];
         _validateLB.font = [UIFont systemFontOfSize:12];
-        _validateLB.text = @"退货原因：";
+        
         _validateLB.textColor = [UIColor blackColor];
         [cell addSubview:_validateLB];
         
-        UILabel *validateField = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_validateLB.frame)-10,10, 240, 35)];
-        validateField.backgroundColor = [UIColor whiteColor];
-        validateField.clipsToBounds = YES;
-        validateField.layer.cornerRadius = 3;
-        validateField.layer.borderWidth = 1;
-        validateField.layer.borderColor = [[UIColor grayColor]CGColor];
-        [cell addSubview:validateField];
+
+        if (self.isle == NO) {
         
+        _validateLB.text = @"退货原因：";
         NSMutableArray *testArray = [NSMutableArray array];
-        
         for (int i = 0; i<self.datas.count; i++) {
             BackReasonModel *model = self.datas[i];
-            
             [testArray addObject:model.title];
             NSLog(@"datas--%@",testArray[i]);
-            
         }
         
-        
         NSLog(@"datas--%@",testArray);
-        
-        
-        
-        MXPullDownMenu *menu = [[MXPullDownMenu alloc] initWithArray:testArray selectedColor:[UIColor grayColor]];
+        menu = [[MXPullDownMenu alloc] initWithArray:testArray selectedColor:[UIColor grayColor]];
         menu.delegate = self;
         menu.clipsToBounds = YES;
         menu.layer.cornerRadius = 3;
@@ -213,14 +258,33 @@
         menu.layer.borderWidth = 1;
         menu.frame = CGRectMake(CGRectGetMaxX(_validateLB.frame)-10,10, 240, 35);
         [cell addSubview:menu];
-        
-        UILabel *explainLB = [[UILabel alloc]initWithFrame:CGRectMake(35, CGRectGetMaxY(menu.frame)+20, 40, 20)];
+        }else{
+            
+        _validateLB.text = @"换货原因";
+            NSMutableArray *testArray = [NSMutableArray array];
+            for (int i = 0; i<self.exchageDatas.count; i++) {
+                BackReasonModel *model = self.datas[i];
+                [testArray addObject:model.title];
+                NSLog(@"datas--%@",testArray[i]);
+            }
+            
+            NSLog(@"datas--%@",testArray);
+            menu = [[MXPullDownMenu alloc] initWithArray:testArray selectedColor:[UIColor grayColor]];
+            menu.delegate = self;
+            menu.clipsToBounds = YES;
+            menu.layer.cornerRadius = 3;
+            menu.layer.borderColor = [[UIColor blackColor]CGColor];
+            menu.layer.borderWidth = 1;
+            menu.frame = CGRectMake(CGRectGetMaxX(_validateLB.frame)-10,10, 240, 35);
+            [cell addSubview:menu];
+        }
+        UILabel *explainLB = [[UILabel alloc]initWithFrame:CGRectMake(35, 75+20, 40, 20)];
         explainLB.font = [UIFont systemFontOfSize:12];
         explainLB.text = @"说明：";
         explainLB.textColor = [UIColor blackColor];
         [cell addSubview:explainLB];
         
-        _explainTextView = [[UITextView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(explainLB.frame)-5, CGRectGetMaxY(menu.frame)+10, 240, 120)];
+        _explainTextView = [[UITextView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(explainLB.frame)-5, 75+10, 240, 120)];
         _explainTextView.clipsToBounds = YES;
         _explainTextView.layer.cornerRadius = 5;
         _explainTextView.layer.borderWidth = 1;
@@ -313,7 +377,7 @@
 
 
 -(void)addPhoto{
-    int i = rand()%4;
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"添 加 图 片"
                                   delegate:self
@@ -328,32 +392,28 @@
     
     if (self.isle == YES) {
         
-        [self exchageDatas];
+        [self exchage];
         ExchageSuccessController *exs = [[ExchageSuccessController alloc]init];
         [self.navigationController pushViewController:exs animated:YES];
     }
     else{
-        
+        [self returnDatas];
         ReturnSuccessController *returnS = [[ReturnSuccessController alloc]init];
         [self.navigationController pushViewController:returnS animated:YES];
     }
     
 }
--(void)exchageDatas{
-    
-    
-    
-    
+-(void)exchage{
     
     SingleModel *model = [SingleModel sharedSingleModel];
     int i = [(model.reasonId)intValue];
     
     NSLog(@"%d",i);
-    BackReasonModel *backReason = self.datas[i];
+    BackReasonModel *backReason = self.exchageDatas[i];
     
     NSLog(@"%@",backReason.reasonId);
-    NSString *path= [NSString stringWithFormat:RETUNGOODSEXPLAIN,model.jsessionid,model.userkey,model.orderId];
-    NSLog(@"%@",_reasonId);
+    NSString *path= [NSString stringWithFormat:EXPLACE,model.jsessionid,model.userkey,model.serviceOrderId];
+    NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -370,7 +430,34 @@
         NSLog(@"%@",error);
     }];
     
+}
+
+-(void)returnDatas{
     
+    SingleModel *model = [SingleModel sharedSingleModel];
+    int i = [(model.reasonId)intValue];
+    
+    NSLog(@"%d",i);
+    BackReasonModel *backReason = self.datas[i];
+    
+    NSLog(@"%@",backReason.reasonId);
+    NSString *path= [NSString stringWithFormat:RETUNGOODSEXPLAIN,model.jsessionid,model.userkey,model.serviceOrderId];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"content":_explainTextView.text,@"reasonId":model.reasonId,@"name":_nameField.text,@"phone":_phoneField,@"address":_addressTextView} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
     
 }
 /**

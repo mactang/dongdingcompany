@@ -106,6 +106,8 @@
 		61793A851B54AF3800CFD83A /* cell_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 61793A811B54AF3800CFD83A /* cell_03.png */; };
 		61793A861B54AF3800CFD83A /* cell_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 61793A821B54AF3800CFD83A /* cell_04.png */; };
 		61793A891B54B70700CFD83A /* BigPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61793A881B54B70700CFD83A /* BigPhotoModel.m */; };
+		617C38C11B9035F30076CEB4 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 617C38C01B9035F30076CEB4 /* BBBadgeBarButtonItem.m */; };
+		617C38C31B903F360076CEB4 /* massegeNumber.png in Resources */ = {isa = PBXBuildFile; fileRef = 617C38C21B903F360076CEB4 /* massegeNumber.png */; };
 		617FE4571B607A87007EBFB2 /* dingdanxiaotu.png in Resources */ = {isa = PBXBuildFile; fileRef = 617FE4561B607A87007EBFB2 /* dingdanxiaotu.png */; };
 		617FE45A1B60888F007EBFB2 /* LogisticsDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 617FE4591B60888F007EBFB2 /* LogisticsDetailsController.m */; };
 		617FE45D1B609A92007EBFB2 /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 617FE45C1B609A92007EBFB2 /* AddressViewController.m */; };
@@ -396,6 +398,9 @@
 		61793A821B54AF3800CFD83A /* cell_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cell_04.png; sourceTree = "<group>"; };
 		61793A871B54B70700CFD83A /* BigPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigPhotoModel.h; sourceTree = "<group>"; };
 		61793A881B54B70700CFD83A /* BigPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigPhotoModel.m; sourceTree = "<group>"; };
+		617C38BF1B9035F30076CEB4 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
+		617C38C01B9035F30076CEB4 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
+		617C38C21B903F360076CEB4 /* massegeNumber.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = massegeNumber.png; sourceTree = "<group>"; };
 		617FE4561B607A87007EBFB2 /* dingdanxiaotu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dingdanxiaotu.png; sourceTree = "<group>"; };
 		617FE4581B60888F007EBFB2 /* LogisticsDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogisticsDetailsController.h; sourceTree = "<group>"; };
 		617FE4591B60888F007EBFB2 /* LogisticsDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogisticsDetailsController.m; sourceTree = "<group>"; };
@@ -713,6 +718,7 @@
 		615B296B1B4FAF50004E7546 /* MyFramework */ = {
 			isa = PBXGroup;
 			children = (
+				617C38BE1B9035DB0076CEB4 /* BBBadgeBarButtonItem */,
 				612C57BA1B8ABC3A0048FF28 /* addPhoto */,
 				618FD7511B8717E000090608 /* MXPullDownMenu */,
 				61D54ABB1B7D7D8D002DE544 /* Allselect */,
@@ -729,6 +735,7 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				617C38C21B903F360076CEB4 /* massegeNumber.png */,
 				612C57C01B8AC7AD0048FF28 /* deleteButton.png */,
 				612C57BE1B8AC6A30048FF28 /* deletbutton.png */,
 				6186F3521B84582700571679 /* colorSelectNO.png */,
@@ -996,6 +1003,15 @@
 				61AFE5861B8C09A400ACD981 /* PersonInformationModel.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		617C38BE1B9035DB0076CEB4 /* BBBadgeBarButtonItem */ = {
+			isa = PBXGroup;
+			children = (
+				617C38BF1B9035F30076CEB4 /* BBBadgeBarButtonItem.h */,
+				617C38C01B9035F30076CEB4 /* BBBadgeBarButtonItem.m */,
+			);
+			name = BBBadgeBarButtonItem;
 			sourceTree = "<group>";
 		};
 		617FE46E1B60D14E007EBFB2 /* MyInfor */ = {
@@ -1369,6 +1385,7 @@
 				6186F3551B84582700571679 /* colorSelectYES.png in Resources */,
 				615B297C1B4FB02C004E7546 /* checkYES.png in Resources */,
 				61AD52E61B57A2D40037FED8 /* DefaultLine.png in Resources */,
+				617C38C31B903F360076CEB4 /* massegeNumber.png in Resources */,
 				617FE4F41B60D5EF007EBFB2 /* 安全设置.png in Resources */,
 				617FE4F71B60D5EF007EBFB2 /* 未选.png in Resources */,
 				617FE4D31B60D5B8007EBFB2 /* 小沟.png in Resources */,
@@ -1601,6 +1618,7 @@
 				6197F0841B58DD29000EC83E /* RDVTabBarController.m in Sources */,
 				61D54ABE1B7D7DB1002DE544 /* LTableViewCell.m in Sources */,
 				61EBC6CF1B68E9D2002D0373 /* ExchangeViewController.m in Sources */,
+				617C38C11B9035F30076CEB4 /* BBBadgeBarButtonItem.m in Sources */,
 				6172F5431B6C6ADB007BDBD2 /* AddAddressController.m in Sources */,
 				618342501B5658720097E8A4 /* LewPopupViewAnimationSpring.m in Sources */,
 				615B29A31B4FB22B004E7546 /* MemberViewController.m in Sources */,

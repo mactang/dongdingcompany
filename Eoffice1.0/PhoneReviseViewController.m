@@ -15,7 +15,12 @@
 @end
 
 @implementation PhoneReviseViewController
+{
 
+    UITextField *validateField;
+    UITextField *newPhoneField ;
+    UITextField *newNalidateField;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -43,10 +48,8 @@
     _phoneField.backgroundColor = [UIColor whiteColor];
     _phoneField.clipsToBounds = YES;
     [_phoneField setText:@"13618090081"];
-    _phoneField.layer.cornerRadius = 3;
-    _phoneField.layer.borderWidth = 1;
-    _phoneField.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.view addSubview:_phoneField];
+    
     
     UIButton *validateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_phoneField.frame)+5,photoLB.frame.origin.y-5, 70, 30)];
     validateButton.backgroundColor = [UIColor whiteColor];
@@ -60,13 +63,15 @@
     [validateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:validateButton];
     
+    
     UILabel *validateLB = [[UILabel alloc]initWithFrame:CGRectMake(30, CGRectGetMaxY(photoLB.frame)+30, 50, 20)];
     validateLB.font = [UIFont systemFontOfSize:12];
     validateLB.text = @"验证码：";
     validateLB.textColor = [UIColor blackColor];
     [self.view addSubview:validateLB];
     
-    UITextField *validateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(validateLB.frame), CGRectGetMaxY(photoLB.frame)+23, 155, 30)];
+    
+    validateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(validateLB.frame), CGRectGetMaxY(photoLB.frame)+23, 155, 30)];
     validateField.backgroundColor = [UIColor whiteColor];
     validateField.clipsToBounds = YES;
     validateField.delegate = self;
@@ -81,7 +86,7 @@
     newValidateLB.textColor = [UIColor blackColor];
     [self.view addSubview:newValidateLB];
     
-    UITextField *newPhoneField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(validateField.frame)+25, 155, 30)];
+    newPhoneField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(validateField.frame)+25, 155, 30)];
     newPhoneField.backgroundColor = [UIColor whiteColor];
     newPhoneField.clipsToBounds = YES;
     newPhoneField.delegate = self;
@@ -97,7 +102,7 @@
     newNalidateButton.layer.borderColor = [[UIColor grayColor]CGColor];
     newNalidateButton.layer.borderWidth = 1;
     newNalidateButton.font = [UIFont systemFontOfSize:12];
-    [newNalidateButton addTarget:self action:@selector(validatePress) forControlEvents:UIControlEventTouchUpInside];
+    [newNalidateButton addTarget:self action:@selector(newValidatePress) forControlEvents:UIControlEventTouchUpInside];
     [newNalidateButton setTitle:@"发送验证码" forState:UIControlStateNormal];
     [newNalidateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.view addSubview:newNalidateButton];
@@ -108,7 +113,7 @@
     newNalidateLB.textColor = [UIColor blackColor];
     [self.view addSubview:newNalidateLB];
     
-    UITextField *newNalidateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(newValidateLB.frame)+23, 155, 30)];
+    newNalidateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(newValidateLB.frame)+23, 155, 30)];
     newNalidateField.backgroundColor = [UIColor whiteColor];
     newNalidateField.clipsToBounds = YES;
     newNalidateField.delegate = self;
@@ -148,13 +153,45 @@
     [self valiData];
 }
 
+-(void)newValidatePress{
+
+    [self newNaliData];
+}
+
+-(void)newNaliData{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:SAFEVALIDATE,model.jsessionid,model.userkey];
+    NSLog(@"%@",_phoneField.text);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"phoneNo":newPhoneField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+
 -(void)valiData{
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
     NSString *path= [NSString stringWithFormat:SAFEVALIDATE,model.jsessionid,model.userkey];
-    NSLog(@"%@",path);
+    NSLog(@"%@",_phoneField.text);
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -176,8 +213,35 @@
 
 -(void)surePress{
     
+    [self phoneData];
+}
+-(void)phoneData{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:SAFENEWPHONE,model.jsessionid,model.userkey];
+    NSLog(@"%@",validateField.text);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"phone":_phoneField.text,@"phone1":newPhoneField.text,@"rand":newNalidateField.text,@"rand1":validateField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
     
 }
+
+
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];

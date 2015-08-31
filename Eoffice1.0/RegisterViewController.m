@@ -10,19 +10,21 @@
 #import "RDVTabBarController.h"
 #import "MainViewController.h"
 #import "AFNetworking.h"
-
+#import "SingleModel.h"
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)UITextField *userNameField;
 @property(nonatomic,strong)UITextField *passWordField;
 @end
 
 @implementation RegisterViewController
+{
 
+    UITextField *text_field;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     
-
     //用户名
     UIImageView *logoimageView = [[UIImageView alloc]initWithFrame:CGRectMake(80, 40, 141, 50)];
     logoimageView.clipsToBounds = YES;
@@ -70,6 +72,7 @@
     validateBtn.font = [UIFont systemFontOfSize:11];
     [validateBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
     [validateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [validateBtn addTarget:self action:@selector(identifyingBtn) forControlEvents:UIControlEventTouchUpInside];
     [phoneNumber_view addSubview:validateBtn];
     
     UIView *number_view = [[UIView alloc] init];
@@ -103,6 +106,39 @@
     
     // Do any additional setup after loading the view.
 }
+
+-(void)identifyingBtn{
+
+    [self valiData];
+}
+
+-(void)valiData{
+    
+    
+    UITextField *phone_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
+    NSLog(@"%@",phone_field.text);
+    
+    NSString *path= [NSString stringWithFormat:REGISTERVERIF];
+    NSLog(@"%@",phone_field.text);
+    
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"phoneNo":phone_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",string);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+
 - (void)backLogin{
 
     
@@ -118,7 +154,7 @@
     [text_view addSubview:iconImageView];
     
     //输入框
-    UITextField *text_field = [[UITextField alloc] init];
+    text_field = [[UITextField alloc] init];
     text_field.borderStyle = UITextBorderStyleNone;
     text_field.frame = CGRectMake(45, 20, 235, 20);
     text_field.font = [UIFont systemFontOfSize:18];
@@ -137,8 +173,6 @@
     //判断
     if (isPwd == 1)
     {
-        
-        
         text_field.text = @"";
         text_field.secureTextEntry = NO;
         text_field.tag = 1001;
@@ -159,24 +193,24 @@
     {
         text_field.text = @"";
         text_field.secureTextEntry = YES;
-        text_field.tag = 1000;
+        text_field.tag = 1003;
         text_field.placeholder = @"重复密码";
         iconImageView.image = [UIImage imageNamed:@"图层-10"];
     }
     if (isPwd == 4)
     {
+        
         text_field.text = @"";
-        text_field.secureTextEntry = YES;
-        text_field.tag = 1000;
+        text_field.tag = VERIFICATION;
+        text_field.clearButtonMode = UITextFieldViewModeNever;
         text_field.placeholder = @"请输入手机号码";
         iconImageView.image = [UIImage imageNamed:@"图层-11"];
-        // iconImageView.highlightedImage = [UIImage imageNamed:@"lockIcon_highlight.png"];
+       
     }
     if (isPwd == 5)
     {
         text_field.text = @"";
-        text_field.secureTextEntry = YES;
-        text_field.tag = 1000;
+        text_field.tag = 1004;
         text_field.placeholder = @"请输入验证码";
         iconImageView.image = [UIImage imageNamed:@"图层-12"];
        
@@ -193,15 +227,17 @@
   
     UITextField *name_field = (UITextField *)[self.view viewWithTag:1001];
     UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
+    UITextField *identifying_field = (UITextField *)[self.view viewWithTag:1004];
+    
     
     NSString *path = REGISTER;
-    
+    NSLog(@"%@",identifying_field.text);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
    
-    [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];

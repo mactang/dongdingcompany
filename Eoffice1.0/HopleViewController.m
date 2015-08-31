@@ -105,6 +105,8 @@
     alter.rightBlock=^()
     {
         NSLog(@"右边按钮被点击");
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"tel://123456789"]];
     };
     alter.leftBlock=^()
     {

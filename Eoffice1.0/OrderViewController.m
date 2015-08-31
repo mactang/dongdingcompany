@@ -20,10 +20,14 @@
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
+@property(nonatomic,strong)NSMutableArray *classifyDatas;
+
 @property(nonatomic,assign)NSInteger row;
 @property(nonatomic,assign)NSInteger btnNumber;
 @property(nonatomic,assign)NSInteger orderId;
 @property(nonatomic,assign)NSString *returnId;
+@property(nonatomic,assign)NSInteger serviceOrderId;
+@property(nonatomic,assign)NSString *docstatus;
 @end
 
 @implementation OrderViewController
@@ -31,6 +35,9 @@
 
     NSArray *dropDownMenuList;
      DropDown1 *dd1;
+    BOOL isClssify;
+    NSString *docstatus;
+    OrderModel *model1;
     
 }
 -(NSMutableArray *)datas{
@@ -40,6 +47,12 @@
     return _datas;
 }
 
+-(NSMutableArray *)classifyDatas{
+    if (_classifyDatas == nil) {
+        _classifyDatas = [NSMutableArray array];
+    }
+    return _classifyDatas;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -54,6 +67,7 @@
     self.view.backgroundColor = [UIColor grayColor];
     [self.navigationItem setTitle:@"我的订单"];
     
+    isClssify = NO;
     [self downData];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, 320, 430) style:UITableViewStyleGrouped];
@@ -85,14 +99,30 @@
         
         [dd1.textButton setTitle:[NSString stringWithFormat:@"%@",selection] forState:UIControlStateNormal];
         //dropDownMenu.title = [NSString stringWithFormat:@"%@▼",selection];
-        
+        NSLog(@"%@",dd1.textButton.titleLabel.text);
+        isClssify = YES;
+        if ([dd1.textButton.titleLabel.text isEqualToString:@"全部"]) {
+            _docstatus = @"-1";
+        }
+        if ([dd1.textButton.titleLabel.text isEqualToString:@"待发货"]) {
+            _docstatus = @"1";
+        }
+        if ([dd1.textButton.titleLabel.text isEqualToString:@"退换货/维修"]) {
+            _docstatus = @"2";
+        }
+        if ([dd1.textButton.titleLabel.text isEqualToString:@"待评价"]) {
+            _docstatus = @"3";
+        }
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
             
            
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
+                
+                [self classifyData];
+//                [self.tableView reloadData];
+                [self.classifyDatas removeAllObjects];
             });
             
         });
@@ -100,6 +130,43 @@
     
 }
 
+-(void)classifyData{
+    
+    
+    NSLog(@"%@",_docstatus);
+
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager POST:path parameters:@{@"docstatus":_docstatus} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSArray *array = dic[@"data"];
+        
+        for(NSDictionary *subDict in array)
+        {
+            NSLog(@"%@",subDict);
+            OrderModel *model = [OrderModel modelWithDic:subDict];
+            [self.classifyDatas addObject:model];
+            
+        }
+        
+        
+        [_tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
 - (void)downData{
     
     
@@ -136,7 +203,14 @@
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.datas.count;
+    
+    if (isClssify == NO) {
+        return self.datas.count;
+    }
+    else{
+    
+        return self.classifyDatas.count;
+    }
    
 }
 
@@ -171,14 +245,22 @@
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
     
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.clipsToBounds = YES;
     NSLog(@"%@",self.datas);
-    OrderModel *model = self.datas[indexPath.row];
-    NSLog(@"%@",model.orderDescription);
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
-    NSString *docstatus = [NSString stringWithFormat:@"%@",model.docstatus];
+    if (isClssify == NO) {
+    model1 = self.datas[indexPath.row];
+    NSLog(@"%@",model1.orderDescription);
     
-  
+        
+    
+    }
+    if (isClssify == YES) {
+        model1 = self.classifyDatas[indexPath.row];
+        
+    }
+        docstatus = [NSString stringWithFormat:@"%@",model1.docstatus];
+    
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"dingdanxiaotu"]];
         imageView.frame = CGRectMake(10, 5, 40, 40);
         [cell addSubview:imageView];
@@ -215,7 +297,7 @@
         
         UILabel *lb6 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+40, lb1.frame.origin.y, 60, 20)];
         lb6.font = [UIFont systemFontOfSize:10];
-        lb6.text = lb6.text = [NSString stringWithFormat:@"%@",model.price];;
+        lb6.text = lb6.text = [NSString stringWithFormat:@"%@",model1.price];;
         [cell addSubview:lb6];
         
         UILabel *lb7 = [[UILabel alloc]initWithFrame:CGRectMake(lb6.frame.origin.x+40, CGRectGetMaxY(lb6.frame)+10, 60, 20)];
@@ -256,9 +338,9 @@
         [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         
         btn1.clipsToBounds = YES;
-        _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+        _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
             SingleModel *single = [SingleModel sharedSingleModel];
-            single.orderId = model.orderId;
+            single.orderId = model1.orderId;
             NSLog(@"%ld",(long)btn1.tag);
         btn1.tag = indexPath.row;
         btn1.font = [UIFont systemFontOfSize:12];
@@ -288,7 +370,7 @@
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
             NSLog(@"%ld",(long)_row);
         btn1.tag = indexPath.row;
         btn1.font = [UIFont systemFontOfSize:12];
@@ -331,7 +413,7 @@
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
          NSLog(@"model.orderId--%ld",(long)_row);
         btn1.tag = indexPath.row;
             
@@ -364,7 +446,7 @@
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
             NSLog(@"%ld",(long)btn1.tag);
              btn1.tag = indexPath.row;
         btn1.font = [UIFont systemFontOfSize:12];
@@ -395,6 +477,7 @@
         btn4.layer.borderColor = [[UIColor grayColor]CGColor];
         [btn4 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
         btn4.tag = 1005;
+        _serviceOrderId = indexPath.row;
         [cell addSubview:btn4];
 
         UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn4.frame)+5, btn1.frame.origin.y, 60, 20)];
@@ -418,7 +501,7 @@
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
         btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model.orderId]intValue];
+       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
             NSLog(@"model.orderId--%ld",(long)_row);
          btn1.tag = indexPath.row;
         btn1.font = [UIFont systemFontOfSize:12];
@@ -454,9 +537,11 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [cell addSubview:btn3];
-
+        
          
     }
+    
+    
 
 
     
@@ -540,12 +625,17 @@
     
     //退换货
     if (btn.tag == 1004) {
+        
+        SingleModel *model = [SingleModel sharedSingleModel];
+        model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
         ExchangeViewController *exc = [[ExchangeViewController alloc]init];
         
         [self.navigationController pushViewController:exc animated:YES];
     }
     //维修
     if (btn.tag == 1005) {
+        SingleModel *model = [SingleModel sharedSingleModel];
+        model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
         ServiceViewController *ser = [[ServiceViewController alloc]init];
         [self.navigationController pushViewController:ser animated:YES];
     }
