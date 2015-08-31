@@ -232,7 +232,8 @@
     [alertView show];
     btn.selected = !btn.selected;
     _btnNumber = btn.tag;
-        NSLog(@"aaa");
+    
+    NSLog(@"aaa");
     
     
 }
