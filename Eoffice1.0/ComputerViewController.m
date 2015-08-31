@@ -149,8 +149,6 @@ static const CGFloat MJDuration = 2.0;
 {
     __weak __typeof(self) weakSelf = self;
     
-    
-    
     // 下拉刷新
     self.collectionView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         // 增加5条假数据

@@ -141,7 +141,7 @@
         }
         //刷新表
         
-//        [self button];
+        [self button];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
