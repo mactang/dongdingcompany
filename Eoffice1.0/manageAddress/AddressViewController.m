@@ -180,7 +180,6 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-<<<<<<< HEAD:Eoffice1.0/AddressViewController.m
 
 //-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 //
@@ -207,15 +206,13 @@
     
     NSLog(@"aaa");
     
-    
-=======
+}
 #pragma mark buttondelegate methds
 -(void)buttondelegate:(UIButton *)button{
     anotherButton.selected  = NO;
     self.signbutton = button.tag-100;
     button.selected = YES;
     anotherButton = button;
->>>>>>> 9d485e7261549113bc728c352968808692aa86c6:Eoffice1.0/manageAddress/AddressViewController.m
 }
 -(void)delegatedata:(NSInteger)buttontag{
     _btnNumber = buttontag;
