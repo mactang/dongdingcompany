@@ -243,7 +243,6 @@
 		96821FCA1B8AF5DC00EC7276 /* citychoose.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96821FC71B8AF5DC00EC7276 /* citychoose.plist */; };
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
 		9690D6021B8D85C000B47495 /* ChangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9690D6011B8D85C000B47495 /* ChangeModel.m */; };
-		96A70D091B9429C800C0F1F5 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A70D081B9429C800C0F1F5 /* search.png */; };
 		96A70D0C1B943E9A00C0F1F5 /* PersonInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */; };
 		96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */; };
 		96A70D111B943F5A00C0F1F5 /* massegeNumber.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A70D101B943F5A00C0F1F5 /* massegeNumber.png */; };
@@ -602,7 +601,6 @@
 		96821FC91B8AF5DC00EC7276 /* CityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CityChooseView.m; sourceTree = "<group>"; usesTabs = 0; };
 		9690D6001B8D85C000B47495 /* ChangeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeModel.h; sourceTree = "<group>"; };
 		9690D6011B8D85C000B47495 /* ChangeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeModel.m; sourceTree = "<group>"; };
-		96A70D081B9429C800C0F1F5 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		96A70D0A1B943E9A00C0F1F5 /* PersonInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInformationModel.h; sourceTree = "<group>"; };
 		96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInformationModel.m; sourceTree = "<group>"; };
 		96A70D0D1B943F1500C0F1F5 /* OrderStateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderStateModel.h; sourceTree = "<group>"; };
@@ -941,7 +939,6 @@
 		615B29BD1B4FB27D004E7546 /* ComputerController */ = {
 			isa = PBXGroup;
 			children = (
-				96A70D081B9429C800C0F1F5 /* search.png */,
 				615B29BF1B4FB29F004E7546 /* ComputerCell.m */,
 				615B29BE1B4FB29F004E7546 /* ComputerCell.h */,
 				61731B201B954AE200B04D85 /* GoodsBigViewController.h */,
@@ -1473,7 +1470,6 @@
 				617FE4E01B60D5B8007EBFB2 /* easyicon_net_1281.png in Resources */,
 				615CF6281B6F5FBC00B369E7 /* zclogo.png in Resources */,
 				617FE4571B607A87007EBFB2 /* dingdanxiaotu.png in Resources */,
-				96A70D091B9429C800C0F1F5 /* search.png in Resources */,
 				61068AA31B5CCEE0008BE40A /* shouye1.png in Resources */,
 				615CF61D1B6F0D2400B369E7 /* dianhua.png in Resources */,
 				6160F21D1B7C9C7100D55489 /* 圆角矩形-3-2.png in Resources */,
