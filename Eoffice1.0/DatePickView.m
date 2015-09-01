@@ -7,7 +7,20 @@
 //
 
 #define ZHToobarHeight 40
+// 设置警告框的长和宽
 
+#define Alertwidth 300.0f
+#define Alertheigth 430.0f
+#define GYZtitlegap 15.0f
+#define GYZtitleofheigth 25.0f
+#define GYZSinglebuttonWidth 160.0f
+//        单个按钮时的宽度
+#define GYZdoublebuttonWidth 130.0f
+//        双个按钮的宽度
+#define GYZbuttonHeigth 33.0f
+//        按钮的高度
+#define GYZbuttonbttomgap 10.0f
+//        设置按钮距离底部的边距
 #import "DatePickView.h"
 @interface DatePickView ()<UIPickerViewDelegate,UIPickerViewDataSource>
 @property(nonatomic,copy)NSString *plistName;
@@ -27,6 +40,10 @@
 @property(nonatomic,strong)NSMutableArray *dicKeyArray;
 @property(nonatomic,copy)NSMutableArray *state;
 @property(nonatomic,copy)NSMutableArray *city;
+
+@property (nonatomic, strong) UIButton *leftbtn;
+@property (nonatomic, strong) UIButton *rightbtn;
+@property (nonatomic, strong) UILabel *alertTitleLabel;
 @end
 @implementation DatePickView
 - (id)initWithFrame:(CGRect)frame
@@ -38,16 +55,21 @@
         lb.text = @"修改生日";
         lb.textColor = [UIColor whiteColor];
         lb.backgroundColor = [UIColor redColor];
-        lb.font = [UIFont systemFontOfSize:15];
+//        lb.font = [UIFont systemFontOfSize:15];
         lb.clipsToBounds = YES;
-        lb.layer.cornerRadius = 5;
+    //    lb.layer.cornerRadius = 5;
         
         [self addSubview:lb];
+        
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 370, 320, 70)];
+        view.backgroundColor = [UIColor whiteColor];
+        [self addSubview:view];
+        
     }
     return self;
 }
 -(void)setUpToolBar{
-    _toolbar=[self setToolbarStyle];
+  //  _toolbar=[self setToolbarStyle];
     [self setToolbarWithPickViewFrame];
     [self addSubview:_toolbar];
 }
@@ -62,6 +84,60 @@
     toolbar.items=@[lefttem,centerSpace,right];
     return toolbar;
 }
+
+- (id)initWithTitle:(NSString *)title
+    leftButtonTitle:(NSString *)leftTitle
+   rightButtonTitle:(NSString *)rigthTitle
+{
+    if (self = [super init]) {
+        self.layer.cornerRadius = 5.0;
+       // self.backgroundColor = [UIColor whiteColor];
+        
+        
+        CGRect leftbtnFrame;
+        CGRect rightbtnFrame;
+        
+        
+        if (!leftTitle) {
+            rightbtnFrame = CGRectMake((Alertwidth - GYZSinglebuttonWidth) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZSinglebuttonWidth, GYZbuttonHeigth);
+            self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.rightbtn.frame = rightbtnFrame;
+            
+        }else {
+            leftbtnFrame = CGRectMake((Alertwidth - 2 * GYZdoublebuttonWidth - GYZbuttonbttomgap) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZdoublebuttonWidth, GYZbuttonHeigth);
+            
+            rightbtnFrame = CGRectMake(CGRectGetMaxX(leftbtnFrame) + GYZbuttonbttomgap, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZdoublebuttonWidth, GYZbuttonHeigth);
+            self.leftbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.leftbtn.frame = leftbtnFrame;
+            self.rightbtn.frame = rightbtnFrame;
+        }
+        
+        
+        [self.rightbtn setTitle:rigthTitle forState:UIControlStateNormal];
+        [self.rightbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        self.rightbtn.backgroundColor = [UIColor redColor];
+        [self.leftbtn setTitle:leftTitle forState:UIControlStateNormal];
+        
+        [self.leftbtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        self.leftbtn.titleLabel.font = self.rightbtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        
+        [self.leftbtn addTarget:self action:@selector(leftbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.rightbtn addTarget:self action:@selector(rightbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
+        self.leftbtn.layer.masksToBounds = self.rightbtn.layer.masksToBounds = YES;
+        self.leftbtn.layer.cornerRadius = self.rightbtn.layer.cornerRadius = 3.0;
+        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor redColor] CGColor];
+        self.leftbtn.layer.borderWidth = self.rightbtn.layer.borderWidth = 1;
+        [self addSubview:self.leftbtn];
+        [self addSubview:self.rightbtn];
+        self.alertTitleLabel.text = title;
+        
+        
+        self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+    }
+    return self;
+}
+
 -(void)doneClick
 {
     
@@ -110,7 +186,7 @@
         toolViewY= [UIScreen mainScreen].bounds.size.height-toolViewH;
     }
     CGFloat toolViewW = [UIScreen mainScreen].bounds.size.width;
-    self.frame = CGRectMake(toolViewX, 0, toolViewW, 520);
+    self.frame = CGRectMake(toolViewX, 0, toolViewW, 600);
 }
 -(void)remove{
     

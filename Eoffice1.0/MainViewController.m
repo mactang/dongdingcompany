@@ -16,6 +16,7 @@
 #import "LeftSortsViewController.h"
 #import "BottonTabBarController.h"
 #import "NewsViewController.h"
+#import "GoodsBigViewController.h"
 @interface MainViewController ()
 @property(nonatomic, strong)UIPageControl *pageControl;
 @end
@@ -295,13 +296,11 @@
     if (btn.tag == 1000) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"商品" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
-        CommodityViewController *cmd = [[CommodityViewController alloc]init];
-        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:cmd];
-        LeftSortsViewController *leftVC = [[LeftSortsViewController alloc] init];
-//        self.LeftSlideVC = [[LeftSlideViewController alloc] initWithLeftView:leftVC andMainView:nav];
         
+        GoodsBigViewController *good = [[GoodsBigViewController alloc]init];
+              
         
-        [self.navigationController pushViewController:cmd animated:YES];
+        [self.navigationController pushViewController:good animated:YES];
        // [(BottonTabBarController*)self.tabBarController hideTabBar:NO];
         
     }

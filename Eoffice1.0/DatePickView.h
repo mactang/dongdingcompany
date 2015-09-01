@@ -18,7 +18,9 @@
  *  @return 带有toolbar的datePicker
  */
 -(instancetype)initDatePickWithDate:(NSDate *)defaulDate datePickerMode:(UIDatePickerMode)datePickerMode isHaveNavControler:(BOOL)isHaveNavControler;
-
+- (id)initWithTitle:(NSString *)title
+    leftButtonTitle:(NSString *)leftTitle
+   rightButtonTitle:(NSString *)rigthTitle;
 /**
  *   移除本控件
  */
