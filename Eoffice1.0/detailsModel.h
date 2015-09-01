@@ -11,6 +11,9 @@
 @interface detailsModel : NSObject
 @property (nonatomic, strong) NSString *price;
 @property (nonatomic, strong) NSString *wGoodsId;
+@property (nonatomic, strong) NSString *productId;
+@property (nonatomic, strong) NSString *bparterId;
+@property (nonatomic, strong) NSString *imgUrl;
 
 +(detailsModel *)modelWithDic:(NSDictionary *)dic;
 -(id)initWithDic:(NSDictionary *)dic;

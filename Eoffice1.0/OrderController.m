@@ -27,13 +27,16 @@
 
 @implementation OrderController
 {
-int _currentNumber;
+    int _currentNumber;
+    UILabel *priceLb;
+    UILabel *totalPice;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    _currentNumber = 1;
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -1, 320, 540) style:UITableViewStyleGrouped];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -160,9 +163,16 @@ int _currentNumber;
         lb1.numberOfLines = 2;
         lb1.text = @"Apple MacBook Pro MF839CH/A 13.3英寸宽屏笔记本电脑 128GB 闪存";
         [cell addSubview:lb1];
-        UILabel *priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+5, lb1.frame.origin.y, 30, 20)];
-        priceLb.font = [UIFont systemFontOfSize:10];
-        priceLb.text = @"￥";
+        UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+5, lb1.frame.origin.y+5, 10, 20)];
+        priceFLb.font = [UIFont systemFontOfSize:13];
+        priceFLb.textColor = [UIColor blackColor];
+        priceFLb.text = @"￥";
+        [cell addSubview:priceFLb];
+        
+        priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame), lb1.frame.origin.y+4, 80, 20)];
+        priceLb.font = [UIFont systemFontOfSize:13];
+        priceLb.textColor = [UIColor blackColor];
+        priceLb.text = @"6800.00";
         [cell addSubview:priceLb];
         
         UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, CGRectGetMaxY(lb1.frame), 30, 20)];
@@ -285,13 +295,13 @@ int _currentNumber;
         btn1.titleLabel.font = [UIFont systemFontOfSize:12];
         [cell addSubview:btn1];
         
-        UIButton *btn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), 10, 60, 20)];
-        [btn2 setTitle:@"34000.00" forState:UIControlStateNormal];
-        [btn2 setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        btn2.titleLabel.font = [UIFont systemFontOfSize:12];
-        [cell addSubview:btn2];
+        totalPice = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), 10, 60, 20)];
+        totalPice.text = priceLb.text;
+        totalPice.textColor = [UIColor redColor];
+        totalPice.font = [UIFont systemFontOfSize:12];
+        [cell addSubview:totalPice];
         
-        UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame), 10, 70, 50)];
+        UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalPice.frame), 10, 70, 50)];
         [btn3 setTitle:@"确定" forState:UIControlStateNormal];
         btn3.backgroundColor = [UIColor redColor];
         btn3.clipsToBounds = YES;
@@ -375,7 +385,7 @@ int _currentNumber;
     
     
     if (btn.tag ==1) {
-        if (_currentNumber>0) {
+        if (_currentNumber>1) {
             
             
             _currentNumber--;
@@ -383,12 +393,20 @@ int _currentNumber;
             
             NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
             [_numberLb1 setText:string];
+            
+            int price = [(priceLb.text)intValue]/_currentNumber;
+            
+            totalPice.text = [NSString stringWithFormat:@"%d",price];
+            
         }
     }
     if (btn.tag == 2) {
         _currentNumber++;
         NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
         [_numberLb1 setText:string];
+        int price = [(priceLb.text)intValue]*_currentNumber;
+        
+        totalPice.text = [NSString stringWithFormat:@"%d",price];
     }
     
     
