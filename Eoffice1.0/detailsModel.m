@@ -17,6 +17,10 @@
     if (self = [super init]) {
         self.price = dic[@"price"];
         self.wGoodsId = dic[@"wGoodsId"];
+        self.imgUrl = dic[@"imgUrl"];
+        self.productId = dic[@"productId"];
+        self.bparterId = dic[@"bparterId"];
+        
     }
     
     return self;

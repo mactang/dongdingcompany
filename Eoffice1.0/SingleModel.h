@@ -22,6 +22,11 @@
 
 @property(nonatomic,strong)NSString *serviceOrderId;
 
+//商品
+@property(nonatomic,strong)NSString *paraId;
+@property(nonatomic,strong)NSString *goodsId;
+@property(nonatomic,strong)NSString *cPartnerId;
+
 //通过类方法，创建唯一的对象
 +(SingleModel *)sharedSingleModel;
 

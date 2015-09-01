@@ -57,6 +57,7 @@
 
 //电脑
 #define COMPUTER @"http://192.168.0.65:8080/eoffice/phone/product!getMidGoodsList.action?cartId=%@&page=0"
+#define COMPUTERDETAIL @"http://192.168.0.65:8080/eoffice/phone/product!getGoodsDetail.action?paraId=%@&goodsId=%@&cPartnerId=%@"
 //购物车接口
 #define SHOPCAR @"http://192.168.0.65:8080/eoffice/phone/order!getBasket.action;jsessionid=%@?userkey=%@"
 

@@ -18,6 +18,7 @@
 #import "RDVTabBarItem.h"
 #import "ScreenViewController.h"
 #import "AFNetworking.h"
+#import "UIKit+AFNetworking.h"
 #import "SingleModel.h"
 #import "detailsModel.h"
 /**
@@ -123,8 +124,8 @@ static const CGFloat MJDuration = 2.0;
         }
         }
         //刷新表
-       // [_collectionView reloadData];
-        [self addHeader];
+        [_collectionView reloadData];
+      //  [self addHeader];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -238,7 +239,8 @@ static const CGFloat MJDuration = 2.0;
     //  NSLog(@"%@",model.price);
     UIImageView *imageView = [[UIImageView  alloc]initWithFrame:CGRectMake(10, 5, 130, 140)];
     
-    imageView.image = [UIImage imageNamed:@"computer1"];
+    [imageView setImageWithURL:[NSURL URLWithString:model.imgUrl]];
+    NSLog(@"%@",model.imgUrl);
     [cell addSubview:imageView];
     for (UIView *view in cell.contentView.subviews) {
         [view removeFromSuperview];
@@ -270,8 +272,11 @@ static const CGFloat MJDuration = 2.0;
     
     detailsModel *model = self.datas[indexPath.row];
     SingleModel *sing = [SingleModel sharedSingleModel];
-    sing.wGoodsId = model.wGoodsId;
     
+    sing.wGoodsId = model.wGoodsId;
+    sing.paraId = model.productId;
+    sing.goodsId = model.wGoodsId;
+    sing.cPartnerId = model.bparterId;
     CMDetailsViewController *detail = [[CMDetailsViewController alloc]init];
     
     [self.navigationController pushViewController:detail animated:YES];
