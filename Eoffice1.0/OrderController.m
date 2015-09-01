@@ -160,6 +160,10 @@ int _currentNumber;
         lb1.numberOfLines = 2;
         lb1.text = @"Apple MacBook Pro MF839CH/A 13.3英寸宽屏笔记本电脑 128GB 闪存";
         [cell addSubview:lb1];
+        UILabel *priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+5, lb1.frame.origin.y, 30, 20)];
+        priceLb.font = [UIFont systemFontOfSize:10];
+        priceLb.text = @"￥";
+        [cell addSubview:priceLb];
         
         UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, CGRectGetMaxY(lb1.frame), 30, 20)];
         lb2.font = [UIFont systemFontOfSize:10];
