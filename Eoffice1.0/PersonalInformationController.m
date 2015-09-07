@@ -205,8 +205,6 @@
         _nickName.clearButtonMode = UITextFieldViewModeAlways;
         _nickName.delegate = self;
         [cell addSubview:_nickName];
-
-       
     }
     if (indexPath.row == 3) {
         cell.textLabel.text = @"性别";

@@ -20,6 +20,7 @@
 @property(nonatomic,copy)NSString *prvoice;
 @property(nonatomic,copy)NSString *city;
 @property(nonatomic,copy)NSString *area;
+@property(nonatomic,copy)NSString *cityid;
 @end
 @implementation CityChooseView
 
@@ -30,34 +31,75 @@
     self.thirdPickerArray = [NSMutableArray array];
     self = [super initWithFrame:frame];
     if (self) {
-//      [self datarequest];
-        [self initalizaApperance];
+      [self readdata];
+      
     }
     return self;
+}
+-(void)readdata{
+    // 1.获得沙盒根路径
+    NSString *home1 = NSHomeDirectory();
+    
+    // 2.document路径
+    NSString *docPath1 = [home1 stringByAppendingPathComponent:@"Documents"];
+    
+    // 3.文件路径
+    NSString *filepath1 = [docPath1 stringByAppendingPathComponent:@"data.plist"];
+    
+    // 4.读取数据
+    NSArray *data1 = [NSArray arrayWithContentsOfFile:filepath1];
+    
+    if (data1.count !=0) {
+       self.dataArray = data1;
+        for (NSInteger i=0; i<[self.dataArray count]; i++) {
+            [self.pickerArray addObject:self.dataArray[i][@"name"]];
+        }
+        self.subPickerArray = [self.dataArray objectAtIndex:0][@"city"];
+        if ([[self.subPickerArray objectAtIndex:0][@"county"] count]!=0) {
+            self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"county"];
+        }
+        else{
+            self.area = @"";
+        }
+
+        [self initalizaApperance];
+    }
+    else{
+        [self datarequest];
+    }
 }
 -(void)datarequest{
     NSString *path= [NSString stringWithFormat:@"http://192.168.0.65:8080/eoffice/phone/order!selectAll.action"];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
+    
     [manager POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
+        // 1.获得沙盒根路径
+        NSString *home = NSHomeDirectory();
+        
+        // 2.document路径
+        NSString *docPath = [home stringByAppendingPathComponent:@"Documents"];
+        
+        NSString *filepath = [docPath stringByAppendingPathComponent:@"data.plist"];
+        [dic[@"data"] writeToFile:filepath atomically:YES];
+        
         self.dataArray = dic[@"data"];
         for (NSInteger i=0; i<[dic[@"data"] count]; i++) {
             [self.pickerArray addObject:dic[@"data"][i][@"name"]];
         }
         self.subPickerArray = [self.dataArray objectAtIndex:0][@"city"];
         if ([[self.subPickerArray objectAtIndex:0][@"county"] count]!=0) {
-              self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"county"];
+            self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"county"];
         }
         else{
-               self.area = @"";
-           }
-//        NSLog(@"%@",self.pickerArray);
-//        NSLog(@"%@+++",self.subPickerArray);
-//        NSLog(@"%@---",self.thirdPickerArray);
-//      [self initalizaApperance];
+            self.area = @"";
+        }
+        //        NSLog(@"%@",self.pickerArray);
+        //        NSLog(@"%@+++",self.subPickerArray);
+        //        NSLog(@"%@---",self.thirdPickerArray);
+        [self initalizaApperance];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
@@ -71,19 +113,19 @@
     self.pickerView.showsSelectionIndicator=YES;
     self.pickerView.backgroundColor = [UIColor whiteColor];
     [self addSubview:self.pickerView];
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"citychoose" ofType:@"plist"];
-    self.dataArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
+//    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"citychoose" ofType:@"plist"];
+//    self.dataArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
 //  NSLog(@"%@", self.dataArray);//直接打印数据。
-    for (NSInteger i=0; i<self.dataArray.count; i++) {
-        [self.pickerArray addObject:self.dataArray[i][@"state"]];
-    }
-    self.subPickerArray = [self.dataArray objectAtIndex:0][@"cities"];
-    if ([[self.subPickerArray objectAtIndex:0][@"areas"] count]!=0) {
-        self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"areas"];
-    }
-    else{
-        self.area = @"";
-    }
+//    for (NSInteger i=0; i<self.dataArray.count; i++) {
+//        [self.pickerArray addObject:self.dataArray[i][@"state"]];
+//    }
+//    self.subPickerArray = [self.dataArray objectAtIndex:0][@"cities"];
+//    if ([[self.subPickerArray objectAtIndex:0][@"areas"] count]!=0) {
+//        self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"areas"];
+//    }
+//    else{
+//        self.area = @"";
+//    }
 //    NSLog(@"%@",self.subPickerArray);
     UIView *linghtView = [[UIView alloc]initWithFrame:CGRectMake(0, widgetboundsHeight(self)-210, SCREEN_WIDTH, 30)];
     linghtView.backgroundColor = [UIColor lightGrayColor];
@@ -137,13 +179,14 @@
        return [self.pickerArray objectAtIndex:row];
     }
     if (component==1) {
-        self.city = [self.subPickerArray objectAtIndex:row][@"city"];
-        return [self.subPickerArray objectAtIndex:row][@"city"];
+        self.city = [self.subPickerArray objectAtIndex:row][@"name"];
+        return [self.subPickerArray objectAtIndex:row][@"name"];
     }
     else{
         if ([self.thirdPickerArray count]!=0) {
-            self.area = [self.thirdPickerArray objectAtIndex:row];
-            return [self.thirdPickerArray objectAtIndex:row];
+            self.area = [self.thirdPickerArray objectAtIndex:row][@"name"];
+            self.cityid = [self.thirdPickerArray objectAtIndex:row][@"id"];
+            return [self.thirdPickerArray objectAtIndex:row][@"name"];
         }
         else{
             self.area = @"";
@@ -156,12 +199,13 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
 //    NSLog(@"%ld",row);
     if (component==0) {
-        self.subPickerArray = [self.dataArray objectAtIndex:row][@"cities"];
-        self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"areas"];
+        self.subPickerArray = [self.dataArray objectAtIndex:row][@"city"];
+        self.thirdPickerArray = [self.subPickerArray objectAtIndex:0][@"county"];
         self.prvoice = [self.pickerArray objectAtIndex:row];
-        self.city = [self.subPickerArray objectAtIndex:0][@"city"];
+        self.city = [self.subPickerArray objectAtIndex:0][@"name"];
+        self.cityid = [self.thirdPickerArray objectAtIndex:0][@"id"];
         if ([self.thirdPickerArray count] !=0) {
-           self.area = [self.thirdPickerArray objectAtIndex:0];
+           self.area = [self.thirdPickerArray objectAtIndex:0][@"name"];
         }
         else{
             self.area = @"";
@@ -172,10 +216,11 @@
         [pickerView reloadComponent:2];
     }
     else if (component==1) {
-        self.thirdPickerArray = [self.subPickerArray objectAtIndex:row][@"areas"];
-        self.city = [self.subPickerArray objectAtIndex:row][@"city"];
+        self.thirdPickerArray = [self.subPickerArray objectAtIndex:row][@"county"];
+        self.city = [self.subPickerArray objectAtIndex:row][@"name"];
         if ([self.thirdPickerArray count] !=0) {
-            self.area = [self.thirdPickerArray objectAtIndex:0];
+            self.area = [self.thirdPickerArray objectAtIndex:0][@"name"];
+            self.cityid = [self.thirdPickerArray objectAtIndex:row][@"id"];
         }
         else{
             self.area = @"";
@@ -185,7 +230,8 @@
     }
     else{
         if ([self.thirdPickerArray count] !=0) {
-            self.area = [self.thirdPickerArray objectAtIndex:row];
+            self.area = [self.thirdPickerArray objectAtIndex:row][@"name"];
+            self.cityid = [self.thirdPickerArray objectAtIndex:row][@"id"];
         }
         else{
             self.area = @"";
@@ -201,8 +247,8 @@
             [self removeFromSuperview];
         }];
     if (button.tag==11) {
-        if (_delegate && [self.delegate respondsToSelector:@selector(addressed:)]) {
-            [self.delegate addressed:[NSString stringWithFormat:@"%@%@%@",self.prvoice,self.city,self.area]];
+        if (_delegate && [self.delegate respondsToSelector:@selector(addressed:cityid:)]) {
+            [self.delegate addressed:[NSString stringWithFormat:@"%@%@%@",self.prvoice,self.city,self.area]cityid:self.cityid];
         }
     }
 }

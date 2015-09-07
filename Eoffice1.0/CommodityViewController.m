@@ -17,12 +17,15 @@
 #import "CategoryBig.h"
 #import "SingleModel.h"
 #import "CMDetailsViewController.h"
-
+#import "ButtonImageWithTitle.h"
 @interface CommodityViewController ()
 
 @property(nonatomic, strong)UISearchBar *searchBar;
 
 @property(nonatomic, strong)NSMutableArray *datas;
+
+@property(nonatomic,strong)UIScrollView *myscrollview;
+
 @end
 
 @implementation CommodityViewController
@@ -40,7 +43,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     //    UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"＜商品" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBtn)];
     //    [self.navigationItem setLeftBarButtonItem:logoutItem];
-    self.view.backgroundColor = [UIColor whiteColor];
+    
+//    self.contentTableView.scrollEnabled = NO;
+//    self.contentScrollView.showsVerticalScrollIndicator = NO
     
     UIButton *cbt = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, 20, 40)];
     [cbt addTarget:self action:@selector(openOrCloseLeftList) forControlEvents:UIControlEventTouchUpInside];
@@ -80,8 +85,9 @@
     self.searchBar.layer.borderColor = [[UIColor blackColor]CGColor];
     self.searchBar.layer.borderWidth = 1;
 
-    [self button];
+//    [self button];
     
+
     UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 280, 320, 80)];
     imageview.image = [UIImage imageNamed:@"heibaiyitiji"];
     imageview.userInteractionEnabled = YES;
@@ -141,7 +147,24 @@
         }
         //刷新表
         
-        [self button];
+        for (NSInteger i=0; i<self.datas.count; i++) {
+            CategoryBig *model = [[CategoryBig alloc]init];
+            model = self.datas[i];
+            NSArray *imageName = @[@"pos1",@"zhizhang1",@"diannao1",@"dayingji1",@"chuanzhengji1"];
+            ButtonImageWithTitle  *button = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(15+(i%3)*((SCREEN_WIDTH-60)/3)+(i%3)*15, 120+(i/3)*70, (SCREEN_WIDTH-60)/3, (SCREEN_WIDTH-55)/4)];
+            [button setImage:[UIImage imageNamed:imageName[i]] forState:UIControlStateNormal];
+            [button setTitle:model.name forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:12];
+            button.titleLabel.textAlignment = NSTextAlignmentCenter;
+            [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            button.tag = 1000+i;
+            [button addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+            button.backgroundColor = [UIColor whiteColor];
+//          button.contentHorizontalAlignment=UIControlContentHorizontalAlignmentCenter;
+            [self.view addSubview:button];
+        }
+        
+//        [self button];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
@@ -165,7 +188,6 @@
     int m = 20;
     int n = 160;
     
-    
     NSArray *imageName = @[@"pos1",@"zhizhang1",@"diannao1",@"dayingji1",@"chuanzhengji1"];
     for (int i = 0; i<self.datas.count; i++) {
         if (i == 0 || i%3 != 0) {
@@ -176,8 +198,8 @@
             [paperBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
             [paperBtn setImage:[UIImage imageNamed:imageName[i]] forState:UIControlStateNormal];
             paperBtn.tag = 1000+i;
-            
             [self.view addSubview:paperBtn];
+            
             x = x +50+50;
             
             UILabel *paperLB = [[UILabel alloc]initWithFrame:CGRectMake(m, n, 80, 20)];

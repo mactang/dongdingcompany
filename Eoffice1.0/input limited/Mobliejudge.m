@@ -75,8 +75,14 @@
     checkBit = [checkString substringWithRange:NSMakeRange(remainder,1)];// 判断校验位
     return [checkBit isEqualToString:[[value substringWithRange:NSMakeRange(17,1)] uppercaseString]];
 }
-
--(BOOL)isChinese:(NSString *)value
+/*邮箱验证 MODIFIED BY HELENSONG*/
++(BOOL)isValidateEmail:(NSString *)email
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:email];
+}
++(BOOL)isChinese:(NSString *)value
 {
     NSString *match=@"^[\u4E00-\u9FA5]{2,4}$";
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF matches %@", match];

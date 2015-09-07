@@ -1,6 +1,5 @@
 //
 //  MyAlertView.m
-//  315酒店
 //
 //  Created by Francis on 15-1-26.
 //  Copyright (c) 2015年 Francis. All rights reserved.
@@ -40,6 +39,7 @@ NSInteger check = 1;
 
 +(void)startCheckNetwork:(NSString *)title message:(NSArray *)messages cancelButtonTitle:(NSString *)cancelButtonTitle buttonArray:(NSArray *)buttonArray clickButtonIndex:(ClickButtonIndex)buttonIndex dissMiss:(DissMiss)dissMiss
 {
+    
     NSString *str;
     if (check == 1) {
         _buttonIndex = [buttonIndex copy];
@@ -54,15 +54,14 @@ NSInteger check = 1;
         }
         [self createAlertView:title message:str cancelButtonTitle:cancelButtonTitle buttonArray:buttonArray];
     }
-    
-    
 }
-
 +(void)createAlertView:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelButtonTitle clickButtonIndex:(ClickButtonIndex)buttonIndex dissMiss:(DissMiss)dissMiss
 {
     if (check == 1) {
         _buttonIndex = [buttonIndex copy];
         _dissMiss = [dissMiss copy];
+        
+        
         UIAlertView *alertView = [[UIAlertView alloc]
                                   initWithTitle:title
                                   message:message

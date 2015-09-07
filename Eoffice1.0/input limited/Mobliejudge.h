@@ -13,4 +13,5 @@
 + (BOOL)verifyIDCardNumber:(NSString *)value;
 + (BOOL)isChinese:(NSString *)value;
 + (BOOL)checkChinese:(NSString *)chinese;
++(BOOL)isValidateEmail:(NSString *)email;
 @end

@@ -70,8 +70,17 @@
 //   if (![model.defaultsign isKindOfClass:[NSNull class]]) {
 //            self.clickbutton.selected = YES;
 //    }
-    titlelabel.text = model.address;
-    phonelabel.text = model.telphone;
+    if ([model.defaultsign isEqualToString:@"Y"]) {
+        self.clickbutton.selected = YES;
+    }else{
+        self.clickbutton.selected = NO;
+    }
+    titlelabel.text = model.receiver;
+    if ([model.telphone isKindOfClass:[NSNull class]]) {
+        phonelabel.text = @"暂无";
+    }else{
+        phonelabel.text = model.telphone;
+    }
     detailaddresslabel.text = model.fullAddress;
     whetherdefault.text = @"默认地址";
     self.clickbutton.tag = 100+_buttontag;

@@ -33,11 +33,11 @@
     
     CGFloat titleW = contentRect.size.width;
     
-    CGFloat titleH = contentRect.size.height/4 ;
+    CGFloat titleH = 20 ;
     
     CGFloat titleX = 0;
     
-    CGFloat titleY = contentRect.size.height/4*3 + 1;
+    CGFloat titleY = contentRect.size.height-20;
     
     contentRect = (CGRect){{titleX,titleY},{titleW,titleH}};
     
@@ -49,13 +49,13 @@
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
 
 {
-    CGFloat imageW = contentRect.size.width/4*3;
+    CGFloat imageW = contentRect.size.width/10*3;
     
-    CGFloat imageH = imageW - 2;
+    CGFloat imageH = imageW+2;
     
-    CGFloat imageX = 7;
+    CGFloat imageX = (contentRect.size.width-(contentRect.size.width/10*3))/2;
     
-    CGFloat imageY = 1;
+    CGFloat imageY = 10;
     
     contentRect = (CGRect){{imageX,imageY},{imageW,imageH}};
     

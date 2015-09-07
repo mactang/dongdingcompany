@@ -7,7 +7,6 @@
 //
 
 #import "CalculateStringSpace.h"
-
 @implementation CalculateStringSpace
 +(CGSize)sizeWithString:(NSString *)string font:(UIFont *)font constraintSize:(CGSize)constrainSize
 {
@@ -19,7 +18,6 @@
                                     attributes:@{NSFontAttributeName: font}
                                        context:nil];
     size = rect.size;
-    
     return size;
 }
 @end

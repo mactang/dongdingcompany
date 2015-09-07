@@ -80,7 +80,6 @@
         self.cellbutton = [UIButton buttonWithType:UIButtonTypeCustom];
         self.cellbutton.frame = CGRectMake(SCREEN_WIDTH-40, 5, 30, 30);
         self.cellbutton.backgroundColor = [UIColor clearColor];
-        self.cellbutton.selected = NO;
         [self.cellbutton setImage:IMAGE_MYSELF(@"确认40灰色.png") forState:UIControlStateNormal];
         [self.cellbutton setImage:IMAGE_MYSELF(@"蓝色确认40.png") forState:UIControlStateSelected];
         [self.cellbutton addTarget:self action:@selector(clickPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -94,6 +93,7 @@
             self.textfield = [[UITextField alloc]initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH-20, 30)];
             self.textfield.font = [UIFont systemFontOfSize:17];
             self.textfield.delegate = self;
+            self.textfield.textColor = [UIColor lightGrayColor];
             [self.contentView addSubview:self.textfield];
             self.detaillabel = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(self.textfield), CGRectGetMaxY(self.textfield.frame)+5, 100, 13)];
             self.detaillabel.font = [UIFont systemFontOfSize:13];
@@ -117,10 +117,10 @@
     button.selected = !button.selected;
     if (_delegate && [_delegate respondsToSelector:@selector(buttonclick:)]) {
         if (button.selected) {
-            [_delegate buttonclick:@"y"];
+            [_delegate buttonclick:@"Y"];
         }
         else{
-            [_delegate buttonclick:@"n"];
+            [_delegate buttonclick:@"N"];
         }
     }
 }
@@ -137,11 +137,21 @@
     }
     self.label.text = message;
     self.label.tag = 10+_indexnumber;
-    self.textfield.placeholder = message;
+    if (![message isKindOfClass:[NSNull class]]) {
+         self.textfield.text = message;
+    }else{
+        self.textfield.text = @"暂无";
+    }
     self.textfield.tag = 10+_indexnumber;
 }
 -(void)setDetailstring:(NSString *)detailstring{
     self.detaillabel.text = detailstring;
+    if ([detailstring isEqualToString:@"Y"]||[detailstring isEqualToString:@"N"]) {
+        self.detaillabel.hidden = YES;
+        if ([detailstring isEqualToString:@"Y"]) {
+            self.cellbutton.selected = YES;
+        }
+    }
 }
 -(void)setIndexnumber:(NSInteger)indexnumber{
     _indexnumber = indexnumber;
@@ -154,11 +164,14 @@
     return YES;
 }
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (_delegate &&[_delegate respondsToSelector:@selector(textfieldtext:texttag:)]) {
+        [_delegate textfieldtext:text texttag:textField.tag];
+    }
     if (string.length == 0) {
         return YES;
     }
-    if (textField.tag==14||textField.tag==15) {
+    if (textField.tag==14) {
         if ([@"1234567890" rangeOfString:string].location == NSNotFound && string.length !=0)
         {
             return NO;
@@ -167,10 +180,7 @@
             return NO;
         }
     }
-    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    if (_delegate &&[_delegate respondsToSelector:@selector(textfieldtext:texttag:)]) {
-        [_delegate textfieldtext:text texttag:textField.tag];
-    }
+    
 //    NSLog(@"%ld",textField.tag);
 //    NSLog(@"%@",text);
 //    NSLog(@"%@",string);

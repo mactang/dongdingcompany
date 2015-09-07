@@ -9,8 +9,6 @@
 #import "ImageCarousel.h"
 #import "UIImageView+WebCache.h"
 #import "MyAlertView.h"
-#import "RequestAndJSON.h"
-//#import "SearchView.h"
 @interface ImageCarousel()<UIScrollViewDelegate>
 {
     NSTimer *timer;
@@ -57,7 +55,6 @@
     }
     return self;
 }
-
 /**
  *  初始化数据源
  *
@@ -75,7 +72,7 @@
     imageArray = [NSMutableArray array];
 
     if ([parameter[1][@"URL"] isEqualToString:@""]) {
-        [self startRefreshShop];
+//        [self startRefreshShop];
     }
     else
     {
@@ -144,70 +141,70 @@
 }
 
 
-//刷新数据
-- (void)startRefresh
-{
-    [activityIndicatorView startAnimating];
-    RequestAndJSON *requestJson = [[RequestAndJSON alloc] init];
-    [requestJson asynchronousPOSTRequestOther:arrayParameter[1][@"URL"] params:arrayParameter[0] completionResultSuccess:^(id content) {
-        [arrayData removeAllObjects];
-        [arrayData addObjectsFromArray:content[@"data"]];
-        if (content[@"data"] != [NSNull null]) {
-            for (int i = 0; i < [content[@"data"] count]; i ++) {
-                NSURL *url = [NSURL URLWithString:content[@"data"][i][@"img_url_path"]];
-                if (!url) {
-                    continue;
-                }
-                [imageArray addObject:url];
-                
-            }
-            if ([imageArray count] > 0) {
-                [self loadImage];
-                [self startTimer];
-            }
-        }
-    } failure:^(NSInteger buttonIndex) {
-        [activityIndicatorView stopAnimating];
-        if(buttonIndex == 0)
-        {
-            [self startRefresh];
-        }
-
-    }];
-
-}
-
-- (void)startRefreshShop
-{
-    [activityIndicatorView startAnimating];
-    RequestAndJSON *requestJson = [[RequestAndJSON alloc] init];
-    [requestJson asynchronousPOSTRequest:arrayParameter[1][@"URL"] params:arrayParameter[0] completionResultSuccess:^(id content) {
-        [arrayData removeAllObjects];
-        [arrayData addObjectsFromArray:content[@"data"][@"adv_list"]];
-        if (content[@"data"] != [NSNull null]) {
-            for (int i = 0; i < [content[@"data"][@"adv_list"] count]; i ++) {
-                NSURL *url = [NSURL URLWithString:content[@"data"][@"adv_list"][i][@"image"]];
-                if (!url) {
-                    continue;
-                }
-                [imageArray addObject:url];
-                
-            }
-            if ([imageArray count] > 0) {
-                [self loadImage];
-                [self startTimer];
-            }
-        }
-    } failure:^(NSInteger buttonIndex) {
-        [activityIndicatorView stopAnimating];
-        if(buttonIndex == 0)
-        {
-            [self startRefresh];
-        }
-        
-    }];
-    
-}
+////刷新数据
+//- (void)startRefresh
+//{
+//    [activityIndicatorView startAnimating];
+//    RequestAndJSON *requestJson = [[RequestAndJSON alloc] init];
+//    [requestJson asynchronousPOSTRequestOther:arrayParameter[1][@"URL"] params:arrayParameter[0] completionResultSuccess:^(id content) {
+//        [arrayData removeAllObjects];
+//        [arrayData addObjectsFromArray:content[@"data"]];
+//        if (content[@"data"] != [NSNull null]) {
+//            for (int i = 0; i < [content[@"data"] count]; i ++) {
+//                NSURL *url = [NSURL URLWithString:content[@"data"][i][@"img_url_path"]];
+//                if (!url) {
+//                    continue;
+//                }
+//                [imageArray addObject:url];
+//                
+//            }
+//            if ([imageArray count] > 0) {
+//                [self loadImage];
+//                [self startTimer];
+//            }
+//        }
+//    } failure:^(NSInteger buttonIndex) {
+//        [activityIndicatorView stopAnimating];
+//        if(buttonIndex == 0)
+//        {
+//            [self startRefresh];
+//        }
+//
+//    }];
+//
+//}
+//
+//- (void)startRefreshShop
+//{
+//    [activityIndicatorView startAnimating];
+//    RequestAndJSON *requestJson = [[RequestAndJSON alloc] init];
+//    [requestJson asynchronousPOSTRequest:arrayParameter[1][@"URL"] params:arrayParameter[0] completionResultSuccess:^(id content) {
+//        [arrayData removeAllObjects];
+//        [arrayData addObjectsFromArray:content[@"data"][@"adv_list"]];
+//        if (content[@"data"] != [NSNull null]) {
+//            for (int i = 0; i < [content[@"data"][@"adv_list"] count]; i ++) {
+//                NSURL *url = [NSURL URLWithString:content[@"data"][@"adv_list"][i][@"image"]];
+//                if (!url) {
+//                    continue;
+//                }
+//                [imageArray addObject:url];
+//                
+//            }
+//            if ([imageArray count] > 0) {
+//                [self loadImage];
+//                [self startTimer];
+//            }
+//        }
+//    } failure:^(NSInteger buttonIndex) {
+//        [activityIndicatorView stopAnimating];
+//        if(buttonIndex == 0)
+//        {
+//            [self startRefresh];
+//        }
+//        
+//    }];
+//    
+//}
 
 
 #pragma mark - UIScrollViewDelegate methods

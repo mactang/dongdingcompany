@@ -12,7 +12,7 @@
 #import "AFNetworking.h"
 #import "CityChooseView.h"
 #import "Config.h"
-
+#import "Mobliejudge.h"
 @interface AddAddressController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,citychoosedelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *addressLB;
@@ -20,6 +20,7 @@
 @property(nonatomic,strong)UITextField *phoneLB;
 @property(nonatomic,strong)UITextField *emailLB;
 @property(nonatomic,strong)UITextField *street;
+@property(nonatomic,copy)NSString *cityid;
 @end
 
 @implementation AddAddressController
@@ -53,40 +54,6 @@
     [self.view addSubview:confirmbutton];
     // Do any additional setup after loading the view.
 }
--(void)confirmbuttonPresed{
-    
-    //增加地址
-//#define ADDRESSEDADD @"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action?address=%@&telPhone=%@&receiver=%@&post=%@&id=%@"
-    UILabel *addresslabel = (UILabel *)[self.view viewWithTag:10];
-//    NSString *datastring = [NSString stringWithFormat:ADDRESSEDADD,addresslabel.text,_phoneLB.text,_nameLB.text,_emailLB.text,@"110101"];
-    
-    
-    
-    SingleModel *model = [SingleModel sharedSingleModel];
-    
-    NSString *path= [NSString stringWithFormat:@"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action;jsessionid=%@?userkey=%@",model.jsessionid,model.userkey];
-    NSLog(@"%@",path);
-
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
-   //    NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:addresslabel.text,@"address",_phoneLB.text,@"telPhone",_nameLB.text,@"receiver",_emailLB.text,@"post",@"110101",@"id",nil];
-//    NSLog(@"%@",dicdata);
-    NSDictionary *parameter=@{@"address":addresslabel.text,@"telPhone":_phoneLB.text,@"receiver":_nameLB.text,@"post":_emailLB.text,@"id":@"110101"};
-    [manager POST:path parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
-//        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@",string);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
-
-}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 6;
 }
@@ -115,7 +82,7 @@
     if (indexPath.row == 0) {
         UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 280, 20)];
         LB.font = [UIFont systemFontOfSize:17];
-        LB.text = @"四川省成都市金牛区";
+        LB.text = @"请选择区域";
         LB.tag = 10;
         LB.textColor = [UIColor blackColor];
         [cell addSubview:LB];
@@ -131,18 +98,8 @@
         self.street.placeholder = @"请输入街道名称";
         self.street.font = [UIFont systemFontOfSize:17];
         self.street.delegate = self;
-//      self.street.clearButtonMode = UITextFieldViewModeAlways;
+      self.street.clearButtonMode = UITextFieldViewModeAlways;
         [cell addSubview:self.street];
-//        UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 280, 20)];
-//        LB.font = [UIFont systemFontOfSize:17];
-//        LB.text = @"请选择街道";
-//        LB.textColor = [UIColor grayColor];
-//        [cell addSubview:LB];
-//        UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(LB.frame)+5, 280, 20)];
-//        LB1.font = [UIFont systemFontOfSize:12];
-//        LB1.text = @"街道";
-//        LB1.textColor = [UIColor grayColor];
-//        [cell addSubview:LB1];
     }
     if (indexPath.row == 2) {
         _addressLB = [[UITextField alloc]initWithFrame:CGRectMake(10, 10, 300, 30)];
@@ -183,17 +140,99 @@
     return cell;
     
 }
+-(void)confirmbuttonPresed{
+    UILabel *quitlabel = (UILabel *)[self.view viewWithTag:10];
+    UIAlertView *alertview;
+    NSString *string;
+    if ([quitlabel.text isEqualToString:@"请选择区域"]) {
+        string = @"请选择区域位置";
+    }
+    else if ([self.street.text isEqualToString:@""]) {
+        string = @"请输入街道名称";
+        
+    }
+    else if ([_addressLB.text isEqualToString:@""]){
+        string = @"请输入详细地址";
+    }
+    else if ([_nameLB.text isEqualToString:@""]){
+        string = @"请输入收货人姓名";
+    }
+    else if ([Mobliejudge valiMobile:_phoneLB.text]){
+        string = [Mobliejudge valiMobile:_phoneLB.text];
+    }
+    else if (![Mobliejudge isValidateEmail:_emailLB.text]){
+        string = @"请输入正确的邮箱";
+    }
+    else{
+        [self datarequest];
+        return;
+    }
+    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertview show];
+}
+-(void)datarequest{
+    //增加地址
+    //#define ADDRESSEDADD @"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action?address=%@&telPhone=%@&receiver=%@&post=%@&id=%@"
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    
+    UILabel *addresslabel = (UILabel *)[self.view viewWithTag:10];
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    NSString *path= [NSString stringWithFormat:@"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action;jsessionid=%@?userkey=%@",model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    NSDictionary *parameter=@{@"address":addresslabel.text,@"telPhone":_phoneLB.text,@"receiver":_nameLB.text,@"post":_emailLB.text,@"id":self.cityid};
+    [manager POST:path parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        UIAlertView *alertview;
+        NSString *stirng;
+        if ([dic[@"status"] integerValue]==1) {
+            stirng = @"新增地址成功";
+        }
+        else{
+            stirng  = @"新增失败";
+        }
+        alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:stirng delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        if ([stirng isEqualToString:@"新增地址成功"]) {
+            alertview.tag = 20;
+            self.navigationController.navigationBar.translucent = YES;
+            [self.navigationController popViewControllerAnimated:YES];
+            if (_delegate &&[_delegate respondsToSelector:@selector(reloaddata)]) {
+                [_delegate reloaddata];
+            }
+        }
+        else{
+            alertview.tag = 21;
+        }
+        [alertview show];
+        //  NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+        //  NSLog(@"%@",string);
+        [hud hide:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"%@",error);
+    }];
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row==0) {
         CityChooseView *cithchoose = [[CityChooseView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
         cithchoose.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.4];
         cithchoose.delegate = self;
         [self.view addSubview:cithchoose];
-        
     }
 }
 #pragma mark - citydelegate
--(void)addressed:(NSString *)address{
+-(void)addressed:(NSString *)address cityid:(NSString *)cityid{
+    self.cityid = cityid;
     UILabel *addressLabel = (UILabel *)[self.view viewWithTag:10];
     addressLabel.text = address;
 }
@@ -213,7 +252,6 @@
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
 }
-
 
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];

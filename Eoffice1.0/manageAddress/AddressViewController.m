@@ -15,7 +15,7 @@
 #import "SingleModel.h"
 #import "ChangeAddrssController.h"
 #import "ManageAddressCell.h"
-@interface AddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,buttondelegate>{
+@interface AddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,buttondelegate,reloaddelegate,reloadAddressdelegate>{
      UIButton *anotherButton;
 }
 @property(nonatomic,strong)UITableView *tableView;
@@ -85,36 +85,46 @@
     // Do any additional setup after loading the view.
 }
 -(void)releaseInfo:(UIBarButtonItem *)button{
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,self.dataarray[self.signbutton][@"addressId"],model.userkey];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        [hud hide:YES];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic[@"info"]);
         [_tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
 
 
 }
 - (void)downData{
-
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:ADDRESS,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        [hud hide:YES];
+        [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-      
+        NSLog(@"%@",dic);
+        [self.dataarray removeAllObjects];
+        [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]) {
             for (NSInteger i=0; i<[dic[@"data"]count]; i++) {
-                if (![dic[@"data"][i][@"defaultAD"]isKindOfClass:[NSNull class]]) {
+                if (![dic[@"data"][i][@"defaultAD"]isEqualToString:@"N"]) {
                     self.signbutton = i;
                 }
             }
@@ -129,6 +139,7 @@
         [_tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
     
@@ -136,8 +147,12 @@
 
 -(void)addPress{
     AddAddressController *add = [[AddAddressController alloc]init];
-    
+    add.delegate = self;
     [self.navigationController pushViewController:add animated:YES];
+}
+#pragma mark reloadata
+-(void)reloaddata{
+    [self downData];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -172,15 +187,13 @@
     return cell;
 }
 -(void)checkPressed:(UIButton *)button{
-   
+    NSLog(@"++++++++");
 }
 - (void)leftItemClicked{
-    
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-
 //-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 //
 //    if (buttonIndex == 0) {
@@ -195,18 +208,18 @@
 //
 //    }
 //}
-- (void)isPublicBtnPress:(UIButton*)btn{
-    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"确定删除这条地址吗" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    //设置提示框样式（可以输入账号，密码）
-    alertView.alertViewStyle = UIAlertViewStyleDefault;
-    alertView.delegate = self;
-    [alertView show];
-    btn.selected = !btn.selected;
-    _btnNumber = btn.tag;
-    
-    NSLog(@"aaa");
-    
-}
+//- (void)isPublicBtnPress:(UIButton*)btn{
+//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"确定删除这条地址吗" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    //设置提示框样式（可以输入账号，密码）
+//    alertView.alertViewStyle = UIAlertViewStyleDefault;
+//    alertView.delegate = self;
+//    [alertView show];
+//    btn.selected = !btn.selected;
+//    _btnNumber = btn.tag;
+//    
+//    NSLog(@"aaa");
+//    
+//}
 #pragma mark buttondelegate methds
 -(void)buttondelegate:(UIButton *)button{
     anotherButton.selected  = NO;
@@ -253,6 +266,7 @@
         
          NSIndexPath *path = [NSIndexPath indexPathForRow:_btnNumber inSection:0];
         [self.datas removeObjectAtIndex:_btnNumber];
+        [self.dataarray removeObjectAtIndex:_btnNumber];
         [_tableView beginUpdates];
         [_tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
         [_tableView endUpdates];
@@ -264,18 +278,19 @@
     
     NSLog(@"row--%@",_addressId);
 //    http://192.168.0.170:8080/eoffice/phone/order!delAddress.action?id=?
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     NSString *path= [NSString stringWithFormat:ADDRESSDELTE,self.dataarray[_btnNumber][@"addressId"]];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [hud hide:YES];
         NSLog(@"%@",dic);
         NSArray *array = dic[@"status"];
         NSString *string = [NSString stringWithFormat:@"%@",array];
@@ -285,28 +300,30 @@
             
         }
         else{
+            
         }
-        
-        
-        
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
-    
-    
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     AddressModel *model = self.datas[indexPath.row];
-    
     SingleModel *single = [SingleModel sharedSingleModel];
     single.addressId = model.addressId;
 
-    ChangeAddrssController *change = [[ChangeAddrssController alloc]init];
+    ChangeAddrssController *change = [[ChangeAddrssController alloc]initwithtitle:self.dataarray[indexPath.row]];
+    change.view.frame = self.view.bounds;
+    change.delegate = self;
     [self.navigationController pushViewController:change animated:YES];
     
 }
-
+#pragma mark reloadAddressdelegate methds
+-(void)reloadAddress{
+    
+    [self downData];
+    
+}
 ////继承该方法时,左右滑动会出现删除按钮(自定义按钮),点击按钮时的操作
 //- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
 //    

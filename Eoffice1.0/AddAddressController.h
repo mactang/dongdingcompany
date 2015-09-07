@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol reloaddelegate <NSObject>
+-(void)reloaddata;
+@end
 @interface AddAddressController : UIViewController
-
+@property(nonatomic,assign)id<reloaddelegate>delegate;
 @end

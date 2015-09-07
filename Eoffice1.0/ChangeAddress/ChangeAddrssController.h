@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol reloadAddressdelegate <NSObject>
+-(void)reloadAddress;
+@end
 @interface ChangeAddrssController : UIViewController
-
+-(instancetype)initwithtitle:(NSDictionary *)dicdata;
+@property(nonatomic,assign)id<reloadAddressdelegate>delegate;
 @end

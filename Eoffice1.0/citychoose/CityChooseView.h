@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @protocol citychoosedelegate <NSObject>
--(void)addressed:(NSString *)address;
+-(void)addressed:(NSString *)address cityid:(NSString *)cityid;
 @end
 @interface CityChooseView : UIView<NSXMLParserDelegate>
 @property(nonatomic,assign)id<citychoosedelegate>delegate;
