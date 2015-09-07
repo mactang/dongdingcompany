@@ -57,7 +57,7 @@
     if (self)
     {
         self.menuItems = aMenuItems;
-        
+        _currentNumber = 1;
         // Adding Container Button which will take care of hiding menu when user taps outside of menu area
         self.containerButton = [[UIButton alloc] init];
        [self.containerButton setBackgroundColor:CONTAINER_BG_COLOR];
@@ -94,7 +94,7 @@
         self.frame = CGRectMake(0, 110, 320, 440);
         
         [self.containerButton addSubview:self];
-        
+    
        // [self.deleteBtn addSubview:self];
     }
     
@@ -244,7 +244,7 @@
         
         _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
         _numberLb1.backgroundColor = [UIColor whiteColor];
-        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
+        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"  %d",_currentNumber]];
         [_numberLb1 setText:string];
         [_numberLb1 setTextColor:[UIColor blackColor]];
         _numberLb1.clipsToBounds = YES;
@@ -329,7 +329,7 @@
     
     
     if (btn.tag ==1) {
-        if (_currentNumber>0) {
+        if (_currentNumber>1) {
             
             
             _currentNumber--;

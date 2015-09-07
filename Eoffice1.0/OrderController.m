@@ -18,11 +18,13 @@
 #import "GYZAlterview.h"
 #import "InvoiceAlterView.h"
 #import "DispatchingView.h"
+#import "SingleModel.h"
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
 @property(nonatomic, strong)UIButton *numberBtn1;
 @property(nonatomic,strong)UILabel *numberLb1;
+@property(nonatomic,strong)NSString *price;
 @end
 
 @implementation OrderController
@@ -168,11 +170,13 @@
         priceFLb.textColor = [UIColor blackColor];
         priceFLb.text = @"￥";
         [cell addSubview:priceFLb];
-        
+        SingleModel *single = [SingleModel sharedSingleModel];
         priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame), lb1.frame.origin.y+4, 80, 20)];
         priceLb.font = [UIFont systemFontOfSize:13];
         priceLb.textColor = [UIColor blackColor];
-        priceLb.text = @"6800.00";
+        NSLog(@"%@",single.price);
+        priceLb.text = [NSString stringWithFormat:@"%@",single.price];
+        _price = single.price;
         [cell addSubview:priceLb];
         
         UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, CGRectGetMaxY(lb1.frame), 30, 20)];
@@ -289,21 +293,21 @@
     }
     }
     if (indexPath.section == 2) {
-        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(140, 10, 35, 20)];
-        [btn1 setTitle:@"合计 :" forState:UIControlStateNormal];
-        [btn1 setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(140, 10, 45, 20)];
+        [btn1 setTitle:@"合计 :￥" forState:UIControlStateNormal];
+        [btn1 setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
         btn1.titleLabel.font = [UIFont systemFontOfSize:12];
         [cell addSubview:btn1];
         
         totalPice = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), 10, 60, 20)];
         totalPice.text = priceLb.text;
-        totalPice.textColor = [UIColor redColor];
+        totalPice.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         totalPice.font = [UIFont systemFontOfSize:12];
         [cell addSubview:totalPice];
         
         UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalPice.frame), 10, 70, 50)];
         [btn3 setTitle:@"确定" forState:UIControlStateNormal];
-        btn3.backgroundColor = [UIColor redColor];
+        btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         btn3.clipsToBounds = YES;
         btn3.layer.cornerRadius = 5;
         btn3.tag = 1000;
@@ -389,12 +393,13 @@
             
             
             _currentNumber--;
-            NSLog(@"%d",_currentNumber);
+            NSLog(@"%@",_price);
+            NSLog(@"priceLb-%d",[(priceLb.text)intValue]);
             
             NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
             [_numberLb1 setText:string];
             
-            int price = [(priceLb.text)intValue]/_currentNumber;
+            int price = ([(totalPice.text)intValue])-([(_price)intValue]);
             
             totalPice.text = [NSString stringWithFormat:@"%d",price];
             
@@ -404,6 +409,7 @@
         _currentNumber++;
         NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
         [_numberLb1 setText:string];
+        
         int price = [(priceLb.text)intValue]*_currentNumber;
         
         totalPice.text = [NSString stringWithFormat:@"%d",price];

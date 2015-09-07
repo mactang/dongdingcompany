@@ -17,7 +17,7 @@
     if (self = [super init]) {
         
         self.name = dic[@"name"];
-        self.shortname = dic[@"shortname"];
+        self.shorname = dic[@"shorname"];
         self.gender = dic[@"gender"];
         self.birthday = dic[@"birthday"];
         

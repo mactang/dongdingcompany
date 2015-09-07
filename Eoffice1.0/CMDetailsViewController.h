@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CMDetailsViewController : UIViewController
-@property(nonatomic, strong)NSArray *datas;
+
 - (void)setNewMessageItemBadgeValue:(NSString*)value;
 @end

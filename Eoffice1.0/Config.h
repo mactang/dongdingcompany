@@ -45,19 +45,24 @@
 //用户注册接口
 #define REGISTER @"http://192.168.0.65:8080/eoffice/phone/user!Register.action?username=TTTTT&password=test"
 
+//
+#define OFFICE @"http://192.168.0.65:8080/eoffice/";
+
 //商品
 #define COMMODITYMIDDLE @"http://192.168.0.65:8080/eoffice/phone/product!getMidCategory.action"
 //商品详情
-#define MAINTAINDETAIL @"http://192.168.0.65:8080/eoffice/phone/order!addBasket.action;jsessionid=%@?userkey=%@&goodsId=%@"
+#define MAINTAINDETAIL @"http://192.168.0.65:8080/eoffice/phone/product!getGoodsDetail.action?paraId=%@&goodsId=%@&cPartnerId=%@"
 #define MAINTAINSORTSSMART @"http://192.168.0.65:8080/eoffice/phone/product!getSubCategory.action?cartId=%@"
 
 #define MAINTAINSORTS @"http://192.168.0.65:8080/eoffice/phone/product!getMidCategory.action"
 
 #define MAINTAIN @"http://192.168.0.65:8080/eoffice/phone/product!getSubCategory.action?cartId=%@"
 
+#define PARAMETER @"http://192.168.0.65:8080/eoffice/phone/product!getParameters.action?paraId=%@"
+
 //电脑
 #define COMPUTER @"http://192.168.0.65:8080/eoffice/phone/product!getMidGoodsList.action?cartId=%@&page=0"
-#define COMPUTERDETAIL @"http://192.168.0.65:8080/eoffice/phone/product!getGoodsDetail.action?paraId=%@&goodsId=%@&cPartnerId=%@"
+
 //购物车接口
 #define SHOPCAR @"http://192.168.0.65:8080/eoffice/phone/order!getBasket.action;jsessionid=%@?userkey=%@"
 

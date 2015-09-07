@@ -91,7 +91,6 @@
         _tableView.dataSource = self;
         _tableView.scrollEnabled = NO;
         [self addSubview:_tableView];
-                
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     }
     return self;
@@ -228,30 +227,32 @@
         
         if (!selectIndexPath) {//第一次
             selectIndexPath = indexPath;
-        //    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height+150);
+       
             _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
-//            _leftbtn.frame = CGRectMake(_leftbtn.frame.origin.x, _leftbtn.frame.origin.y+130, _leftbtn.frame.size.width, _leftbtn.frame.size.height);
-//            _rightbtn.frame = CGRectMake(_rightbtn.frame.origin.x, _rightbtn.frame.origin.y+130, _rightbtn.frame.size.width, _rightbtn.frame.size.height);
+
         }
         
-    selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
     invoiceSelector = !invoiceSelector;
-    
     BOOL isOtherIndex = NO;
     
-    if (isOtherIndex && !invoiceSelector) {
-        invoiceSelector = YES;
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-       // self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
-      //  _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-   //     _leftbtn.frame = CGRectMake(_leftbtn.frame.origin.x, _leftbtn.frame.origin.y, _leftbtn.frame.size.width, _leftbtn.frame.size.height);
-//        _rightbtn.frame = CGRectMake(_rightbtn.frame.origin.x, _rightbtn.frame.origin.y, _rightbtn.frame.size.width, _rightbtn.frame.size.height);
+        if (selectIndexPath.row != indexPath.row) {
+            isOtherIndex = YES;
+            
+            _tableView.frame = CGRectMake(0, -15, 300, 300);
+        }
+        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        _tableView.frame = CGRectMake(0, -15, 300, 300);
+        if (isOtherIndex && !invoiceSelector) {
+            invoiceSelector = YES;
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+             _tableView.frame = CGRectMake(0, -15, 300, 300);
+        }
         
     }
-        
-    }
+    
+
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
