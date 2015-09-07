@@ -27,6 +27,8 @@
 @property(nonatomic,strong)NSString *goodsId;
 @property(nonatomic,strong)NSString *cPartnerId;
 
+@property(nonatomic,strong)NSString *price;
+
 //通过类方法，创建唯一的对象
 +(SingleModel *)sharedSingleModel;
 

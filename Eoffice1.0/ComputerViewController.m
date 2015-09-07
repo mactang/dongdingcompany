@@ -101,6 +101,7 @@ static const CGFloat MJDuration = 2.0;
 }
 
 -(void)data{
+    
     SingleModel *single = [SingleModel sharedSingleModel];
     NSLog(@"single.name--%@",single.ids);
     
@@ -238,8 +239,9 @@ static const CGFloat MJDuration = 2.0;
     //  NSLog(@"%@",model.price);
     UIImageView *imageView = [[UIImageView  alloc]initWithFrame:CGRectMake(10, 5, 130, 140)];
     
-    [imageView setImageWithURL:[NSURL URLWithString:model.imgUrl]];
-    NSLog(@"%@",model.imgUrl);
+    NSString *string = OFFICE
+    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",string,model.imgUrl]]];
+    NSLog(@"%@",imageView.image);
     [cell addSubview:imageView];
     for (UIView *view in cell.contentView.subviews) {
         [view removeFromSuperview];
@@ -275,7 +277,9 @@ static const CGFloat MJDuration = 2.0;
     sing.wGoodsId = model.wGoodsId;
     sing.paraId = model.productId;
     sing.goodsId = model.wGoodsId;
+    NSLog(@"%@",sing.goodsId);
     sing.cPartnerId = model.bparterId;
+    sing.price = model.price;
     CMDetailsViewController *detail = [[CMDetailsViewController alloc]init];
     
     [self.navigationController pushViewController:detail animated:YES];

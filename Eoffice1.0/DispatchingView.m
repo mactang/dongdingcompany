@@ -87,7 +87,19 @@
         self.layer.cornerRadius = 5.0;
         
         
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 300) style:UITableViewStyleGrouped];
+        
+        if (invoiceSelector == YES) {
+            _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 340) style:UITableViewStyleGrouped];
+            
+        }
+
+        
+    
+    else{
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 240) style:UITableViewStyleGrouped];
+    }
+
+    
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollEnabled = NO;
@@ -214,7 +226,7 @@
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
+//    _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -223,10 +235,9 @@
         
         if (!selectIndexPath) {//第一次
             selectIndexPath = indexPath;
-            //    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height+150);
-            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
-            //            _leftbtn.frame = CGRectMake(_leftbtn.frame.origin.x, _leftbtn.frame.origin.y+130, _leftbtn.frame.size.width, _leftbtn.frame.size.height);
-            //            _rightbtn.frame = CGRectMake(_rightbtn.frame.origin.x, _rightbtn.frame.origin.y+130, _rightbtn.frame.size.width, _rightbtn.frame.size.height);
+            
+//            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
+            
         }
         
         selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
@@ -236,14 +247,17 @@
         
         BOOL isOtherIndex = NO;
         
+        if (selectIndexPath.row != indexPath.row) {
+            isOtherIndex = YES;
+            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
+        }
+        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
         if (isOtherIndex && !invoiceSelector) {
             invoiceSelector = YES;
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            // self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.frame.size.height);
-            //  _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-            //     _leftbtn.frame = CGRectMake(_leftbtn.frame.origin.x, _leftbtn.frame.origin.y, _leftbtn.frame.size.width, _leftbtn.frame.size.height);
-            //        _rightbtn.frame = CGRectMake(_rightbtn.frame.origin.x, _rightbtn.frame.origin.y, _rightbtn.frame.size.width, _rightbtn.frame.size.height);
-            
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
         }
         
     }

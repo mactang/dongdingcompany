@@ -19,6 +19,7 @@
 @property(nonatomic,strong)UILabel *numberLb1;
 @property (strong,nonatomic)UIButton * tmpBtn;
 @property(nonatomic,assign)NSString *cartId;
+@property (strong,nonatomic)UIButton *selectButton;
 @end
 
 @implementation ShoppingCarController
@@ -408,19 +409,24 @@
     return cell;
 }
 -(void)colorBtnPress:(UIButton *)btn{
+    
+    _selectButton.selected = NO;
+    if(_selectButton == NO){
+        
+        _selectButton.layer.borderColor = [[UIColor grayColor] CGColor];
+        //  btn.selected = YES;
+    }
+
+    btn.selected = YES;
     if (btn.selected) {
         
         btn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         
-        btn.selected = NO;
+       // btn.selected = NO;
         
         
         
-    }else{
-    
-    btn.layer.borderColor = [[UIColor grayColor] CGColor];
-        btn.selected = YES;
-    }
+    }    _selectButton = btn;
 }
 -(void)NumBtnPress:(UIButton *)btn{
     

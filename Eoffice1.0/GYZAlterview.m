@@ -34,6 +34,7 @@
 @property (nonatomic, strong) UIButton *rightbtn;
 @property (nonatomic, strong) UIView *backimageView;
 @property(nonatomic,strong)UITableView *tableView;
+@property (nonatomic, strong) UIButton *allButton;
 
 @end
 
@@ -134,11 +135,11 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 4;
+    return 3;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 47;
+    return 60;
     
     
 }
@@ -178,16 +179,16 @@
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = payBtn;
     }
+//    if (indexPath.row == 2) {
+//        cell.textLabel.text = @"在线支付";
+//        payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        payBtn.frame = CGRectMake(0, 0, 20, 20);
+//        [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
+//        [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
+//        [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+//        cell.accessoryView = payBtn;
+//    }
     if (indexPath.row == 2) {
-        cell.textLabel.text = @"在线支付";
-        payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        payBtn.frame = CGRectMake(0, 0, 20, 20);
-        [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
-        [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
-        [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        cell.accessoryView = payBtn;
-    }
-    if (indexPath.row == 3) {
         cell.textLabel.text = @"公司转账";
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
@@ -201,7 +202,11 @@
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
-    btn.selected = !btn.selected;
+    
+    _allButton.selected = NO;
+    btn.selected = YES;
+    _allButton = btn;
+    
     
 }
 - (void)leftbtnclicked:(id)sender

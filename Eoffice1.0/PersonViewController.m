@@ -15,6 +15,7 @@
 #import "ShoppingCarController.h"
 #import "SingleModel.h"
 #import "AFNetworking.h"
+#import "RDVTabBarController.h"
 #import "PersonInformationModel.h"
 @interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
@@ -204,17 +205,21 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    
     self.navigationController.navigationBarHidden = YES;
     
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
-   
     [super viewWillDisappear:animated];
-     self.navigationController.navigationBarHidden = YES;
+    
+    self.navigationController.navigationBarHidden = YES;
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

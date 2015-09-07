@@ -152,6 +152,7 @@
 
 -(void)backPress{
     //LoginViewController *login = [[LoginViewController alloc]init];
+    self.navigationController.navigationBarHidden = YES;
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
@@ -201,7 +202,7 @@
         cell.textLabel.text = @"昵称";
         _nickName = [[UITextField alloc]initWithFrame:CGRectMake(210, 10, 100, 30)];
         _nickName.backgroundColor = [UIColor whiteColor];
-        _nickName.placeholder = [NSString stringWithFormat:@"%@",model.shortname];
+        _nickName.placeholder = [NSString stringWithFormat:@"%@",model.shorname];
         _nickName.clearButtonMode = UITextFieldViewModeAlways;
         _nickName.delegate = self;
         [cell addSubview:_nickName];
@@ -377,8 +378,8 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
-    self.navigationController.navigationBarHidden = NO;
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    self.navigationController.navigationBarHidden = YES;
     
     
     [super viewWillDisappear:animated];
