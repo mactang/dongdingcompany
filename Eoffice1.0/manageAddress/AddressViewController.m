@@ -124,8 +124,10 @@
         [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]) {
             for (NSInteger i=0; i<[dic[@"data"]count]; i++) {
-                if (![dic[@"data"][i][@"defaultAD"]isEqualToString:@"N"]) {
-                    self.signbutton = i;
+                if (dic[@"data"][i][@"defaultAD"] !=[NSNull class]) {
+                    if (![dic[@"data"][i][@"defaultAD"]isEqualToString:@"N"]) {
+                        self.signbutton = i;
+                    }
                 }
             }
             [self.dataarray addObjectsFromArray:dic[@"data"]];

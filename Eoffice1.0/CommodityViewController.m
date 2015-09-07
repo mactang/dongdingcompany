@@ -44,9 +44,6 @@
     //    UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"＜商品" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBtn)];
     //    [self.navigationItem setLeftBarButtonItem:logoutItem];
     
-//    self.contentTableView.scrollEnabled = NO;
-//    self.contentScrollView.showsVerticalScrollIndicator = NO
-    
     UIButton *cbt = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, 20, 40)];
     [cbt addTarget:self action:@selector(openOrCloseLeftList) forControlEvents:UIControlEventTouchUpInside];
     [cbt setImage:[UIImage imageNamed:@"椭圆-5.png"] forState:UIControlStateNormal];
@@ -56,6 +53,12 @@
     self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(30, 69, SCREEN_WIDTH-40, 30)];
     [self.view addSubview:self.searchBar];
     
+    self.myscrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.searchBar.frame), SCREEN_WIDTH, SCREEN_HEIGHT-CGRectGetMaxY(self.searchBar.frame))];
+    self.myscrollview.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT+200);
+    self.myscrollview.showsVerticalScrollIndicator = YES;
+    self.myscrollview.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.myscrollview];
+
     self.searchBar.backgroundColor = [UIColor lightGrayColor];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"输入商家、分类和产品";
@@ -85,32 +88,6 @@
     self.searchBar.layer.borderColor = [[UIColor blackColor]CGColor];
     self.searchBar.layer.borderWidth = 1;
 
-//    [self button];
-    
-
-    UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 280, 320, 80)];
-    imageview.image = [UIImage imageNamed:@"heibaiyitiji"];
-    imageview.userInteractionEnabled = YES;
-    [self.view addSubview:imageview];
-    
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 320, 80)];
-    [btn addTarget:self action:@selector(btntuPress) forControlEvents:UIControlEventTouchUpInside];
-    [imageview addSubview:btn];
-    
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 360, 320, 220)];
-    view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-    [self.view addSubview:view];
-    
-    UIImageView *imageview1 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 150, 180)];
-    imageview1.image = [UIImage imageNamed:@"air.jpg"];
-    imageview1.userInteractionEnabled = YES;
-    [view addSubview:imageview1];
-    
-    UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageview1.frame)+10, 10, 150, 180)];
-    imageview2.image = [UIImage imageNamed:@"Lenovo.jpg"];
-    imageview2.userInteractionEnabled = YES;
-    [view addSubview:imageview2];
-    
 }
 -(void)btntuPress{
     CMDetailsViewController *cm = [[CMDetailsViewController alloc]init];
@@ -124,8 +101,6 @@
     [self.navigationController pushViewController:leftVC animated:YES];
     
 }
-
-
 -(void)data{
     
     NSString *path= COMMODITYMIDDLE;
@@ -151,7 +126,7 @@
             CategoryBig *model = [[CategoryBig alloc]init];
             model = self.datas[i];
             NSArray *imageName = @[@"pos1",@"zhizhang1",@"diannao1",@"dayingji1",@"chuanzhengji1"];
-            ButtonImageWithTitle  *button = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(15+(i%3)*((SCREEN_WIDTH-60)/3)+(i%3)*15, 120+(i/3)*70, (SCREEN_WIDTH-60)/3, (SCREEN_WIDTH-55)/4)];
+            ButtonImageWithTitle  *button = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(15+(i%3)*((SCREEN_WIDTH-60)/3)+(i%3)*15, 25+(i/3)*70, (SCREEN_WIDTH-60)/3, (SCREEN_WIDTH-55)/4)];
             [button setImage:[UIImage imageNamed:imageName[i]] forState:UIControlStateNormal];
             [button setTitle:model.name forState:UIControlStateNormal];
             button.titleLabel.font = [UIFont systemFontOfSize:12];
@@ -161,21 +136,44 @@
             [button addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
             button.backgroundColor = [UIColor whiteColor];
 //          button.contentHorizontalAlignment=UIControlContentHorizontalAlignmentCenter;
-            [self.view addSubview:button];
+            [self.myscrollview addSubview:button];
+            if (i==self.datas.count-1) {
+                [self imageviewdata:button];
+            }
         }
-        
-//        [self button];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-    
-    
-    
-    
-    
 }
+-(void)imageviewdata:(UIButton *)buttonframe{
+    
+    UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(buttonframe.frame)+20, 320, 80)];
+    imageview.image = [UIImage imageNamed:@"heibaiyitiji"];
+    imageview.userInteractionEnabled = YES;
+    [self.myscrollview addSubview:imageview];
+    
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH/4)];
+    [btn addTarget:self action:@selector(btntuPress) forControlEvents:UIControlEventTouchUpInside];
+    [imageview addSubview:btn];
+    
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageview.frame), SCREEN_WIDTH, SCREEN_WIDTH*0.7)];
+    view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+    [self.myscrollview addSubview:view];
+    
+    UIImageView *imageview1 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH/2-10, SCREEN_WIDTH*0.57)];
+    imageview1.image = [UIImage imageNamed:@"air.jpg"];
+    imageview1.userInteractionEnabled = YES;
+    [view addSubview:imageview1];
+    
+    UIImageView *imageview2 = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageview1.frame)+10, 10, SCREEN_WIDTH/2-10, SCREEN_WIDTH*0.57)];
+    imageview2.image = [UIImage imageNamed:@"Lenovo.jpg"];
+    imageview2.userInteractionEnabled = YES;
+    [view addSubview:imageview2];
+    
+    self.myscrollview.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetMaxY(view.frame));
 
+}
 - (void)leftBtn{
     
     self.navigationController.navigationBar.translucent = YES;
