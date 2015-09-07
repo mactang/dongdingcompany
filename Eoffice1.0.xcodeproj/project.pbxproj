@@ -243,6 +243,10 @@
 		96821FCA1B8AF5DC00EC7276 /* citychoose.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96821FC71B8AF5DC00EC7276 /* citychoose.plist */; };
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
 		9690D6021B8D85C000B47495 /* ChangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9690D6011B8D85C000B47495 /* ChangeModel.m */; };
+		9695ADE81B957A9A004A7A1B /* ButtonImageWithTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE11B957A9A004A7A1B /* ButtonImageWithTitle.m */; };
+		9695ADE91B957A9A004A7A1B /* CalculateStringSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE31B957A9A004A7A1B /* CalculateStringSpace.m */; };
+		9695ADEA1B957A9A004A7A1B /* ImageCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE51B957A9A004A7A1B /* ImageCarousel.m */; };
+		9695ADEB1B957A9A004A7A1B /* MyAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE71B957A9A004A7A1B /* MyAlertView.m */; };
 		96A70D0C1B943E9A00C0F1F5 /* PersonInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */; };
 		96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */; };
 		96A70D111B943F5A00C0F1F5 /* massegeNumber.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A70D101B943F5A00C0F1F5 /* massegeNumber.png */; };
@@ -601,6 +605,14 @@
 		96821FC91B8AF5DC00EC7276 /* CityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CityChooseView.m; sourceTree = "<group>"; usesTabs = 0; };
 		9690D6001B8D85C000B47495 /* ChangeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeModel.h; sourceTree = "<group>"; };
 		9690D6011B8D85C000B47495 /* ChangeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeModel.m; sourceTree = "<group>"; };
+		9695ADE01B957A9A004A7A1B /* ButtonImageWithTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonImageWithTitle.h; sourceTree = "<group>"; };
+		9695ADE11B957A9A004A7A1B /* ButtonImageWithTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonImageWithTitle.m; sourceTree = "<group>"; };
+		9695ADE21B957A9A004A7A1B /* CalculateStringSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculateStringSpace.h; sourceTree = "<group>"; };
+		9695ADE31B957A9A004A7A1B /* CalculateStringSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculateStringSpace.m; sourceTree = "<group>"; };
+		9695ADE41B957A9A004A7A1B /* ImageCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCarousel.h; sourceTree = "<group>"; };
+		9695ADE51B957A9A004A7A1B /* ImageCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCarousel.m; sourceTree = "<group>"; };
+		9695ADE61B957A9A004A7A1B /* MyAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlertView.h; sourceTree = "<group>"; };
+		9695ADE71B957A9A004A7A1B /* MyAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlertView.m; sourceTree = "<group>"; };
 		96A70D0A1B943E9A00C0F1F5 /* PersonInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInformationModel.h; sourceTree = "<group>"; };
 		96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInformationModel.m; sourceTree = "<group>"; };
 		96A70D0D1B943F1500C0F1F5 /* OrderStateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderStateModel.h; sourceTree = "<group>"; };
@@ -700,6 +712,7 @@
 		615B29441B4FAE4B004E7546 /* Eoffice1.0 */ = {
 			isa = PBXGroup;
 			children = (
+				9695ADDF1B9579C0004A7A1B /* Classtype */,
 				61793A711B54A7FF00CFD83A /* Models */,
 				61793A6D1B54A7D800CFD83A /* UIView+Shortcut */,
 				61E0FB0C1B53A4060080F41B /* Cells */,
@@ -1306,6 +1319,21 @@
 			path = citychoose;
 			sourceTree = "<group>";
 		};
+		9695ADDF1B9579C0004A7A1B /* Classtype */ = {
+			isa = PBXGroup;
+			children = (
+				9695ADE01B957A9A004A7A1B /* ButtonImageWithTitle.h */,
+				9695ADE11B957A9A004A7A1B /* ButtonImageWithTitle.m */,
+				9695ADE21B957A9A004A7A1B /* CalculateStringSpace.h */,
+				9695ADE31B957A9A004A7A1B /* CalculateStringSpace.m */,
+				9695ADE41B957A9A004A7A1B /* ImageCarousel.h */,
+				9695ADE51B957A9A004A7A1B /* ImageCarousel.m */,
+				9695ADE61B957A9A004A7A1B /* MyAlertView.h */,
+				9695ADE71B957A9A004A7A1B /* MyAlertView.m */,
+			);
+			path = Classtype;
+			sourceTree = "<group>";
+		};
 		96BA8F291B8EADDC0062C8D8 /* input limited */ = {
 			isa = PBXGroup;
 			children = (
@@ -1649,6 +1677,9 @@
 				6181493B1B5E443500E39900 /* SixAlterView.m in Sources */,
 				61E971151B7367A1007F42B6 /* SingleModel.m in Sources */,
 				6197F0851B58DD29000EC83E /* RDVTabBarItem.m in Sources */,
+				9695ADEB1B957A9A004A7A1B /* MyAlertView.m in Sources */,
+				9695ADE91B957A9A004A7A1B /* CalculateStringSpace.m in Sources */,
+				9695ADEA1B957A9A004A7A1B /* ImageCarousel.m in Sources */,
 				61068AAB1B5CF611008BE40A /* NewsViewController.m in Sources */,
 				615B29C91B4FB3B5004E7546 /* LeftSlideViewController.m in Sources */,
 				6183424F1B5658720097E8A4 /* LewPopupViewAnimationSlide.m in Sources */,
@@ -1659,6 +1690,7 @@
 				619FCCDB1B86B3FA0075A0AA /* AddressModel.m in Sources */,
 				61068A781B5C9DC3008BE40A /* InvoiceAlterView.m in Sources */,
 				61793A7A1B54A8EE00CFD83A /* JHCellConfig.m in Sources */,
+				9695ADE81B957A9A004A7A1B /* ButtonImageWithTitle.m in Sources */,
 				61A0A2801B5918FE00C4496A /* PayViewController.m in Sources */,
 				618149411B5E468A00E39900 /* birthdayAlterView.m in Sources */,
 				61E971161B7367A1007F42B6 /* detailsModel.m in Sources */,
