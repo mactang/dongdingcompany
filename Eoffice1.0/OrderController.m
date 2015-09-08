@@ -19,6 +19,7 @@
 #import "InvoiceAlterView.h"
 #import "DispatchingView.h"
 #import "SingleModel.h"
+#import "OrderAddressViewController.h"
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
@@ -119,8 +120,9 @@
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     
     if (indexPath.section == 0) {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+       // cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.tag = 1000;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 40, 20)];
         [btn setTitle:@"收货人 :" forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -320,7 +322,28 @@
     return cell;
     
 }
+
+-(void)loginNotify
+{
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
+    
+}
+
+- (void)selectedRegular:(NSNotification *)notify{
+    
+    NSString *reglarText = notify.object;
+    UITableViewCell *cell = (UITableViewCell*)[self.view viewWithTag:1000];
+    
+    cell.detailTextLabel.text = reglarText;
+    
+}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        OrderAddressViewController *addre = [[OrderAddressViewController alloc]init];
+        [self.navigationController pushViewController:addre animated:YES];
+    }
+    
     if (indexPath.section == 1) {
         if (indexPath.row==2) {
             
@@ -384,6 +407,8 @@
         PayViewController *pay = [[PayViewController alloc]init];
         [self.navigationController pushViewController:pay animated:YES];
     }
+    
+    
 }
 -(void)numBtnPress:(UIButton *)btn{
     
@@ -450,7 +475,7 @@
     //  self.parentViewController.tabBarController.tabBar.hidden = YES;
     //   [(BottonTabBarController*)self.tabBarController hideTabBar:YES];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
-    
+    [self loginNotify];
     
 }
 

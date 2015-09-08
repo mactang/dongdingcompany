@@ -97,7 +97,7 @@
     
     
     NSString *path= [NSString stringWithFormat:PERSONREVISE,model.jsessionid,model.userkey];
-    NSLog(@"%@",path);
+    NSLog(@"path--%@",path);
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

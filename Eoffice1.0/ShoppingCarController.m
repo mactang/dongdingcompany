@@ -23,6 +23,7 @@
 @end
 
 @implementation ShoppingCarController
+
 {
     BOOL invoiceSelector;
     NSIndexPath *selectIndexPath;
@@ -409,24 +410,22 @@
     return cell;
 }
 -(void)colorBtnPress:(UIButton *)btn{
-    
-    _selectButton.selected = NO;
-    if(_selectButton == NO){
-        
-        _selectButton.layer.borderColor = [[UIColor grayColor] CGColor];
-        //  btn.selected = YES;
+   
+    if (_selectButton == btn) {
+        return;
     }
-
+    _selectButton.selected = NO;
     btn.selected = YES;
+    if(_selectButton.selected == NO){
+        _selectButton.layer.borderColor = [[UIColor grayColor] CGColor];
+    }
     if (btn.selected) {
         
         btn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         
-       // btn.selected = NO;
-        
-        
-        
-    }    _selectButton = btn;
+    }
+    _selectButton = btn;
+   
 }
 -(void)NumBtnPress:(UIButton *)btn{
     
