@@ -390,28 +390,6 @@
         
     }
     else if (indexPath.row == 0 &&indexPath.section == 3) {
-//        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 10, 100, 20)];
-//        [btn setTitle:@"图文详情" forState:UIControlStateNormal];
-//        btn.tag = 1000;
-//        btn.selected = YES;
-//        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        [btn addTarget:self action:@selector(btnPress1) forControlEvents:UIControlEventTouchUpInside];
-//        [cell addSubview:btn];
-//        
-//        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame), 10, 100, 20)];
-//        [btn1 addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-//        btn1.tag = 1001;
-//        [btn1 setTitle:@"产品参数" forState:UIControlStateNormal];
-//        [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [cell addSubview:btn1];
-//        
-//        UIButton *btn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), 10, 100, 20)];
-//        [btn2 addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-//        btn2.tag = 1002;
-//        [btn2 setTitle:@"推荐产品" forState:UIControlStateNormal];
-//        [btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [cell addSubview:btn2];
         HMSegmentedControl *segmentedControl2 = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"图文详情", @"产品参数",@"推荐产品"]];
         segmentedControl2.frame = CGRectMake(0, 10, self.view.frame.size.width, 40);
         segmentedControl2.selectionIndicatorHeight = 4.0f;

@@ -23,6 +23,7 @@
 @end
 
 @implementation ShoppingCarController
+
 {
     BOOL invoiceSelector;
     NSIndexPath *selectIndexPath;
@@ -409,6 +410,10 @@
     return cell;
 }
 -(void)colorBtnPress:(UIButton *)btn{
+<<<<<<< HEAD
+   
+=======
+>>>>>>> 4259c722b5805f4aac80882ae648eda55c0e6161
     if (_selectButton == btn) {
         return;
     }
@@ -423,6 +428,10 @@
         
     }
     _selectButton = btn;
+<<<<<<< HEAD
+   
+=======
+>>>>>>> 4259c722b5805f4aac80882ae648eda55c0e6161
 }
 -(void)NumBtnPress:(UIButton *)btn{
     
