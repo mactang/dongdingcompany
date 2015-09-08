@@ -55,16 +55,12 @@
     NSLog(@"self.datas%@",self.datas);
     UITableView *tableview = [[UITableView alloc] init];
     self.tableview = tableview;
-    tableview.frame = CGRectMake(0, 60, 200, 520);
+    tableview.frame = CGRectMake(0, 60, 200, SCREEN_HEIGHT-60);
     tableview.dataSource = self;
     tableview.delegate  = self;
     tableview.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:tableview];
-    
-    
-
-    // Do any additional setup after loading the view.
 }
 - (void)leftItemClicked{
     
@@ -73,7 +69,6 @@
     
 }
 -(void)setMyModel:(CategoryBig *)myModel{
-
     _myModel = myModel;
     NSLog(@"%@",myModel.name);
 }
@@ -128,20 +123,17 @@
             [self.detailDatas addObject:model];
             
         }
-        }
-        
+    }
         [self category];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
 
-    
 //    //初始化选中行
 //    NSIndexPath *ind = [NSIndexPath indexPathForRow:0 inSection:0];
 //    [self.tableview scrollToRowAtIndexPath:ind atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 //    [self.tableview selectRowAtIndexPath:ind animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-   
        return cell;
 }
 
@@ -216,7 +208,7 @@
 -(void)category{
     
     
-    UIView *printerView = [[UIView alloc]initWithFrame:CGRectMake(140, 63, 200, 460)];
+    UIView *printerView = [[UIView alloc]initWithFrame:CGRectMake(140, 63, 200, widgetboundsHeight(self.tableview))];
     printerView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:printerView];
     int x = 10;

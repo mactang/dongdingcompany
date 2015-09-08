@@ -57,9 +57,7 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-    [self downData];
-
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 480) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     //开始默认表是不编辑状态
@@ -82,6 +80,7 @@
     _addressDatas = [NSMutableArray arrayWithObjects:@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼",@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼",@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼", nil];
     
     _selectedCellIndexes = [NSMutableArray array];
+    [self downData];
     // Do any additional setup after loading the view.
 }
 -(void)releaseInfo:(UIBarButtonItem *)button{
