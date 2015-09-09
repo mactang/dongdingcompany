@@ -9,6 +9,7 @@
 #import "GoodsBigViewController.h"
 #import "RDVTabBarController.h"
 #import "CommodityViewController.h"
+#import "TarBarButton.h"
 @interface GoodsBigViewController ()
 
 @end
@@ -18,6 +19,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+    
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    //    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
+    //    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    leftButton.font = [UIFont systemFontOfSize:14];
+    // ligthButton.backgroundColor = [UIColor redColor];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
+    self.navigationController.navigationBarHidden = NO;
     self.navigationItem.title = @"商品";
     int m = 80;
     
@@ -38,6 +52,13 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)leftItemClicked{
+
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
+
+    
+}
 -(void)GoodsBigBtn:(UIButton *)btn{
 
     CommodityViewController *cmd = [[CommodityViewController alloc]init];

@@ -18,6 +18,7 @@
 #import "SingleModel.h"
 #import "CMDetailsViewController.h"
 #import "ButtonImageWithTitle.h"
+#import "TarBarButton.h"
 @interface CommodityViewController ()
 
 @property(nonatomic, strong)UISearchBar *searchBar;
@@ -41,8 +42,18 @@
     [super viewDidLoad];
     [self data];
     self.view.backgroundColor = [UIColor whiteColor];
-    //    UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"＜商品" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBtn)];
-    //    [self.navigationItem setLeftBarButtonItem:logoutItem];
+    
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    [leftButton setTitle:@"办公设备" forState:UIControlStateNormal];
+    [leftButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    leftButton.font = [UIFont systemFontOfSize:14];
+    // ligthButton.backgroundColor = [UIColor redColor];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
     
     UIButton *cbt = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, 20, 40)];
     [cbt addTarget:self action:@selector(openOrCloseLeftList) forControlEvents:UIControlEventTouchUpInside];
@@ -88,6 +99,12 @@
     self.searchBar.layer.borderColor = [[UIColor blackColor]CGColor];
     self.searchBar.layer.borderWidth = 1;
 
+}
+-(void)leftItemClicked{
+    
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 -(void)btntuPress{
     CMDetailsViewController *cm = [[CMDetailsViewController alloc]init];

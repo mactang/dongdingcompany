@@ -20,7 +20,7 @@
         self.imgUrl = dic[@"imgUrl"];
         self.productId = dic[@"productId"];
         self.bparterId = dic[@"bparterId"];
-        
+        self.name = dic[@"name"];
     }
     
     return self;

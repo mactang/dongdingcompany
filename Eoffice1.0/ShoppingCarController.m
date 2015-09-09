@@ -430,7 +430,7 @@
     
     
     if (btn.tag ==10000) {
-        if (_currentNumber>0) {
+        if (_currentNumber>1) {
             
             
             _currentNumber--;

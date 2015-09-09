@@ -152,6 +152,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     OrederManagerCell *cell = [OrederManagerCell cellWithTableView:tableView];
+    AddressModel *model = self.datas[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.tag = 1000;
     cell.buttontag = indexPath.row;
@@ -161,7 +162,7 @@
         cell.clickbutton.selected = YES;
         anotherButton = cell.clickbutton;
     }
-    if ([_regularText isEqualToString:cell.model.address]) {
+    if ([_regularText isEqualToString:model.address]) {
         
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         
@@ -227,11 +228,25 @@
 //    UITableViewCell *cell = (UITableViewCell *)[self.view viewWithTag:1000];
 //    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-   UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+ //  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"selectedAddresss" object:@""];
+    AddressModel *model = self.datas[indexPath.row];
+    
+    NSLog(@"%@",model.fullAddress);
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"selectedAddress" object:model.address];
     
 }
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    cell.accessoryType = UITableViewCellAccessoryNone;
+}
+
 #pragma mark reloadAddressdelegate methds
 -(void)reloadAddress{
     

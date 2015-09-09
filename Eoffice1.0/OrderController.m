@@ -20,12 +20,16 @@
 #import "DispatchingView.h"
 #import "SingleModel.h"
 #import "OrderAddressViewController.h"
+#import "AFNetworking.h"
+#import "AddressModel.h"
+#import "TarBarButton.h"
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
 @property(nonatomic, strong)UIButton *numberBtn1;
 @property(nonatomic,strong)UILabel *numberLb1;
 @property(nonatomic,strong)NSString *price;
+@property(nonatomic,strong)NSMutableArray *datas;
 @end
 
 @implementation OrderController
@@ -33,11 +37,31 @@
     int _currentNumber;
     UILabel *priceLb;
     UILabel *totalPice;
+    UILabel *addressLb ;
+}
+-(NSMutableArray *)datas{
+    if (_datas == nil) {
+        _datas = [NSMutableArray array];
+    }
+    return _datas;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    ligthButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+//    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
+//    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    ligthButton.font = [UIFont systemFontOfSize:14];
+   // ligthButton.backgroundColor = [UIColor redColor];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
+    self.navigationItem.title = @"确认订单";
     
     _currentNumber = 1;
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -1, 320, 540) style:UITableViewStyleGrouped];
@@ -49,6 +73,7 @@
     _tableView.scrollEnabled = NO;
     [self.view addSubview:_tableView];
     
+    [self defaultAddress];
     //键盘空白收回
 //    self.view.userInteractionEnabled = YES;
 //    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fingerTapped:)];
@@ -64,8 +89,16 @@
 //    
 //    
 //}
+- (void)leftItemClicked{
+    
+    NSArray *array = self.navigationController.viewControllers;
+    //取出里面的对应元素（对象）,并返回
+    //popToViewController:是返回到这个对象
+    [self.navigationController popToViewController:array[4] animated:YES];
+    
+}
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return self.datas.count*3;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -118,9 +151,11 @@
     cell.clipsToBounds = YES;
 
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
     if (indexPath.section == 0) {
        // cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        AddressModel *model = self.datas[indexPath.section];
         cell.tag = 1000;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 40, 20)];
@@ -130,11 +165,11 @@
         [cell addSubview:btn];
         
         UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame), 20, 100, 20)];
-        lb1.text = @"东鼎泰和";
+        lb1.text = model.receiver;
         [cell addSubview:lb1];
         
         UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame), 20, 130, 20)];
-        lb2.text = @"12345678901";
+        lb2.text = model.telphone;
         [cell addSubview:lb2];
         
         UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(btn.frame)+5, 40, 20)];
@@ -143,13 +178,15 @@
         btn1.titleLabel.font = [UIFont systemFontOfSize:10];
         [cell addSubview:btn1];
         
-        UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), CGRectGetMaxY(btn.frame)+5, 250, 40)];
-        lb3.font = [UIFont systemFontOfSize:12];
+        
+        
+        addressLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), CGRectGetMaxY(btn.frame)+2, 250, 40)];
+        addressLb.font = [UIFont systemFontOfSize:12];
         //lb3.backgroundColor = [UIColor redColor];
-        lb3.lineBreakMode = NSLineBreakByTruncatingTail;
-        lb3.numberOfLines = 2;
-        lb3.text = @"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼";
-        [cell addSubview:lb3];
+        addressLb.lineBreakMode = NSLineBreakByWordWrapping;
+        addressLb.numberOfLines = 0;
+        addressLb.text = model.address;
+        [cell addSubview:addressLb];
         
     }
     if (indexPath.section == 1) {
@@ -323,24 +360,56 @@
     
 }
 
--(void)loginNotify
-{
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
+- (void)defaultAddress{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path= [NSString stringWithFormat:ADDRESS,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        [hud hide:YES];
+        [self.datas removeAllObjects];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        
+        if (dic[@"data"] !=[NSNull null]) {
+            for (NSInteger i=0; i<[dic[@"data"]count]; i++) {
+                if (![dic[@"data"][i][@"defaultAD"]isEqualToString:@"Y"]) {
+                    NSArray *array = dic[@"data"];
+                    for(NSDictionary *subDict in array)
+                    {
+                    AddressModel *model = [AddressModel modelWithDic:subDict];
+                    [self.datas addObject:model];
+                        NSLog(@"%@",self.datas);
+                    }
+                }
+            }
+        }
+        [_tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"%@",error);
+    }];
     
 }
+
 
 - (void)selectedRegular:(NSNotification *)notify{
     
     NSString *reglarText = notify.object;
-    UITableViewCell *cell = (UITableViewCell*)[self.view viewWithTag:1000];
-    
-    cell.detailTextLabel.text = reglarText;
+//    UITableViewCell *cell = (UITableViewCell*)[self.view viewWithTag:1000];
+//    cell.detailTextLabel.text = reglarText;
+    addressLb.text = reglarText;
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         OrderAddressViewController *addre = [[OrderAddressViewController alloc]init];
+        addre.regularText = addressLb.text;
         [self.navigationController pushViewController:addre animated:YES];
     }
     
@@ -475,7 +544,7 @@
     //  self.parentViewController.tabBarController.tabBar.hidden = YES;
     //   [(BottonTabBarController*)self.tabBarController hideTabBar:YES];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
-    [self loginNotify];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
     
 }
 
@@ -484,6 +553,7 @@
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
     [super viewWillDisappear:animated];
+    
 }
 
 #pragma mark UITextFieldDelegate方法

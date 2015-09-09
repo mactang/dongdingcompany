@@ -29,6 +29,12 @@
 
 @property(nonatomic,strong)NSString *price;
 
+//是否已经登录
+@property(nonatomic,assign)NSString *isBoolLogin;
+@property(nonatomic,assign)NSString *push;
+
+@property(nonatomic,assign)NSString *isBoolmy;
+
 //通过类方法，创建唯一的对象
 +(SingleModel *)sharedSingleModel;
 

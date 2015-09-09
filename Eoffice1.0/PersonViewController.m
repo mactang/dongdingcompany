@@ -39,9 +39,13 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     [self.navigationItem setTitle:@""];
     
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *string = @"my";
+    model.isBoolmy = [NSString stringWithFormat:@"%@",string];
     [self downData];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 440) style:UITableViewStylePlain];
     _tableView.scrollEnabled = NO;
