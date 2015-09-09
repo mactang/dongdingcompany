@@ -66,12 +66,19 @@
                                                     initWithRootViewController:secondViewController];
     secondViewController.title = @"订单";
     
+<<<<<<< HEAD
     
    
         UIViewController *thirdViewController = [[PersonViewController alloc] init];
         thirdViewController.title = @"我的";
         thirdNavigationController = [[UINavigationController alloc]
                                      initWithRootViewController:thirdViewController];
+=======
+    UIViewController *thirdViewController = [[PersonViewController alloc] init];
+    thirdViewController.title = @"我的";
+    UIViewController *thirdNavigationController = [[UINavigationController alloc]
+                                                   initWithRootViewController:thirdViewController];
+>>>>>>> 693ed85eb81fc69e0d6273ae3d48d2842e13c109
     
     RDVTabBarController *tabBarController = [[RDVTabBarController alloc] init];
     [tabBarController setViewControllers:@[MainNavigationController, secondNavigationController,

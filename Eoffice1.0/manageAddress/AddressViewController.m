@@ -57,9 +57,7 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-    
-
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 480) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     //开始默认表是不编辑状态
@@ -74,8 +72,15 @@
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(addPress) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
-    [self downData];
     
+    _nameDatas = [NSMutableArray arrayWithObjects:@"东鼎泰和",@"泰和",@"科技", nil];
+    
+    _phoneDatas = [NSMutableArray arrayWithObjects:@"12345678901",@"23456789876",@"45678906543", nil];
+    
+    _addressDatas = [NSMutableArray arrayWithObjects:@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼",@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼",@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼", nil];
+    
+    _selectedCellIndexes = [NSMutableArray array];
+    [self downData];
     // Do any additional setup after loading the view.
 }
 -(void)releaseInfo:(UIBarButtonItem *)button{

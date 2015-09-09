@@ -159,8 +159,7 @@
         
     }
     
-    return YES;    
-    
+    return YES;
 }
 -(void)textViewDidChange:(UITextView *)textView
 {

@@ -21,7 +21,7 @@
 #import "UIKit+AFNetworking.h"
 #import "SingleModel.h"
 #import "detailsModel.h"
-#import "TarBarButton.h"
+#import "SDRefresh.h"
 /**
  *  随机颜色
  */
@@ -37,6 +37,17 @@ static const CGFloat MJDuration = 2.0;
 /** 存放假数据 */
 @property (strong, nonatomic) NSMutableArray *colors;
 @property (strong, nonatomic) NSMutableArray *datas;
+
+
+
+@property (nonatomic, weak) SDRefreshFooterView *refreshFooter;
+@property (nonatomic, weak) SDRefreshHeaderView *refreshHeader;
+@property (nonatomic, assign) NSInteger totalRowCount;
+
+@property (nonatomic, weak) UIImageView *animationView;
+@property (nonatomic, weak) UIImageView *boxView;
+@property (nonatomic, weak) UILabel *label;
+
 @end
 
 @implementation ComputerViewController
@@ -64,26 +75,11 @@ static const CGFloat MJDuration = 2.0;
 }
 
 - (void)viewDidLoad {
+    _totalRowCount = 3;
     [super viewDidLoad];
-    
     [self data];
-    
     [self character];
-    
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-    
-    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
-    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
-    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
-    [leftButton setTitle:@"电脑及周边产品" forState:UIControlStateNormal];
-    [leftButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    leftButton.font = [UIFont systemFontOfSize:14];
-    // ligthButton.backgroundColor = [UIColor redColor];
-    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    [self.navigationItem setLeftBarButtonItem:lightItem2];
-    
     // 1.设置布局模式
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     // 1.1设置item的大小
@@ -110,15 +106,112 @@ static const CGFloat MJDuration = 2.0;
     // 3.注册cell类型
     [_collectionView registerClass:[ComputerCell class] forCellWithReuseIdentifier:@"cell"];
     
-    
-    
+    [self setupHeader];
+    [self setupFooter];
 }
--(void)leftItemClicked{
+- (void)setupHeader
+{
+    SDRefreshHeaderView *refreshHeader = [SDRefreshHeaderView refreshViewWithStyle:SDRefreshViewStyleCustom];
     
-    self.navigationController.navigationBar.translucent = YES;
-    [self.navigationController popViewControllerAnimated:YES];
+    // 默认是在navigationController环境下，如果不是在此环境下，请设置 refreshHeader.isEffectedByNavigationController = NO;
+    [refreshHeader addToScrollView:self.collectionView];
+    _refreshHeader = refreshHeader;
     
+    __weak SDRefreshHeaderView *weakRefreshHeader = refreshHeader;
+    refreshHeader.beginRefreshingOperation = ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.totalRowCount += 3;
+            [self.collectionView reloadData];
+            [weakRefreshHeader endRefreshing];
+        });
+    };
+    
+    //    normal状态执行的操作
+    refreshHeader.normalStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
+        refreshView.hidden = NO;
+        if (progress == 0) {
+            _animationView.transform = CGAffineTransformMakeScale(0.1, 0.1);
+            _boxView.hidden = NO;
+            _label.text = @"下拉加载数据";
+            [_animationView stopAnimating];
+        }
+        
+        self.animationView.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation(progress * 10, -20 * progress), CGAffineTransformMakeScale(progress, progress));
+        self.boxView.transform = CGAffineTransformMakeTranslation(- progress * 85, progress * 35);
+    };
+    
+    //    willRefresh状态执行的操作
+    refreshHeader.willRefreshStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
+        _boxView.hidden = YES;
+        _label.text = @"放手刷新数据";
+        _animationView.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation(10, -20), CGAffineTransformMakeScale(1, 1));
+        NSArray *images = @[[UIImage imageNamed:@"deliveryStaff0"],
+                            [UIImage imageNamed:@"deliveryStaff1"],
+                            [UIImage imageNamed:@"deliveryStaff2"],
+                            [UIImage imageNamed:@"deliveryStaff3"]
+                            ];
+        _animationView.animationImages = images;
+        [_animationView startAnimating];
+    };
+    
+    //    refreshing状态执行的操作
+    refreshHeader.refreshingStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
+        _label.text = @"正在加载数据";
+        [UIView animateWithDuration:1.5 animations:^{
+            self.animationView.transform = CGAffineTransformMakeTranslation(200, -20);
+        }];
+    };
+    
+    // 动画view
+    UIImageView *animationView = [[UIImageView alloc] init];
+    animationView.frame = CGRectMake(30, 45, 40, 40);
+    animationView.image = [UIImage imageNamed:@"staticDeliveryStaff"];
+    [refreshHeader addSubview:animationView];
+    _animationView = animationView;
+    
+    NSArray *images = @[[UIImage imageNamed:@"deliveryStaff0"],
+                        [UIImage imageNamed:@"deliveryStaff1"],
+                        [UIImage imageNamed:@"deliveryStaff2"],
+                        [UIImage imageNamed:@"deliveryStaff3"]
+                        ];
+    _animationView.animationImages = images;
+
+    UIImageView *boxView = [[UIImageView alloc] init];
+    boxView.frame = CGRectMake(150, 10, 15, 8);
+    boxView.image = [UIImage imageNamed:@"box"];
+    [refreshHeader addSubview:boxView];
+    _boxView = boxView;
+
+    UILabel *label= [[UILabel alloc] init];
+    label.frame = CGRectMake((self.view.bounds.size.width - 200) * 0.5, 5, 200, 20);
+    label.textColor = [UIColor grayColor];
+    label.font = [UIFont systemFontOfSize:14];
+    label.textAlignment = NSTextAlignmentCenter;
+    [refreshHeader addSubview:label];
+    _label = label;
+    
+    // 进入页面自动加载一次数据
+//    [refreshHeader beginRefreshing];
 }
+
+- (void)setupFooter
+{
+    SDRefreshFooterView *refreshFooter = [SDRefreshFooterView refreshViewWithStyle:SDRefreshViewStyleClassical];
+    [refreshFooter addToScrollView:self.collectionView];
+    [refreshFooter addTarget:self refreshAction:@selector(footerRefresh)];
+    _refreshFooter = refreshFooter;
+}
+
+
+- (void)footerRefresh
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.totalRowCount += 2;
+        [self.collectionView reloadData];
+        [self.refreshFooter endRefreshing];
+    });
+}
+
 -(void)data{
     
     SingleModel *single = [SingleModel sharedSingleModel];

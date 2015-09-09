@@ -14,9 +14,7 @@
 #import "AFNetworking.h"
 #import "PersonViewController.h"
 #import "SingleModel.h"
-#import "OrderController.h"
-#import "TarBarButton.h"
-#import "MainViewController.h"
+
 @interface LoginViewController ()
 
 @end
@@ -30,18 +28,7 @@
     [super viewDidLoad];
     
     
-//    self.navigationController.navigationBarHidden = YES;
-    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
-    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
-    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
-    leftButton.font = [UIFont systemFontOfSize:14];
-    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    [self.navigationItem setLeftBarButtonItem:lightItem2];
-    
-    self.navigationItem.title = @"";
-    
+    self.navigationController.navigationBarHidden = YES;
     isChecked = NO;
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     float bl[4];
@@ -155,14 +142,7 @@
 //    [self.view addSubview:shareBtn2];
     // Do any additional setup after loading the view.
 }
--(void)leftItemClicked{
-    
-    MainViewController *main = [[MainViewController alloc]init];
-    [self.navigationController pushViewController:main animated:YES];
-//    self.navigationController.navigationBar.translucent = YES;
- //   [self.navigationController popViewControllerAnimated:YES];
-    
-}
+
 
 - (void)createTextField:(BOOL)isPwd withView:(UIView *)text_view
 {
@@ -353,10 +333,9 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSArray *array = dic[@"status"];
-        NSString *string = [NSString stringWithFormat:@"%@",array];
-         NSLog(@"array--%@",string);
-        if ([string isEqualToString:@"0"]) {
+        NSLog(@"%@",dic);
+        
+        if ([dic[@"status"] integerValue]==0) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"登录失败" message:@"请输入正确的账号" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             //设置提示框样式（可以输入账号密码）
             alert.alertViewStyle = UIAlertViewStyleDefault;
@@ -365,30 +344,17 @@
 
         }
         else{
-            SingleModel *model = [SingleModel sharedSingleModel];
             NSDictionary *subDic = dic[@"data"];
             NSString *userkey = subDic[@"userkey"];
             NSString *jsessionid = subDic[@"jsessionId"];
-            NSLog(@"jsessionid--%@",jsessionid);
-           
+//            NSLog(@"jsessionid--%@",jsessionid);
+            SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
             model.jsessionid = jsessionid;
-            model.isBoolLogin = @"Y";
-            NSLog(@"%@",model.userkey);
-        
-            if ([model.push isEqualToString:@"shopOrder"]) {
-                UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-                self.navigationItem.backBarButtonItem = backItem;
-                self.navigationController.navigationBarHidden = NO;
-                OrderController *order = [[OrderController alloc]init];
-                [self.navigationController pushViewController:order animated:YES];
-                
-            }
-            
-            else {
-                PersonViewController *person = [[PersonViewController alloc]init];
-                [self.navigationController pushViewController:person animated:YES];
-            }
+//            NSLog(@"%@",model.userkey);
+            [self.view removeFromSuperview];
+        PersonViewController *person = [[PersonViewController alloc]init];
+        [self.navigationController pushViewController:person animated:YES];
             
         }
         
@@ -409,7 +375,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
     
 }
