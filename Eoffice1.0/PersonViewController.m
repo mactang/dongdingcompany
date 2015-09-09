@@ -17,7 +17,10 @@
 #import "AFNetworking.h"
 #import "RDVTabBarController.h"
 #import "PersonInformationModel.h"
-@interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "SingleModel.h"
+@interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate>{
+    LoginViewController *login;
+}
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)NSMutableArray *datas;
 @end
@@ -83,7 +86,27 @@
     }];
     
 }
+-(void)viewWillAppear:(BOOL)animated{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSLog(@"%@",model.userkey);
+    NSLog(@"%@",[model.userkey class]);
+    if (model.userkey == nil) {
+        if (!login) {
+            login = [[LoginViewController alloc]init];
+            [self.view addSubview:login.view];
+        }
+        
+    }else{
+        if (login) {
+            [login.view removeFromSuperview];
+            
+        }
+        
+    }
 
+      [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
 -(void)buttonPress{
     
     LoginViewController *login = [[LoginViewController alloc]init];
@@ -202,17 +225,10 @@
         [self.navigationController pushViewController:hope animated:YES];
     }
 }
-- (void)viewWillAppear:(BOOL)animated{
-    
-    [super viewWillAppear:animated];
-    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
-    
-    self.navigationController.navigationBarHidden = YES;
-    
-}
-
 
 - (void)viewWillDisappear:(BOOL)animated {
+    
+    
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
     [super viewWillDisappear:animated];

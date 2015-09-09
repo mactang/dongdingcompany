@@ -56,7 +56,7 @@
                                                     initWithRootViewController:secondViewController];
     secondViewController.title = @"订单";
     
-    UIViewController *thirdViewController = [[LoginViewController alloc] init];
+    UIViewController *thirdViewController = [[PersonViewController alloc] init];
     thirdViewController.title = @"我的";
     UIViewController *thirdNavigationController = [[UINavigationController alloc]
                                                    initWithRootViewController:thirdViewController];

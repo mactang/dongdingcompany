@@ -333,10 +333,9 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSArray *array = dic[@"status"];
-        NSString *string = [NSString stringWithFormat:@"%@",array];
-         NSLog(@"array--%@",string);
-        if ([string isEqualToString:@"0"]) {
+        NSLog(@"%@",dic);
+        
+        if ([dic[@"status"] integerValue]==0) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"登录失败" message:@"请输入正确的账号" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             //设置提示框样式（可以输入账号密码）
             alert.alertViewStyle = UIAlertViewStyleDefault;
@@ -348,11 +347,12 @@
             NSDictionary *subDic = dic[@"data"];
             NSString *userkey = subDic[@"userkey"];
             NSString *jsessionid = subDic[@"jsessionId"];
-            NSLog(@"jsessionid--%@",jsessionid);
+//            NSLog(@"jsessionid--%@",jsessionid);
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
             model.jsessionid = jsessionid;
-            NSLog(@"%@",model.userkey);
+//            NSLog(@"%@",model.userkey);
+            [self.view removeFromSuperview];
         PersonViewController *person = [[PersonViewController alloc]init];
         [self.navigationController pushViewController:person animated:YES];
             

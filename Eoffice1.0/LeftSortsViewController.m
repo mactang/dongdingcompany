@@ -207,7 +207,6 @@
 }
 -(void)category{
     
-    
     UIView *printerView = [[UIView alloc]initWithFrame:CGRectMake(140, 63, 200, widgetboundsHeight(self.tableview))];
     printerView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:printerView];
@@ -230,7 +229,7 @@
             [btn1 setTitle:[NSString stringWithFormat:@"%@",model.name] forState:UIControlStateNormal];
             [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(categoryBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-            btn1.font = [UIFont systemFontOfSize:12];
+            btn1.titleLabel.font = [UIFont systemFontOfSize:12];
      
             [printerView addSubview:btn1];
 
@@ -250,7 +249,7 @@
             [btn1 addTarget:self action:@selector(categoryBtnPress:) forControlEvents:UIControlEventTouchUpInside];
             [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             btn1.tag = i;
-            btn1.font = [UIFont systemFontOfSize:12];
+            btn1.titleLabel.font = [UIFont systemFontOfSize:12];
             
             [printerView addSubview:btn1];
             
