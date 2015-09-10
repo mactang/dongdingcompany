@@ -14,7 +14,9 @@
 #import "AFNetworking.h"
 #import "PersonViewController.h"
 #import "SingleModel.h"
-
+#import "OrderController.h"
+#import "TarBarButton.h"
+#import "MainViewController.h"
 @interface LoginViewController ()
 
 @end
@@ -28,7 +30,17 @@
     [super viewDidLoad];
     
     
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, 20, 20);
+    leftButton.font = [UIFont systemFontOfSize:14];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
+    
+    
     isChecked = NO;
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     float bl[4];
@@ -126,23 +138,15 @@
     lb1.textColor = [UIColor grayColor];
     [self.view addSubview:lb1];
     
-//    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(100, CGRectGetMaxY(lb1.frame)+20, 40, 40)];
-//    [shareBtn setImage:[UIImage imageNamed:@"weibo"] forState:UIControlStateNormal];
-//
-//    [self.view addSubview:shareBtn];
-//    
-//    UIButton *shareBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shareBtn.frame)+20, CGRectGetMaxY(lb1.frame)+20, 40, 40)];
-//    [shareBtn1 setImage:[UIImage imageNamed:@"weixin"] forState:UIControlStateNormal];
-//    
-//    [self.view addSubview:shareBtn1];
-//    
-//    UIButton *shareBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shareBtn1.frame)+20, CGRectGetMaxY(lb1.frame)+20, 40, 40)];
-//    [shareBtn2 setImage:[UIImage imageNamed:@"qq"] forState:UIControlStateNormal];
-//    
-//    [self.view addSubview:shareBtn2];
+
     // Do any additional setup after loading the view.
 }
-
+-(void)leftItemClicked{
+    
+    [self.view removeFromSuperview];
+    
+    
+}
 
 - (void)createTextField:(BOOL)isPwd withView:(UIView *)text_view
 {
@@ -351,10 +355,22 @@
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
             model.jsessionid = jsessionid;
-//            NSLog(@"%@",model.userkey);
-            [self.view removeFromSuperview];
-        PersonViewController *person = [[PersonViewController alloc]init];
-        [self.navigationController pushViewController:person animated:YES];
+            
+            if (_delegate &&[_delegate respondsToSelector:@selector(reloadata)]) {
+                [_delegate reloadata];
+                [self.view removeFromSuperview];
+            }
+            
+//            if ([model.isBoolLogin isEqualToString: @"Y"]) {
+//                OrderController *order = [[OrderController alloc]init];
+//                [self.navigationController pushViewController:order animated:YES];
+//            }
+            else {
+                [self.view removeFromSuperview];
+//                PersonViewController *person = [[PersonViewController alloc]init];
+//                [self.navigationController pushViewController:person animated:YES];
+                
+            }
             
         }
         
@@ -367,9 +383,8 @@
 - (void)registerLogin{
 
     
-    RegisterViewController *reg = [[RegisterViewController alloc]init];
     
-    [self.navigationController pushViewController:reg animated:YES];
+   
     
 }
 - (void)viewWillAppear:(BOOL)animated{

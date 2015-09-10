@@ -26,6 +26,9 @@
 #import "LewPopupViewAnimationSpring.h"
 #import "LewPopupViewAnimationDrop.h"
 
+#import "SingleModel.h"
+#import "LoginViewController.h"
+
 #import "OrderController.h"
 #import "GYZViewController.h"
 #import "MenuPopover.h"
@@ -36,10 +39,21 @@
 #import "BBBadgeBarButtonItem.h"
 
 #import "HMSegmentedControl.h"
+#import "ButtonImageWithTitle.h"
 
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+#import "TencentOpenAPI/QQApiInterface.h"
+#import "TencentOpenAPI/TencentOAuth.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialQQHandler.h"
+#import "TarBarButton.h"
+#import "LoginViewController.h"
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
-@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate>
+@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>{
+    LoginViewController *login;
+}
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)UIImageView *immgeView;
 
@@ -62,6 +76,9 @@
 
 @property(nonatomic, strong)NSMutableArray *datas;
 
+@property(nonatomic, assign) BOOL isLogin;
+
+@property(nonatomic, strong)NSString *back;
 @end
 
 @implementation CMDetailsViewController
@@ -72,6 +89,8 @@
     NSMutableArray *_imagesArray;
     
     int number;
+    
+    
     
     
 }
@@ -86,13 +105,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"＜" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBtn)];
-//    [self.navigationItem setLeftBarButtonItem:logoutItem];
-   // [(BottonTabBarController*)self.tabBarController hideTabBar:YES];
+
     self.view.backgroundColor = [UIColor grayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.hidesBottomBarWhenPushed = YES;
   
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, 20, 20);
+    leftButton.font = [UIFont systemFontOfSize:14];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
+    
     [self data];
     
    
@@ -129,14 +155,23 @@
 
     // Do any additional setup after loading the view.
 }
-- (void)leftBtn{
+
+-(void)leftItemClicked{
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (_back != nil && model.userkey == nil) {
+        
+    [login.view removeFromSuperview];
+        _back= nil;
+        
+    }
+    else{
     
-    // [self.navigationController popToRootViewControllerAnimated:YES];
-    self.navigationController.navigationBar.translucent = YES;
-    [self.navigationController popViewControllerAnimated:YES];
-  //  [(BottonTabBarController*)self.tabBarController hideTabBar:NO];
-    
+        
+        self.navigationController.navigationBar.translucent = YES;
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
+
 -(void)buttonClicked:(UIButton *)btn{
 
     
@@ -209,6 +244,7 @@
     [_carView addSubview:shopBtn];
 }
 -(void)shopPress:(UIButton *)btn{
+    SingleModel *model = [SingleModel sharedSingleModel];
     if (btn.tag == 2000) {
         
     }
@@ -220,7 +256,26 @@
         [self data];
     
     }
+    
     else if (btn.tag == 2002){
+        
+        _back = @"is";
+        if (model.userkey == nil) {
+            if (!login) {
+                login = [[LoginViewController alloc]init];
+                login.delegate = self;
+                [self.view addSubview:login.view];
+                
+            }else{
+                [login.view removeFromSuperview];
+            }
+            
+
+        }
+        
+        
+    }
+    if (model.userkey != nil) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
         
@@ -229,7 +284,14 @@
     }
     
 }
+-(void)reloadata{
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+            self.navigationItem.backBarButtonItem = backItem;
+            OrderController *order = [[OrderController alloc]init];
+            [self.navigationController pushViewController:order animated:YES];
+    _isLogin = YES;
 
+}
 -(void)data{
     
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -256,9 +318,8 @@
                 NSLog(@"model.name--%@",self.datas);
             
         }
-        //刷新表
         
-        //  [self addHeader];
+        [_tableView reloadData];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -270,7 +331,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 4*self.datas.count;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -369,8 +430,47 @@
 
     }
      if (indexPath.row == 1 &&indexPath.section == 0) {
-        cell.textLabel.text = @"寸宽屏笔记本";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+         
+         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+         detailsModel *model = self.datas[indexPath.section];
+       // cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+         UILabel *description = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 100, 40)];
+         description.font = [UIFont systemFontOfSize:12];
+         //lb3.backgroundColor = [UIColor redColor];
+         description.lineBreakMode = NSLineBreakByWordWrapping;
+         description.numberOfLines = 0;
+         NSLog(@"%@",model.name);
+        // description.text = model.name;
+         description.text = @"Mac";
+         [cell addSubview:description];
+         
+         UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(description.frame)+5, 10, 20)];
+         priceFLb.font = [UIFont systemFontOfSize:15];
+         priceFLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
+         priceFLb.text = @"￥";
+         [cell addSubview:priceFLb];
+         
+         SingleModel *single = [SingleModel sharedSingleModel];
+         UILabel *priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame)+2, priceFLb.frame.origin.y, 80, 20)];
+         priceLb.font = [UIFont systemFontOfSize:15];
+         priceLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
+         NSLog(@"%@",single.price);
+         priceLb.text = [NSString stringWithFormat:@"%@",model.price];
+         
+         [cell addSubview:priceLb];
+         
+         ButtonImageWithTitle  *fenxBtb = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(250, 30, 50, 50)];
+         
+         [fenxBtb setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+         [fenxBtb addTarget:self action:@selector(fenxClicked) forControlEvents:UIControlEventTouchUpInside];
+         [fenxBtb setTitle:@"分享" forState:UIControlStateNormal];
+         [fenxBtb setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+         fenxBtb.font = [UIFont systemFontOfSize:12];
+         fenxBtb.titleLabel.textAlignment = NSTextAlignmentCenter;
+         [cell addSubview:fenxBtb];
+         
+         
+         
     }
     else if (indexPath.row == 0 && indexPath.section == 1) {
         cell.textLabel.text = @"商家对比";
@@ -407,6 +507,35 @@
 
 }
 
+
+-(void)fenxClicked{
+
+    NSLog(@",,");
+//            //友盟分享的appKey
+//        [UMSocialData setAppKey:@"5211818556240bc9ee01db2f"];
+//    
+//    //设置微信AppId，设置分享url，默认使用友盟的网址
+//    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
+//    
+//    //设置手机QQ的AppId，指定你的分享url，若传nil，将使用友盟的网址
+//    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
+    
+    
+ //        注意：要想进行qq微信分享，下面的设置是必须的
+ //       设置微信的appId url设置为空，默认使用友盟的网址
+//        [UMSocialWechatHandler setWXAppId:@"wxd9a39c7122aa6516" url:nil];
+//        
+//        [UMSocialConfig setQQAppId:@"100424468" url:nil importClasses:@[[QQApiInterface class],[TencentOAuth class]]];
+    
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"5211818556240bc9ee01db2f"
+                                      shareText:nil
+                                     shareImage:nil
+                                shareToSnsNames:nil
+                                       delegate:self];
+    
+    
+}
 - (void)segmentedControlChangedValue:(HMSegmentedControl*)segmentedControl{
     
     
@@ -500,8 +629,29 @@
 {
     [self.menuPopover dismissMenuPopover];
     
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey == nil) {
+        if (!login) {
+            login = [[LoginViewController alloc]init];
+            login.delegate = self;
+            [self.view addSubview:login.view];
+            
+        }else{
+            [login.view removeFromSuperview];
+        }
+        
+        
+    }
+    
+    
+if (model.userkey != nil) {
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
+    
     OrderController *order = [[OrderController alloc]init];
     [self.navigationController pushViewController:order animated:YES];
+}
+
 }
 
 
@@ -652,8 +802,13 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     
+    
+
+    
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    
+   
     
     
 }

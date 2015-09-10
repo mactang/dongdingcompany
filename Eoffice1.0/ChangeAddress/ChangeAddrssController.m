@@ -53,9 +53,9 @@
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftBtn) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang11(1)"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    ligthButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    ligthButton.frame = CGRectMake(0, 0, 20, 20);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
 

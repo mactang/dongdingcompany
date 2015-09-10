@@ -15,11 +15,17 @@
 #import "RDVTabBarController.h"
 #import "RDVTabBarItem.h"
 #import "LoginViewController.h"
+#import "SingleModel.h"
+
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
+{
+
+    UIViewController *thirdNavigationController;
+}
 @synthesize nav_controller;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -46,6 +52,10 @@
 #pragma mark - Methods
 
 - (void)setupViewControllers {
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
     UIViewController *MainView = [[MainViewController alloc]init];
     MainView.title = @"首页";
     UIViewController *MainNavigationController = [[UINavigationController alloc]
@@ -55,11 +65,12 @@
     UIViewController *secondNavigationController = [[UINavigationController alloc]
                                                     initWithRootViewController:secondViewController];
     secondViewController.title = @"订单";
-    
+
     UIViewController *thirdViewController = [[PersonViewController alloc] init];
     thirdViewController.title = @"我的";
     UIViewController *thirdNavigationController = [[UINavigationController alloc]
                                                    initWithRootViewController:thirdViewController];
+
     
     RDVTabBarController *tabBarController = [[RDVTabBarController alloc] init];
     [tabBarController setViewControllers:@[MainNavigationController, secondNavigationController,

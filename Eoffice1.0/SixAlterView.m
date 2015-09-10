@@ -181,7 +181,16 @@
     }
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSLog(@"%@",cell.textLabel.text);
+    NSString *string = [NSString stringWithFormat:@"%@",cell.textLabel.text];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"mySex" object:string];
+}
 - (void)isPublicBtnPress:(UIButton*)btn{
+    
+    
     self.testbutton.selected = NO;
     btn.selected = YES;
     self.testbutton = btn;

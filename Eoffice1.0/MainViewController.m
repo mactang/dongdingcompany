@@ -17,6 +17,7 @@
 #import "BottonTabBarController.h"
 #import "NewsViewController.h"
 #import "GoodsBigViewController.h"
+#import "NewButton.h"
 @interface MainViewController ()
 @property(nonatomic, strong)UIPageControl *pageControl;
 @end
@@ -44,43 +45,37 @@
     
    // [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"logo1(3)"] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setBackgroundColor:[UIColor whiteColor]];
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //设置title
-   // [rightButton setTitle:@"消息" forState:UIControlStateNormal];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
+    view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:view];
+    NewButton *rightButton = [[NewButton alloc]initWithFrame:CGRectMake(270, 30, 22, 22)];
     [rightButton addTarget:self action:@selector(rightItemClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [rightButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    rightButton.font = [UIFont systemFontOfSize:12];
+    [rightButton setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
     //设置背景图片
-    UIImage *rightImage = [UIImage imageNamed:@"logo-2(5)"];
+    rightButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    UIImage *rightImage = [UIImage imageNamed:@"xiaoxi"];
     [rightButton setBackgroundImage:rightImage forState:UIControlStateNormal];
-    //自定义的按钮要设置frame
-    rightButton.frame = CGRectMake(0, 20, rightImage.size.width, rightImage.size.height);
-    //2.通过UIBarButtonItem加载按钮
-    UIBarButtonItem *rightItem2 = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
-   
-    [self.navigationItem setRightBarButtonItem:rightItem2];
+    [rightButton setTitle:@"消息" forState:UIControlStateNormal];
+    rightButton.font = [UIFont systemFontOfSize:12];
+    [view addSubview:rightButton];
     
-    
-    UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    //设置title
-    [ligthButton addTarget:self action:@selector(leftItemClicked:) forControlEvents:UIControlEventTouchUpInside];
-   // ligthButton.selected = NO;
-    ligthButton.font = [UIFont systemFontOfSize:12];
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [leftButton addTarget:self action:@selector(rightItemClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [leftButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     //设置背景图片
-    UIImage *ligthImage = [UIImage imageNamed:@"logo1"];
-    [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    UIImage *leftImage = [UIImage imageNamed:@"logo"];
+    [leftButton setBackgroundImage:leftImage forState:UIControlStateNormal];
     //自定义的按钮要设置frame
-    ligthButton.frame = CGRectMake(0, 20, ligthImage.size.width, ligthImage.size.height);
-    //2.通过UIBarButtonItem加载按钮
-    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
+    leftButton.frame = CGRectMake(12, 30, 73, 24);
     
-   // [self.navigationItem setLeftBarButtonItem:lightItem2];
+    [view addSubview:leftButton];
     
-    UIViewController* viewController = [[UIViewController alloc]init];
+    
     //设置标签栏的标题
    // viewController.title = @"首页";
     [self.navigationItem setTitle:@""];
     
+    self.navigationController.navigationBarHidden = YES;
     
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     

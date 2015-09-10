@@ -16,8 +16,10 @@
 #import "AFNetworking.h"
 #import "OrderModel.h"
 #import "AFNetworking.h"
+#import "LoginViewController.h"
+#import "SingleModel.h"
 
-@interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate>
+@interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic,strong)NSMutableArray *classifyDatas;
@@ -38,6 +40,7 @@
     BOOL isClssify;
     NSString *docstatus;
     OrderModel *model1;
+    LoginViewController *login;
     
 }
 -(NSMutableArray *)datas{
@@ -65,10 +68,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
-    [self.navigationItem setTitle:@"我的订单"];
+    
     
     isClssify = NO;
-    [self downData];
+  //  [self downData];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, 320, 430) style:UITableViewStyleGrouped];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -215,7 +218,20 @@
     }
    
 }
+-(void)reloadata{
 
+    [self downData];
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey != nil) {
+        self.navigationController.navigationBarHidden = NO;
+        [self.navigationItem setTitle:@"我的订单"];
+    }
+    else{
+        
+        
+    }
+}
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -688,6 +704,29 @@
     
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSLog(@"%@",model.userkey);
+    NSLog(@"%@",[model.userkey class]);
+    if (model.userkey == nil) {
+        if (!login) {
+            login = [[LoginViewController alloc]init];
+            [self.view addSubview:login.view];
+            login.delegate = self;
+        }
+        
+    }else{
+        if (login) {
+            [login.view removeFromSuperview];
+            
+        }
+        
+    }
+    if (model.userkey != nil) {
+        self.navigationController.navigationBarHidden = NO;
+        [self.navigationItem setTitle:@"我的订单"];
+    }else{
+    self.navigationController.navigationBarHidden = YES;
+    }
     
 }
 

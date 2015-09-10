@@ -70,8 +70,8 @@
     }else{
         phonelabel.text = model.telphone;
     }
-    detailaddresslabel.text = model.fullAddress;
-    
+    detailaddresslabel.text = model.address;
+    NSLog(@"%@",model.fullAddress);
     self.clickbutton.tag = 100+_buttontag;
 }
 -(void)checkPressed:(UIButton *)button{

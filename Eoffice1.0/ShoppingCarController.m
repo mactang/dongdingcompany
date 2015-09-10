@@ -57,9 +57,9 @@
     DeleteRow = [NSMutableArray array];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang11(1)"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    ligthButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    ligthButton.frame = CGRectMake(0, 0, 20, 20);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
@@ -430,7 +430,7 @@
     
     
     if (btn.tag ==10000) {
-        if (_currentNumber>0) {
+        if (_currentNumber>1) {
             
             
             _currentNumber--;

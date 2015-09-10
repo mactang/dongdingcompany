@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol logindelegate <NSObject>
 
+-(void)reloadata;
+
+@end
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
-
+@property(nonatomic,assign)id<logindelegate>delegate;
 @end
