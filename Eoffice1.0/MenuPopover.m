@@ -442,6 +442,7 @@
 }
 
 #pragma mark - UItextfieldelegate methds
+
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     _currentNumber = [text intValue];
