@@ -20,11 +20,11 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     
-    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 20, 20)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    
     //    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
     //    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     leftButton.font = [UIFont systemFontOfSize:14];

@@ -33,9 +33,9 @@
     self.navigationController.navigationBarHidden = NO;
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    leftButton.frame = CGRectMake(0, 0, 20, 20);
     leftButton.font = [UIFont systemFontOfSize:14];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
@@ -138,20 +138,7 @@
     lb1.textColor = [UIColor grayColor];
     [self.view addSubview:lb1];
     
-//    UIButton *shareBtn = [[UIButton alloc]initWithFrame:CGRectMake(100, CGRectGetMaxY(lb1.frame)+20, 40, 40)];
-//    [shareBtn setImage:[UIImage imageNamed:@"weibo"] forState:UIControlStateNormal];
-//
-//    [self.view addSubview:shareBtn];
-//    
-//    UIButton *shareBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shareBtn.frame)+20, CGRectGetMaxY(lb1.frame)+20, 40, 40)];
-//    [shareBtn1 setImage:[UIImage imageNamed:@"weixin"] forState:UIControlStateNormal];
-//    
-//    [self.view addSubview:shareBtn1];
-//    
-//    UIButton *shareBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shareBtn1.frame)+20, CGRectGetMaxY(lb1.frame)+20, 40, 40)];
-//    [shareBtn2 setImage:[UIImage imageNamed:@"qq"] forState:UIControlStateNormal];
-//    
-//    [self.view addSubview:shareBtn2];
+
     // Do any additional setup after loading the view.
 }
 -(void)leftItemClicked{
@@ -371,16 +358,17 @@
             
             if (_delegate &&[_delegate respondsToSelector:@selector(reloadata)]) {
                 [_delegate reloadata];
+                [self.view removeFromSuperview];
             }
             
-            if ([model.isBoolLogin isEqualToString: @"Y"]) {
-                OrderController *order = [[OrderController alloc]init];
-                [self.navigationController pushViewController:order animated:YES];
-            }
+//            if ([model.isBoolLogin isEqualToString: @"Y"]) {
+//                OrderController *order = [[OrderController alloc]init];
+//                [self.navigationController pushViewController:order animated:YES];
+//            }
             else {
                 [self.view removeFromSuperview];
-                PersonViewController *person = [[PersonViewController alloc]init];
-                [self.navigationController pushViewController:person animated:YES];
+//                PersonViewController *person = [[PersonViewController alloc]init];
+//                [self.navigationController pushViewController:person animated:YES];
                 
             }
             

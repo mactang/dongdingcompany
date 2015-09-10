@@ -77,6 +77,8 @@
 @property(nonatomic, strong)NSMutableArray *datas;
 
 @property(nonatomic, assign) BOOL isLogin;
+
+@property(nonatomic, strong)NSString *back;
 @end
 
 @implementation CMDetailsViewController
@@ -110,9 +112,9 @@
   
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    leftButton.frame = CGRectMake(0, 0, 20, 20);
     leftButton.font = [UIFont systemFontOfSize:14];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
@@ -156,13 +158,17 @@
 
 -(void)leftItemClicked{
     SingleModel *model = [SingleModel sharedSingleModel];
-    if (model.userkey != nil) {
-    self.navigationController.navigationBar.translucent = YES;
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_back != nil && model.userkey == nil) {
+        
+    [login.view removeFromSuperview];
+        _back= nil;
+        
     }
     else{
     
-         [login.view removeFromSuperview];
+        
+        self.navigationController.navigationBar.translucent = YES;
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -253,9 +259,7 @@
     
     else if (btn.tag == 2002){
         
-        
-        
-        
+        _back = @"is";
         if (model.userkey == nil) {
             if (!login) {
                 login = [[LoginViewController alloc]init];

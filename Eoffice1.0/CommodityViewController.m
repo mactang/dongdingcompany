@@ -45,9 +45,9 @@
     
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    leftButton.frame = CGRectMake(0, 0, 20, 20);
     [leftButton setTitle:@"办公设备" forState:UIControlStateNormal];
     [leftButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     leftButton.font = [UIFont systemFontOfSize:14];

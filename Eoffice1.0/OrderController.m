@@ -55,9 +55,9 @@
     
     TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    ligthButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    ligthButton.frame = CGRectMake(0, 0, 20, 20);
 //    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
 //    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     ligthButton.font = [UIFont systemFontOfSize:14];

@@ -8,6 +8,8 @@
 
 #import "NewsViewController.h"
 #import "DetailNewsViewController.h"
+#import "RDVTabBarController.h"
+#import "TarBarButton.h"
 @interface NewsViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @end
@@ -16,10 +18,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor grayColor];
-    UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"＜" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBtn)];
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, 20, 20);
+    leftButton.font = [UIFont systemFontOfSize:14];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
     [self.navigationItem setTitle:@"消息"];
-    [self.navigationItem setLeftBarButtonItem:logoutItem];
+    
     
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -1, 320, 550) style:UITableViewStyleGrouped];
@@ -35,7 +45,7 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)leftBtn{
+- (void)leftItemClicked{
     
     
     self.navigationController.navigationBar.translucent = YES;
@@ -140,6 +150,20 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationController.navigationBarHidden = NO;
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    
+    
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = YES;
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    [super viewWillDisappear:animated];
 }
 
 /*

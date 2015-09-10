@@ -17,6 +17,8 @@
 #import "AFNetworking.h"
 #import "SingleModel.h"
 #import "PersonInformationModel.h"
+#import "CalendarManager.h"
+
 @interface PersonalInformationController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIApplicationDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong)UIImage *imageName;
@@ -31,7 +33,13 @@
 @end
 
 @implementation PersonalInformationController
+{
 
+    UILabel *birthdayLb;
+    CalendarManager *cm;
+    UILabel *sexLb;
+
+}
 -(NSMutableArray *)datas{
     if (_datas == nil) {
         _datas = [NSMutableArray array];
@@ -43,9 +51,9 @@
     [super viewDidLoad];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang11(1)"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    ligthButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    ligthButton.frame = CGRectMake(0, 0, 20, 20);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
@@ -209,9 +217,32 @@
     }
     if (indexPath.row == 3) {
         cell.textLabel.text = @"性别";
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedSex:) name:@"mySex" object:nil];
+        sexLb = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 100, 20)];
+        
+        
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        NSString *value = [ud objectForKey:@"mySex"];
+        sexLb.text = value;
+        
+        sexLb.textColor = [UIColor blackColor];
+        [cell addSubview:sexLb];
     }
     if (indexPath.row == 4) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedBirthday:) name:@"birthday" object:nil];
+        
         cell.textLabel.text = @"生日";
+        
+        birthdayLb = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 100, 20)];
+        
+        
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        
+       NSString *value = [ud objectForKey:@"myKey"];
+        birthdayLb.text = value;
+        
+        birthdayLb.textColor = [UIColor blackColor];
+        [cell addSubview:birthdayLb];
     }
     if (indexPath.row == 5) {
         cell.textLabel.text = @"公司名字";
@@ -226,6 +257,30 @@
     
     return cell;
 }
+
+- (void)selectedBirthday:(NSNotification *)notify{
+    
+    NSString *birthdayText = notify.object;
+    NSLog(@"%@",notify.object);
+    birthdayLb.text = birthdayText;
+    
+    
+    
+}
+
+- (void)selectedSex:(NSNotification *)notify{
+    
+    NSString *sexText = notify.object;
+    NSLog(@"%@",notify.object);
+    //    UITableViewCell *cell = (UITableViewCell*)[self.view viewWithTag:1000];
+    //    cell.detailTextLabel.text = reglarText;
+    // birthdayLb.text = reglarText;
+    sexLb.text = sexText;
+    
+    
+    
+}
+
 //点击return键执行的方法
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
@@ -268,6 +323,9 @@
         _pickview=[[DatePickView alloc] initDatePickWithDate:date datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
         [_pickview initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         [_pickview show];    }
+    
+   
+
     
     
 }
@@ -363,6 +421,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 - (void)leftItemClicked{
+    
+    NSString *string = [NSString stringWithFormat:@"%@",birthdayLb.text];
+    NSString *sexSt = [NSString stringWithFormat:@"%@",sexLb.text];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:string forKey:@"myKey"];
+    [ud setObject:sexSt forKey:@"mySex"];
     
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];

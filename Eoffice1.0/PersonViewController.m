@@ -18,7 +18,8 @@
 #import "RDVTabBarController.h"
 #import "PersonInformationModel.h"
 #import "SingleModel.h"
-@interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate>{
+#import "LoginViewController.h"
+@interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate>{
     LoginViewController *login;
 }
 @property(nonatomic,strong)UITableView *tableView;
@@ -26,6 +27,7 @@
 @end
 
 @implementation PersonViewController
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -56,6 +58,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    //[self downData];
     // Do any additional setup after loading the view.
 }
 
@@ -90,6 +93,7 @@
     }];
     
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -99,6 +103,7 @@
         if (!login) {
             login = [[LoginViewController alloc]init];
             [self.view addSubview:login.view];
+            login.delegate = self;
         }
         
     }else{
@@ -111,6 +116,11 @@
 
       [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
+-(void)reloadata{
+    
+    [self downData];
+    
+}
 -(void)buttonPress{
     
     LoginViewController *login = [[LoginViewController alloc]init];
@@ -119,7 +129,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 6;
+    return 6*self.datas.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -142,6 +152,7 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     if (indexPath.row == 0) {
+        PersonInformationModel *model = self.datas[indexPath.row];
         UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 175)];
         detailImageView.userInteractionEnabled = YES;
         detailImageView.image = [UIImage imageNamed:@"求真像"];
@@ -156,7 +167,7 @@
         
         UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(115, CGRectGetMaxY(button.frame)+10, 100, 20)];
         lb1.font = [UIFont systemFontOfSize:15];
-        lb1.text = @"东鼎科技客服";
+        lb1.text = [NSString stringWithFormat:@"%@",model.name];
         lb1.textColor = [UIColor whiteColor];
         [detailImageView addSubview:lb1];
     }

@@ -22,6 +22,7 @@
 #define GYZbuttonbttomgap 10.0f
 //        设置按钮距离底部的边距
 #import "DatePickView.h"
+#import "CalendarManager.h"
 @interface DatePickView ()<UIPickerViewDelegate,UIPickerViewDataSource>
 @property(nonatomic,copy)NSString *plistName;
 @property(nonatomic,strong)NSArray *plistArray;
@@ -46,6 +47,12 @@
 @property (nonatomic, strong) UILabel *alertTitleLabel;
 @end
 @implementation DatePickView
+{
+
+    UIDatePicker *datePicker;
+    CalendarManager *cm;
+    
+}
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -54,7 +61,7 @@
         UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(0, 125, 320, 40)];
         lb.text = @"修改生日";
         lb.textColor = [UIColor whiteColor];
-        lb.backgroundColor = [UIColor redColor];
+        lb.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
 //        lb.font = [UIFont systemFontOfSize:15];
         lb.clipsToBounds = YES;
     //    lb.layer.cornerRadius = 5;
@@ -99,14 +106,14 @@
         
         
         if (!leftTitle) {
-            rightbtnFrame = CGRectMake((Alertwidth - GYZSinglebuttonWidth) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZSinglebuttonWidth, GYZbuttonHeigth);
+            rightbtnFrame = CGRectMake((Alertwidth - GYZSinglebuttonWidth) * 0.5+10, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZSinglebuttonWidth, GYZbuttonHeigth);
             self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightbtn.frame = rightbtnFrame;
             
         }else {
             leftbtnFrame = CGRectMake((Alertwidth - 2 * GYZdoublebuttonWidth - GYZbuttonbttomgap) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZdoublebuttonWidth, GYZbuttonHeigth);
             
-            rightbtnFrame = CGRectMake(CGRectGetMaxX(leftbtnFrame) + GYZbuttonbttomgap, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZdoublebuttonWidth, GYZbuttonHeigth);
+            rightbtnFrame = CGRectMake(CGRectGetMaxX(leftbtnFrame) + GYZbuttonbttomgap+10, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZdoublebuttonWidth, GYZbuttonHeigth);
             self.leftbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.leftbtn.frame = leftbtnFrame;
@@ -116,17 +123,17 @@
         
         [self.rightbtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.rightbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.rightbtn.backgroundColor = [UIColor redColor];
+        self.rightbtn.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         [self.leftbtn setTitle:leftTitle forState:UIControlStateNormal];
         
-        [self.leftbtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [self.leftbtn setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
         self.leftbtn.titleLabel.font = self.rightbtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         
-        [self.leftbtn addTarget:self action:@selector(leftbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.rightbtn addTarget:self action:@selector(rightbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.leftbtn addTarget:self action:@selector(remove) forControlEvents:UIControlEventTouchUpInside];
+        [self.rightbtn addTarget:self action:@selector(doneClick) forControlEvents:UIControlEventTouchUpInside];
         self.leftbtn.layer.masksToBounds = self.rightbtn.layer.masksToBounds = YES;
         self.leftbtn.layer.cornerRadius = self.rightbtn.layer.cornerRadius = 3.0;
-        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor redColor] CGColor];
+        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         self.leftbtn.layer.borderWidth = self.rightbtn.layer.borderWidth = 1;
         [self addSubview:self.leftbtn];
         [self addSubview:self.rightbtn];
@@ -140,11 +147,16 @@
 
 -(void)doneClick
 {
+    cm = [[CalendarManager alloc]init];
     
-        
+    NSLog(@"%@",_datePicker.date);
         _resultString=[NSString stringWithFormat:@"%@",_datePicker.date];
     
+    NSString *string =  [cm stringFromDate:_datePicker.date WithFormat:@"yyyy-MM-dd"];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"birthday" object:string];
     [self removeFromSuperview];
+    
 }
 
 -(void)setToolbarWithPickViewFrame{
@@ -163,7 +175,7 @@
     return self;
 }
 -(void)setUpDatePickerWithdatePickerMode:(UIDatePickerMode)datePickerMode{
-    UIDatePicker *datePicker=[[UIDatePicker alloc] init];
+    datePicker=[[UIDatePicker alloc] init];
     datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
     datePicker.datePickerMode = datePickerMode;
     datePicker.backgroundColor=[UIColor whiteColor];
@@ -189,6 +201,7 @@
     self.frame = CGRectMake(toolViewX, 0, toolViewW, 600);
 }
 -(void)remove{
+    
     
     [self removeFromSuperview];
 }
