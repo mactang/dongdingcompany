@@ -53,7 +53,7 @@
 }
 
 -(void)leftItemClicked{
-
+    self.navigationController.navigationBarHidden = YES;
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
 
@@ -75,6 +75,8 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
+    
+    
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
     [super viewWillDisappear:animated];

@@ -60,14 +60,13 @@
     [view addSubview:rightButton];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftButton addTarget:self action:@selector(rightItemClicked:) forControlEvents:UIControlEventTouchUpInside];
     [leftButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     //设置背景图片
     UIImage *leftImage = [UIImage imageNamed:@"logo"];
     [leftButton setBackgroundImage:leftImage forState:UIControlStateNormal];
     //自定义的按钮要设置frame
     leftButton.frame = CGRectMake(12, 30, 73, 24);
-    
+    //leftButton.selected = NO;
     [view addSubview:leftButton];
     
     
