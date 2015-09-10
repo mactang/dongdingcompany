@@ -343,7 +343,7 @@ static const CGFloat MJDuration = 2.0;
     // 如复用池中没有则会自动实例化
     
    
-    ComputerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    ComputerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellName forIndexPath:indexPath];
   //  cell.titleLabel.text = [NSString stringWithFormat:@"%ld - %ld",(long)indexPath.section,(long)indexPath.row];
 //    if (indexPath.row < 4) {
     
@@ -363,7 +363,7 @@ static const CGFloat MJDuration = 2.0;
     //[price setTitle:@"322" forState:UIControlStateNormal];
     [price setTitle:[NSString stringWithFormat: @"￥%@",model.price]forState:UIControlStateNormal];
     [price setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    price.font = [UIFont systemFontOfSize:15];
+    price.titleLabel.font = [UIFont systemFontOfSize:15];
     [cell addSubview:price];
     
     UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(price.frame), 130, 30)];

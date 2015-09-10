@@ -29,13 +29,17 @@
 
 #define LANDSCAPE_WIDTH_PADDING 50
 
-@interface MenuPopover ()
-
+@interface MenuPopover ()<UITextFieldDelegate>{
+    UIButton *colorbutton;
+    UIButton *sizebutton;
+}
 @property(nonatomic,retain) NSArray *menuItems;
 @property(nonatomic,retain) UIButton *containerButton;
 @property(nonatomic,retain) UIButton  *deleteBtn;
 @property(nonatomic,strong)UILabel *numberLb1;
+@property(nonatomic,strong)UITextField *textfield;
 @property(nonatomic, strong)UIButton *numberBtn1;
+//input box
 - (void)hide;
 - (void)addSeparatorImageToCell:(UITableViewCell *)cell;
 
@@ -149,6 +153,7 @@
         colorBtn.layer.borderWidth = 0.8;
         colorBtn.layer.borderColor = [[UIColor grayColor] CGColor];
         [colorBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [colorBtn addTarget:self action:@selector(colorchoosePressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:colorBtn];
         
         UIButton *colorBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(colorBtn.frame)+10, CGRectGetMaxY(colorLb.frame)+10, 80, 30)];
@@ -159,6 +164,7 @@
         colorBtn1.layer.borderWidth = 0.8;
         colorBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
         [colorBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [colorBtn1 addTarget:self action:@selector(colorchoosePressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:colorBtn1];
         
         UIButton *colorBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(colorBtn1.frame)+10, CGRectGetMaxY(colorLb.frame)+10, 80, 30)];
@@ -169,6 +175,7 @@
         colorBtn2.layer.borderWidth = 0.8;
         colorBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
         [colorBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [colorBtn2 addTarget:self action:@selector(colorchoosePressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:colorBtn2];
 
     
@@ -188,6 +195,7 @@
         versionBtn.layer.borderWidth = 0.8;
         versionBtn.layer.borderColor = [[UIColor grayColor] CGColor];
         [versionBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [versionBtn addTarget:self action:@selector(sizechoosePressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:versionBtn];
         
         UIButton *versionBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(versionBtn.frame)+10, versionBtn.frame.origin.y, 80, 30)];
@@ -198,6 +206,7 @@
         versionBtn1.layer.borderWidth = 0.8;
         versionBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
         [versionBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [versionBtn1 addTarget:self action:@selector(sizechoosePressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:versionBtn1];
         
         UIButton *versionBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(versionBtn1.frame)+10, versionBtn.frame.origin.y, 100, 30)];
@@ -208,6 +217,7 @@
         versionBtn2.layer.borderWidth = 0.8;
         versionBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
         [versionBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [versionBtn2 addTarget:self action:@selector(sizechoosePressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:versionBtn2];
 
     }
@@ -242,24 +252,36 @@
         numberBtn2.tag = 2;
         [cell addSubview:numberBtn2];
         
-        _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
-        _numberLb1.backgroundColor = [UIColor whiteColor];
-        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"  %d",_currentNumber]];
-        [_numberLb1 setText:string];
-        [_numberLb1 setTextColor:[UIColor blackColor]];
-        _numberLb1.clipsToBounds = YES;
-        _numberLb1.layer.cornerRadius = 3;
-        _numberLb1.layer.borderWidth = 0.8;
-        _numberLb1.layer.borderColor = [[UIColor grayColor] CGColor];;
-        [_numberLb1 setTextColor:[UIColor grayColor]];
-        [cell addSubview:_numberLb1];
+        
+        
+        self.textfield = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, widgetFrameY(_numberBtn1), 50, 30)];
+        self.textfield.text = [NSString stringWithFormat:@"%d",_currentNumber];
+        self.textfield.delegate = self;
+        self.textfield.textColor = [UIColor blackColor];
+        self.textfield.textAlignment = NSTextAlignmentCenter;
+        self.textfield.layer.cornerRadius = 3;
+        self.textfield.layer.borderWidth = 0.8;
+        self.textfield.layer.borderColor = [[UIColor grayColor]CGColor];
+        [cell addSubview:self.textfield];
+        
+//        _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
+//        _numberLb1.backgroundColor = [UIColor whiteColor];
+//        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"  %d",_currentNumber]];
+//        [_numberLb1 setText:string];
+//        [_numberLb1 setTextColor:[UIColor blackColor]];
+//        _numberLb1.clipsToBounds = YES;
+//        _numberLb1.layer.cornerRadius = 3;
+//        _numberLb1.layer.borderWidth = 0.8;
+//        _numberLb1.layer.borderColor = [[UIColor grayColor] CGColor];;
+//        [_numberLb1 setTextColor:[UIColor grayColor]];
+//        [cell addSubview:_numberLb1];
     }
     else if (indexPath.row == 4){
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UIButton *shopCarBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
         // [shopCarBtn setTitle:@"购物车" forState:UIControlStateNormal];
         shopCarBtn.backgroundColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-        shopCarBtn.font = [UIFont systemFontOfSize:12];
+        shopCarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         shopCarBtn.clipsToBounds = YES;
         shopCarBtn.layer.cornerRadius = 6;
         shopCarBtn.tag = 2000;
@@ -308,6 +330,30 @@
     
     return cell;
 }
+-(void)colorchoosePressed:(UIButton *)button{
+    colorbutton.selected = NO;
+    button.selected = YES;
+
+    if (!colorbutton.selected) {
+        colorbutton.layer.borderColor = [[UIColor grayColor]CGColor];
+    }
+    if (button.selected) {
+        button.layer.borderColor = [[UIColor redColor]CGColor];
+    }
+    colorbutton = button;
+   }
+-(void)sizechoosePressed:(UIButton *)button{
+    sizebutton.selected = NO;
+    button.selected = YES;
+    if (!sizebutton.selected) {
+        sizebutton.layer.borderColor = [[UIColor grayColor]CGColor];
+    }
+    if (button.selected) {
+        button.layer.borderColor = [[UIColor redColor]CGColor];
+    }
+    sizebutton = button;
+    
+}
 -(void)shopPress:(UIButton *)btn{
     if (btn.tag == 2000) {
         NSLog(@";;;");
@@ -331,18 +377,17 @@
     if (btn.tag ==1) {
         if (_currentNumber>1) {
             
-            
             _currentNumber--;
             NSLog(@"%d",_currentNumber);
             
             NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
-            [_numberLb1 setText:string];
+            [self.textfield setText:string];
         }
     }
     if (btn.tag == 2) {
         _currentNumber++;
         NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
-        [_numberLb1 setText:string];
+        [self.textfield setText:string];
     }
     
     
@@ -396,7 +441,15 @@
                      }];
 }
 
-#pragma mark -
+#pragma mark - UItextfieldelegate methds
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    _currentNumber = [text intValue];
+    if (string.length == 0) {
+        return YES;
+    }
+    return YES;
+}
 #pragma mark Separator Methods
 
 - (void)addSeparatorImageToCell:(UITableViewCell *)cell
