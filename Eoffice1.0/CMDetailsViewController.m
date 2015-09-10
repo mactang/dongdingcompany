@@ -189,7 +189,7 @@
     UIButton *shopCarBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
    // [shopCarBtn setTitle:@"购物车" forState:UIControlStateNormal];
     shopCarBtn.backgroundColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-    shopCarBtn.font = [UIFont systemFontOfSize:12];
+    shopCarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     shopCarBtn.clipsToBounds = YES;
     shopCarBtn.layer.cornerRadius = 6;
     shopCarBtn.tag = 2000;
@@ -211,7 +211,7 @@
     
     
     _number = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
-    _number.font = [UIFont systemFontOfSize:10];
+    _number.titleLabel.font = [UIFont systemFontOfSize:10];
     [_number setTitle:[NSString stringWithFormat:@"%d",number
                       ] forState:UIControlStateNormal];
     _number.clipsToBounds = YES;
@@ -306,6 +306,9 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"%@",dic[@"info"]);
+        
         
         if (dic[@"data"] !=[NSNull null]){
             NSDictionary *array = dic[@"data"];
