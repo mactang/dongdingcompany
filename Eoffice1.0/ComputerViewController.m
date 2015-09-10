@@ -22,6 +22,7 @@
 #import "SingleModel.h"
 #import "detailsModel.h"
 #import "SDRefresh.h"
+#import "TarBarButton.h"
 /**
  *  随机颜色
  */
@@ -79,6 +80,19 @@ static const CGFloat MJDuration = 2.0;
     [super viewDidLoad];
     [self data];
     [self character];
+    
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    [leftButton setTitle:@"电脑及周边产品" forState:UIControlStateNormal];
+    [leftButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    leftButton.font = [UIFont systemFontOfSize:14];
+    // ligthButton.backgroundColor = [UIColor redColor];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+     [self.navigationItem setLeftBarButtonItem:lightItem2];
+    
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     // 1.设置布局模式
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
@@ -192,6 +206,12 @@ static const CGFloat MJDuration = 2.0;
     
     // 进入页面自动加载一次数据
 //    [refreshHeader beginRefreshing];
+}
+-(void)leftItemClicked{
+    
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 - (void)setupFooter

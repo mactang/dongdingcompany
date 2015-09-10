@@ -14,7 +14,9 @@
 #import "AFNetworking.h"
 #import "PersonViewController.h"
 #import "SingleModel.h"
-
+#import "OrderController.h"
+#import "TarBarButton.h"
+#import "MainViewController.h"
 @interface LoginViewController ()
 
 @end
@@ -28,7 +30,17 @@
     [super viewDidLoad];
     
     
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, ligthImage.size.width, ligthImage.size.height);
+    leftButton.font = [UIFont systemFontOfSize:14];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
+    
+    
     isChecked = NO;
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     float bl[4];
@@ -142,7 +154,12 @@
 //    [self.view addSubview:shareBtn2];
     // Do any additional setup after loading the view.
 }
-
+-(void)leftItemClicked{
+    
+    [self.view removeFromSuperview];
+    
+    
+}
 
 - (void)createTextField:(BOOL)isPwd withView:(UIView *)text_view
 {
@@ -351,10 +368,21 @@
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
             model.jsessionid = jsessionid;
-//            NSLog(@"%@",model.userkey);
-            [self.view removeFromSuperview];
-        PersonViewController *person = [[PersonViewController alloc]init];
-        [self.navigationController pushViewController:person animated:YES];
+            
+            if (_delegate &&[_delegate respondsToSelector:@selector(reloadata)]) {
+                [_delegate reloadata];
+            }
+            
+            if ([model.isBoolLogin isEqualToString: @"Y"]) {
+                OrderController *order = [[OrderController alloc]init];
+                [self.navigationController pushViewController:order animated:YES];
+            }
+            else {
+                [self.view removeFromSuperview];
+                PersonViewController *person = [[PersonViewController alloc]init];
+                [self.navigationController pushViewController:person animated:YES];
+                
+            }
             
         }
         
@@ -367,9 +395,8 @@
 - (void)registerLogin{
 
     
-    RegisterViewController *reg = [[RegisterViewController alloc]init];
     
-    [self.navigationController pushViewController:reg animated:YES];
+   
     
 }
 - (void)viewWillAppear:(BOOL)animated{

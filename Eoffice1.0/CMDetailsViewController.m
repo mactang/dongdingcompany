@@ -48,11 +48,12 @@
 #import "UMSocialWechatHandler.h"
 #import "UMSocialQQHandler.h"
 #import "TarBarButton.h"
-
-
+#import "LoginViewController.h"
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
-@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate>
+@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>{
+    LoginViewController *login;
+}
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)UIImageView *immgeView;
 
@@ -75,6 +76,7 @@
 
 @property(nonatomic, strong)NSMutableArray *datas;
 
+@property(nonatomic, assign) BOOL isLogin;
 @end
 
 @implementation CMDetailsViewController
@@ -85,6 +87,8 @@
     NSMutableArray *_imagesArray;
     
     int number;
+    
+    
     
     
 }
@@ -151,10 +155,15 @@
 }
 
 -(void)leftItemClicked{
-    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey != nil) {
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
+    }
+    else{
     
+         [login.view removeFromSuperview];
+    }
 }
 
 -(void)buttonClicked:(UIButton *)btn{
@@ -245,25 +254,40 @@
     else if (btn.tag == 2002){
         
         
-        if ([model.isBoolLogin isEqualToString:@"Y"]) {
-            
         
+        
+        if (model.userkey == nil) {
+            if (!login) {
+                login = [[LoginViewController alloc]init];
+                login.delegate = self;
+                [self.view addSubview:login.view];
+                
+            }else{
+                [login.view removeFromSuperview];
+            }
+            
+
+        }
+        
+        
+    }
+    if (model.userkey != nil) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
         
         OrderController *order = [[OrderController alloc]init];
         [self.navigationController pushViewController:order animated:YES];
-        }
-        else{
-            
-            LoginViewController *login = [[LoginViewController alloc]init];
-            [self.navigationController pushViewController:login animated:YES];
-            model.push = @"shopOrder";
-        }
     }
     
 }
+-(void)reloadata{
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+            self.navigationItem.backBarButtonItem = backItem;
+            OrderController *order = [[OrderController alloc]init];
+            [self.navigationController pushViewController:order animated:YES];
+    _isLogin = YES;
 
+}
 -(void)data{
     
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -598,8 +622,29 @@
 {
     [self.menuPopover dismissMenuPopover];
     
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey == nil) {
+        if (!login) {
+            login = [[LoginViewController alloc]init];
+            login.delegate = self;
+            [self.view addSubview:login.view];
+            
+        }else{
+            [login.view removeFromSuperview];
+        }
+        
+        
+    }
+    
+    
+if (model.userkey != nil) {
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
+    
     OrderController *order = [[OrderController alloc]init];
     [self.navigationController pushViewController:order animated:YES];
+}
+
 }
 
 
@@ -750,8 +795,13 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     
+    
+
+    
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    
+   
     
     
 }

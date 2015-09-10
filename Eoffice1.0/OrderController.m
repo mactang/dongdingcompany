@@ -23,6 +23,7 @@
 #import "AFNetworking.h"
 #import "AddressModel.h"
 #import "TarBarButton.h"
+#import "LoginViewController.h"
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
@@ -38,6 +39,8 @@
     UILabel *priceLb;
     UILabel *totalPice;
     UILabel *addressLb ;
+    LoginViewController *login;
+    
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -91,10 +94,13 @@
 //}
 - (void)leftItemClicked{
     
-    NSArray *array = self.navigationController.viewControllers;
-    //取出里面的对应元素（对象）,并返回
-    //popToViewController:是返回到这个对象
-    [self.navigationController popToViewController:array[4] animated:YES];
+//    NSArray *array = self.navigationController.viewControllers;
+//    //取出里面的对应元素（对象）,并返回
+//    //popToViewController:是返回到这个对象
+//    [self.navigationController popToViewController:array[4] animated:YES];
+    
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -541,10 +547,30 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+     self.navigationController.navigationBarHidden = NO;
     //  self.parentViewController.tabBarController.tabBar.hidden = YES;
     //   [(BottonTabBarController*)self.tabBarController hideTabBar:YES];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSLog(@"%@",model.userkey);
+    NSLog(@"%@",[model.userkey class]);
+    if (model.userkey == nil) {
+        if (!login) {
+            login = [[LoginViewController alloc]init];
+            [self.view addSubview:login.view];
+        }
+        
+    }else{
+        if (login) {
+            [login.view removeFromSuperview];
+            
+        }
+        
+    }
+    
+    
     
 }
 
