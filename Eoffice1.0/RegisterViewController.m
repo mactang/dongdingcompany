@@ -142,8 +142,11 @@
 
 - (void)backLogin{
 
+    [self dismissViewControllerAnimated:YES completion:^{
+        
+    }];
     
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)createTextField:(int)isPwd withView:(UIView *)text_view
 {
@@ -249,12 +252,6 @@
     }];
 
 }
-- (void)backPress{
-    MainViewController *main = [[MainViewController alloc]init];
-    
-    [self.navigationController pushViewController:main animated:YES];
-    
-}
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
@@ -263,8 +260,6 @@
     
     
 }
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     

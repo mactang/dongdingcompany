@@ -382,10 +382,11 @@
 }
 - (void)registerLogin{
 
+    RegisterViewController *registerview = [[RegisterViewController alloc]init];
     
-    
-   
-    
+    [self presentViewController:registerview animated:YES completion:^{
+        
+    }];
 }
 - (void)viewWillAppear:(BOOL)animated{
     

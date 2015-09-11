@@ -153,7 +153,8 @@
         colorBtn.clipsToBounds = YES;
         colorBtn.layer.cornerRadius = 3;
         colorBtn.layer.borderWidth = 0.8;
-        colorBtn.layer.borderColor = [[UIColor grayColor] CGColor];
+        colorBtn.layer.borderColor = [[UIColor redColor] CGColor];
+        selectButton = colorBtn;
         [colorBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [colorBtn addTarget:self action:@selector(colorPress:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:colorBtn];
@@ -195,7 +196,8 @@
         versionBtn.clipsToBounds = YES;
         versionBtn.layer.cornerRadius = 3;
         versionBtn.layer.borderWidth = 0.8;
-        versionBtn.layer.borderColor = [[UIColor grayColor] CGColor];
+        versionBtn.layer.borderColor = [[UIColor redColor] CGColor];
+        versionSelectButton = versionBtn;
         [versionBtn addTarget:self action:@selector(versionPress:) forControlEvents:UIControlEventTouchUpInside];
         [versionBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [cell addSubview:versionBtn];
