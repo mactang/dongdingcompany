@@ -10,5 +10,5 @@
 
 @interface CMDetailsViewController : UIViewController
 
-- (void)setNewMessageItemBadgeValue:(NSString*)value;
+//- (void)setNewMessageItemBadgeValue:(NSString*)value;
 @end

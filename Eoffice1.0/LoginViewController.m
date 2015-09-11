@@ -36,7 +36,7 @@
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
     leftButton.frame = CGRectMake(0, 0, 20, 20);
-    leftButton.font = [UIFont systemFontOfSize:14];
+    leftButton.titleLabel.font = [UIFont systemFontOfSize:14];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
