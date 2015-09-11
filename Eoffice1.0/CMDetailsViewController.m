@@ -115,7 +115,7 @@
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
     leftButton.frame = CGRectMake(0, 0, 20, 20);
-    leftButton.font = [UIFont systemFontOfSize:14];
+    leftButton.titleLabel.font = [UIFont systemFontOfSize:14];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
@@ -165,8 +165,6 @@
         
     }
     else{
-    
-        
         self.navigationController.navigationBar.translucent = YES;
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -250,14 +248,30 @@
     }
     else if (btn.tag == 2001){
         
-        [_number setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
-        number = number +1;
+        [self.menuPopover dismissMenuPopover];
         
-        [self data];
+        self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
+        
+        self.menuPopover.menuPopoverDelegate = self;
+        [self.menuPopover showInView:self.view];
+        
+        
+//        [_number setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
+//        number = number +1;
+//        
+//        [self data];
     
     }
     
     else if (btn.tag == 2002){
+        
+//        [self.menuPopover dismissMenuPopover];
+//        
+//        self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
+//        
+//        self.menuPopover.menuPopoverDelegate = self;
+//        [self.menuPopover showInView:self.view];
+
         
         _back = @"is";
         if (model.userkey == nil) {
@@ -272,7 +286,6 @@
             
 
         }
-        
         
     }
     if (model.userkey != nil) {
@@ -465,7 +478,7 @@
          [fenxBtb addTarget:self action:@selector(fenxClicked) forControlEvents:UIControlEventTouchUpInside];
          [fenxBtb setTitle:@"分享" forState:UIControlStateNormal];
          [fenxBtb setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-         fenxBtb.font = [UIFont systemFontOfSize:12];
+         fenxBtb.titleLabel.font = [UIFont systemFontOfSize:12];
          fenxBtb.titleLabel.textAlignment = NSTextAlignmentCenter;
          [cell addSubview:fenxBtb];
          
@@ -622,37 +635,37 @@
     
 }
 
-#pragma mark -
-#pragma mark MLKMenuPopoverDelegate
-
-- (void)menuPopover:(MenuPopover *)menuPopover
-{
-    [self.menuPopover dismissMenuPopover];
-    
-    SingleModel *model = [SingleModel sharedSingleModel];
-    if (model.userkey == nil) {
-        if (!login) {
-            login = [[LoginViewController alloc]init];
-            login.delegate = self;
-            [self.view addSubview:login.view];
-            
-        }else{
-            [login.view removeFromSuperview];
-        }
-        
-        
-    }
-    
-    
-if (model.userkey != nil) {
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backItem;
-    
-    OrderController *order = [[OrderController alloc]init];
-    [self.navigationController pushViewController:order animated:YES];
-}
-
-}
+//#pragma mark -
+//#pragma mark MLKMenuPopoverDelegate
+//
+//- (void)menuPopover:(MenuPopover *)menuPopover
+//{
+//    [self.menuPopover dismissMenuPopover];
+//    
+//    SingleModel *model = [SingleModel sharedSingleModel];
+//    if (model.userkey == nil) {
+//        if (!login) {
+//            login = [[LoginViewController alloc]init];
+//            login.delegate = self;
+//            [self.view addSubview:login.view];
+//            
+//        }else{
+//            [login.view removeFromSuperview];
+//        }
+//        
+//        
+//    }
+//    
+//    
+//if (model.userkey != nil) {
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    self.navigationItem.backBarButtonItem = backItem;
+//    
+//    OrderController *order = [[OrderController alloc]init];
+//    [self.navigationController pushViewController:order animated:YES];
+//}
+//
+//}
 
 
 -(void)btnPress1{

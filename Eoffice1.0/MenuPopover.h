@@ -23,7 +23,7 @@
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)menuItems;
 - (void)showInView:(UIView *)view;
 - (void)dismissMenuPopover;
-- (void)layoutUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
+//- (void)layoutUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end
 
