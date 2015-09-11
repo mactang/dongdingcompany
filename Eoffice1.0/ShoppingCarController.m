@@ -142,11 +142,11 @@
         }
         
         
-        
+        [self downData];
         [numberIndex removeAllObjects];
         [_tableView reloadData];
         
-      //  [self deleteData];
+        [self deleteData];
         
     }
 }
@@ -494,7 +494,7 @@
 
 - (void)isPublicBtnPress:(UIButton*)btn{
     
-  //  NSLog(@"%ld",(long)btn.tag);
+    NSLog(@"%ld",(long)btn.tag);
     NSString *string = [NSString stringWithFormat:@"%ld",(long)btn.tag-1];
     [numberIndex addObject:string];
     NSLog(@"%@",numberIndex);

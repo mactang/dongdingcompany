@@ -173,7 +173,7 @@
         cell.textLabel.text = array[indexPath.row-1];
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
-        payBtn.tag = 1000+indexPath.row;
+        payBtn.tag = indexPath.row;
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
@@ -185,13 +185,16 @@
 
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSLog(@"%@",cell.textLabel.text);
-    NSString *string = [NSString stringWithFormat:@"%@",cell.textLabel.text];
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"mySex" object:string];
+    
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
+    NSArray *array = @[@"男",@"女",@"保密"];
     
+    NSString *string = [NSString stringWithFormat:@"%@",array[btn.tag-1]];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"mySex" object:string];
     self.testbutton.selected = NO;
+    
     btn.selected = YES;
     self.testbutton = btn;
 

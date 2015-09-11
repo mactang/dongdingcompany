@@ -9,6 +9,9 @@
 #import "MenuPopover.h"
 #import <QuartzCore/QuartzCore.h>
 #import "OrderController.h"
+#import "SingleModel.h"
+#import "AFNetworking.h"
+
 #define RGBA(a, b, c, d) [UIColor colorWithRed:(a / 255.0f) green:(b / 255.0f) blue:(c / 255.0f) alpha:d]
 
 #define MENU_ITEM_HEIGHT        44
@@ -353,8 +356,7 @@ if (btn.selected) {
 
     }
     else if (btn.tag == 2001){
-        NSLog(@";;;");
-
+        [self addData];
     }
     else if (btn.tag == 2002){
         
@@ -362,6 +364,36 @@ if (btn.selected) {
             [self.menuPopoverDelegate menuPopover:self];
         NSLog(@";;;");
     }
+    
+}
+-(void)addData{
+    
+    
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+     NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
+    NSString *path = [NSString stringWithFormat:ADDMAINTAIN,model.userkey,model.goodsId,string];
+    NSLog(@"path--%@",path);
+   
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"%@",dic[@"info"]);
+        
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
     
 }
 -(int)numBtnPress:(UIButton *)btn{

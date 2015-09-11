@@ -292,6 +292,9 @@
     _isLogin = YES;
 
 }
+
+
+
 -(void)data{
     
     SingleModel *model = [SingleModel sharedSingleModel];
