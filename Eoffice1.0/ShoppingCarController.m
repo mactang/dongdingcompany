@@ -38,6 +38,7 @@
     NSMutableArray *numberIndex;
    
      NSMutableArray *DeleteRow;
+    int number;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -134,19 +135,24 @@
         NSLog(@"....");
     }else{
         for (int i = 0; i<numberIndex.count; i++) {
+            
             NSLog(@"%@",numberIndex[i]);
             NSLog(@"count-%lu",(unsigned long)numberIndex.count);
             NSLog(@"%ld",[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2);
             [self.datas removeObjectAtIndex:[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2];
             
+             NSLog(@"number--%d",number);
+            
+           
+            number = i;
         }
         
-        
-        [self downData];
+        [self deleteData];
+       // [self downData];
         [numberIndex removeAllObjects];
         [_tableView reloadData];
         
-        [self deleteData];
+        //[self deleteData];
         
     }
 }
@@ -154,7 +160,7 @@
     
     NSLog(@"%@",DeleteRow);
     for (int i = 0; i<DeleteRow.count; i++) {
-    
+    NSLog(@"%d",number);
     NSString *path= [NSString stringWithFormat:DELETESHOPCAR,DeleteRow[i]];
     NSLog(@"%@",path);
     
@@ -287,13 +293,7 @@
    
     
     if (indexPath.row == 0||indexPath.row%2==0) {
-        if (indexPath.row == 0) {
-           ShopCarModel *model = self.datas[indexPath.row];
-            _cartId = model.cartId;
-        }else{
-        ShopCarModel *model = self.datas[indexPath.row/2];
-            _cartId = model.cartId;
-        }
+        
         
         chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         chooseBtn.frame = CGRectMake(10, 30, 20, 20);
@@ -501,7 +501,14 @@
     
     
     btn.selected = !btn.selected;
-    [DeleteRow addObject:_cartId];
+    if (btn.selected == YES) {
+        ShopCarModel *model = self.datas[btn.tag-1];
+        _cartId = model.cartId;
+        [DeleteRow addObject:_cartId];
+    }
+    
+    
+    NSLog(@"%@",DeleteRow);
     
 }
 

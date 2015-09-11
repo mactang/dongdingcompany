@@ -382,7 +382,9 @@
 }
 - (void)registerLogin{
 
+    RegisterViewController *reg = [[RegisterViewController alloc]init];
     
+    [self.navigationController pushViewController:reg animated:YES];
     
    
     

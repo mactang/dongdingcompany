@@ -273,7 +273,6 @@
 
         }
         
-        
     }
     if (model.userkey != nil) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
