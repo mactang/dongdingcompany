@@ -52,6 +52,7 @@
 #define COMMODITYMIDDLE @"http://192.168.0.65:8080/eoffice/phone/product!getMidCategory.action"
 //商品详情
 #define MAINTAINDETAIL @"http://192.168.0.65:8080/eoffice/phone/product!getGoodsDetail.action?paraId=%@&goodsId=%@&cPartnerId=%@"
+#define ADDMAINTAIN @"http://192.168.0.65:8080/eoffice/phone/order!addBasket.action?userkey=%@&goodsId=%@&count=%@"
 #define MAINTAINSORTSSMART @"http://192.168.0.65:8080/eoffice/phone/product!getSubCategory.action?cartId=%@"
 
 #define MAINTAINSORTS @"http://192.168.0.65:8080/eoffice/phone/product!getMidCategory.action"
