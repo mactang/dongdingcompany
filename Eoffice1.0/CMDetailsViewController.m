@@ -53,6 +53,7 @@
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
 @interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>{
     LoginViewController *login;
+    BOOL loginsucess;
 }
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)UIImageView *immgeView;
@@ -70,7 +71,7 @@
 
 @property(nonatomic,strong)UIView *carView;
 
-@property(nonatomic,strong)UIButton *number;
+@property(nonatomic,strong)UIButton *numberbutton;
 
 @property (nonatomic, strong) BBBadgeBarButtonItem *messageItem;
 
@@ -105,7 +106,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    number = 0;
+    loginsucess = NO;
     self.view.backgroundColor = [UIColor grayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.hidesBottomBarWhenPushed = YES;
@@ -146,21 +148,16 @@
     [self.view addSubview:_carView];
     [self shopTabBar];
     
-    
-    
     //商品参数
     [self parameterData];
     
-    
-
     // Do any additional setup after loading the view.
 }
 
 -(void)leftItemClicked{
     SingleModel *model = [SingleModel sharedSingleModel];
     if (_back != nil && model.userkey == nil) {
-        
-    [login.view removeFromSuperview];
+        [login.view removeFromSuperview];
         _back= nil;
         
     }
@@ -180,9 +177,6 @@
     
     self.pageControl.currentPage = gap;
 }
-
-
-
 -(void)shopTabBar{
     UIButton *shopCarBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
    // [shopCarBtn setTitle:@"购物车" forState:UIControlStateNormal];
@@ -208,15 +202,15 @@
     [shopCarBtn addSubview:lb1];
     
     
-    _number = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
-    _number.titleLabel.font = [UIFont systemFontOfSize:10];
-    [_number setTitle:[NSString stringWithFormat:@"%d",number
+    _numberbutton = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
+    _numberbutton.titleLabel.font = [UIFont systemFontOfSize:10];
+    [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number
                       ] forState:UIControlStateNormal];
-    _number.clipsToBounds = YES;
-    _number.layer.cornerRadius = 10;
-    [_number setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _number.backgroundColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:0/255.0 alpha:1];
-    [_carView addSubview:_number];
+    _numberbutton.clipsToBounds = YES;
+    _numberbutton.layer.cornerRadius = 10;
+    [_numberbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _numberbutton.backgroundColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:0/255.0 alpha:1];
+    [_carView addSubview:_numberbutton];
     
     UIButton *InShopBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shopCarBtn.frame)+8, 5, 120, 40)];
     [InShopBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
@@ -255,65 +249,50 @@
         self.menuPopover.menuPopoverDelegate = self;
         [self.menuPopover showInView:self.view];
         
-        
-//        [_number setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
-//        number = number +1;
-//        
+        [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
+        number = number +1;
+//
 //        [self data];
     
     }
     
     else if (btn.tag == 2002){
-        
-//        [self.menuPopover dismissMenuPopover];
-//        
-//        self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
-//        
-//        self.menuPopover.menuPopoverDelegate = self;
-//        [self.menuPopover showInView:self.view];
-
-        
         _back = @"is";
         if (model.userkey == nil) {
-            if (!login) {
+            if (!loginsucess) {
                 login = [[LoginViewController alloc]init];
                 login.delegate = self;
                 [self.view addSubview:login.view];
                 
             }else{
                 [login.view removeFromSuperview];
+                
             }
             
 
         }
+        else{
+            [self.menuPopover dismissMenuPopover];
+            self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
+            self.menuPopover.menuPopoverDelegate = self;
+            [self.menuPopover showInView:self.view];
+        }
         
     }
-    if (model.userkey != nil) {
-        UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-        self.navigationItem.backBarButtonItem = backItem;
-        
-        OrderController *order = [[OrderController alloc]init];
-        [self.navigationController pushViewController:order animated:YES];
-    }
-    
 }
 -(void)reloadata{
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-            self.navigationItem.backBarButtonItem = backItem;
-            OrderController *order = [[OrderController alloc]init];
-            [self.navigationController pushViewController:order animated:YES];
-    _isLogin = YES;
-
+    [self.menuPopover dismissMenuPopover];
+    self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
+    self.menuPopover.menuPopoverDelegate = self;
+    [self.menuPopover showInView:self.view];
+   
 }
-
-
-
 -(void)data{
     
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,model.paraId,model.goodsId,model.cPartnerId];
     NSLog(@"path--%@",path);
-    NSLog(@"wGoodsId--%@",_number.titleLabel.text);
+    NSLog(@"wGoodsId--%@",_numberbutton.titleLabel.text);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -607,7 +586,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:PARAMETER,model.paraId];
     NSLog(@"path--%@",path);
-    NSLog(@"wGoodsId--%@",_number.titleLabel.text);
+    NSLog(@"wGoodsId--%@",_numberbutton.titleLabel.text);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -633,43 +612,22 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-    
-    
-    
+}
+#pragma mark -
+#pragma mark MLKMenuPopoverDelegate
+
+- (void)menuPopover:(MenuPopover *)menuPopover
+{
+  
+    SingleModel *model = [SingleModel sharedSingleModel];
+ if (model.userkey != nil) {
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
+    OrderController *order = [[OrderController alloc]init];
+    [self.navigationController pushViewController:order animated:YES];
 }
 
-//#pragma mark -
-//#pragma mark MLKMenuPopoverDelegate
-//
-//- (void)menuPopover:(MenuPopover *)menuPopover
-//{
-//    [self.menuPopover dismissMenuPopover];
-//    
-//    SingleModel *model = [SingleModel sharedSingleModel];
-//    if (model.userkey == nil) {
-//        if (!login) {
-//            login = [[LoginViewController alloc]init];
-//            login.delegate = self;
-//            [self.view addSubview:login.view];
-//            
-//        }else{
-//            [login.view removeFromSuperview];
-//        }
-//        
-//        
-//    }
-//    
-//    
-//if (model.userkey != nil) {
-//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-//    self.navigationItem.backBarButtonItem = backItem;
-//    
-//    OrderController *order = [[OrderController alloc]init];
-//    [self.navigationController pushViewController:order animated:YES];
-//}
-//
-//}
-
+}
 
 -(void)btnPress1{
     UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];
@@ -831,7 +789,7 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
-    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
     [super viewWillDisappear:animated];
 }

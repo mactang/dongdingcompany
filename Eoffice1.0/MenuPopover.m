@@ -368,7 +368,6 @@ if (btn.selected) {
         [self addData];
     }
     else if (btn.tag == 2002){
-        
             [self hide];
             [self.menuPopoverDelegate menuPopover:self];
         NSLog(@";;;");
@@ -376,8 +375,6 @@ if (btn.selected) {
     
 }
 -(void)addData{
-    
-    
     
     SingleModel *model = [SingleModel sharedSingleModel];
      NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
@@ -402,30 +399,24 @@ if (btn.selected) {
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-    
-    
 }
 -(int)numBtnPress:(UIButton *)btn{
     
     
     if (btn.tag ==1) {
         if (_currentNumber>1) {
-            
-            
             _currentNumber--;
             NSLog(@"%d",_currentNumber);
             
-            NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
+            NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
             [self.textfield setText:string];
         }
     }
     if (btn.tag == 2) {
         _currentNumber++;
-        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
+        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
         [self.textfield setText:string];
     }
-    
-    
     return _currentNumber;
 }
 
