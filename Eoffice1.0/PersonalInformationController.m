@@ -159,7 +159,7 @@
 
 
 -(void)backPress{
-    //LoginViewController *login = [[LoginViewController alloc]init];
+    
     self.navigationController.navigationBarHidden = YES;
     [self.navigationController popToRootViewControllerAnimated:YES];
     
