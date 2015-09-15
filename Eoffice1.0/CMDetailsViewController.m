@@ -89,6 +89,7 @@
     NSMutableArray *_imagesArray;
     
     int number;
+    LoginViewController *login;
     
     
     
@@ -565,17 +566,12 @@
         
         if (dic[@"data"] !=[NSNull null]){
             NSDictionary *array = dic[@"data"];
-            
             detailsModel *model = [detailsModel modelWithDic:array];
             [self.datas addObject:model];
             NSLog(@"model.name--%@",self.datas);
-            
         }
-        
         //默认选中图文详情
         [self btnPress1];
-        
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
@@ -590,17 +586,19 @@
         [self.navigationController pushViewController:order animated:YES];
     }
     else{
-        LoginViewController *login = [[LoginViewController alloc]init];
+        login = [[LoginViewController alloc]init];
         login.delegate = self;
         [self.navigationController pushViewController:login animated:YES];
     }
 }
 #pragma mark logindelegate mathds
 -(void)reloadata{
+    [login.navigationController popViewControllerAnimated:NO];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backItem;
     OrderController *order = [[OrderController alloc]init];
     [self.navigationController pushViewController:order animated:YES];
+
 }
 -(void)btnPress1{
     UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];
