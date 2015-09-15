@@ -308,6 +308,7 @@ static const CGFloat MJDuration = 2.0;
         for (int i = 0; i<4; i++) {
             detailsModel *model = self.datas[i];
             [weakSelf.datas addObject:model];
+            
             [_collectionView reloadData];
             
         }
@@ -366,6 +367,9 @@ static const CGFloat MJDuration = 2.0;
     ComputerCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellName forIndexPath:indexPath];
   //  cell.titleLabel.text = [NSString stringWithFormat:@"%ld - %ld",(long)indexPath.section,(long)indexPath.row];
 //    if (indexPath.row < 4) {
+    for (UIView *view in cell.contentView.subviews) {
+        [view removeFromSuperview];
+    }
     
     detailsModel *model = self.datas[indexPath.row];
     //  NSLog(@"%@",model.price);
@@ -375,9 +379,6 @@ static const CGFloat MJDuration = 2.0;
     [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",string,model.imgUrl]]];
     NSLog(@"%@",imageView.image);
     [cell addSubview:imageView];
-    for (UIView *view in cell.contentView.subviews) {
-        [view removeFromSuperview];
-    }
     
     UIButton *price = [[UIButton alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+20, 80, 20)];
     //[price setTitle:@"322" forState:UIControlStateNormal];

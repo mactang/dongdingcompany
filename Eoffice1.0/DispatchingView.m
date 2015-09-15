@@ -88,16 +88,13 @@
         
         
         
-        if (invoiceSelector == YES) {
-            _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 340) style:UITableViewStyleGrouped];
-            
-        }
+        
 
         
     
-    else{
+    
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 240) style:UITableViewStyleGrouped];
-    }
+
 
     
         _tableView.delegate = self;
@@ -170,6 +167,7 @@
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+        payBtn.tag = indexPath.row;
         cell.accessoryView = payBtn;
     }
     if (indexPath.row == 3) {
@@ -179,6 +177,7 @@
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+        payBtn.tag = indexPath.row;
         cell.accessoryView = payBtn;
     }
     
@@ -229,42 +228,84 @@
 //    _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
     
 }
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row == 1 || indexPath.row == 3) {
-        
-        if (!selectIndexPath) {//第一次
-            selectIndexPath = indexPath;
-            
+
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    if (indexPath.row == 1 || indexPath.row == 3) {
+//        
+//        if (!selectIndexPath) {//第一次
+//            selectIndexPath = indexPath;
+//            
 //            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
-            
-        }
-        
-        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        invoiceSelector = !invoiceSelector;
-        
-        BOOL isOtherIndex = NO;
-        
-        if (selectIndexPath.row != indexPath.row) {
-            isOtherIndex = YES;
-            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-        }
-        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        if (isOtherIndex && !invoiceSelector) {
-            invoiceSelector = YES;
-            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-        }
-        
-    }
-}
+//            
+//        }
+//        
+//        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+//        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        
+//        invoiceSelector = !invoiceSelector;
+//        
+//        BOOL isOtherIndex = NO;
+//        
+//        if (selectIndexPath.row != indexPath.row) {
+//            isOtherIndex = YES;
+//            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
+//        }
+//        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        
+//        if (isOtherIndex && !invoiceSelector) {
+//            invoiceSelector = YES;
+//            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
+//        }
+//        
+//    }
+//}
 - (void)isPublicBtnPress:(UIButton*)btn{
     
-    btn.selected = !btn.selected;
+    
+  //  if (btn.selected == YES) {
+    NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
+    
+    NSIndexPath *indexPath= [anArrayOfIndexPath objectAtIndex:btn.tag];
+    
+    if (!selectIndexPath) {//第一次
+        selectIndexPath = indexPath;
+        
+        _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
+        btn.selected = YES;
+       
+    }
+    
+    selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    invoiceSelector = !invoiceSelector;
+    
+    BOOL isOtherIndex = NO;
+    btn.selected = YES;
+    if (selectIndexPath.row != indexPath.row) {
+        isOtherIndex = YES;
+        
+      //  _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
+        
+    }
+    selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    if (isOtherIndex && !invoiceSelector) {
+        invoiceSelector = YES;
+        
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
+        btn.selected = YES;
+    }
+//    }
+//    else{
+//    
+//        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 240) style:UITableViewStyleGrouped];
+//    }
     
 }
 - (void)leftbtnclicked:(id)sender

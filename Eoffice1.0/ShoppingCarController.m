@@ -39,6 +39,7 @@
    
      NSMutableArray *DeleteRow;
     int number;
+    BOOL isAllDelete;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -54,6 +55,7 @@
     
     [self downData];
     invoiceSelector = 0;
+    isAllDelete = NO;
     numberIndex = [NSMutableArray array];
     DeleteRow = [NSMutableArray array];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -134,22 +136,33 @@
     if (buttonIndex == 1) {
         NSLog(@"....");
     }else{
-        for (int i = 0; i<numberIndex.count; i++) {
+        if (isAllDelete == NO) {
+            for (int i = 0; i<numberIndex.count; i++) {
+                
+                NSLog(@"%@",numberIndex[i]);
+                NSLog(@"count-%lu",(unsigned long)numberIndex.count);
+                NSLog(@"%ld",[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2);
+                [self.datas removeObjectAtIndex:[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2];
+                
+                NSLog(@"number--%d",number);
+                
+                
+                number = i;
+        }
+            [self deleteData];
+            // [self downData];
+            [numberIndex removeAllObjects];
+        }
+        else{
             
-            NSLog(@"%@",numberIndex[i]);
-            NSLog(@"count-%lu",(unsigned long)numberIndex.count);
-            NSLog(@"%ld",[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2);
-            [self.datas removeObjectAtIndex:[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2];
-            
-             NSLog(@"number--%d",number);
-            
+            [self AllDeleteData];
+            [self.datas removeAllObjects];
+            // [self downData];
            
-            number = i;
+            
         }
         
-        [self deleteData];
-       // [self downData];
-        [numberIndex removeAllObjects];
+        
         [_tableView reloadData];
         
         //[self deleteData];
@@ -193,6 +206,45 @@
     
 }
 
+-(void)AllDeleteData{
+    
+    NSLog(@"%@",DeleteRow);
+    for (int i = 0; i<self.datas.count; i++) {
+        NSLog(@"%d",number);
+        
+        ShopCarModel *model = self.datas[i];
+        
+        NSString *path= [NSString stringWithFormat:DELETESHOPCAR,model.cartId];
+        NSLog(@"%@",path);
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        
+        [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            if (dic[@"data"] !=[NSNull null]){
+                NSArray *array = dic[@"status"];
+                NSString *string = [NSString stringWithFormat:@"%@",array];
+                NSLog(@"array--%@",string);
+                if ([string isEqualToString:@"1"]) {
+                    
+                    
+                }
+                else{
+                }
+                
+                
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@",error);
+        }];
+    }
+    
+}
 
 - (void)leftItemClicked{
     
@@ -210,8 +262,12 @@
             NSLog(@"btn--%@",btn);
             btn.selected = !btn.selected;
         }
+        
+        
     }
     allBtn.selected = !allBtn.selected;
+    
+    isAllDelete = YES;
     
 }
 - (void)downData{
@@ -294,7 +350,7 @@
     
     if (indexPath.row == 0||indexPath.row%2==0) {
         
-        
+        int  i = 0 ;
         chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         chooseBtn.frame = CGRectMake(10, 30, 20, 20);
         [chooseBtn setImage:[UIImage imageNamed:@"check-NO"] forState:UIControlStateNormal];
@@ -495,14 +551,14 @@
 - (void)isPublicBtnPress:(UIButton*)btn{
     
     NSLog(@"%ld",(long)btn.tag);
-    NSString *string = [NSString stringWithFormat:@"%ld",(long)btn.tag-1];
+    NSString *string = [NSString stringWithFormat:@"%ld",(long)btn.tag];
     [numberIndex addObject:string];
     NSLog(@"%@",numberIndex);
     
     
     btn.selected = !btn.selected;
     if (btn.selected == YES) {
-        ShopCarModel *model = self.datas[btn.tag-1];
+        ShopCarModel *model = self.datas[(btn.tag-1)%2];
         _cartId = model.cartId;
         [DeleteRow addObject:_cartId];
     }
