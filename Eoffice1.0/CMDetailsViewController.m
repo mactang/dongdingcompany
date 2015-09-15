@@ -585,7 +585,7 @@
 -(void)pushlogincontroller{
     
     LoginViewController *login = [[LoginViewController alloc]init];
-    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    
     [self.navigationController pushViewController:login animated:YES];
     
     
