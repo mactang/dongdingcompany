@@ -158,6 +158,7 @@
 
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
+    NSLog(@"%lu",(unsigned long)self.datas.count);
     if (indexPath.section == 0) {
        // cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
