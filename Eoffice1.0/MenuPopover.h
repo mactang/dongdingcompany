@@ -10,15 +10,15 @@
 
 @class MenuPopover;
 
-@protocol MenuPopoverDelegate
+@protocol MenuPopoverDelegate<NSObject>
 
-- (void)menuPopover:(MenuPopover *)menuPopover;
+- (void)pushlogincontroller;
 
 @end
 
 @interface MenuPopover : UIView <UITableViewDataSource,UITableViewDelegate>
 
-@property(nonatomic,assign) id<MenuPopoverDelegate> menuPopoverDelegate;
+@property(nonatomic,assign) id<MenuPopoverDelegate>delegate;
 
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)menuItems;
 - (void)showInView:(UIView *)view;

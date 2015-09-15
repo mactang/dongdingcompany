@@ -47,7 +47,7 @@
     
     self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
     
-    self.menuPopover.menuPopoverDelegate = self;
+    self.menuPopover.delegate = self;
     [self.menuPopover showInView:self.view];
 }
 

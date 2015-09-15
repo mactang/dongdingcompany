@@ -51,10 +51,8 @@
 #import "LoginViewController.h"
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
-@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>{
-    LoginViewController *login;
-    BOOL loginsucess;
-}
+@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate>
+    
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)UIImageView *immgeView;
 
@@ -77,9 +75,10 @@
 
 @property(nonatomic, strong)NSMutableArray *datas;
 
-@property(nonatomic, assign) BOOL isLogin;
+//@property(nonatomic, assign) BOOL isLogin;
 
 @property(nonatomic, strong)NSString *back;
+
 @end
 
 @implementation CMDetailsViewController
@@ -107,7 +106,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     number = 0;
-    loginsucess = NO;
     self.view.backgroundColor = [UIColor grayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.hidesBottomBarWhenPushed = YES;
@@ -155,16 +153,10 @@
 }
 
 -(void)leftItemClicked{
-    SingleModel *model = [SingleModel sharedSingleModel];
-    if (_back != nil && model.userkey == nil) {
-        [login.view removeFromSuperview];
-        _back= nil;
-        
-    }
-    else{
-        self.navigationController.navigationBar.translucent = YES;
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+    
+   self.navigationController.navigationBar.translucent = YES;
+   [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 -(void)buttonClicked:(UIButton *)btn{
@@ -236,7 +228,6 @@
     [_carView addSubview:shopBtn];
 }
 -(void)shopPress:(UIButton *)btn{
-    SingleModel *model = [SingleModel sharedSingleModel];
     if (btn.tag == 2000) {
         
     }
@@ -246,46 +237,22 @@
         
         self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
         
-        self.menuPopover.menuPopoverDelegate = self;
+        self.menuPopover.delegate = self;
         [self.menuPopover showInView:self.view];
         
         [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
         number = number +1;
-//
 //        [self data];
     
     }
     
     else if (btn.tag == 2002){
-        _back = @"is";
-        if (model.userkey == nil) {
-            if (!loginsucess) {
-                login = [[LoginViewController alloc]init];
-                login.delegate = self;
-                [self.view addSubview:login.view];
-                
-            }else{
-                [login.view removeFromSuperview];
-                
-            }
-            
-
-        }
-        else{
             [self.menuPopover dismissMenuPopover];
             self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
-            self.menuPopover.menuPopoverDelegate = self;
+            self.menuPopover.delegate = self;
             [self.menuPopover showInView:self.view];
-        }
         
     }
-}
--(void)reloadata{
-    [self.menuPopover dismissMenuPopover];
-    self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
-    self.menuPopover.menuPopoverDelegate = self;
-    [self.menuPopover showInView:self.view];
-   
 }
 -(void)data{
     
@@ -577,7 +544,7 @@
     
     self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
     
-    self.menuPopover.menuPopoverDelegate = self;
+    self.menuPopover.delegate = self;
     [self.menuPopover showInView:self.view];
 }
 
@@ -615,19 +582,25 @@
 }
 #pragma mark -
 #pragma mark MLKMenuPopoverDelegate
+-(void)pushlogincontroller{
+    
+    LoginViewController *login = [[LoginViewController alloc]init];
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    [self.navigationController pushViewController:login animated:YES];
+    
+    
+}
 
-- (void)menuPopover:(MenuPopover *)menuPopover
-{
+
   
-    SingleModel *model = [SingleModel sharedSingleModel];
- if (model.userkey != nil) {
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backItem;
-    OrderController *order = [[OrderController alloc]init];
-    [self.navigationController pushViewController:order animated:YES];
-}
+//    SingleModel *model = [SingleModel sharedSingleModel];
+// if (model.userkey != nil) {
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    self.navigationItem.backBarButtonItem = backItem;
+//    OrderController *order = [[OrderController alloc]init];
+//    [self.navigationController pushViewController:order animated:YES];
+//}
 
-}
 
 -(void)btnPress1{
     UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];

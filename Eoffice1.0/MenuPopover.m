@@ -11,7 +11,8 @@
 #import "OrderController.h"
 #import "SingleModel.h"
 #import "AFNetworking.h"
-
+#import "LoginViewController.h"
+#import "CMDetailsViewController.h"
 #define RGBA(a, b, c, d) [UIColor colorWithRed:(a / 255.0f) green:(b / 255.0f) blue:(c / 255.0f) alpha:d]
 
 #define MENU_ITEM_HEIGHT        44
@@ -32,7 +33,10 @@
 
 #define LANDSCAPE_WIDTH_PADDING 50
 
-@interface MenuPopover ()<UITextFieldDelegate>
+@interface MenuPopover ()<UITextFieldDelegate,logindelegate>{
+    LoginViewController *login;
+    BOOL loginsucess;
+}
 
 @property(nonatomic,retain) NSArray *menuItems;
 @property(nonatomic,retain) UIButton *containerButton;
@@ -40,6 +44,8 @@
 //@property(nonatomic,strong)UILabel *numberLb1;
 @property(nonatomic, strong)UIButton *numberBtn1;
 @property(nonatomic,strong)UITextField *textfield;
+@property(nonatomic, strong)NSString *back;
+
 - (void)hide;
 - (void)addSeparatorImageToCell:(UITableViewCell *)cell;
 
@@ -51,7 +57,7 @@
     UIButton *selectButton;
     UIButton *versionSelectButton;
 }
-@synthesize menuPopoverDelegate;
+
 @synthesize menuItems;
 @synthesize containerButton;
 
@@ -362,19 +368,52 @@ if (btn.selected) {
     return YES;
 }
 -(void)shopPress:(UIButton *)btn{
-    if (btn.tag == 2000) {
-        NSLog(@";;;");
-
+    if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller)]) {
+        [_delegate pushlogincontroller];
+        
     }
-    else if (btn.tag == 2001){
-        [self addData];
-    }
-    else if (btn.tag == 2002){
-            [self hide];
-            [self.menuPopoverDelegate menuPopover:self];
-        NSLog(@";;;");
-    }
+//    SingleModel *model = [SingleModel sharedSingleModel];
+//    _back = @"is";
+//    
+//    if (model.userkey == nil) {
+//        
+//       if (!loginsucess) {
+//           
+//            login = [[LoginViewController alloc]init];
+//            login.delegate = self;
+//            [self.superview addSubview:login.view];
+//    
+//        }else{
+//            [login.view removeFromSuperview];
+//    
+//            }
+//                
+//    
+//    }
     
+//    if (btn.tag == 2000) {
+//        NSLog(@";;;");
+//
+//    }
+//    else if (btn.tag == 2001){
+//        [self addData];
+//    }
+//    else if (btn.tag == 2002){
+//            [self hide];
+//            [self.menuPopoverDelegate menuPopover:self];
+//        NSLog(@";;;");
+//    }
+    
+}
+#pragma mark longindelegate methds
+-(void)reloadata{
+    CMDetailsViewController *cmdController;
+//    UIViewController *rootController = [[UIApplication sharedApplication].keyWindow rootViewController];
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    cmdController.navigationItem.backBarButtonItem = backItem;
+//    OrderController *order = [[OrderController alloc]init];
+//    [cmdController.navigationController pushViewController:order animated:YES];
+
 }
 -(void)addData{
     

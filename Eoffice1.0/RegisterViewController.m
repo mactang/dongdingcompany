@@ -114,39 +114,37 @@
 
 -(void)valiData{
     
-    UITextField *name_field = (UITextField *)[self.view viewWithTag:1001];
-    UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
-    UITextField *identifying_field = (UITextField *)[self.view viewWithTag:1004];
-    
-    
-    NSString *path = REGISTER;
-    NSLog(@"%@",identifying_field.text);
-    
+    UITextField *name_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
+    NSString *path = [NSString stringWithFormat:REGISTERMASSAGE,name_field.text];
+    NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    
-    [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",string);
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"%@",dic[@"data"]);
+        
+        
+        
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
     
+    
 }
 
 - (void)backLogin{
 
-    [self dismissViewControllerAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:NO completion:^{
         
     }];
     
-//    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)createTextField:(int)isPwd withView:(UIView *)text_view
 {
