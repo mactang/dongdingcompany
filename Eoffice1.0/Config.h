@@ -44,6 +44,7 @@
 
 //用户注册接口
 #define REGISTER @"http://192.168.0.65:8080/eoffice/phone/user!Register.action?username=TTTTT&password=test"
+#define REGISTERMASSAGE @"http://192.168.0.65:8080/eoffice/phone/sms!getPhoneSms.action?phoneNo=%@"
 
 //
 #define OFFICE @"http://192.168.0.65:8080/eoffice/";
