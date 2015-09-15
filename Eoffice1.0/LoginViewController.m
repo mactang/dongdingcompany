@@ -351,7 +351,6 @@
             NSDictionary *subDic = dic[@"data"];
             NSString *userkey = subDic[@"userkey"];
             NSString *jsessionid = subDic[@"jsessionId"];
-//            NSLog(@"jsessionid--%@",jsessionid);
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
             model.jsessionid = jsessionid;
@@ -359,17 +358,13 @@
             if (_delegate &&[_delegate respondsToSelector:@selector(reloadata)]) {
                 [_delegate reloadata];
                 [self.view removeFromSuperview];
+                [self removeFromParentViewController];
             }
             
-//            if ([model.isBoolLogin isEqualToString: @"Y"]) {
-//                OrderController *order = [[OrderController alloc]init];
-//                [self.navigationController pushViewController:order animated:YES];
-//            }
             else {
                 [self.view removeFromSuperview];
-//                PersonViewController *person = [[PersonViewController alloc]init];
-//                [self.navigationController pushViewController:person animated:YES];
-                
+                [self removeFromParentViewController];
+
             }
             
         }

@@ -98,7 +98,7 @@
 //    //取出里面的对应元素（对象）,并返回
 //    //popToViewController:是返回到这个对象
 //    [self.navigationController popToViewController:array[4] animated:YES];
-    
+   // self.navigationController.navigationBarHidden = YES;
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
     
