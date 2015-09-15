@@ -33,8 +33,7 @@
 
 #define LANDSCAPE_WIDTH_PADDING 50
 
-@interface MenuPopover ()<UITextFieldDelegate,logindelegate>{
-    LoginViewController *login;
+@interface MenuPopover ()<UITextFieldDelegate>{
     BOOL loginsucess;
 }
 
@@ -372,48 +371,6 @@ if (btn.selected) {
         [_delegate pushlogincontroller];
         
     }
-//    SingleModel *model = [SingleModel sharedSingleModel];
-//    _back = @"is";
-//    
-//    if (model.userkey == nil) {
-//        
-//       if (!loginsucess) {
-//           
-//            login = [[LoginViewController alloc]init];
-//            login.delegate = self;
-//            [self.superview addSubview:login.view];
-//    
-//        }else{
-//            [login.view removeFromSuperview];
-//    
-//            }
-//                
-//    
-//    }
-    
-//    if (btn.tag == 2000) {
-//        NSLog(@";;;");
-//
-//    }
-//    else if (btn.tag == 2001){
-//        [self addData];
-//    }
-//    else if (btn.tag == 2002){
-//            [self hide];
-//            [self.menuPopoverDelegate menuPopover:self];
-//        NSLog(@";;;");
-//    }
-    
-}
-#pragma mark longindelegate methds
--(void)reloadata{
-    CMDetailsViewController *cmdController;
-//    UIViewController *rootController = [[UIApplication sharedApplication].keyWindow rootViewController];
-//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-//    cmdController.navigationItem.backBarButtonItem = backItem;
-//    OrderController *order = [[OrderController alloc]init];
-//    [cmdController.navigationController pushViewController:order animated:YES];
-
 }
 -(void)addData{
     

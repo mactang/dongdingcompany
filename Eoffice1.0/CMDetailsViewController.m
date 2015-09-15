@@ -51,7 +51,7 @@
 #import "LoginViewController.h"
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
-@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate>
+@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>
     
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)UIImageView *immgeView;
@@ -580,28 +580,28 @@
         NSLog(@"%@",error);
     }];
 }
-#pragma mark -
 #pragma mark MLKMenuPopoverDelegate
 -(void)pushlogincontroller{
-    
-    LoginViewController *login = [[LoginViewController alloc]init];
-    
-    [self.navigationController pushViewController:login animated:YES];
-    
-    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey !=nil) {
+        UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.navigationItem.backBarButtonItem = backItem;
+        OrderController *order = [[OrderController alloc]init];
+        [self.navigationController pushViewController:order animated:YES];
+    }
+    else{
+        LoginViewController *login = [[LoginViewController alloc]init];
+        login.delegate = self;
+        [self.navigationController pushViewController:login animated:YES];
+    }
 }
-
-
-  
-//    SingleModel *model = [SingleModel sharedSingleModel];
-// if (model.userkey != nil) {
-//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-//    self.navigationItem.backBarButtonItem = backItem;
-//    OrderController *order = [[OrderController alloc]init];
-//    [self.navigationController pushViewController:order animated:YES];
-//}
-
-
+#pragma mark logindelegate mathds
+-(void)reloadata{
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
+    OrderController *order = [[OrderController alloc]init];
+    [self.navigationController pushViewController:order animated:YES];
+}
 -(void)btnPress1{
     UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];
     goodsNameLb.text = @"商品名称:";
@@ -762,6 +762,7 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
+    
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
     [super viewWillDisappear:animated];
