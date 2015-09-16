@@ -442,8 +442,7 @@
             [alter show];
         }
         if (indexPath.row==3) {
-            
-        
+    
         GYZAlterview *alter=[[GYZAlterview alloc]initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         alter.rightBlock=^()
         {

@@ -29,14 +29,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
-//    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
-//    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-//    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
-//    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-//    leftButton.frame = CGRectMake(0, 0, 20, 20);
-//    leftButton.titleLabel.font = [UIFont systemFontOfSize:14];
-//    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-//    [self.navigationItem setLeftBarButtonItem:lightItem2];
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, 20, 20);
+    leftButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
     
     
     isChecked = NO;
