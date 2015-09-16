@@ -84,8 +84,6 @@
 {
     if (self = [super init]) {
         self.layer.cornerRadius = 5.0;
-       
-        
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 300) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
