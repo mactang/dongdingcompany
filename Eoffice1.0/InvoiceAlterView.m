@@ -42,6 +42,9 @@
     UIButton *payBtn;
     BOOL invoiceSelector;
     NSIndexPath *selectIndexPath;
+    UIButton *currentbutton;
+    BOOL  sucess;
+    BOOL  cellbool;
 }
 
 
@@ -84,7 +87,7 @@
 {
     if (self = [super init]) {
         self.layer.cornerRadius = 5.0;
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 300) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 240) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollEnabled = NO;
@@ -95,11 +98,11 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 8;
+    return 5;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (indexPath.row == 2 || indexPath.row == 4 ||indexPath.row == 6) {
+    if (indexPath.row == 2) {
     
     
     if (invoiceSelector && selectIndexPath.row + 1 == indexPath.row) {
@@ -107,7 +110,6 @@
         
     }
         return 0;
-     //   tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
         
     }
     else{
@@ -138,41 +140,36 @@
     if (indexPath.row == 0) {
         
         UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
-        bl.backgroundColor = [UIColor redColor];
+        bl.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         bl.font = [UIFont systemFontOfSize:20];
         [bl setText:@"  发票信息"];
         [bl setTextColor:[UIColor whiteColor]];
         [cell addSubview:bl];
     }
     if (indexPath.row == 1) {
-        cell.textLabel.text = @"个人发票";
+        cell.textLabel.text = @"开发票";
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
+        payBtn.tag = indexPath.row;
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = payBtn;
     }
     if (indexPath.row == 3) {
-        cell.textLabel.text = @"公司增票";
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.text = @"不开发票";
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = payBtn;
-    }
-    if (indexPath.row == 5) {
-        cell.textLabel.text = @"公司普票";
-        payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        payBtn.frame = CGRectMake(0, 0, 20, 20);
-        [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
-        [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
-        [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        cell.accessoryView = payBtn;
+        payBtn.tag = indexPath.row;
     }
     
-    if (indexPath.row == 7) {
+    if (indexPath.row == 4) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         NSString *leftTitle = @"取消";
         NSString *rigthTitle = @"确定";
         CGRect leftbtnFrame;
@@ -196,17 +193,17 @@
         
         [self.rightbtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.rightbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.rightbtn.backgroundColor = [UIColor redColor];
+        self.rightbtn.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         [self.leftbtn setTitle:leftTitle forState:UIControlStateNormal];
         
-        [self.leftbtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [self.leftbtn setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
         self.leftbtn.titleLabel.font = self.rightbtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         
         [self.leftbtn addTarget:self action:@selector(leftbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.rightbtn addTarget:self action:@selector(rightbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
         self.leftbtn.layer.masksToBounds = self.rightbtn.layer.masksToBounds = YES;
         self.leftbtn.layer.cornerRadius = self.rightbtn.layer.cornerRadius = 3.0;
-        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor redColor] CGColor];
+        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         self.leftbtn.layer.borderWidth = self.rightbtn.layer.borderWidth = 1;
         
         [cell addSubview:self.leftbtn];
@@ -221,41 +218,99 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    if (indexPath.row == 1 || indexPath.row == 3 ||indexPath .row == 5) {
-        
-        if (!selectIndexPath) {//第一次
-            selectIndexPath = indexPath;
-       
-            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
-
-        }
-        
-    invoiceSelector = !invoiceSelector;
-    BOOL isOtherIndex = NO;
-    
-        if (selectIndexPath.row != indexPath.row) {
-            isOtherIndex = YES;
-            
-            _tableView.frame = CGRectMake(0, -15, 300, 300);
-        }
-        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        _tableView.frame = CGRectMake(0, -15, 300, 300);
-        if (isOtherIndex && !invoiceSelector) {
-            invoiceSelector = YES;
-            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-             _tableView.frame = CGRectMake(0, -15, 300, 300);
-        }
-        
-    }
+//    if (indexPath.row == 1) {
+//        
+//        if (!selectIndexPath) {//第一次
+//            selectIndexPath = indexPath;
+//       
+//            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
+//
+//        }
+//        
+//    invoiceSelector = !invoiceSelector;
+//    BOOL isOtherIndex = NO;
+//    
+//        if (selectIndexPath.row != indexPath.row) {
+//            isOtherIndex = YES;
+//            
+//            _tableView.frame = CGRectMake(0, -15, 300, 300);
+//        }
+//        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//        _tableView.frame = CGRectMake(0, -15, 300, 300);
+//        if (isOtherIndex && !invoiceSelector) {
+//            invoiceSelector = YES;
+//            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+//            
+//             _tableView.frame = CGRectMake(0, -15, 300, 300);
+//        }
+//        
+//    }
     
 
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
-    btn.selected = !btn.selected;
+    currentbutton.selected = NO;
+    btn.selected = YES;
+    currentbutton = btn;
+    if (btn.tag == 1) {
+        
     
+    if (currentbutton==btn) {
+        invoiceSelector = !invoiceSelector;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
+        
+        if (!invoiceSelector) {
+            [self tableviewmove:self.tableView number:NO];
+        }
+        if (invoiceSelector) {
+            [self tableviewmove:self.tableView number:YES];
+        }
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        return;
+    }
+    
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
+    if (!selectIndexPath) {//第一次
+        [self tableviewmove:self.tableView number:YES];
+        cellbool = YES;
+        
+    }
+    if (selectIndexPath.row!=indexPath.row) {
+        sucess = YES;
+    }
+    selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    invoiceSelector = !invoiceSelector;
+    if (cellbool) {
+        if (!invoiceSelector) {
+            [self tableviewmove:self.tableView number:NO];
+        }
+        if (invoiceSelector) {
+            [self tableviewmove:self.tableView number:YES];
+        }
+    }
+    if (sucess &&!invoiceSelector) {
+        invoiceSelector = YES;
+        [self tableviewmove:self.tableView number:YES];
+        
+    }
+    [_tableView reloadRowsAtIndexPaths:@[selectIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+}
+-(void)tableviewmove:(UITableView *)tabelview number:(BOOL)signumber{
+    if (signumber) {
+        [UIView animateWithDuration:0.4f animations:^{
+            tabelview.frame = CGRectMake(tabelview.frame.origin.x, tabelview.frame.origin.y, tabelview.frame.size.width, 370);
+        }];
+    }
+    else{
+        [UIView animateWithDuration:0.4f animations:^{
+            tabelview.frame = CGRectMake(tabelview.frame.origin.x, tabelview.frame.origin.y, tabelview.frame.size.width, 240);
+        }];
+        
+    }
 }
 - (void)leftbtnclicked:(id)sender
 {
