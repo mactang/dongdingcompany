@@ -103,12 +103,12 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 6;
+    return 5;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld",indexPath.row);
     
-    if (indexPath.row == 2 || indexPath.row == 4) {
+    if (indexPath.row == 2) {
     
         if (invoiceSelector && selectIndexPath.row  == indexPath.row) {
             
@@ -178,22 +178,28 @@
         cell.accessoryView = onerbutton;
     }
     
-    if (indexPath.row == 5) {
+    if (indexPath.row == 4) {
         NSString *leftTitle = @"取消";
         NSString *rigthTitle = @"确定";
         CGRect leftbtnFrame;
         CGRect rightbtnFrame;
         if (!leftTitle) {
             rightbtnFrame = CGRectMake(10, 15, GYZSinglebuttonWidth, GYZbuttonHeigth);
-            self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            if (!self.rightbtn) {
+                self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            }
             self.rightbtn.frame = rightbtnFrame;
             
         }else {
             leftbtnFrame = CGRectMake(10, 15, GYZdoublebuttonWidth, GYZbuttonHeigth);
             
             rightbtnFrame = CGRectMake(10+GYZbuttonHeigth+110, 15, GYZdoublebuttonWidth, GYZbuttonHeigth);
-            self.leftbtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            if (!self.leftbtn) {
+                self.leftbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            }
+            if (!self.rightbtn) {
+                self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            }
             //self.leftbtn.backgroundColor = [UIColor redColor];
             self.leftbtn.frame = leftbtnFrame;
             self.rightbtn.frame = rightbtnFrame;
@@ -260,17 +266,22 @@
 //    }
 //}
 - (void)isPublicBtnPress:(UIButton*)btn{
+    
     if (currentbutton==btn) {
         invoiceSelector = !invoiceSelector;
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
-        
-        if (!invoiceSelector) {
-            [self tableviewmove:self.tableView number:NO];
+        if (btn.tag!=3) {
+            if (!invoiceSelector) {
+                [self tableviewmove:self.tableView number:NO];
+            }
+            if (invoiceSelector) {
+                [self tableviewmove:self.tableView number:YES];
+            }
+
         }
-        if (invoiceSelector) {
-            [self tableviewmove:self.tableView number:YES];
+        if (btn.tag!=3) {
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
-        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         return;
     }
     currentbutton.selected = NO;
@@ -279,29 +290,41 @@
     
      NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
     if (!selectIndexPath) {//第一次
-        [self tableviewmove:self.tableView number:YES];
-        cellbool = YES;
-        
+        if (btn.tag!=3) {
+            [self tableviewmove:self.tableView number:YES];
+        }
+            cellbool = YES;
     }
     if (selectIndexPath.row!=indexPath.row) {
         sucess = YES;
     }
-    selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    
+        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    
     invoiceSelector = !invoiceSelector;
     if (cellbool) {
-        if (!invoiceSelector) {
-            [self tableviewmove:self.tableView number:NO];
-        }
-        if (invoiceSelector) {
-            [self tableviewmove:self.tableView number:YES];
+        if (btn.tag!=3) {
+            if (!invoiceSelector) {
+                [self tableviewmove:self.tableView number:NO];
+            }
+            if (invoiceSelector) {
+                [self tableviewmove:self.tableView number:YES];
+            }
         }
     }
+    
     if (sucess &&!invoiceSelector) {
         invoiceSelector = YES;
-        [self tableviewmove:self.tableView number:YES];
+        if (btn.tag==3) {
+            [self tableviewmove:self.tableView number:NO];
+        }else{
+            [self tableviewmove:self.tableView number:YES];
 
+            
+        }
     }
     [_tableView reloadRowsAtIndexPaths:@[selectIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
     
     
 }
@@ -338,7 +361,6 @@
 - (void)show
 {   //获取第一响应视图视图
     UIViewController *topVC = [self appRootViewController];
-//    self.frame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5, Alertwidth, Alertheigth);
     self.frame = topVC.view.bounds;
     self.alpha=0;
     [topVC.view addSubview:self];
@@ -362,14 +384,10 @@
     }
     return topVC;
 }
-
-
 - (void)removeFromSuperview
 {
     [self.backimageView removeFromSuperview];
     self.backimageView = nil;
-    UIViewController *topVC = [self appRootViewController];
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5+30, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5-30, Alertwidth, Alertheigth);
     CGRect  viewframe = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.frame = viewframe;
@@ -389,29 +407,11 @@
     
     if (!self.backimageView) {
         self.backimageView = [[UIView alloc] initWithFrame:topVC.view.bounds];
-        NSLog(@"%f",topVC.view.frame.origin.y);
-        NSLog(@"%f",topVC.view.frame.origin.x);
-        NSLog(@"%f",topVC.view.frame.size.width);
-        NSLog(@"%f",topVC.view.frame.size.height);
-        self.backimageView.backgroundColor = [UIColor orangeColor];
-        self.backimageView.alpha = 0.6f;
+        self.backimageView.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.5];
         self.backimageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     //    加载背景背景图,防止重复点击
     [topVC.view addSubview:self.backimageView];
-//    if (!_tableView) {
-//        self.layer.cornerRadius = 5.0;
-//        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 300, 240) style:UITableViewStyleGrouped];
-//        _tableView.delegate = self;
-//        _tableView.dataSource = self;
-//        _tableView.scrollEnabled = YES;
-//        
-//        [self.backimageView addSubview:_tableView];
-//        
-//        self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
-//
-//    }
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5+30, Alertwidth, Alertheigth+160);
     CGRect  viewframe = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         //视图位置
@@ -421,13 +421,4 @@
     }];
     [super willMoveToSuperview:newSuperview];
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
 @end
