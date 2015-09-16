@@ -40,6 +40,7 @@
     UILabel *totalPice;
     UILabel *addressLb ;
     LoginViewController *login;
+    NSString *payWay;
     
 }
 -(NSMutableArray *)datas{
@@ -52,6 +53,8 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    payWay = @"";
     
     TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -165,6 +168,9 @@
        // cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         AddressModel *model = self.datas[indexPath.section];
+        SingleModel *sing = [SingleModel sharedSingleModel];
+        sing.addressId = model.addressId;
+        
         cell.tag = 1000;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 40, 20)];
@@ -290,12 +296,19 @@
         
     }
     else if (indexPath.row == 2) {
+        
         cell.textLabel.text = @"配送方式";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
     }
     else if (indexPath.row == 3) {
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
         cell.textLabel.text = @"支付方式";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        cell.detailTextLabel.text = payWay;
+
         
         
     }
@@ -370,6 +383,7 @@
 }
 
 - (void)defaultAddress{
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
@@ -413,6 +427,16 @@
 //    UITableViewCell *cell = (UITableViewCell*)[self.view viewWithTag:1000];
 //    cell.detailTextLabel.text = reglarText;
     addressLb.text = reglarText;
+    
+}
+- (void)selectedPayWay:(NSNotification *)notify{
+    
+    NSString *reglarText = notify.object;
+    NSLog(@"%@",reglarText);
+    payWay = reglarText;
+    [_tableView reloadData];
+    
+
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -481,12 +505,45 @@
     if (btn.tag == 1000) {
     
         
+        [self sureOrder];
         PayViewController *pay = [[PayViewController alloc]init];
         [self.navigationController pushViewController:pay animated:YES];
+        
     }
     
     
 }
+
+- (void)sureOrder{
+    
+    SingleModel *sing = [SingleModel sharedSingleModel];
+    NSLog(@"%@",sing.addressId);
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *count = [NSString stringWithFormat:@"%d",_currentNumber];
+    NSString *path= [NSString stringWithFormat:SUREORDER,model.userkey,model.goodsId,count,payWay,sing.addressId];
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        [hud hide:YES];
+        [self.datas removeAllObjects];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        
+        
+       
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"%@",error);
+    }];
+    
+}
+
+
 -(void)numBtnPress:(UIButton *)btn{
     
     

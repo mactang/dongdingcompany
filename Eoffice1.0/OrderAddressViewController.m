@@ -236,6 +236,9 @@
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     AddressModel *model = self.datas[indexPath.row];
     
+    SingleModel *sing = [SingleModel sharedSingleModel];
+    sing.addressId = model.addressId;
+    
     NSLog(@"%@",model.fullAddress);
     [[NSNotificationCenter defaultCenter]postNotificationName:@"selectedAddress" object:model.address];
     
