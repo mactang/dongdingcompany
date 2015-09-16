@@ -177,6 +177,7 @@
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+        payBtn.tag = indexPath.row;
         cell.accessoryView = payBtn;
     }
 //    if (indexPath.row == 2) {
@@ -192,6 +193,7 @@
         cell.textLabel.text = @"公司转账";
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
+        payBtn.tag = indexPath.row;
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
@@ -202,6 +204,10 @@
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
+    NSArray *array = @[@"货到付款",@"公司转账"];
+    
+    NSString *string = [NSString stringWithFormat:@"%@",array[btn.tag-1]];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"payway" object:string];
     
     _allButton.selected = NO;
     btn.selected = YES;

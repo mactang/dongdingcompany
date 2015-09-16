@@ -73,7 +73,9 @@
 //订单接口
 #define ORDER @"http://192.168.0.65:8080/eoffice/phone/order!getList.action;jsessionid=%@?userkey=%@"
 
-#define DELETEORDER @"http://192.65.0.65:8080/eoffice/phone/order!deleteOrder.action?orderId=%@"
+#define DELETEORDER @"http://192.168.0.65:8080/eoffice/phone/order!deleteOrder.action?orderId=%@"
+
+#define SUREORDER @"http://192.168.0.65:8080/eoffice/phone/order!goodsCommit.action?userkey=%@&goodsId=%@&count=%@&payway=%@&id=%@"
 
 //收货地址
 #define ADDRESS @"http://192.168.0.65:8080/eoffice/phone/order!addressList.action;jsessionid=%@?userkey=%@"

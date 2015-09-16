@@ -35,6 +35,8 @@
 
 @property(nonatomic,assign)NSString *isBoolmy;
 
+
+
 //通过类方法，创建唯一的对象
 +(SingleModel *)sharedSingleModel;
 
