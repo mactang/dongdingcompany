@@ -49,6 +49,7 @@
 #import "UMSocialQQHandler.h"
 #import "TarBarButton.h"
 #import "LoginViewController.h"
+#import "ShoppingCarController.h"
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
 @interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>
@@ -651,11 +652,17 @@
         [self.navigationController pushViewController:login animated:YES];
     }
     else{
+        ShoppingCarController *shopcart = [[ShoppingCarController alloc]init];
+        [self.navigationController pushViewController:shopcart animated:YES];
         
     }
 }
 -(void)reloadshopcart{
     [login.navigationController popViewControllerAnimated:NO];
+    ShoppingCarController *shopcart = [[ShoppingCarController alloc]init];
+    [self.navigationController pushViewController:shopcart animated:YES];
+    
+    
 }
 -(void)btnPress1{
     UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];
