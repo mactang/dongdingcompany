@@ -93,7 +93,7 @@
 {
     if (self = [super init]) {
         self.layer.cornerRadius = 5.0;
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(10, 120, 300, 240) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(10, 120, SCREEN_WIDTH-20, 240) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollEnabled = YES;

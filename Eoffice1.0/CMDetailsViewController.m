@@ -90,6 +90,8 @@
     
     int number;
     LoginViewController *login;
+    BOOL loginsucess;
+    NSInteger  product;
     
     
     
@@ -235,23 +237,22 @@
     else if (btn.tag == 2001){
         
         [self.menuPopover dismissMenuPopover];
-        
         self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
-        
+        self.menuPopover.intcart = YES;
+        self.menuPopover.Distinguish = YES;
         self.menuPopover.delegate = self;
         [self.menuPopover showInView:self.view];
-        
         [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
         number = number +1;
-//        [self data];
-    
+//      [self data];
     }
-    
     else if (btn.tag == 2002){
-            [self.menuPopover dismissMenuPopover];
-            self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
-            self.menuPopover.delegate = self;
-            [self.menuPopover showInView:self.view];
+        [self.menuPopover dismissMenuPopover];
+        self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
+        self.menuPopover.delegate = self;
+        self.menuPopover.intcart = YES;
+        self.menuPopover.Distinguish = NO;
+        [self.menuPopover showInView:self.view];
         
     }
 }
@@ -542,9 +543,8 @@
 {
     // Hide already showing popover
     [self.menuPopover dismissMenuPopover];
-    
     self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
-    
+    self.menuPopover.intcart = NO;
     self.menuPopover.delegate = self;
     [self.menuPopover showInView:self.view];
 }
@@ -577,13 +577,18 @@
     }];
 }
 #pragma mark MLKMenuPopoverDelegate
--(void)pushlogincontroller{
+-(void)pushlogincontroller:(BOOL)sucess shopnumber:(NSInteger)shopnumber{
+    loginsucess = sucess;
+    product = shopnumber;
     SingleModel *model = [SingleModel sharedSingleModel];
-    if (model.userkey !=nil) {
+    if (model.userkey !=nil&&!sucess) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
         OrderController *order = [[OrderController alloc]init];
         [self.navigationController pushViewController:order animated:YES];
+    }
+    if (model.userkey!=nil&&sucess) {
+        [self addData];
     }
     else{
         login = [[LoginViewController alloc]init];
@@ -593,12 +598,36 @@
 }
 #pragma mark logindelegate mathds
 -(void)reloadata{
-    [login.navigationController popViewControllerAnimated:NO];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backItem;
-    OrderController *order = [[OrderController alloc]init];
-    [self.navigationController pushViewController:order animated:YES];
-
+    if (loginsucess) {
+        [login.navigationController popViewControllerAnimated:NO];
+        [self addData];
+    }
+    else{
+        [login.navigationController popViewControllerAnimated:NO];
+        UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.navigationItem.backBarButtonItem = backItem;
+        OrderController *order = [[OrderController alloc]init];
+        [self.navigationController pushViewController:order animated:YES];
+    }
+}
+#pragma mark  加入购物车网络请求
+-(void)addData{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",product]];
+    NSString *path = [NSString stringWithFormat:ADDMAINTAIN,model.userkey,model.goodsId,string];
+    NSLog(@"path--%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic[@"info"]);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
 }
 -(void)btnPress1{
     UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];
