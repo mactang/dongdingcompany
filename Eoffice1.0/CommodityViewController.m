@@ -270,9 +270,9 @@
     
     CategoryBig *model = self.datas[btn.tag-1000];
     
-    NSLog(@"%@",model.MProductMedcategoryId);
+    NSLog(@"%@",model.MProductCategoryId);
     //将值存储到单例对象里面
-    single.ids = model.MProductMedcategoryId;
+    single.ids = model.MProductCategoryId;
     ComputerViewController *cmp = [[ComputerViewController alloc]init];
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"办公电脑" style:UIBarButtonItemStylePlain target:nil action:nil];

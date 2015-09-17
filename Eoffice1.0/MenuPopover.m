@@ -76,11 +76,8 @@
         
         self.deleteBtn = [[UIButton alloc]init];
        // self.deleteBtn.backgroundColor = [UIColor redColor];
-        [self.deleteBtn setTitle:@"X" forState:UIControlStateNormal];
-        self.deleteBtn.clipsToBounds = YES;
-        self.deleteBtn.layer.cornerRadius = 10;
-        self.deleteBtn.layer.borderWidth = 0.8;
-        self.deleteBtn.layer.borderColor = [[UIColor grayColor] CGColor];
+        
+        [self.deleteBtn setImage:[UIImage imageNamed:@"cha1"] forState:UIControlStateNormal];
         [self.deleteBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [self.deleteBtn addTarget:self action:@selector(dismissMenuPopover) forControlEvents:UIControlEventTouchUpInside];
         [self.deleteBtn setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin];
@@ -158,7 +155,7 @@
         colorBtn.clipsToBounds = YES;
         colorBtn.layer.cornerRadius = 3;
         colorBtn.layer.borderWidth = 0.8;
-        colorBtn.layer.borderColor = [[UIColor redColor] CGColor];
+        colorBtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         selectButton = colorBtn;
         [colorBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [colorBtn addTarget:self action:@selector(colorPress:) forControlEvents:UIControlEventTouchUpInside];
@@ -201,7 +198,7 @@
         versionBtn.clipsToBounds = YES;
         versionBtn.layer.cornerRadius = 3;
         versionBtn.layer.borderWidth = 0.8;
-        versionBtn.layer.borderColor = [[UIColor redColor] CGColor];
+        versionBtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         versionSelectButton = versionBtn;
         [versionBtn addTarget:self action:@selector(versionPress:) forControlEvents:UIControlEventTouchUpInside];
         [versionBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -382,6 +379,7 @@ if (btn.selected) {
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
             [_delegate pushlogincontroller:YES shopnumber:_currentNumber];
     }
+    [self addData];
 }
     else{
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {

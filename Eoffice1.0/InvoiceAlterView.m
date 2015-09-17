@@ -23,7 +23,7 @@
 //        设置按钮距离底部的边距
 
 
-@interface InvoiceAlterView ()<UITableViewDelegate,UITableViewDataSource>
+@interface InvoiceAlterView ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     BOOL _leftLeave;
 }
@@ -45,6 +45,10 @@
     UIButton *currentbutton;
     BOOL  sucess;
     BOOL  cellbool;
+    UIButton *selectButton;
+    NSString *chooseType;
+    UIButton *typeButton;
+    BOOL keepInfor;
 }
 
 
@@ -86,6 +90,8 @@
    rightButtonTitle:(NSString *)rigthTitle
 {
     if (self = [super init]) {
+        keepInfor = NO;
+        chooseType = @"明细";
         self.layer.cornerRadius = 5.0;
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -15, 300, 240) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
@@ -105,13 +111,15 @@
     if (indexPath.row == 2) {
     
     
-    if (invoiceSelector && selectIndexPath.row + 1 == indexPath.row) {
-        return 130;
+    if (invoiceSelector && selectIndexPath.row  == indexPath.row) {
+        return 190;
         
     }
+        
         return 0;
         
     }
+    
     else{
         return 60;
     }
@@ -136,7 +144,7 @@
     cell.clipsToBounds = YES;
     
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row == 0) {
         
         UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
@@ -156,8 +164,77 @@
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
         cell.accessoryView = payBtn;
     }
+    if (indexPath.row == 2) {
+        
+        UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, 60, 20)];
+        lb.font = [UIFont systemFontOfSize:12];
+        lb.text = @"发票抬头:";
+        lb.textColor = [UIColor blackColor];
+        [cell addSubview:lb];
+        
+        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb.frame), 12, 202, 25)];
+        textField.clipsToBounds = YES;
+        textField.layer.cornerRadius = 2;
+        textField.layer.borderWidth = 1;
+        textField.delegate = self;
+        textField.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1]CGColor];
+        [cell addSubview:textField];
+        
+        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(textField.frame)+18, 60, 20)];
+        lb1.font = [UIFont systemFontOfSize:12];
+        lb1.text = @"发票内容:";
+        lb1.textColor = [UIColor blackColor];
+        [cell addSubview:lb1];
+        for (int i = 0; i<4; i++) {
+            
+         NSArray *array = @[@"明细",@"办公用品",@"电脑配件",@"耗材"];
+            
+        typeButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+(i%2)*((SCREEN_WIDTH-138)/2)+(i%2)*15, CGRectGetMaxY(textField.frame)+18+(i/2)*35, 98, 25)];
+        typeButton.clipsToBounds = YES;
+        typeButton.layer.cornerRadius = 2;
+        typeButton.layer.borderWidth = 1;
+        [typeButton setTitle:array[i] forState:UIControlStateNormal];
+        [typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        typeButton.font = [UIFont systemFontOfSize:10];
+            if ([array[i] isEqualToString:chooseType]) {
+                typeButton.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1]CGColor];
+                selectButton = typeButton;
+            }else{
+                typeButton.layer.borderColor = [[UIColor grayColor]CGColor];
+            }
+        typeButton.tag = i+10;
+        [typeButton addTarget:self action:@selector(pressBtn:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:typeButton];
+            
+        }
+        
+        UIButton *button1 = [[UIButton alloc]initWithFrame:CGRectMake(76, CGRectGetMaxY(textField.frame)+100, 98, 25)];
+        button1.clipsToBounds = YES;
+        button1.layer.cornerRadius = 2;
+        button1.layer.borderWidth = 1;
+        [button1 setTitle:@"保存发票信息" forState:UIControlStateNormal];
+        [button1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        button1.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+        button1.font = [UIFont systemFontOfSize:12];
+        button1.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1]CGColor];
+        [button1 addTarget:self action:@selector(keepBtn) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:button1];
+        
+        UIButton *button2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(button1.frame)+5, CGRectGetMaxY(textField.frame)+100, 40, 25)];
+        button2.clipsToBounds = YES;
+        button2.layer.cornerRadius = 2;
+        button2.layer.borderWidth = 1;
+        [button2 setTitle:@"取消" forState:UIControlStateNormal];
+        [button2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        button2.backgroundColor = [UIColor whiteColor];
+        button2.font = [UIFont systemFontOfSize:12];
+        button2.layer.borderColor = [[UIColor grayColor]CGColor];
+        [cell addSubview:button2];
+        
+    }
     if (indexPath.row == 3) {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+       
         cell.textLabel.text = @"不开发票";
         payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         payBtn.frame = CGRectMake(0, 0, 20, 20);
@@ -212,6 +289,34 @@
     
     return cell;
 }
+-(void)keepBtn{
+
+    
+}
+-(void)pressBtn:(UIButton *)btn{
+    
+    NSLog(@"%@",btn.titleLabel.text);
+    chooseType = btn.titleLabel.text;
+    if (selectButton == btn) {
+        return;
+    }
+    selectButton.selected = NO;
+    btn.selected = YES;
+    if(selectButton.selected == NO){
+        selectButton.layer.borderColor = [[UIColor grayColor] CGColor];
+    }
+    if (btn.selected) {
+        
+        btn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
+        
+    }
+    selectButton = btn;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
  _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
     
@@ -251,62 +356,72 @@
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
-    currentbutton.selected = NO;
-    btn.selected = YES;
-    currentbutton = btn;
-    if (btn.tag == 1) {
-        
-    
     if (currentbutton==btn) {
         invoiceSelector = !invoiceSelector;
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
-        
-        if (!invoiceSelector) {
-            [self tableviewmove:self.tableView number:NO];
+        if (btn.tag!=3) {
+            if (!invoiceSelector) {
+                [self tableviewmove:self.tableView number:NO];
+            }
+            if (invoiceSelector) {
+                [self tableviewmove:self.tableView number:YES];
+            }
+            
         }
-        if (invoiceSelector) {
-            [self tableviewmove:self.tableView number:YES];
+        if (btn.tag!=3) {
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         }
-        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         return;
     }
-    
+    currentbutton.selected = NO;
+    btn.selected = YES;
+    currentbutton = btn;
     
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
     if (!selectIndexPath) {//第一次
-        [self tableviewmove:self.tableView number:YES];
+        if (btn.tag!=3) {
+            [self tableviewmove:self.tableView number:YES];
+        }
         cellbool = YES;
-        
     }
     if (selectIndexPath.row!=indexPath.row) {
         sucess = YES;
     }
+    
     selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    
     invoiceSelector = !invoiceSelector;
     if (cellbool) {
-        if (!invoiceSelector) {
-            [self tableviewmove:self.tableView number:NO];
-        }
-        if (invoiceSelector) {
-            [self tableviewmove:self.tableView number:YES];
+        if (btn.tag!=3) {
+            if (!invoiceSelector) {
+                [self tableviewmove:self.tableView number:NO];
+            }
+            if (invoiceSelector) {
+                [self tableviewmove:self.tableView number:YES];
+            }
         }
     }
+    
     if (sucess &&!invoiceSelector) {
         invoiceSelector = YES;
-        [self tableviewmove:self.tableView number:YES];
-        
+        if (btn.tag==3) {
+            [self tableviewmove:self.tableView number:NO];
+        }else{
+            [self tableviewmove:self.tableView number:YES];
+            
+            
+        }
     }
     [_tableView reloadRowsAtIndexPaths:@[selectIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
 }
 -(void)tableviewmove:(UITableView *)tabelview number:(BOOL)signumber{
     if (signumber) {
-        [UIView animateWithDuration:0.4f animations:^{
-            tabelview.frame = CGRectMake(tabelview.frame.origin.x, tabelview.frame.origin.y, tabelview.frame.size.width, 370);
+        [UIView animateWithDuration:0.3f animations:^{
+            tabelview.frame = CGRectMake(tabelview.frame.origin.x, tabelview.frame.origin.y, tabelview.frame.size.width, 430);
         }];
     }
     else{
-        [UIView animateWithDuration:0.4f animations:^{
+        [UIView animateWithDuration:0.3f animations:^{
             tabelview.frame = CGRectMake(tabelview.frame.origin.x, tabelview.frame.origin.y, tabelview.frame.size.width, 240);
         }];
         
@@ -388,7 +503,7 @@
     }
     //    加载背景背景图,防止重复点击
     [topVC.view addSubview:self.backimageView];
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5+30, Alertwidth, Alertheigth+160);
+    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5-20, Alertwidth, Alertheigth+160);
     [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         //视图位置
         self.frame = afterFrame;

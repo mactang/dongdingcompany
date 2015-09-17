@@ -178,9 +178,9 @@
     //打开这个方法选择颜色就会消失
   //  [tableView deselectRowAtIndexPath:indexPath animated:YES];
      CategoryBig *model = self.datas[indexPath.row];
-    NSLog(@"MProductMedcategoryId--%@",model.MProductMedcategoryId);
+    NSLog(@"MProductMedcategoryId--%@",model.MProductCategoryId);
     
-    NSString *path1= [NSString stringWithFormat:MAINTAIN,model.MProductMedcategoryId];
+    NSString *path1= [NSString stringWithFormat:MAINTAIN,model.MProductCategoryId];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
