@@ -243,7 +243,7 @@
         
         [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
         number = number +1;
-//        [self data];
+       // [self data];
     
     }
     
@@ -255,6 +255,8 @@
         
     }
 }
+
+
 -(void)data{
     
     SingleModel *model = [SingleModel sharedSingleModel];

@@ -17,7 +17,7 @@
     if (self = [super init]) {
         self.name = dic[@"name"];
 
-        self.MProductMedcategoryId = dic[@"MProductMedcategoryId"];
+        self.MProductCategoryId = dic[@"MProductCategoryId"];
     }
     
     return self;
