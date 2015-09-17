@@ -7,6 +7,7 @@
 //
 
 #import "DispatchingView.h"
+#import "CalculateStringSpace.h"
 // 设置警告框的长和宽
 
 #define Alertwidth 300.0f
@@ -14,6 +15,7 @@
 #define GYZtitlegap 15.0f
 #define GYZtitleofheigth 25.0f
 #define GYZSinglebuttonWidth 160.0f
+#define UILABEL @"您再15:00之前提交的订单,如果您勾选夜间配送,您的订单将在当晚19:00-22:00点之间送达,么么哒么么哒么么哒么么哒么么哒"
 //        单个按钮时的宽度
 #define GYZdoublebuttonWidth 130.0f
 //        双个按钮的宽度
@@ -47,6 +49,7 @@
     UIButton *currentbutton;
     BOOL  sucess;
     BOOL  cellbool;
+    UIButton *choosebutton;
 }
 
 
@@ -135,19 +138,15 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"%ld",indexPath.section);
-    
     static NSString *identity = @"cell";
-    
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
-    
     cell.clipsToBounds = YES;
-    
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row == 0) {
         
         UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
-        bl.backgroundColor = [UIColor redColor];
+        bl.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         bl.font = [UIFont systemFontOfSize:20];
         [bl setText:@"  配送方式"];
         [bl setTextColor:[UIColor whiteColor]];
@@ -165,8 +164,47 @@
         payBtn.tag = indexPath.row;
         cell.accessoryView = payBtn;
     }
+    if (indexPath.row==2) {
+        UILabel *deliverylabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, 60, 20)];
+        deliverylabel.text = @"送货时间 :";
+        deliverylabel.textColor = [UIColor blackColor];
+        deliverylabel.backgroundColor = [UIColor whiteColor];
+        deliverylabel.font = [UIFont systemFontOfSize:13];
+        [cell addSubview:deliverylabel];
+        
+        for (NSInteger i=0; i<2; i++) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            
+            button.frame = CGRectMake(90, 12.5, (SCREEN_WIDTH-135)/2, 25);
+            [button setTitle:@"普通" forState:UIControlStateNormal];
+            button.layer.borderColor = [[UIColor grayColor]CGColor];
+            if (i==1) {
+                button.frame = CGRectMake(90+(SCREEN_WIDTH-135)/2+10, 12.5, (SCREEN_WIDTH-135)/2, 25);
+                [button setTitle:@"加急配送" forState:UIControlStateNormal];
+                button.layer.borderColor = [[UIColor redColor]CGColor];
+            }
+            [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:13];
+            button.layer.borderWidth = 0.5;
+            button.layer.cornerRadius = 3;
+            button.tag = 90+i;
+            [button addTarget:self action:@selector(deliverchoosePressed:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:button];
+            
+            if ([button.titleLabel.text isEqualToString:@"加急配送"]) {
+                choosebutton = button;
+            }
+            
+        }
+        CGSize size  = [CalculateStringSpace sizeWithString:UILABEL font:[UIFont systemFontOfSize:13] constraintSize:CGSizeMake(SCREEN_WIDTH-135, MAXFLOAT)];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(90, 45, size.width, size.height)];
+        label.font = [UIFont systemFontOfSize:13];
+        label.text = UILABEL;
+        label.numberOfLines = 0;
+        [cell addSubview:label];
+    }
     if (indexPath.row == 3) {
-        cell.textLabel.text = @"上面自取";
+        cell.textLabel.text = @"上门自取";
         if (!onerbutton) {
              onerbutton = [UIButton buttonWithType:UIButtonTypeCustom];
         }
@@ -208,7 +246,7 @@
         
         [self.rightbtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.rightbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.rightbtn.backgroundColor = [UIColor redColor];
+        self.rightbtn.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         [self.leftbtn setTitle:leftTitle forState:UIControlStateNormal];
         
         [self.leftbtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -218,7 +256,7 @@
         [self.rightbtn addTarget:self action:@selector(rightbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
         self.leftbtn.layer.masksToBounds = self.rightbtn.layer.masksToBounds = YES;
         self.leftbtn.layer.cornerRadius = self.rightbtn.layer.cornerRadius = 3.0;
-        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor redColor] CGColor];
+        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         self.leftbtn.layer.borderWidth = self.rightbtn.layer.borderWidth = 1;
         
         [cell addSubview:self.leftbtn];
@@ -227,44 +265,20 @@
     
     return cell;
 }
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-    
+-(void)deliverchoosePressed:(UIButton *)button{
+    if (choosebutton == button) {
+        return;
+    }
+    choosebutton.selected = NO;
+    button.selected = YES;
+    if (choosebutton.selected ==NO) {
+        choosebutton.layer.borderColor = [[UIColor grayColor]CGColor];
+    }
+    if (button.selected) {
+        button.layer.borderColor = [[UIColor redColor]CGColor];
+    }
+    choosebutton = button;
 }
-
-//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//    if (indexPath.row == 1 || indexPath.row == 3) {
-//        
-//        if (!selectIndexPath) {//第一次
-//            selectIndexPath = indexPath;
-//            
-//            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
-//            
-//        }
-//        
-//        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-//        [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//        
-//        invoiceSelector = !invoiceSelector;
-//        
-//        BOOL isOtherIndex = NO;
-//        
-//        if (selectIndexPath.row != indexPath.row) {
-//            isOtherIndex = YES;
-//            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-//        }
-//        selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-//        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//        
-//        if (isOtherIndex && !invoiceSelector) {
-//            invoiceSelector = YES;
-//            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-//            _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-//        }
-//        
-//    }
-//}
 - (void)isPublicBtnPress:(UIButton*)btn{
     
     if (currentbutton==btn) {
@@ -330,12 +344,12 @@
 }
 -(void)tableviewmove:(UITableView *)tabelview number:(BOOL)signumber{
     if (signumber) {
-        [UIView animateWithDuration:0.4f animations:^{
+        [UIView animateWithDuration:0.3f animations:^{
             tabelview.frame = CGRectMake(tabelview.frame.origin.x, tabelview.frame.origin.y, tabelview.frame.size.width, 370);
         }];
     }
     else{
-        [UIView animateWithDuration:0.4f animations:^{
+        [UIView animateWithDuration:0.3f animations:^{
             tabelview.frame = CGRectMake(tabelview.frame.origin.x, tabelview.frame.origin.y, tabelview.frame.size.width, 240);
         }];
         
