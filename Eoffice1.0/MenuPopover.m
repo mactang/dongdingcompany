@@ -52,7 +52,7 @@
 
 @implementation MenuPopover
 {
-    int _currentNumber;
+    NSInteger _currentNumber;
     UIButton *selectButton;
     UIButton *versionSelectButton;
 }
@@ -258,7 +258,7 @@
         
         
         self.textfield = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, widgetFrameY(_numberBtn1), 50, 30)];
-        self.textfield.text = [NSString stringWithFormat:@"%d",_currentNumber];
+        self.textfield.text = [NSString stringWithFormat:@"%ld",_currentNumber];
         self.textfield.delegate = self;
         self.textfield.textColor = [UIColor blackColor];
         self.textfield.textAlignment = NSTextAlignmentCenter;
@@ -270,55 +270,66 @@
     }
     else if (indexPath.row == 4){
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UIButton *shopCarBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
-        // [shopCarBtn setTitle:@"购物车" forState:UIControlStateNormal];
-        shopCarBtn.backgroundColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-        shopCarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-        shopCarBtn.clipsToBounds = YES;
-        shopCarBtn.layer.cornerRadius = 6;
-        shopCarBtn.tag = 2000;
-        shopCarBtn.selected = YES;
-        // [shopCarBtn setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
-        [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [shopCarBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:shopCarBtn];
-        
-        UIButton *shopCarBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 3, 20, 20)];
-        [shopCarBtn1 setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
-        [shopCarBtn addSubview:shopCarBtn1];
-        
-        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(5, 22, 30, 20)];
-        lb1.font = [UIFont systemFontOfSize:10];
-        lb1.text = @"购物车";
-        lb1.textColor = [UIColor whiteColor];
-        [shopCarBtn addSubview:lb1];
-        
-        UIButton *InShopBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shopCarBtn.frame)+8, 5, 120, 40)];
-        [InShopBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
-        InShopBtn.backgroundColor = [UIColor colorWithRed:203/255.0 green:103/255.0 blue:103/255.0 alpha:1];
-        InShopBtn.clipsToBounds = YES;
-        InShopBtn.layer.cornerRadius = 6;
-        InShopBtn.tag = 2001;
-        InShopBtn.selected = YES;
-        [InShopBtn setImage:[UIImage imageNamed:@"jiaru"] forState:UIControlStateNormal];
-        [InShopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [InShopBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:InShopBtn];
-        
-        UIButton *shopBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(InShopBtn.frame)+8, 5, 120, 40)];
-        [shopBtn setTitle:@"立刻购买" forState:UIControlStateNormal];
-        shopBtn.backgroundColor = [UIColor colorWithRed:207/255.0 green:134/255.0 blue:65/255.0 alpha:1];
-        shopBtn.clipsToBounds = YES;
-        shopBtn.layer.cornerRadius = 6;
-        shopBtn.tag = 2002;
-        [shopBtn setImage:[UIImage imageNamed:@"lijigoumai"] forState:UIControlStateNormal];
-        [shopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [shopBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:shopBtn];
-
+        if (self.intcart == YES) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            button.frame = CGRectMake(10, 5, SCREEN_WIDTH-20, 40);
+            button.layer.cornerRadius = 4;
+            button.layer.borderColor = [[UIColor redColor]CGColor];
+            button.layer.borderWidth = 0.5;
+            [button setTitle:@"确认" forState:UIControlStateNormal];
+            button.titleLabel.font = [UIFont systemFontOfSize:17];
+            button.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+            [button addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:button];
+        }
+        else{
+            UIButton *shopCarBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
+            // [shopCarBtn setTitle:@"购物车" forState:UIControlStateNormal];
+            shopCarBtn.backgroundColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
+            shopCarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+            shopCarBtn.clipsToBounds = YES;
+            shopCarBtn.layer.cornerRadius = 6;
+            shopCarBtn.tag = 2000;
+            shopCarBtn.selected = YES;
+            // [shopCarBtn setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
+            [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [shopCarBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:shopCarBtn];
+            UIButton *shopCarBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 3, 20, 20)];
+            [shopCarBtn1 setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
+            [shopCarBtn addSubview:shopCarBtn1];
+            
+            UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(5, 22, 30, 20)];
+            lb1.font = [UIFont systemFontOfSize:10];
+            lb1.text = @"购物车";
+            lb1.textColor = [UIColor whiteColor];
+            [shopCarBtn addSubview:lb1];
+            
+            UIButton *InShopBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shopCarBtn.frame)+8, 5, 120, 40)];
+            [InShopBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
+            InShopBtn.backgroundColor = [UIColor colorWithRed:203/255.0 green:103/255.0 blue:103/255.0 alpha:1];
+            InShopBtn.clipsToBounds = YES;
+            InShopBtn.layer.cornerRadius = 6;
+            InShopBtn.tag = 2001;
+            InShopBtn.selected = YES;
+            [InShopBtn setImage:[UIImage imageNamed:@"jiaru"] forState:UIControlStateNormal];
+            [InShopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [InShopBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:InShopBtn];
+            
+            UIButton *shopBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(InShopBtn.frame)+8, 5, 120, 40)];
+            [shopBtn setTitle:@"立刻购买" forState:UIControlStateNormal];
+            shopBtn.backgroundColor = [UIColor colorWithRed:207/255.0 green:134/255.0 blue:65/255.0 alpha:1];
+            shopBtn.clipsToBounds = YES;
+            shopBtn.selected = NO;
+            shopBtn.layer.cornerRadius = 6;
+            shopBtn.tag = 2002;
+            [shopBtn setImage:[UIImage imageNamed:@"lijigoumai"] forState:UIControlStateNormal];
+            [shopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [shopBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:shopBtn];
+        }
     }
-    
-   
     
     return cell;
 }
@@ -364,53 +375,57 @@ if (btn.selected) {
     return YES;
 }
 -(void)shopPress:(UIButton *)btn{
-    if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller)]) {
-        [_delegate pushlogincontroller];
-        
+    if (self.Distinguish||btn.selected ==YES) {
+        if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
+            [_delegate pushlogincontroller:YES shopnumber:_currentNumber];
     }
     [self addData];
 }
--(void)addData{
-    
-    SingleModel *model = [SingleModel sharedSingleModel];
-     NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
-    NSString *path = [NSString stringWithFormat:ADDMAINTAIN,model.userkey,model.goodsId,string];
-    NSLog(@"path--%@",path);
+    else{
+        if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
+            [_delegate pushlogincontroller:NO shopnumber:_currentNumber];
+        
+    }
    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"%@",dic[@"info"]);
-        
-        
-        
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
+  }
 }
--(int)numBtnPress:(UIButton *)btn{
+//-(void)addData{
+//    
+//    SingleModel *model = [SingleModel sharedSingleModel];
+//     NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",_currentNumber]];
+//    NSString *path = [NSString stringWithFormat:ADDMAINTAIN,model.userkey,model.goodsId,string];
+//    NSLog(@"path--%@",path);
+//   
+//    
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    
+//    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//        
+//        NSLog(@"%@",dic[@"info"]);
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"%@",error);
+//    }];
+//}
+-(NSInteger)numBtnPress:(UIButton *)btn{
     
     
     if (btn.tag ==1) {
         if (_currentNumber>1) {
             _currentNumber--;
-            NSLog(@"%d",_currentNumber);
+            NSLog(@"%ld",_currentNumber);
             
-            NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
+            NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",_currentNumber]];
             [self.textfield setText:string];
         }
     }
     if (btn.tag == 2) {
         _currentNumber++;
-        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%d",_currentNumber]];
+        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",_currentNumber]];
         [self.textfield setText:string];
     }
     return _currentNumber;
@@ -500,6 +515,3 @@ if (btn.selected) {
 
 @end
 
-// 版权属于原作者
-// http://code4app.com (cn) http://code4app.net (en)
-// 发布代码于最专业的源码分享网站: Code4App.com 

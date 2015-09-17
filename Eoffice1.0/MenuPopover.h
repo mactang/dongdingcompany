@@ -12,7 +12,7 @@
 
 @protocol MenuPopoverDelegate<NSObject>
 
-- (void)pushlogincontroller;
+- (void)pushlogincontroller:(BOOL )sucess shopnumber:(NSInteger )shopnumber;
 
 @end
 
@@ -23,6 +23,8 @@
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)menuItems;
 - (void)showInView:(UIView *)view;
 - (void)dismissMenuPopover;
+@property(nonatomic,assign)BOOL  intcart;
+@property(nonatomic,assign)BOOL  Distinguish;
 //- (void)layoutUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end

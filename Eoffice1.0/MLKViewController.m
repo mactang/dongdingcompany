@@ -44,9 +44,7 @@
 {
     // Hide already showing popover
     [self.menuPopover dismissMenuPopover];
-    
     self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
-    
     self.menuPopover.delegate = self;
     [self.menuPopover showInView:self.view];
 }
