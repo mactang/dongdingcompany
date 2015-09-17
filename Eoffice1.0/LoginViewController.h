@@ -10,8 +10,9 @@
 @protocol logindelegate <NSObject>
 
 -(void)reloadata;
-
+-(void)reloadshopcart;
 @end
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 @property(nonatomic,assign)id<logindelegate>delegate;
+@property(nonatomic,assign)BOOL iflogin;
 @end

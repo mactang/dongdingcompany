@@ -293,15 +293,18 @@
             shopCarBtn.selected = YES;
             // [shopCarBtn setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
             [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [shopCarBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
+            [shopCarBtn addTarget:self action:@selector(shopcartPressed:) forControlEvents:UIControlEventTouchUpInside];
+            shopCarBtn.tag = 80;
             [cell addSubview:shopCarBtn];
             UIButton *shopCarBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 3, 20, 20)];
             [shopCarBtn1 setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
+            shopCarBtn1.userInteractionEnabled = NO;
             [shopCarBtn addSubview:shopCarBtn1];
             
             UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(5, 22, 30, 20)];
             lb1.font = [UIFont systemFontOfSize:10];
             lb1.text = @"购物车";
+            lb1.userInteractionEnabled = NO;
             lb1.textColor = [UIColor whiteColor];
             [shopCarBtn addSubview:lb1];
             
@@ -374,12 +377,18 @@ if (btn.selected) {
     }
     return YES;
 }
+-(void)shopcartPressed:(UIButton *)button{
+    if (_delegate &&[_delegate respondsToSelector:@selector(clickshopcratbutton)]) {
+        [self.delegate clickshopcratbutton];
+    }
+}
 -(void)shopPress:(UIButton *)btn{
+    
     if (self.Distinguish||btn.selected ==YES) {
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
             [_delegate pushlogincontroller:YES shopnumber:_currentNumber];
     }
-    [self addData];
+    
 }
     else{
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
