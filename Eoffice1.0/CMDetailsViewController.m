@@ -50,7 +50,6 @@
 #import "TarBarButton.h"
 #import "LoginViewController.h"
 #import "ShoppingCarController.h"
-#define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
 @interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>
     
@@ -238,25 +237,27 @@
         [self clickshopcratbutton];
     }
     else if (btn.tag == 2001){
-        
-        [self.menuPopover dismissMenuPopover];
-        self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
+        self.menuPopover = [[MenuPopover alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-64) menuItems:self.menuItems];
         self.menuPopover.intcart = YES;
         self.menuPopover.Distinguish = YES;
         self.menuPopover.delegate = self;
-        [self.menuPopover showInView:self.view];
+        [UIView animateWithDuration:0.4f animations:^{
+            self.menuPopover.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64);
+        }];
+        [self.view addSubview:self.menuPopover];
         [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
         number = number +1;
-//      [self data];
     }
     else if (btn.tag == 2002){
-        [self.menuPopover dismissMenuPopover];
-        self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
+        self.menuPopover = [[MenuPopover alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-64) menuItems:self.menuItems];
+        self.menuPopover.backgroundColor = [UIColor grayColor];
         self.menuPopover.delegate = self;
         self.menuPopover.intcart = YES;
         self.menuPopover.Distinguish = NO;
-        [self.menuPopover showInView:self.view];
-        
+        [UIView animateWithDuration:0.4f animations:^{
+            self.menuPopover.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64);
+        }];
+        [self.view addSubview:self.menuPopover];
     }
 }
 -(void)data{
@@ -544,11 +545,13 @@
 }
 - (void)showMenuPopOver:(id)sender
 {
-    [self.menuPopover dismissMenuPopover];
-    self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
+    self.menuPopover = [[MenuPopover alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-64) menuItems:self.menuItems];
     self.menuPopover.intcart = NO;
     self.menuPopover.delegate = self;
-    [self.menuPopover showInView:self.view];
+    [UIView animateWithDuration:0.4f animations:^{
+        self.menuPopover.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64);
+    }];
+    [self.view addSubview:self.menuPopover];
 }
 
 -(void)parameterData{

@@ -22,11 +22,8 @@
 @property(nonatomic,assign) id<MenuPopoverDelegate>delegate;
 
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)menuItems;
-- (void)showInView:(UIView *)view;
-- (void)dismissMenuPopover;
 @property(nonatomic,assign)BOOL  intcart;
 @property(nonatomic,assign)BOOL  Distinguish;
-//- (void)layoutUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation;
 
 @end
 
