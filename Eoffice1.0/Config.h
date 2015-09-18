@@ -114,4 +114,7 @@
 //维修
 #define  SERVICEREASON @"http://192.168.0.65:8080/eoffice/phone/repair!getReasonList.action;jsessionid=%@?userkey=%@"
 #define  SERVICESUBMIT @"http://192.168.0.65:8080/eoffice/phone/repair!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
+//商品信息
+#define PRODUCTMESSAGE @"http://192.168.0.65:8080/eoffice/phone/product!selectedByVersion.action?goodsId=%@"
+
 #endif

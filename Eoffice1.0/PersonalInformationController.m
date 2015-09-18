@@ -80,7 +80,7 @@
     sureButton.clipsToBounds = YES;
     sureButton.layer.cornerRadius = 5;
     
-    sureButton.font = [UIFont systemFontOfSize:15];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:15];
     
     [sureButton addTarget:self action:@selector(backPress) forControlEvents:UIControlEventTouchUpInside];
     [sureButton setTitle:@"退出当前账号" forState:UIControlStateNormal];
