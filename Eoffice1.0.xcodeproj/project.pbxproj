@@ -258,7 +258,6 @@
 		61A8AE571B5A0BB3001F2339 /* GYZAlterview.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A8AE561B5A0BB3001F2339 /* GYZAlterview.m */; };
 		61AD52D21B577C350037FED8 /* OrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61AD52D11B577C350037FED8 /* OrderController.m */; };
 		61AD52DC1B579E3C0037FED8 /* MenuPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 61AD52DB1B579E3C0037FED8 /* MenuPopover.m */; };
-		61AD52DF1B579E650037FED8 /* MLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61AD52DE1B579E650037FED8 /* MLKViewController.m */; };
 		61AD52E61B57A2D40037FED8 /* DefaultLine.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AD52E11B57A2D40037FED8 /* DefaultLine.png */; };
 		61AD52E71B57A2D40037FED8 /* Menu_PopOver_BG.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AD52E21B57A2D40037FED8 /* Menu_PopOver_BG.png */; };
 		61AD52E81B57A2D40037FED8 /* Menu_PopOver_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AD52E31B57A2D40037FED8 /* Menu_PopOver_BG@2x.png */; };
@@ -673,8 +672,6 @@
 		61AD52D11B577C350037FED8 /* OrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderController.m; sourceTree = "<group>"; };
 		61AD52DA1B579E3C0037FED8 /* MenuPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuPopover.h; sourceTree = "<group>"; };
 		61AD52DB1B579E3C0037FED8 /* MenuPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuPopover.m; sourceTree = "<group>"; };
-		61AD52DD1B579E650037FED8 /* GYZViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GYZViewController.h; sourceTree = "<group>"; };
-		61AD52DE1B579E650037FED8 /* MLKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLKViewController.m; sourceTree = "<group>"; };
 		61AD52E11B57A2D40037FED8 /* DefaultLine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultLine.png; sourceTree = "<group>"; };
 		61AD52E21B57A2D40037FED8 /* Menu_PopOver_BG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Menu_PopOver_BG.png; sourceTree = "<group>"; };
 		61AD52E31B57A2D40037FED8 /* Menu_PopOver_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu_PopOver_BG@2x.png"; sourceTree = "<group>"; };
@@ -1504,8 +1501,6 @@
 			children = (
 				61AD52DA1B579E3C0037FED8 /* MenuPopover.h */,
 				61AD52DB1B579E3C0037FED8 /* MenuPopover.m */,
-				61AD52DD1B579E650037FED8 /* GYZViewController.h */,
-				61AD52DE1B579E650037FED8 /* MLKViewController.m */,
 			);
 			name = MenuPopover;
 			sourceTree = "<group>";
@@ -1608,8 +1603,8 @@
 				9695ADE31B957A9A004A7A1B /* CalculateStringSpace.m */,
 				9695ADE41B957A9A004A7A1B /* ImageCarousel.h */,
 				9695ADE51B957A9A004A7A1B /* ImageCarousel.m */,
-				9695ADE61B957A9A004A7A1B /* MyAlertView.h */,
 				9695ADE71B957A9A004A7A1B /* MyAlertView.m */,
+				9695ADE61B957A9A004A7A1B /* MyAlertView.h */,
 			);
 			path = Classtype;
 			sourceTree = "<group>";
@@ -2007,7 +2002,6 @@
 				618149411B5E468A00E39900 /* birthdayAlterView.m in Sources */,
 				61E971161B7367A1007F42B6 /* detailsModel.m in Sources */,
 				615B29BB1B4FB27A004E7546 /* MaintainController.m in Sources */,
-				61AD52DF1B579E650037FED8 /* MLKViewController.m in Sources */,
 				61793A7E1B54AB2700CFD83A /* GeneralDetailViewController.m in Sources */,
 				618149231B5DEC4600E39900 /* DetailNewsViewController.m in Sources */,
 				6181492F1B5E0EFC00E39900 /* PersonalInformationController.m in Sources */,

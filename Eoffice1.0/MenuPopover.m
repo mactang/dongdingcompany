@@ -13,6 +13,7 @@
 #import "AFNetworking.h"
 #import "LoginViewController.h"
 #import "CMDetailsViewController.h"
+#import "UIImageView+WebCache.h"
 #define RGBA(a, b, c, d) [UIColor colorWithRed:(a / 255.0f) green:(b / 255.0f) blue:(c / 255.0f) alpha:d]
 
 #define MENU_ITEM_HEIGHT        44
@@ -36,50 +37,93 @@
 @interface MenuPopover ()<UITextFieldDelegate>{
     BOOL loginsucess;
 }
-
-@property(nonatomic,retain) NSArray *menuItems;
 @property(nonatomic,retain) UIButton  *deleteBtn;
 //@property(nonatomic,strong)UILabel *numberLb1;
 @property(nonatomic, strong)UIButton *numberBtn1;
 @property(nonatomic,strong)UITextField *textfield;
-@property(nonatomic, strong)NSString *back;
-
-
-- (void)addSeparatorImageToCell:(UITableViewCell *)cell;
-
 @end
-
 @implementation MenuPopover
 {
     NSInteger _currentNumber;
     UIButton *versionSelectButton;
+    NSMutableArray *editionArray;
+    UITableView *menuItemsTableView;
+    NSMutableDictionary *dicdata;
+
 }
-
-@synthesize menuItems;
-
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)aMenuItems
 {
     self = [super initWithFrame:frame];
     
     if (self)
     {
+        [self requestdata];
+        dicdata = [NSMutableDictionary dictionary];
         self.backgroundColor =  [[UIColor grayColor]colorWithAlphaComponent:0.5];
-        self.menuItems = aMenuItems;
         _currentNumber = 1;
         
-        UITableView *menuItemsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_WIDTH, widgetboundsHeight(self)-200) style:UITableViewStylePlain];
-        menuItemsTableView.dataSource = self;
-        menuItemsTableView.delegate = self;
-        menuItemsTableView.scrollEnabled = NO;
-        menuItemsTableView.backgroundColor = [UIColor greenColor];
-        menuItemsTableView.tag = MENU_TABLE_VIEW_TAG;
-       [self addSubview:menuItemsTableView];
     }
     
     return self;
 }
+-(void)initalizeapprance{
+    menuItemsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_WIDTH, widgetboundsHeight(self)-200) style:UITableViewStylePlain];
+    menuItemsTableView.dataSource = self;
+    menuItemsTableView.delegate = self;
+    menuItemsTableView.scrollEnabled = NO;
+    menuItemsTableView.backgroundColor = [UIColor greenColor];
+    menuItemsTableView.tag = MENU_TABLE_VIEW_TAG;
+    if ([menuItemsTableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [menuItemsTableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([menuItemsTableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [menuItemsTableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    [self addSubview:menuItemsTableView];
 
-#pragma mark -
+}
+-(void)requestdata{
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path = [NSString stringWithFormat:PRODUCTMESSAGE,model.goodsId];
+ 
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [editionArray addObjectsFromArray:dic[@"data"]];
+        [self data];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+
+}
+-(void)data{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,model.paraId,model.goodsId,model.cPartnerId];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [dicdata setDictionary:dic[@"data"]];
+        [self initalizeapprance];
+        [menuItemsTableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+    
+    
+}
 #pragma mark UITableViewDatasource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,8 +131,25 @@
     if (indexPath.row == 0) {
         return 90;
     }
-    else
-    return 80;
+    if (indexPath.row==1) {
+        if (editionArray.count==0) {
+            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-90-130-64-35, SCREEN_WIDTH, 90+130+64+35);
+            return 35;
+        }
+        if (editionArray.count/2==0) {
+            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*((editionArray.count)/2)-90-130-64, SCREEN_WIDTH, 35*((editionArray.count)/2)+90+130+64);
+            return 35*((editionArray.count)/2);
+            
+        }
+        else{
+            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*((editionArray.count)/2+1)-90-130-64, SCREEN_WIDTH, 35*((editionArray.count)/2+1)+90+130+64);
+            return 35*((editionArray.count)/2+1);
+        }
+    }
+    if (indexPath.row==3) {
+        return 60;
+    }
+    return 70;
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
@@ -114,6 +175,18 @@
         [self.deleteBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [self.deleteBtn addTarget:self action:@selector(dismissMenuPopover) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:self.deleteBtn];
+        
+        UILabel *pricelable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+20, 15, SCREEN_WIDTH-110, 25)];
+        pricelable.textColor = [UIColor redColor];
+        pricelable.font = [UIFont systemFontOfSize:16];
+        pricelable.text = [NSString stringWithFormat:@"￥%.2f",[dicdata[@"price"]floatValue]];
+        [cell addSubview:pricelable];
+        
+        UILabel *stocklabel = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(pricelable), CGRectGetMaxY(pricelable.frame)+5, widgetBoundsWidth(pricelable), widgetboundsHeight(pricelable))];
+        stocklabel.textColor = [UIColor grayColor];
+        stocklabel.font = [UIFont systemFontOfSize:16];
+        stocklabel.text = [NSString stringWithFormat:@"库存%@件",dicdata[@"wgoodsId"]];
+        [cell addSubview:stocklabel];
     }
     else if (indexPath.row == 1){
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -122,40 +195,24 @@
         [versionLb setTextColor:[UIColor grayColor]];
         [cell addSubview:versionLb];
         
-        UIButton *versionBtn = [[UIButton alloc]initWithFrame:CGRectMake(versionLb.frame.origin.x, CGRectGetMaxY(versionLb.frame)+10, 80, 30)];
-        versionBtn.backgroundColor = [UIColor whiteColor];
-        [versionBtn setTitle:@"128G" forState:UIControlStateNormal];
-        versionBtn.clipsToBounds = YES;
-        versionBtn.layer.cornerRadius = 3;
-        versionBtn.layer.borderWidth = 0.8;
-        versionBtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
-        versionSelectButton = versionBtn;
-        [versionBtn addTarget:self action:@selector(versionPress:) forControlEvents:UIControlEventTouchUpInside];
-        [versionBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [cell addSubview:versionBtn];
-        
-        UIButton *versionBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(versionBtn.frame)+10, versionBtn.frame.origin.y, 80, 30)];
-        versionBtn1.backgroundColor = [UIColor whiteColor];
-        [versionBtn1 setTitle:@"32G" forState:UIControlStateNormal];
-        versionBtn1.clipsToBounds = YES;
-        versionBtn1.layer.cornerRadius = 3;
-        versionBtn1.layer.borderWidth = 0.8;
-        versionBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
-        [versionBtn1 addTarget:self action:@selector(versionPress:) forControlEvents:UIControlEventTouchUpInside];
-        [versionBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [cell addSubview:versionBtn1];
-        
-        UIButton *versionBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(versionBtn1.frame)+10, versionBtn.frame.origin.y, 100, 30)];
-        versionBtn2.backgroundColor = [UIColor whiteColor];
-        [versionBtn2 setTitle:@"128G(套餐)" forState:UIControlStateNormal];
-        versionBtn2.clipsToBounds = YES;
-        versionBtn2.layer.cornerRadius = 3;
-        versionBtn2.layer.borderWidth = 0.8;
-        versionBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
-        [versionBtn2 addTarget:self action:@selector(versionPress:) forControlEvents:UIControlEventTouchUpInside];
-        [versionBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [cell addSubview:versionBtn2];
+        for (NSInteger i=0; i<editionArray.count; i++) {
+            UIButton *editionbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+            editionbutton.frame = CGRectMake(15+(i%2)*((SCREEN_WIDTH-40)/2)+(i%2)*10, CGRectGetMaxY(versionLb.frame)+5+(i/2)*35, (SCREEN_WIDTH-40)/2, 30);
+            editionbutton.backgroundColor = [UIColor whiteColor];
+            [editionbutton setTitle:editionArray[i] forState:UIControlStateNormal];
+            editionbutton.layer.cornerRadius = 3;
+            editionbutton.layer.borderWidth = 0.5;
+            editionbutton.layer.borderColor = [[UIColor grayColor]CGColor];
+            [editionbutton addTarget:self action:@selector(versionPress:) forControlEvents:UIControlEventTouchUpInside];
+            [editionbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            if (i==0) {
+                versionSelectButton = editionbutton;
+                editionbutton.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
 
+            }
+            [cell addSubview:editionbutton];
+        }
+        
     }
     else if (indexPath.row == 2){
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -202,7 +259,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (self.intcart == YES) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.frame = CGRectMake(10, 5, SCREEN_WIDTH-20, 40);
+            button.frame = CGRectMake(10, 10, SCREEN_WIDTH-20, 40);
             button.layer.cornerRadius = 4;
             button.layer.borderColor = [[UIColor redColor]CGColor];
             button.layer.borderWidth = 0.5;
@@ -266,6 +323,17 @@
     
     return cell;
 }
+//设置分割线
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 -(void)versionPress:(UIButton *)btn{
     if (versionSelectButton == btn) {
         return;
@@ -303,10 +371,6 @@
             [_delegate pushlogincontroller:YES shopnumber:_currentNumber];
     }
 
-   // [self addData];
-
-    
-
 }
     else{
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
@@ -335,19 +399,33 @@
     }
     return _currentNumber;
 }
-
-#pragma mark -
-#pragma mark Separator Methods
-
-- (void)addSeparatorImageToCell:(UITableViewCell *)cell
-{
-    UIImageView *separatorImageView = [[UIImageView alloc] initWithFrame:SEPERATOR_LINE_RECT];
-    [separatorImageView setImage:[UIImage imageNamed:@"DefaultLine"]];
-    separatorImageView.opaque = YES;
-    [cell.contentView addSubview:separatorImageView];
-}
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    NSLog(@"++++++");
+   
+    [UIView animateWithDuration:0.4f animations:^{
+         self.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 1);
+    } completion:^(BOOL finished) {
+         [self removeFromSuperview];
+        
+    }];
 }
+-(void)dismissMenuPopover{
+    [UIView animateWithDuration:0.4f animations:^{
+        self.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 1);
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+        
+    }];
+}
+////取得当前view的控制器
+//- (UIViewController*)viewController {
+//    for (UIView* next = [self superview]; next; next = next.superview) {
+//        UIResponder* nextResponder = [next nextResponder];
+//        if ([nextResponder isKindOfClass:[UIViewController class]]) {
+//            return (UIViewController*)nextResponder;
+//        }
+//    }
+//    return nil;
+//}
+
 @end
 

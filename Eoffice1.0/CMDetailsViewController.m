@@ -30,7 +30,6 @@
 #import "LoginViewController.h"
 
 #import "OrderController.h"
-#import "GYZViewController.h"
 #import "MenuPopover.h"
 #import "ContrastViewController.h"
 #import "AFNetworking.h"
@@ -294,10 +293,7 @@
         NSLog(@"%@",error);
     }];
     
-
-
 }
-
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 4*self.datas.count;
 }
