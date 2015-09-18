@@ -86,7 +86,7 @@
 }
 -(void)requestdata{
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path = [NSString stringWithFormat:PRODUCTMESSAGE,model.goodsId];
+    NSString *path = [NSString stringWithFormat:PRODUCTMESSAGE,COMMON,model.goodsId];
  
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -105,7 +105,7 @@
 -(void)data{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,model.paraId,model.goodsId,model.cPartnerId];
+    NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,COMMON,model.paraId,model.goodsId,model.cPartnerId];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
