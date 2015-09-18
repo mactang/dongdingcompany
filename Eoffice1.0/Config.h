@@ -71,7 +71,7 @@
 #define DELETESHOPCAR  @"http://192.168.0.65:8080/eoffice/phone/order!removeBasket.action?cartId=%@"
 
 //订单接口
-#define ORDER @"http://192.168.0.65:8080/eoffice/phone/order!getList.action;jsessionid=%@?userkey=%@"
+#define ORDER @"http://192.168.0.65:8080/eoffice/phone/order!getList.action;jsessionid=%@?docstatus=-1&userkey=%@"
 
 #define DELETEORDER @"http://192.168.0.65:8080/eoffice/phone/order!deleteOrder.action?orderId=%@"
 

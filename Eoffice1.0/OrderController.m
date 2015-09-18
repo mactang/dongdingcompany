@@ -41,6 +41,9 @@
     UILabel *addressLb ;
     LoginViewController *login;
     NSString *payWay;
+    NSString *invoice;
+    NSString *dispatch;
+    NSString *paywayCount ;
     
 }
 -(NSMutableArray *)datas{
@@ -54,7 +57,17 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    payWay = @"";
+    //payWay = @"";
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSString *value = [ud objectForKey:@"payWay"];
+    NSString *value1 = [ud objectForKey:@"invoice"];
+    NSString *value2 = [ud objectForKey:@"dispatch"];
+    
+    payWay = value;
+    
+    invoice = value1;
+    
+    dispatch = value2;
     
     TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -97,6 +110,11 @@
 //}
 - (void)leftItemClicked{
     
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:payWay forKey:@"payWay"];
+    [ud setObject:invoice forKey:@"invoice"];
+    [ud setObject:dispatch forKey:@"dispatch"];
 //    NSArray *array = self.navigationController.viewControllers;
 //    //取出里面的对应元素（对象）,并返回
 //    //popToViewController:是返回到这个对象
@@ -160,8 +178,10 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
     
     cell.clipsToBounds = YES;
-
+    
     cell.textLabel.font = [UIFont systemFontOfSize:15];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
     NSLog(@"%lu",(unsigned long)self.datas.count);
     if (indexPath.section == 0) {
@@ -296,9 +316,11 @@
         
     }
     else if (indexPath.row == 2) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
         
         cell.textLabel.text = @"配送方式";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.detailTextLabel.text = dispatch;
         
     }
     else if (indexPath.row == 3) {
@@ -308,13 +330,15 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         cell.detailTextLabel.text = payWay;
-
         
+
         
     }
     else if (indexPath.row == 4) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
         cell.textLabel.text = @"发票信息";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.detailTextLabel.text = invoice;
     }
     else if (indexPath.row == 5) {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -428,15 +452,43 @@
 //    cell.detailTextLabel.text = reglarText;
     addressLb.text = reglarText;
     
+    
 }
 - (void)selectedPayWay:(NSNotification *)notify{
     
     NSString *reglarText = notify.object;
     NSLog(@"%@",reglarText);
     payWay = reglarText;
+    
+    
     [_tableView reloadData];
     
 
+    
+}
+- (void)selectedDispatch:(NSNotification *)notify{
+    
+    NSString *reglarText = notify.object;
+    NSLog(@"%@",reglarText);
+    dispatch = reglarText;
+    
+    
+    [_tableView reloadData];
+    
+    
+    
+}
+
+- (void)selectedinvoice:(NSNotification *)notify{
+    
+    NSString *reglarText = notify.object;
+    NSLog(@"%@",reglarText);
+    invoice = reglarText;
+    
+    
+    [_tableView reloadData];
+    
+    
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -522,17 +574,21 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
+    
+    if ([payWay isEqualToString:@"货到付款"]) {
+        paywayCount = @"0";
+    }
+    
     NSString *count = [NSString stringWithFormat:@"%d",_currentNumber];
-    NSString *path= [NSString stringWithFormat:SUREORDER,model.userkey,model.goodsId,count,payWay,sing.addressId];
+    NSString *path= [NSString stringWithFormat:SUREORDER,model.userkey,model.goodsId,count,paywayCount,sing.addressId];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         [hud hide:YES];
-        [self.datas removeAllObjects];
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
         
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic[@"info"]);
         
        
         

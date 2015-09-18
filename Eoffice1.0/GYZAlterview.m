@@ -85,7 +85,7 @@
         self.layer.cornerRadius = 5.0;
         self.backgroundColor = [UIColor whiteColor];
         
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -5, 300, 190) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -5, 300, 130) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollEnabled = NO;
@@ -94,14 +94,14 @@
         CGRect rightbtnFrame;
 
         if (!leftTitle) {
-            rightbtnFrame = CGRectMake((Alertwidth - GYZSinglebuttonWidth) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZSinglebuttonWidth, GYZbuttonHeigth);
+            rightbtnFrame = CGRectMake((Alertwidth - GYZSinglebuttonWidth) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-70, GYZSinglebuttonWidth, GYZbuttonHeigth);
             self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightbtn.frame = rightbtnFrame;
             
         }else {
-            leftbtnFrame = CGRectMake((Alertwidth - 2 * GYZdoublebuttonWidth - GYZbuttonbttomgap) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZdoublebuttonWidth, GYZbuttonHeigth);
+            leftbtnFrame = CGRectMake((Alertwidth - 2 * GYZdoublebuttonWidth - GYZbuttonbttomgap) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-70, GYZdoublebuttonWidth, GYZbuttonHeigth);
             
-            rightbtnFrame = CGRectMake(CGRectGetMaxX(leftbtnFrame) + GYZbuttonbttomgap, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth, GYZdoublebuttonWidth, GYZbuttonHeigth);
+            rightbtnFrame = CGRectMake(CGRectGetMaxX(leftbtnFrame) + GYZbuttonbttomgap, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-70, GYZdoublebuttonWidth, GYZbuttonHeigth);
             self.leftbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.leftbtn.frame = leftbtnFrame;
@@ -111,17 +111,17 @@
 
         [self.rightbtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.rightbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.rightbtn.backgroundColor = [UIColor redColor];
+        self.rightbtn.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         [self.leftbtn setTitle:leftTitle forState:UIControlStateNormal];
         
-        [self.leftbtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [self.leftbtn setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
         self.leftbtn.titleLabel.font = self.rightbtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
 
         [self.leftbtn addTarget:self action:@selector(leftbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.rightbtn addTarget:self action:@selector(rightbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
         self.leftbtn.layer.masksToBounds = self.rightbtn.layer.masksToBounds = YES;
         self.leftbtn.layer.cornerRadius = self.rightbtn.layer.cornerRadius = 3.0;
-        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor redColor] CGColor];
+        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         self.leftbtn.layer.borderWidth = self.rightbtn.layer.borderWidth = 1;
         
         [self addSubview:self.leftbtn];
@@ -135,7 +135,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 3;
+    return 2;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -164,7 +164,7 @@
     if (indexPath.row == 0) {
         
         UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
-        bl.backgroundColor = [UIColor redColor];
+        bl.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         bl.font = [UIFont systemFontOfSize:20];
         [bl setText:@"  支付方式"];
         [bl setTextColor:[UIColor whiteColor]];
@@ -189,16 +189,16 @@
 //        [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
 //        cell.accessoryView = payBtn;
 //    }
-    if (indexPath.row == 2) {
-        cell.textLabel.text = @"公司转账";
-        payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        payBtn.frame = CGRectMake(0, 0, 20, 20);
-        payBtn.tag = indexPath.row;
-        [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
-        [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
-        [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        cell.accessoryView = payBtn;
-    }
+//    if (indexPath.row == 2) {
+//        cell.textLabel.text = @"公司转账";
+//        payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        payBtn.frame = CGRectMake(0, 0, 20, 20);
+//        payBtn.tag = indexPath.row;
+//        [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
+//        [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
+//        [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+//        cell.accessoryView = payBtn;
+//    }
     
     return cell;
 }
@@ -265,7 +265,7 @@
     [self.backimageView removeFromSuperview];
     self.backimageView = nil;
     UIViewController *topVC = [self appRootViewController];
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5+30, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5-30, Alertwidth, Alertheigth);
+    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5+30, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5-30, Alertwidth, Alertheigth-60);
     
     [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         self.frame = afterFrame;
@@ -291,7 +291,7 @@
     }
     //    加载背景背景图,防止重复点击
     [topVC.view addSubview:self.backimageView];
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5+30, Alertwidth, Alertheigth);
+    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5+30, Alertwidth, Alertheigth-60);
     [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         //视图位置
         self.frame = afterFrame;
