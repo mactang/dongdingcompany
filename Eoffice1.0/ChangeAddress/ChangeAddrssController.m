@@ -134,7 +134,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:@"http://192.168.0.65:8080/eoffice/phone/order!updateAddress.action;jsessionid=%@?userkey=%@",model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:CHANGEADDRESS,COMMON,model.userkey];
     NSLog(@"%@",path);
     NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:self.dataArray[2],@"address",self.dataArray[4],@"telPhone",self.dataArray[3],@"receiver",self.dataArray[5],@"post",self.dictionary[@"addressId"],@"id",self.cityid,@"city",self.defaultsign,@"isDefault",nil];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
