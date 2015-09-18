@@ -87,7 +87,12 @@
 #define ADDRESSDETAIL @"%@order!getAddressDetail.action?id=%@"
 //增加地址
 
-#define ADDRESSEDADD @"%@order!addAddress.action?address=%@&telPhone=%@&receiver=%@&post=%@&id=%@"
+#define ADDRESSEDADD @"%@order!addAddress.action?userkey=%@"
+
+#define CHANGEADDRESS @"%@order!updateAddress.action?userkey=%@"
+
+
+#define  SELECTALL @"%@order!selectAll.action"
 
 //退货原因
 #define  RETUNGOODSEXPLAIN @"%@return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"

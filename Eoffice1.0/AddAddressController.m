@@ -181,7 +181,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
-    NSString *path= [NSString stringWithFormat:@"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action;jsessionid=%@?userkey=%@",model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:ADDRESSEDADD,COMMON,model.userkey];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

@@ -69,7 +69,7 @@
     }
 }
 -(void)datarequest{
-    NSString *path= [NSString stringWithFormat:@"http://192.168.0.65:8080/eoffice/phone/order!selectAll.action"];
+    NSString *path= [NSString stringWithFormat:SELECTALL,COMMON];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
