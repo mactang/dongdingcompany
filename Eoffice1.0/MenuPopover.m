@@ -38,14 +38,13 @@
 }
 
 @property(nonatomic,retain) NSArray *menuItems;
-@property(nonatomic,retain) UIButton *containerButton;
 @property(nonatomic,retain) UIButton  *deleteBtn;
 //@property(nonatomic,strong)UILabel *numberLb1;
 @property(nonatomic, strong)UIButton *numberBtn1;
 @property(nonatomic,strong)UITextField *textfield;
 @property(nonatomic, strong)NSString *back;
 
-- (void)hide;
+
 - (void)addSeparatorImageToCell:(UITableViewCell *)cell;
 
 @end
@@ -53,12 +52,10 @@
 @implementation MenuPopover
 {
     NSInteger _currentNumber;
-    UIButton *selectButton;
     UIButton *versionSelectButton;
 }
 
 @synthesize menuItems;
-@synthesize containerButton;
 
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)aMenuItems
 {
@@ -66,43 +63,17 @@
     
     if (self)
     {
+        self.backgroundColor =  [[UIColor grayColor]colorWithAlphaComponent:0.5];
         self.menuItems = aMenuItems;
         _currentNumber = 1;
-        // Adding Container Button which will take care of hiding menu when user taps outside of menu area
-        self.containerButton = [[UIButton alloc] init];
-       [self.containerButton setBackgroundColor:CONTAINER_BG_COLOR];
-        [self.containerButton addTarget:self action:@selector(dismissMenuPopover) forControlEvents:UIControlEventTouchUpInside];
-        [self.containerButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin];
         
-        self.deleteBtn = [[UIButton alloc]init];
-       // self.deleteBtn.backgroundColor = [UIColor redColor];
-        
-        [self.deleteBtn setImage:[UIImage imageNamed:@"cha1"] forState:UIControlStateNormal];
-        [self.deleteBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-        [self.deleteBtn addTarget:self action:@selector(dismissMenuPopover) forControlEvents:UIControlEventTouchUpInside];
-        [self.deleteBtn setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleBottomMargin];
-        
-        
-        UITableView *menuItemsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 440) style:UITableViewStylePlain];
-        
+        UITableView *menuItemsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_WIDTH, widgetboundsHeight(self)-200) style:UITableViewStylePlain];
         menuItemsTableView.dataSource = self;
         menuItemsTableView.delegate = self;
-       // menuItemsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         menuItemsTableView.scrollEnabled = NO;
         menuItemsTableView.backgroundColor = [UIColor greenColor];
         menuItemsTableView.tag = MENU_TABLE_VIEW_TAG;
-        
-        UIImageView *bgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Menu_PopOver_BG"]];
-        menuItemsTableView.backgroundView = bgView;
-        
-        [self addSubview:menuItemsTableView];
-        
-        self.backgroundColor = [UIColor redColor];
-        self.frame = CGRectMake(0, 110, 320, 440);
-        
-        [self.containerButton addSubview:self];
-    
-       // [self.deleteBtn addSubview:self];
+       [self addSubview:menuItemsTableView];
     }
     
     return self;
@@ -122,7 +93,7 @@
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section
 {
-     return 6;
+     return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -137,55 +108,14 @@
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"userIcon"]];
         imageView.frame = CGRectMake(10, 5, 40, 40);
         [cell addSubview:imageView];
-        [cell addSubview:imageView];
         
+        self.deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-40, 5, 30, 30)];
+        [self.deleteBtn setImage:[UIImage imageNamed:@"cha1"] forState:UIControlStateNormal];
+        [self.deleteBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [self.deleteBtn addTarget:self action:@selector(dismissMenuPopover) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:self.deleteBtn];
     }
     else if (indexPath.row == 1){
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *colorLb = [[UILabel alloc]initWithFrame:CGRectMake(15, 10, 50, 20)];
-        [colorLb setText:@"颜色"];
-        [colorLb setTextColor:[UIColor grayColor]];
-        [cell addSubview:colorLb];
-        
-        
-        UIButton *colorBtn = [[UIButton alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(colorLb.frame)+10, 80, 30)];
-        colorBtn.backgroundColor = [UIColor whiteColor];
-        [colorBtn setTitle:@"雪山白" forState:UIControlStateNormal];
-        colorBtn.clipsToBounds = YES;
-        colorBtn.layer.cornerRadius = 3;
-        colorBtn.layer.borderWidth = 0.8;
-        colorBtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
-        selectButton = colorBtn;
-        [colorBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [colorBtn addTarget:self action:@selector(colorPress:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:colorBtn];
-        
-        UIButton *colorBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(colorBtn.frame)+10, CGRectGetMaxY(colorLb.frame)+10, 80, 30)];
-        colorBtn1.backgroundColor = [UIColor whiteColor];
-        [colorBtn1 setTitle:@"宾利色" forState:UIControlStateNormal];
-        colorBtn1.clipsToBounds = YES;
-        colorBtn1.layer.cornerRadius = 3;
-        colorBtn1.layer.borderWidth = 0.8;
-        colorBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
-        [colorBtn1 addTarget:self action:@selector(colorPress:) forControlEvents:UIControlEventTouchUpInside];
-        [colorBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [cell addSubview:colorBtn1];
-        
-        UIButton *colorBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(colorBtn1.frame)+10, CGRectGetMaxY(colorLb.frame)+10, 80, 30)];
-        colorBtn2.backgroundColor = [UIColor whiteColor];
-        [colorBtn2 setTitle:@"丝绸色" forState:UIControlStateNormal];
-        colorBtn2.clipsToBounds = YES;
-        colorBtn2.layer.cornerRadius = 3;
-        colorBtn2.layer.borderWidth = 0.8;
-        colorBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
-        [colorBtn2 addTarget:self action:@selector(colorPress:) forControlEvents:UIControlEventTouchUpInside];
-        [colorBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [cell addSubview:colorBtn2];
-
-    
-    }
-    else if (indexPath.row == 2){
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UILabel *versionLb = [[UILabel alloc]initWithFrame:CGRectMake(15, 10, 50, 20)];
         [versionLb setText:@"版本"];
@@ -227,7 +157,7 @@
         [cell addSubview:versionBtn2];
 
     }
-    else if (indexPath.row == 3){
+    else if (indexPath.row == 2){
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UILabel *numberLb = [[UILabel alloc]initWithFrame:CGRectMake(15, 10, 100, 30)];
         [numberLb setText:@"购买数量"];
@@ -268,7 +198,7 @@
         [cell addSubview:self.textfield];
 
     }
-    else if (indexPath.row == 4){
+    else if (indexPath.row == 3){
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         if (self.intcart == YES) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -336,22 +266,6 @@
     
     return cell;
 }
--(void)colorPress:(UIButton *)btn{
-if (selectButton == btn) {
-    return;
-}
-  selectButton.selected = NO;
-  btn.selected = YES;
-if(selectButton.selected == NO){
-    selectButton.layer.borderColor = [[UIColor grayColor] CGColor];
-}
-if (btn.selected) {
-    
-    btn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
-    
-}
-  selectButton = btn;
-}
 -(void)versionPress:(UIButton *)btn{
     if (versionSelectButton == btn) {
         return;
@@ -398,28 +312,6 @@ if (btn.selected) {
    
   }
 }
-//-(void)addData{
-//    
-//    SingleModel *model = [SingleModel sharedSingleModel];
-//     NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",_currentNumber]];
-//    NSString *path = [NSString stringWithFormat:ADDMAINTAIN,model.userkey,model.goodsId,string];
-//    NSLog(@"path--%@",path);
-//   
-//    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    
-//    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-//        
-//        NSLog(@"%@",dic[@"info"]);
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"%@",error);
-//    }];
-//}
 -(NSInteger)numBtnPress:(UIButton *)btn{
     
     
@@ -441,53 +333,6 @@ if (btn.selected) {
 }
 
 #pragma mark -
-#pragma mark UITableViewDelegate
-
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    [self hide];
-//    [self.menuPopoverDelegate menuPopover:self didSelectMenuItemAtIndex:indexPath.row];
-//}
-
-#pragma mark -
-#pragma mark Actions
-
-- (void)dismissMenuPopover
-{
-    [self hide];
-}
-
-- (void)showInView:(UIView *)view
-{
-    self.containerButton.alpha = ZERO;
-    self.deleteBtn.alpha = ZERO;
-    self.containerButton.frame = view.bounds;
-    self.deleteBtn.frame = CGRectMake(280, 120, 30, 30);
-    //self.containerButton.backgroundColor = [UIColor redColor];
-    [view addSubview:self.containerButton];
-    [view addSubview:self.deleteBtn];
-    [UIView animateWithDuration:ANIMATION_DURATION
-                     animations:^{
-                         self.containerButton.alpha = ONE;
-                         self.deleteBtn.alpha = ONE;
-                     }
-                     completion:^(BOOL finished) {}];
-}
-
-- (void)hide
-{
-    [UIView animateWithDuration:ANIMATION_DURATION
-                     animations:^{
-                         self.containerButton.alpha = ZERO;
-                         self.deleteBtn.alpha = ZERO;
-                     }
-                     completion:^(BOOL finished) {
-                         [self.containerButton removeFromSuperview];
-                         [self.deleteBtn removeFromSuperview];
-                     }];
-}
-
-#pragma mark -
 #pragma mark Separator Methods
 
 - (void)addSeparatorImageToCell:(UITableViewCell *)cell
@@ -497,30 +342,8 @@ if (btn.selected) {
     separatorImageView.opaque = YES;
     [cell.contentView addSubview:separatorImageView];
 }
-
-#pragma mark -
-#pragma mark Orientation Methods
-
-//- (void)layoutUIForInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-//{
-//    BOOL landscape = (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
-//    
-//    UIImageView *menuPointerView = (UIImageView *)[self.containerButton viewWithTag:MENU_POINTER_TAG];
-//    UITableView *menuItemsTableView = (UITableView *)[self.containerButton viewWithTag:MENU_TABLE_VIEW_TAG];
-//    
-//    if( landscape )
-//    {
-//        menuPointerView.frame = CGRectMake(menuPointerView.frame.origin.x + LANDSCAPE_WIDTH_PADDING, menuPointerView.frame.origin.y, menuPointerView.frame.size.width, menuPointerView.frame.size.height);
-//        
-//        menuItemsTableView.frame = CGRectMake(menuItemsTableView.frame.origin.x + LANDSCAPE_WIDTH_PADDING, menuItemsTableView.frame.origin.y, menuItemsTableView.frame.size.width, menuItemsTableView.frame.size.height);
-//    }
-//    else
-//    {
-//        menuPointerView.frame = CGRectMake(menuPointerView.frame.origin.x - LANDSCAPE_WIDTH_PADDING, menuPointerView.frame.origin.y, menuPointerView.frame.size.width, menuPointerView.frame.size.height);
-//        
-//        menuItemsTableView.frame = CGRectMake(menuItemsTableView.frame.origin.x - LANDSCAPE_WIDTH_PADDING, menuItemsTableView.frame.origin.y, menuItemsTableView.frame.size.width, menuItemsTableView.frame.size.height);
-//    }
-//}
-
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    NSLog(@"++++++");
+}
 @end
 
