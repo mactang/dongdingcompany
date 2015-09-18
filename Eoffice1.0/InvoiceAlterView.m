@@ -111,7 +111,7 @@
     if (indexPath.row == 2) {
     
     
-    if (invoiceSelector && selectIndexPath.row  == indexPath.row) {
+    if (invoiceSelector && selectIndexPath.row   == indexPath.row) {
         return 190;
         
     }
@@ -290,7 +290,29 @@
     return cell;
 }
 -(void)keepBtn{
-
+    
+ NSIndexPath *indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    
+    
+    
+    
+    invoiceSelector = !invoiceSelector;
+    BOOL isOtherIndex = NO;
+    
+    if (selectIndexPath.row != indexPath.row) {
+        isOtherIndex = YES;
+        
+        [self tableviewmove:self.tableView number:NO];
+    }
+    selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self tableviewmove:self.tableView number:NO];
+    if (isOtherIndex && !invoiceSelector) {
+        invoiceSelector = YES;
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self tableviewmove:self.tableView number:NO];
+        
+    }
     
 }
 -(void)pressBtn:(UIButton *)btn{
@@ -351,10 +373,24 @@
 //        }
 //        
 //    }
-    
+//    
 
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
+    
+    NSArray *array = @[@"开发票",@"不开发票"];
+    
+    int i;
+    if (btn.tag == 1) {
+        i = 0;
+    }else{
+    
+        i = 1;
+    }
+    NSString *string = [NSString stringWithFormat:@"%@",array[i]];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"invoice" object:string];
+    
+    
     
     if (currentbutton==btn) {
         invoiceSelector = !invoiceSelector;

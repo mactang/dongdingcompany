@@ -379,7 +379,7 @@ if (btn.selected) {
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
             [_delegate pushlogincontroller:YES shopnumber:_currentNumber];
     }
-    [self addData];
+   // [self addData];
 }
     else{
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {

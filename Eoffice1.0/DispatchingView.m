@@ -281,6 +281,18 @@
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
+    NSArray *array = @[@"送货上门",@"上门自取"];
+    
+    int i;
+    if (btn.tag == 1) {
+        i = 0;
+    }else{
+        
+        i = 1;
+    }
+    NSString *string = [NSString stringWithFormat:@"%@",array[i]];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"dispatch" object:string];
+    
     if (currentbutton==btn) {
         invoiceSelector = !invoiceSelector;
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
