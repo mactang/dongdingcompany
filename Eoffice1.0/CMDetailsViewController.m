@@ -49,6 +49,7 @@
 #import "UMSocialQQHandler.h"
 #import "TarBarButton.h"
 #import "LoginViewController.h"
+#import "ShoppingCarController.h"
 #define MENU_POPOVER_FRAME  CGRectMake(8, 0, 140, 88)
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
 @interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>
@@ -188,11 +189,13 @@
     
     UIButton *shopCarBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(10, 3, 20, 20)];
     [shopCarBtn1 setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
+    shopCarBtn1.userInteractionEnabled = NO;
     [shopCarBtn addSubview:shopCarBtn1];
     
     UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(5, 22, 30, 20)];
     lb1.font = [UIFont systemFontOfSize:10];
     lb1.text = @"购物车";
+    lb1.userInteractionEnabled = NO;
     lb1.textColor = [UIColor whiteColor];
     [shopCarBtn addSubview:lb1];
     
@@ -232,7 +235,7 @@
 }
 -(void)shopPress:(UIButton *)btn{
     if (btn.tag == 2000) {
-        
+        [self clickshopcratbutton];
     }
     else if (btn.tag == 2001){
         
@@ -541,7 +544,6 @@
 }
 - (void)showMenuPopOver:(id)sender
 {
-    // Hide already showing popover
     [self.menuPopover dismissMenuPopover];
     self.menuPopover = [[MenuPopover alloc] initWithFrame:MENU_POPOVER_FRAME menuItems:self.menuItems];
     self.menuPopover.intcart = NO;
@@ -590,10 +592,12 @@
     if (model.userkey!=nil&&sucess) {
         [self addData];
     }
-    else{
+    if (model.userkey==nil) {
         login = [[LoginViewController alloc]init];
         login.delegate = self;
+        login.iflogin = NO;
         [self.navigationController pushViewController:login animated:YES];
+        
     }
 }
 #pragma mark logindelegate mathds
@@ -617,17 +621,48 @@
     NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",product]];
     NSString *path = [NSString stringWithFormat:ADDMAINTAIN,model.userkey,model.goodsId,string];
     NSLog(@"path--%@",path);
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic[@"info"]);
-        
+        UIAlertView *alertview;
+        if ([dic[@"status"] integerValue]==1) {
+            alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"去购物车" otherButtonTitles:@"继续逛逛", nil];
+        }
+        else{
+            alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"重新提交" otherButtonTitles:@"取消", nil];
+        }
+        [alertview show];
+        [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
+}
+#pragma mark  购物车点击事件以及代理
+-(void)clickshopcratbutton{
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey==nil) {
+        login = [[LoginViewController alloc]init];
+        login.delegate = self;
+        login.iflogin = YES;
+        [self.navigationController pushViewController:login animated:YES];
+    }
+    else{
+        ShoppingCarController *shopcart = [[ShoppingCarController alloc]init];
+        [self.navigationController pushViewController:shopcart animated:YES];
+        
+    }
+}
+-(void)reloadshopcart{
+    [login.navigationController popViewControllerAnimated:NO];
+    ShoppingCarController *shopcart = [[ShoppingCarController alloc]init];
+    [self.navigationController pushViewController:shopcart animated:YES];
+    
+    
 }
 -(void)btnPress1{
     UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];

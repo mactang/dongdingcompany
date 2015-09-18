@@ -13,6 +13,7 @@
 @protocol MenuPopoverDelegate<NSObject>
 
 - (void)pushlogincontroller:(BOOL )sucess shopnumber:(NSInteger )shopnumber;
+- (void)clickshopcratbutton;
 
 @end
 

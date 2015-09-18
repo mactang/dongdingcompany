@@ -355,12 +355,23 @@
             model.userkey = userkey;
             model.jsessionid = jsessionid;
             
-            if (_delegate &&[_delegate respondsToSelector:@selector(reloadata)]) {
-                [_delegate reloadata];
-                [self.view removeFromSuperview];
-                [self removeFromParentViewController];
+            if (self.iflogin) {
+                if (_delegate &&[_delegate respondsToSelector:@selector(reloadshopcart)]) {
+                    [_delegate reloadshopcart];
+                    [self.view removeFromSuperview];
+                    [self removeFromParentViewController];
+                }
+                
             }
-            else {
+            if (!self.iflogin) {
+                if (_delegate &&[_delegate respondsToSelector:@selector(reloadata)]) {
+                    [_delegate reloadata];
+                    [self.view removeFromSuperview];
+                    [self removeFromParentViewController];
+                }
+                
+            }
+           else {
                 [self.view removeFromSuperview];
                 [self removeFromParentViewController];
 
