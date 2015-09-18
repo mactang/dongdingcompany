@@ -128,7 +128,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:FEEDBACK,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:FEEDBACK,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
     
     

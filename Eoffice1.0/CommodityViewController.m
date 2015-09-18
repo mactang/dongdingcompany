@@ -120,7 +120,7 @@
 }
 -(void)data{
     
-    NSString *path= COMMODITYMIDDLE;
+    NSString *path= [NSString stringWithFormat:COMMODITYMIDDLE,COMMON];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     

@@ -388,11 +388,11 @@ if (btn.selected) {
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
             [_delegate pushlogincontroller:YES shopnumber:_currentNumber];
     }
-<<<<<<< HEAD
+
    // [self addData];
-=======
+
     
->>>>>>> bc4fb70c3d4227e1628a8dadbbe063bd008d15bd
+
 }
     else{
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {

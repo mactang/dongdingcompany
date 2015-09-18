@@ -104,7 +104,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:PERSONREVISE,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:PERSONREVISE,COMMON,model.jsessionid,model.userkey];
     NSLog(@"path--%@",path);
     
     
@@ -130,7 +130,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:PERSONCONME,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

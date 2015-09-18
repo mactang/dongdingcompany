@@ -412,7 +412,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:ADDRESS,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:ADDRESS,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -580,7 +580,7 @@
     }
     
     NSString *count = [NSString stringWithFormat:@"%d",_currentNumber];
-    NSString *path= [NSString stringWithFormat:SUREORDER,model.userkey,model.goodsId,count,paywayCount,sing.addressId];
+    NSString *path= [NSString stringWithFormat:SUREORDER,COMMON,model.userkey,model.goodsId,count,paywayCount,sing.addressId];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

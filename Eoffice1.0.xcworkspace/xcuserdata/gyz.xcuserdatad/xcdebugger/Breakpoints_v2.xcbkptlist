@@ -19,12 +19,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Eoffice1.0/OrderViewController.m"
-            timestampString = "464182790.248495"
+            filePath = "Eoffice1.0/PersonViewController.m"
+            timestampString = "464248457.195988"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "181"
-            endingLineNumber = "181"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "-downData"
             landmarkType = "5">
          </BreakpointContent>

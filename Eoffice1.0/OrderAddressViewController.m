@@ -88,7 +88,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:ADDRESS,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:ADDRESS,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

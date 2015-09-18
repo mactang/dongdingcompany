@@ -51,7 +51,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *string = @"my";
     model.isBoolmy = [NSString stringWithFormat:@"%@",string];
-    [self downData];
+   // [self downData];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 440) style:UITableViewStylePlain];
     _tableView.scrollEnabled = NO;
     _tableView.delegate = self;
@@ -68,7 +68,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:PERSONCONME,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -111,7 +111,7 @@
             [login.view removeFromSuperview];
             
         }
-        
+        [self downData];
     }
 
       [self.navigationController setNavigationBarHidden:YES animated:YES];

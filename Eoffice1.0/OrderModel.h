@@ -19,6 +19,8 @@
 @property (strong,nonatomic) NSString *orderId;
 @property (strong,nonatomic) NSString *docstatus;
 
+@property (strong,nonatomic) NSArray *list;
+
 
 +(OrderModel *)modelWithDic:(NSDictionary *)dic;
 -(id)initWithDic:(NSDictionary *)dic;

@@ -23,6 +23,7 @@
         self.imgurl = dic[@"imgurl"];
         self.orderId = dic[@"orderId"];
         self.docstatus =dic[@"docstatus"];
+        self.list =dic[@"list"];
     }
     
     return self;
