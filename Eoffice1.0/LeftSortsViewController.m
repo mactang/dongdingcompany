@@ -107,7 +107,7 @@
    
     NSLog(@"MProductMedcategoryId--%@",model.MProductMedcategoryId);
     
-    NSString *path1= [NSString stringWithFormat:MAINTAINSORTSSMART,model.MProductMedcategoryId];
+    NSString *path1= [NSString stringWithFormat:MAINTAINSORTSSMART,COMMON,model.MProductMedcategoryId];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -139,7 +139,7 @@
 
 -(void)data{
     
-    NSString *path= MAINTAINSORTS;
+    NSString *path= [NSString stringWithFormat:MAINTAINSORTS,COMMON];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -180,7 +180,7 @@
      CategoryBig *model = self.datas[indexPath.row];
     NSLog(@"MProductMedcategoryId--%@",model.MProductCategoryId);
     
-    NSString *path1= [NSString stringWithFormat:MAINTAIN,model.MProductCategoryId];
+    NSString *path1= [NSString stringWithFormat:MAINTAIN,COMMON,model.MProductCategoryId];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];

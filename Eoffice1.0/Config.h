@@ -39,82 +39,86 @@
 //用户注册界面
 #define VERIFICATION 1010
 
+#define COMMON @"http://192.168.0.65:8080/phone/"
+
+#define OFFICE @"http://192.168.0.65:8080/eoffice/"
+
 //用户登录接口
-#define LOGIN @"http://192.168.0.65:8080/eoffice/phone/user!Login.action?username=%@&password=%@"
+#define LOGIN @"%@user!Login.action?username=%@&password=%@"
 
 //用户注册接口
-#define REGISTER @"http://192.168.0.65:8080/eoffice/phone/user!Register.action?username=TTTTT&password=test"
-#define REGISTERMASSAGE @"http://192.168.0.65:8080/eoffice/phone/sms!getPhoneSms.action?phoneNo=%@"
+#define REGISTER @"%@user!Register.action?username=TTTTT&password=test"
+#define REGISTERMASSAGE @"%@sms!getPhoneSms.action?phoneNo=%@"
 
-//
-#define OFFICE @"http://192.168.0.65:8080/eoffice/";
+
 
 //商品
-#define COMMODITYMIDDLE @"http://192.168.0.65:8080/eoffice/phone/product!getMidCategory.action"
+#define COMMODITYMIDDLE @"%@product!getMidCategory.action"
 //商品详情
-#define MAINTAINDETAIL @"http://192.168.0.65:8080/eoffice/phone/product!getGoodsDetail.action?paraId=%@&goodsId=%@&cPartnerId=%@"
-#define ADDMAINTAIN @"http://192.168.0.65:8080/eoffice/phone/order!addBasket.action?userkey=%@&goodsId=%@&count=%@"
-#define MAINTAINSORTSSMART @"http://192.168.0.65:8080/eoffice/phone/product!getSubCategory.action?cartId=%@"
+#define MAINTAINDETAIL @"%@product!getGoodsDetail.action?paraId=%@&goodsId=%@&cPartnerId=%@"
+#define ADDMAINTAIN @"%@order!addBasket.action?userkey=%@&goodsId=%@&count=%@"
+#define MAINTAINSORTSSMART @"%@product!getSubCategory.action?cartId=%@"
 
-#define MAINTAINSORTS @"http://192.168.0.65:8080/eoffice/phone/product!getMidCategory.action"
+#define MAINTAINSORTS @"%@product!getMidCategory.action"
 
-#define MAINTAIN @"http://192.168.0.65:8080/eoffice/phone/product!getSubCategory.action?cartId=%@"
+#define MAINTAIN @"%@product!getSubCategory.action?cartId=%@"
 
-#define PARAMETER @"http://192.168.0.65:8080/eoffice/phone/product!getParameters.action?paraId=%@"
+#define PARAMETER @"%@product!getParameters.action?paraId=%@"
 
 //电脑
-#define COMPUTER @"http://192.168.0.65:8080/eoffice/phone/product!getMidGoodsList.action?cartId=%@&page=0"
+#define COMPUTER @"%@product!getMidGoodsList.action?cartId=%@&page=0"
 
 //购物车接口
-#define SHOPCAR @"http://192.168.0.65:8080/eoffice/phone/order!getBasket.action;jsessionid=%@?userkey=%@"
+#define SHOPCAR @"%@order!getBasket.action;jsessionid=%@?userkey=%@"
 
-#define DELETESHOPCAR  @"http://192.168.0.65:8080/eoffice/phone/order!removeBasket.action?cartId=%@"
+#define DELETESHOPCAR  @"%@order!removeBasket.action?cartId=%@"
 
 //订单接口
-#define ORDER @"http://192.168.0.65:8080/eoffice/phone/order!getList.action;jsessionid=%@?docstatus=-1&userkey=%@"
+#define ORDER @"%@order!getList.action?docstatus=-1&userkey=%@"
 
-#define DELETEORDER @"http://192.168.0.65:8080/eoffice/phone/order!deleteOrder.action?orderId=%@"
+#define DELETEORDER @"%@order!deleteOrder.action?orderId=%@"
 
-#define SUREORDER @"http://192.168.0.65:8080/eoffice/phone/order!goodsCommit.action?userkey=%@&goodsId=%@&count=%@&payway=%@&id=%@"
+#define SUREORDER @"%@order!goodsCommit.action?userkey=%@&goodsId=%@&count=%@&payway=%@&id=%@"
 
 //收货地址
-#define ADDRESS @"http://192.168.0.65:8080/eoffice/phone/order!addressList.action;jsessionid=%@?userkey=%@"
-#define ADDRESSDELTE @"http://192.168.0.65:8080/eoffice/phone/order!delAddress.action?id=%@"
+#define ADDRESS @"%@order!addressList.action;jsessionid=%@?userkey=%@"
+#define ADDRESSDELTE @"%@order!delAddress.action?id=%@"
 
-#define ADDRESSDETAIL @"http://192.168.0.65:8080/eoffice/phone/order!getAddressDetail.action?id=%@"
+#define ADDRESSDETAIL @"%@order!getAddressDetail.action?id=%@"
 //增加地址
-#define ADDRESSEDADD @"http://192.168.0.65:8080/eoffice/phone/order!addAddress.action?address=%@&telPhone=%@&receiver=%@&post=%@&id=%@"
+
+#define ADDRESSEDADD @"%@order!addAddress.action?address=%@&telPhone=%@&receiver=%@&post=%@&id=%@"
+
 //退货原因
-#define  RETUNGOODSEXPLAIN @"http://192.168.0.65:8080/eoffice/phone/return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
-#define  BACKBEASON @"http://192.168.0.65:8080/eoffice/phone/return!getReasonList.action;jsessionid=%@?userkey=%@"
+#define  RETUNGOODSEXPLAIN @"%@return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
+#define  BACKBEASON @"%@return!getReasonList.action;jsessionid=%@?userkey=%@"
 //默认地址设置
-#define DEFAULTADDREDD  @"http://192.168.0.65:8080/eoffice/phone/order!setDefalutAdress.action;id=%@?userkey=%@"
+#define DEFAULTADDREDD  @"%@order!setDefalutAdress.action;id=%@?userkey=%@"
 
 
-#define REGISTERVERIF @"http://192.168.0.65:8080/eoffice/phone/sms!getPhoneSms.action"
+#define REGISTERVERIF @"%@sms!getPhoneSms.action"
 
-#define ORDERCLASSIFY @"http://192.168.0.65:8080/eoffice/phone/order!getList.action;jsessionid=%@?userkey=%@"
+#define ORDERCLASSIFY @"%@order!getList.action;jsessionid=%@?userkey=%@"
 
 //信息反馈
-#define FEEDBACK @"http://192.168.0.65:8080/eoffice/phone/feedback!add.action;jsessionid=%@?userkey=%@"
+#define FEEDBACK @"%@feedback!add.action;jsessionid=%@?userkey=%@"
 
-#define  RETUNGOODSSTATE @"http://192.168.0.65:8080/eoffice/phone/replace!returnStatus.action;jsessionid=%@?userkey=%@&returnId=%@"
+#define  RETUNGOODSSTATE @"%@replace!returnStatus.action;jsessionid=%@?userkey=%@&returnId=%@"
 
 //个人信息
-#define   PERSONCONME @"http://192.168.0.65:8080/eoffice/phone/user!toUpdateMyMsg.action;jsessionid=%@?userkey=%@"
-#define   PERSONREVISE @"http://192.168.0.65:8080/eoffice/phone/user!updateMyMsg.action;jsessionid=%@?userkey=%@"
+#define   PERSONCONME @"%@user!toUpdateMyMsg.action;jsessionid=%@?userkey=%@"
+#define   PERSONREVISE @"%@user!updateMyMsg.action;jsessionid=%@?userkey=%@"
 //安全设置
-#define SAFEVALIDATE @"http://192.168.0.65:8080/eoffice/phone/sms!getPhoneSms.action;jsessionid=%@?userkey=%@"
-#define SAFENEWPHONE @"http://192.168.0.65:8080/eoffice/phone/user!updatePhone.action;jsessionid=%@?userkey=%@"
-#define SAFERIVESE @"http://192.168.0.65:8080/eoffice/phone/user!updatePassword.action;jsessionid=%@?userkey=%@"
+#define SAFEVALIDATE @"%@sms!getPhoneSms.action;jsessionid=%@?userkey=%@"
+#define SAFENEWPHONE @"%@user!updatePhone.action;jsessionid=%@?userkey=%@"
+#define SAFERIVESE @"%@user!updatePassword.action;jsessionid=%@?userkey=%@"
 
 //换货
-#define  REPLACEEXPLAIN @"http://192.168.0.65:8080/eoffice/phone/replace!getReasonList.action;jsessionid=%@?userkey=%@"
-#define  EXPLACE @"http://192.168.0.65:8080/eoffice/phone/replace!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
+#define  REPLACEEXPLAIN @"%@replace!getReasonList.action;jsessionid=%@?userkey=%@"
+#define  EXPLACE @"%@replace!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
 //维修
-#define  SERVICEREASON @"http://192.168.0.65:8080/eoffice/phone/repair!getReasonList.action;jsessionid=%@?userkey=%@"
-#define  SERVICESUBMIT @"http://192.168.0.65:8080/eoffice/phone/repair!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
-//商品信息
-#define PRODUCTMESSAGE @"http://192.168.0.65:8080/eoffice/phone/product!selectedByVersion.action?goodsId=%@"
-
+#define  SERVICEREASON @"%@repair!getReasonList.action;jsessionid=%@?userkey=%@"
+#define  SERVICESUBMIT @"%@repair!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
+//版本信息
+#define PRODUCTMESSAGE @"%@product!selectedByVersion.action?goodsId=%@"
 #endif

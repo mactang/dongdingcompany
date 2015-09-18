@@ -237,7 +237,7 @@ static const CGFloat MJDuration = 2.0;
     SingleModel *single = [SingleModel sharedSingleModel];
     NSLog(@"single.name--%@",single.ids);
     
-    NSString *path= [NSString stringWithFormat:COMPUTER,single.ids];
+    NSString *path= [NSString stringWithFormat:COMPUTER,COMMON,single.ids];
     NSLog(@"path--%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -375,7 +375,7 @@ static const CGFloat MJDuration = 2.0;
     //  NSLog(@"%@",model.price);
     UIImageView *imageView = [[UIImageView  alloc]initWithFrame:CGRectMake(10, 5, 130, 140)];
     
-    NSString *string = OFFICE
+    NSString *string = OFFICE;
     [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",string,model.imgUrl]]];
     NSLog(@"%@",imageView.image);
     [cell addSubview:imageView];

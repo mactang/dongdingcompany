@@ -71,7 +71,7 @@
     
     
     isClssify = NO;
-  //  [self downData];
+   //[self downData];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, 320, 430) style:UITableViewStyleGrouped];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -142,7 +142,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -177,7 +177,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
 
     
-    NSString *path= [NSString stringWithFormat:ORDER,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:ORDER,COMMON,model.userkey];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -190,12 +190,16 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
-       
+            NSLog(@"%@",dic);
         for(NSDictionary *subDict in array)
         {
-            NSLog(@"%@",subDict);
-            OrderModel *model = [OrderModel modelWithDic:subDict];
-            [self.datas addObject:model];
+
+                NSLog(@"%@",subDict);
+                OrderModel *model = [OrderModel modelWithDic:subDict];
+                [self.datas addObject:model];
+            
+        
+            
             
         }
         }
@@ -268,8 +272,9 @@
     NSLog(@"%@",self.datas);
     if (isClssify == NO) {
     model1 = self.datas[indexPath.row];
-    NSLog(@"%@",model1.orderDescription);
     
+    
+    NSLog(@"price--%@",model1.orderDescription);
         
     
     }
@@ -277,7 +282,7 @@
         model1 = self.classifyDatas[indexPath.row];
         
     }
-        docstatus = [NSString stringWithFormat:@"%@",model1.docstatus];
+        docstatus = [NSString stringWithFormat:@"%@",model1.orderDescription];
     
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"dingdanxiaotu"]];
         imageView.frame = CGRectMake(10, 5, 40, 40);
@@ -315,7 +320,7 @@
         
         UILabel *lb6 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+40, lb1.frame.origin.y, 60, 20)];
         lb6.font = [UIFont systemFontOfSize:10];
-        lb6.text = lb6.text = [NSString stringWithFormat:@"%@",model1.price];;
+        lb6.text = lb6.text = [NSString stringWithFormat:@"%@",model1.list[0][@"price"]];;
         [cell addSubview:lb6];
         
         UILabel *lb7 = [[UILabel alloc]initWithFrame:CGRectMake(lb6.frame.origin.x+40, CGRectGetMaxY(lb6.frame)+10, 60, 20)];
@@ -348,7 +353,7 @@
         [cell addSubview:lbT3];
 
         
-        if ([docstatus isEqualToString:@"1"]) {
+        if ([docstatus isEqualToString:@"待付款"]) {
             self.row = indexPath.row;
         UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(170,CGRectGetMaxY(lbT.frame)+20, 60, 20)];
        [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
@@ -381,7 +386,7 @@
         [cell addSubview:btn3];
         }
         
-        if ([docstatus isEqualToString:@"3"]) {
+        if ([docstatus isEqualToString:@"订单完成"]) {
             
         UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(100, CGRectGetMaxY(lbT.frame)+20, 60, 20)];
         [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
@@ -424,7 +429,7 @@
         [cell addSubview:btn3];
             
         }
-        if ([docstatus isEqualToString:@"2"]) {
+        if ([docstatus isEqualToString:@"待发货"]) {
             
         UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(170, CGRectGetMaxY(lbT.frame)+20, 60, 20)];
         [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
@@ -457,7 +462,7 @@
         [cell addSubview:btn3];
             
         }
-        if ([docstatus isEqualToString:@"4"]) {
+        if ([docstatus isEqualToString:@"退换货"]) {
             
         UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(40, CGRectGetMaxY(lbT.frame)+20, 60, 20)];
         [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
@@ -513,7 +518,7 @@
         [cell addSubview:btn3];
         
         }
-        if ([docstatus isEqualToString:@"5"]) {
+        if ([docstatus isEqualToString:@"待收货"]) {
         UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(100, CGRectGetMaxY(lbT.frame)+20, 60, 20)];
         [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
         [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -598,7 +603,7 @@
     NSLog(@"row--%ld",(long)_orderId);
     NSString *string = [NSString stringWithFormat:@"%ld",(long)_orderId];
     
-    NSString *path= [NSString stringWithFormat:DELETEORDER,string];
+    NSString *path= [NSString stringWithFormat:DELETEORDER,COMMON,string];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -670,7 +675,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     int i = [(model.reasonId)intValue];
     
-    NSString *path= [NSString stringWithFormat:RETUNGOODSSTATE,model.jsessionid,model.userkey,_returnId];
+    NSString *path= [NSString stringWithFormat:RETUNGOODSSTATE,COMMON,model.jsessionid,model.userkey,_returnId];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -724,6 +729,7 @@
     if (model.userkey != nil) {
         self.navigationController.navigationBarHidden = NO;
         [self.navigationItem setTitle:@"我的订单"];
+        [self downData];
     }else{
     self.navigationController.navigationBarHidden = YES;
     }

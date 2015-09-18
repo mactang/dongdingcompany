@@ -44,30 +44,38 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     [self.navigationItem setTitle:@""];
+    
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *string = @"my";
     model.isBoolmy = [NSString stringWithFormat:@"%@",string];
-    
+   // [self downData];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 440) style:UITableViewStylePlain];
     _tableView.scrollEnabled = NO;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    [self downData];
     
+    //[self downData];
+    // Do any additional setup after loading the view.
 }
+
 - (void)downData{
     
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
-    NSString *path= [NSString stringWithFormat:PERSONCONME,model.jsessionid,model.userkey];
+    
+    NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
+    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -89,12 +97,13 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     SingleModel *model = [SingleModel sharedSingleModel];
+    NSLog(@"%@",model.userkey);
+    NSLog(@"%@",[model.userkey class]);
     if (model.userkey == nil) {
         if (!login) {
             login = [[LoginViewController alloc]init];
             [self.view addSubview:login.view];
             login.delegate = self;
-            login.iflogin = NO;
         }
         
     }else{
@@ -102,7 +111,7 @@
             [login.view removeFromSuperview];
             
         }
-        
+        [self downData];
     }
 
       [self.navigationController setNavigationBarHidden:YES animated:YES];
@@ -112,13 +121,10 @@
     [self downData];
     
 }
--(void)reloadshopcart{
-    
-}
 -(void)buttonPress{
     
-    LoginViewController *logincontroller = [[LoginViewController alloc]init];
-    [self.navigationController pushViewController:logincontroller animated:YES];
+    LoginViewController *login = [[LoginViewController alloc]init];
+    [self.navigationController pushViewController:login animated:YES];
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

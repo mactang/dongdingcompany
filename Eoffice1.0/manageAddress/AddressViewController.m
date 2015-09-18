@@ -88,7 +88,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,self.dataarray[self.signbutton][@"addressId"],model.userkey];
+    NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,COMMON,self.dataarray[self.signbutton][@"addressId"],model.userkey];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -110,7 +110,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:ADDRESS,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:ADDRESS,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -282,7 +282,7 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
-    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,self.dataarray[_btnNumber][@"addressId"]];
+    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,COMMON,self.dataarray[_btnNumber][@"addressId"]];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

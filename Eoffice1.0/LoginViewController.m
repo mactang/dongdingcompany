@@ -329,7 +329,7 @@
     UITextField *name_field = (UITextField *)[self.view viewWithTag:NAME_FIELD];
     UITextField *pwd_field = (UITextField *)[self.view viewWithTag:PASSWORD_FIELD];
     
-    NSString *path= [NSString stringWithFormat:LOGIN,name_field.text,pwd_field.text ];
+    NSString *path= [NSString stringWithFormat:LOGIN,COMMON,name_field.text,pwd_field.text ];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -349,7 +349,9 @@
         }
         else{
             NSDictionary *subDic = dic[@"data"];
-            NSString *userkey = subDic[@"userkey"];
+            
+            NSString *userkey = dic[@"data"][@"userkey"];
+            NSLog(@"userkey--%@",userkey);
             NSString *jsessionid = subDic[@"jsessionId"];
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;

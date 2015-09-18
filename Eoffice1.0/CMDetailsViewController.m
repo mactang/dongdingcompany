@@ -262,7 +262,7 @@
 -(void)data{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,model.paraId,model.goodsId,model.cPartnerId];
+    NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,COMMON,model.paraId,model.goodsId,model.cPartnerId];
     NSLog(@"path--%@",path);
     NSLog(@"wGoodsId--%@",_numberbutton.titleLabel.text);
     
@@ -553,7 +553,7 @@
 -(void)parameterData{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path = [NSString stringWithFormat:PARAMETER,model.paraId];
+    NSString *path = [NSString stringWithFormat:PARAMETER,COMMON,model.paraId];
     NSLog(@"path--%@",path);
     NSLog(@"wGoodsId--%@",_numberbutton.titleLabel.text);
     
@@ -618,7 +618,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",product]];
-    NSString *path = [NSString stringWithFormat:ADDMAINTAIN,model.userkey,model.goodsId,string];
+    NSString *path = [NSString stringWithFormat:ADDMAINTAIN,COMMON,model.userkey,model.goodsId,string];
     NSLog(@"path--%@",path);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;

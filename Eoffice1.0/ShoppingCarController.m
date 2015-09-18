@@ -174,7 +174,7 @@
     NSLog(@"%@",DeleteRow);
     for (int i = 0; i<DeleteRow.count; i++) {
     NSLog(@"%d",number);
-    NSString *path= [NSString stringWithFormat:DELETESHOPCAR,DeleteRow[i]];
+    NSString *path= [NSString stringWithFormat:DELETESHOPCAR,COMMON,DeleteRow[i]];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -214,7 +214,7 @@
         
         ShopCarModel *model = self.datas[i];
         
-        NSString *path= [NSString stringWithFormat:DELETESHOPCAR,model.cartId];
+        NSString *path= [NSString stringWithFormat:DELETESHOPCAR,COMMON,model.cartId];
         NSLog(@"%@",path);
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -276,7 +276,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:SHOPCAR,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:SHOPCAR,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

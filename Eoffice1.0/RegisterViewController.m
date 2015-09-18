@@ -115,7 +115,7 @@
 -(void)valiData{
     
     UITextField *name_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
-    NSString *path = [NSString stringWithFormat:REGISTERMASSAGE,name_field.text];
+    NSString *path = [NSString stringWithFormat:REGISTERMASSAGE,COMMON,name_field.text];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -232,7 +232,7 @@
     UITextField *identifying_field = (UITextField *)[self.view viewWithTag:1004];
     
     
-    NSString *path = REGISTER;
+    NSString *path = [NSString stringWithFormat:REGISTER,COMMON];
     NSLog(@"%@",identifying_field.text);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
