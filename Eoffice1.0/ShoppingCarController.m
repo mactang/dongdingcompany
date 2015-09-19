@@ -40,6 +40,8 @@
      NSMutableArray *DeleteRow;
     int number;
     BOOL isAllDelete;
+    UIButton *editorBtn;
+    UIButton *currentbutton;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -313,8 +315,8 @@
     if (indexPath.row!=0&&indexPath.row%2!=0) {
         
         
-        if (invoiceSelector && selectIndexPath.row + 1 == indexPath.row) {
-            return 230;
+        if (invoiceSelector && selectIndexPath.row == indexPath.row) {
+            return 170;
             
         }
         return 0;
@@ -350,7 +352,8 @@
     
     if (indexPath.row == 0||indexPath.row%2==0) {
         
-        int  i = 0 ;
+        
+        ShopCarModel *model = self.datas[indexPath.row/2];
         chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         chooseBtn.frame = CGRectMake(10, 30, 20, 20);
         [chooseBtn setImage:[UIImage imageNamed:@"check-NO"] forState:UIControlStateNormal];
@@ -360,32 +363,82 @@
         
         [cell addSubview:chooseBtn];
         
-        UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(230, 10, 100, 20)];
-        LB.font = [UIFont systemFontOfSize:17];
-        LB.text = @"￥6800.00";
-        LB.textColor = [UIColor grayColor];
-        [cell addSubview:LB];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(chooseBtn.frame)+10, 10, 60, 60)];
+        imageView.image = [UIImage imageNamed:@"tu1"];
+        [cell addSubview:imageView];
         
-        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(290, 30, 50, 20)];
-        bl.font = [UIFont systemFontOfSize:17];
-        bl.text = @"X1";
+        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, imageView.frame.origin.y, 120, 40)];
+        lb1.font = [UIFont systemFontOfSize:10];
+        //lb3.backgroundColor = [UIColor redColor];
+        lb1.lineBreakMode = NSLineBreakByTruncatingTail;
+        lb1.numberOfLines = 2;
+        lb1.text = @"Apple MacBook Pro MF839CH/A 13.3英寸宽屏笔记本电脑 128GB 闪存";
+        [cell addSubview:lb1];
+        
+        UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, CGRectGetMaxY(lb1.frame), 30, 20)];
+        lb2.font = [UIFont systemFontOfSize:10];
+        lb2.text = @"颜色:";
+        [cell addSubview:lb2];
+        
+        UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb2.frame), CGRectGetMaxY(lb1.frame), 30, 20)];
+        lb3.font = [UIFont systemFontOfSize:10];
+        lb3.text = @"宾利蓝";
+        [cell addSubview:lb3];
+        
+        UILabel *lb4 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb3.frame)+15, CGRectGetMaxY(lb1.frame), 30, 20)];
+        lb4.font = [UIFont systemFontOfSize:10];
+        lb4.text = @"尺寸:";
+        [cell addSubview:lb4];
+        
+        UILabel *lb5 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb4.frame), CGRectGetMaxY(lb1.frame), 30, 20)];
+        lb5.font = [UIFont systemFontOfSize:10];
+        lb5.text = @"128G";
+        [cell addSubview:lb5];
+        
+        UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(235, 10, 13, 20)];
+        LB.font = [UIFont systemFontOfSize:15];
+        LB.text = @"￥";
+        LB.textColor = [UIColor blackColor];
+        [cell addSubview:LB];
+        UILabel *priceLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(LB.frame), 10, 40, 20)];
+        priceLB.font = [UIFont systemFontOfSize:15];
+        priceLB.text = [NSString stringWithFormat:@"%@",model.price];
+       // priceLB.textAlignment = NSTextAlignmentCenter;
+        priceLB.textColor = [UIColor blackColor];
+        [cell addSubview:priceLB];
+        
+        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(275, 30, 11, 20)];
+        bl.font = [UIFont systemFontOfSize:15];
+        bl.text = @"x";
         [bl setTextColor:[UIColor grayColor]];
         [cell addSubview:bl];
         
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(290, 60, 20, 20)];
-        [btn setImage:[UIImage imageNamed:@"editor"] forState:UIControlStateNormal];
-        [btn addTarget:self action:@selector(editorPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn.tag = indexPath.row +100;
-        [cell addSubview:btn];
+        UILabel *countBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl.frame), 30, 50, 20)];
+        countBL.font = [UIFont systemFontOfSize:15];
+        countBL.text = [NSString stringWithFormat:@"%@",model.count];
+        [countBL setTextColor:[UIColor grayColor]];
+        [cell addSubview:countBL];
+        
+       editorBtn = [[UIButton alloc]initWithFrame:CGRectMake(268, 60, 40, 20)];
+        //[btn setImage:[UIImage imageNamed:@"editor"] forState:UIControlStateNormal];
+        [editorBtn setTitle:@"编辑" forState:UIControlStateNormal];
+        [editorBtn setTitle:@"确定" forState:UIControlStateSelected];
+        editorBtn.font = [UIFont systemFontOfSize:15];
+        [editorBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        [editorBtn setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateSelected];
+        [editorBtn addTarget:self action:@selector(editorPress:) forControlEvents:UIControlEventTouchUpInside];
+        editorBtn.tag = indexPath.row;
+       // currentbutton = editorBtn;
+        [cell addSubview:editorBtn];
         
         
 
     }
     
         if(indexPath.row%2 !=0){
-        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 50, 20)];
+        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 80, 20)];
         bl.font = [UIFont systemFontOfSize:17];
-        bl.text = @"颜色";
+        bl.text = @"版本信息";
         [bl setTextColor:[UIColor grayColor]];
         [cell addSubview:bl];
             
@@ -409,20 +462,20 @@
             x = CGRectGetMaxX(colorBtn.frame);
            [btnMutableArray addObject:colorBtn];
             }
-        ((UIButton *)[btnMutableArray objectAtIndex:2]).selected = YES;
-        UILabel *bl1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 100, 50, 20)];
-        bl1.font = [UIFont systemFontOfSize:17];
-        bl1.text = @"版本";
-        [bl1 setTextColor:[UIColor grayColor]];
-        [cell addSubview:bl1];
+//        ((UIButton *)[btnMutableArray objectAtIndex:2]).selected = YES;
+//        UILabel *bl1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 100, 50, 20)];
+//        bl1.font = [UIFont systemFontOfSize:17];
+//        bl1.text = @"版本";
+//        [bl1 setTextColor:[UIColor grayColor]];
+//        [cell addSubview:bl1];
         
-        UILabel *bl2 = [[UILabel alloc]initWithFrame:CGRectMake(10, 190, 100, 20)];
+        UILabel *bl2 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(colorBtn.frame)+25, 100, 20)];
         bl2.font = [UIFont systemFontOfSize:17];
         bl2.text = @"购买数量";
         [bl2 setTextColor:[UIColor grayColor]];
         [cell addSubview:bl2];
         
-        _numberBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl2.frame)+50, 185, 30, 30)];
+        _numberBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl2.frame)+50, CGRectGetMaxY(colorBtn.frame)+20, 30, 30)];
         _numberBtn1.backgroundColor = [UIColor whiteColor];
         [_numberBtn1 setImage:[UIImage imageNamed:@"圆角矩形-3"] forState:UIControlStateNormal];
         
@@ -467,6 +520,7 @@
 }
 -(void)colorBtnPress:(UIButton *)btn{
 
+   
     if (_selectButton == btn) {
         return;
     }
@@ -513,30 +567,37 @@
 }
 
 -(void)editorPress:(UIButton *)btn{
-     NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
     
-    NSIndexPath *indexPath= [anArrayOfIndexPath objectAtIndex:btn.tag-100];
-    if (!selectIndexPath) {//第一次
-        selectIndexPath = indexPath;
+    
+    if (currentbutton==btn) {
         
-        _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height+130);
+        invoiceSelector = !invoiceSelector;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
         
+        
+            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        btn.selected =! btn.selected;
+        return;
     }
-    invoiceSelector = !invoiceSelector;
     
-    BOOL isOtherIndex = NO;
+    currentbutton.selected = YES;
+    btn.selected =! btn.selected;
+    currentbutton = btn;
     
-    if (selectIndexPath.row != indexPath.row) {
-        isOtherIndex = YES;
-    }
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
+    
     selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-    [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    if (isOtherIndex && !invoiceSelector) {
+    invoiceSelector = !invoiceSelector;
+
+    if (!invoiceSelector) {
         invoiceSelector = YES;
-        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-  
+        
+        }
+    [_tableView reloadRowsAtIndexPaths:@[selectIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+
     
     
 }

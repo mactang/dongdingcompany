@@ -47,9 +47,11 @@
     
     UIButton *confirmbutton = [UIButton buttonWithType:UIButtonTypeCustom];
     confirmbutton.frame = CGRectMake(10, CGRectGetMaxY(_tableView.frame)+20, SCREEN_WIDTH-20, 40);
-    confirmbutton.backgroundColor = [UIColor orangeColor];
+    confirmbutton.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     [confirmbutton setTitle:@"确定" forState:UIControlStateNormal];
     confirmbutton.titleLabel.font = [UIFont systemFontOfSize:17];
+    confirmbutton.clipsToBounds = YES;
+    confirmbutton.layer.cornerRadius = 4;
     [confirmbutton addTarget:self action:@selector(confirmbuttonPresed) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:confirmbutton];
     // Do any additional setup after loading the view.
