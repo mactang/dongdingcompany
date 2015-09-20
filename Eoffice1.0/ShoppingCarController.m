@@ -264,17 +264,14 @@
     NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
     for (int i = 0; i < [anArrayOfIndexPath count]; i++) {
         
+       
         if (i%2!=0) {
             UIButton *btn = (UIButton *)[_tableView viewWithTag:i];
             NSLog(@"btn--%@",btn);
-            btn.selected = !btn.selected;
+            btn.selected =! btn.selected;
         }
-        
-        
     }
     allBtn.selected = !allBtn.selected;
-    
-    isAllDelete = YES;
     
 }
 - (void)downData{
@@ -366,7 +363,7 @@
         [chooseBtn setImage:[UIImage imageNamed:@"check-NO"] forState:UIControlStateNormal];
         [chooseBtn setImage:[UIImage imageNamed:@"check-YES"] forState:UIControlStateSelected];
         [chooseBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        chooseBtn.tag = indexPath.row+1;
+        chooseBtn.tag = indexPath.row + 1;
         
         [cell addSubview:chooseBtn];
         
@@ -511,7 +508,7 @@
         _numberBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
         [_numberBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_numberBtn1 addTarget:self action:@selector(NumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        _numberBtn1.tag = indexPath.row;
+        //_numberBtn1.tag = indexPath.row;
         [cell addSubview:_numberBtn1];
         
         UIButton *numberBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+60, _numberBtn1.frame.origin.y, 30, 30)];
@@ -523,7 +520,7 @@
         numberBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
         [numberBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [numberBtn2 addTarget:self action:@selector(addNumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        numberBtn2.tag = indexPath.row;
+        //numberBtn2.tag = indexPath.row;
         
         [cell addSubview:numberBtn2];
         
