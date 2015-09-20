@@ -299,6 +299,7 @@
 		9695ADE91B957A9A004A7A1B /* CalculateStringSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE31B957A9A004A7A1B /* CalculateStringSpace.m */; };
 		9695ADEA1B957A9A004A7A1B /* ImageCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE51B957A9A004A7A1B /* ImageCarousel.m */; };
 		9695ADEB1B957A9A004A7A1B /* MyAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE71B957A9A004A7A1B /* MyAlertView.m */; };
+		969E18F31BAE826E001DE59E /* OrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 969E18F21BAE826E001DE59E /* OrderTableViewCell.m */; };
 		96A70D0C1B943E9A00C0F1F5 /* PersonInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */; };
 		96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */; };
 		96A70D111B943F5A00C0F1F5 /* massegeNumber.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A70D101B943F5A00C0F1F5 /* massegeNumber.png */; };
@@ -743,6 +744,8 @@
 		9695ADE51B957A9A004A7A1B /* ImageCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageCarousel.m; sourceTree = "<group>"; };
 		9695ADE61B957A9A004A7A1B /* MyAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlertView.h; sourceTree = "<group>"; };
 		9695ADE71B957A9A004A7A1B /* MyAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlertView.m; sourceTree = "<group>"; };
+		969E18F11BAE826E001DE59E /* OrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTableViewCell.h; sourceTree = "<group>"; };
+		969E18F21BAE826E001DE59E /* OrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTableViewCell.m; sourceTree = "<group>"; };
 		96A70D0A1B943E9A00C0F1F5 /* PersonInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInformationModel.h; sourceTree = "<group>"; };
 		96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInformationModel.m; sourceTree = "<group>"; };
 		96A70D0D1B943F1500C0F1F5 /* OrderStateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderStateModel.h; sourceTree = "<group>"; };
@@ -1226,6 +1229,8 @@
 				61793A7D1B54AB2700CFD83A /* GeneralDetailViewController.m */,
 				61AD52D01B577C350037FED8 /* OrderController.h */,
 				61AD52D11B577C350037FED8 /* OrderController.m */,
+				969E18F11BAE826E001DE59E /* OrderTableViewCell.h */,
+				969E18F21BAE826E001DE59E /* OrderTableViewCell.m */,
 				61FA8A781B9D80090090507E /* OrderAddressViewController.h */,
 				61FA8A791B9D80090090507E /* OrderAddressViewController.m */,
 				61AF90201BAE7CE2007BBDAF /* OrderSuccessController.h */,
@@ -1993,6 +1998,7 @@
 				96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */,
 				619FCCE11B86C6890075A0AA /* AddressDetailModel.m in Sources */,
 				615B29A01B4FB22B004E7546 /* BottonTabBarController.m in Sources */,
+				969E18F31BAE826E001DE59E /* OrderTableViewCell.m in Sources */,
 				615B29CA1B4FB3B5004E7546 /* UIView_extra.m in Sources */,
 				615B29C21B4FB29F004E7546 /* ComputerCell.m in Sources */,
 				615B29A41B4FB22B004E7546 /* OrderViewController.m in Sources */,
