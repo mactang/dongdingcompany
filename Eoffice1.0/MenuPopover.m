@@ -95,6 +95,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
         [editionArray addObjectsFromArray:dic[@"data"]];
         [self data];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
