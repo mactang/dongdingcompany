@@ -25,14 +25,11 @@
 #import "TarBarButton.h"
 #import "LoginViewController.h"
 #import "OrderSuccessController.h"
-
+#import "OrderTableViewCell.h"
 
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
-@property(nonatomic, strong)UIButton *numberBtn1;
-@property(nonatomic,strong)UILabel *numberLb1;
-@property(nonatomic,strong)NSString *price;
 @property(nonatomic,strong)NSMutableArray *datas;
 @end
 
@@ -245,18 +242,18 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *identity = @"cell";
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
-    cell.clipsToBounds = YES;
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
-    NSLog(@"%lu",(unsigned long)self.datas.count);
     if (indexPath.section == 0) {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        NSArray *message = @[@"配送方式",@"支付方式",@"发票方式",];
-        NSArray *thewhyarray = @[dispatch,payWay,invoice];
+            static NSString *identity = @"cell";
+            UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
+            cell.clipsToBounds = YES;
+            cell.textLabel.font = [UIFont systemFontOfSize:15];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
+            NSLog(@"%lu",(unsigned long)self.datas.count);
         
+           cell.selectionStyle = UITableViewCellSelectionStyleNone;
+           NSArray *message = @[@"配送方式",@"支付方式",@"发票方式",];
+           NSArray *thewhyarray = @[dispatch,payWay,invoice];
         if (indexPath.row!=3) {
              [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
             cell.textLabel.text = message[indexPath.row];
@@ -283,106 +280,19 @@
             [backButton addTarget:self action:@selector(keyboardReturn:) forControlEvents:UIControlEventTouchUpInside];
             [view addSubview:backButton];
         }
+        return cell;
         
     }
     else{
         
-        cell.selectionStyle = UITableViewCellEditingStyleNone;
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
-        imageView.image = [UIImage imageNamed:@"tu1"];
-        [cell addSubview:imageView];
+        OrderTableViewCell *cell = [OrderTableViewCell cellWithTableView:tableView];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//       cell.selectionStyle = UITableViewCellEditingStyleNone;
+         return cell;
         
-        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, imageView.frame.origin.y, 160, 40)];
-        lb1.font = [UIFont systemFontOfSize:10];
-        //lb3.backgroundColor = [UIColor redColor];
-        lb1.lineBreakMode = NSLineBreakByTruncatingTail;
-        lb1.numberOfLines = 2;
-        lb1.text = @"Apple MacBook Pro MF839CH/A 13.3英寸宽屏笔记本电脑 128GB 闪存";
-        [cell addSubview:lb1];
-        UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+5, lb1.frame.origin.y+5, 10, 20)];
-        priceFLb.font = [UIFont systemFontOfSize:13];
-        priceFLb.textColor = [UIColor blackColor];
-        priceFLb.text = @"￥";
-        [cell addSubview:priceFLb];
-        SingleModel *single = [SingleModel sharedSingleModel];
-        priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame), lb1.frame.origin.y+4, 80, 20)];
-        priceLb.font = [UIFont systemFontOfSize:13];
-        priceLb.textColor = [UIColor blackColor];
-        NSLog(@"%@",single.price);
-        priceLb.text = [NSString stringWithFormat:@"%@",single.price];
-        _price = single.price;
-        [cell addSubview:priceLb];
-        
-        UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, CGRectGetMaxY(lb1.frame), 30, 20)];
-        lb2.font = [UIFont systemFontOfSize:10];
-        lb2.text = @"颜色 :";
-        [cell addSubview:lb2];
-        
-        UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb2.frame), CGRectGetMaxY(lb1.frame), 30, 20)];
-        lb3.font = [UIFont systemFontOfSize:10];
-        lb3.text = @"宾利蓝";
-        [cell addSubview:lb3];
-        
-        UILabel *lb4 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb3.frame)+20, CGRectGetMaxY(lb1.frame), 30, 20)];
-        lb4.font = [UIFont systemFontOfSize:10];
-        lb4.text = @"尺寸 :";
-        [cell addSubview:lb4];
-        
-        UILabel *lb5 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb4.frame)+5, CGRectGetMaxY(lb1.frame), 30, 20)];
-        lb5.font = [UIFont systemFontOfSize:10];
-        lb5.text = @"128G";
-        [cell addSubview:lb5];
-        
-        UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(imageView.frame)+10, SCREEN_WIDTH-20, 0.5)];
-        lineview.backgroundColor = [UIColor lightGrayColor];
-        [cell addSubview:lineview];
-        
-        UILabel *titlelabel = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(lineview), widgetFrameY(lineview)+20, 60, 25)];
-        titlelabel.text = @"购买数量";
-        titlelabel.font = [UIFont systemFontOfSize:15];
-        [cell addSubview:titlelabel];
-    
-        _numberBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(185, widgetFrameY(titlelabel)-5, 30, 30)];
-        _numberBtn1.backgroundColor = [UIColor whiteColor];
-        [_numberBtn1 setImage:[UIImage imageNamed:@"圆角矩形-3"] forState:UIControlStateNormal];
-        
-        _numberBtn1.clipsToBounds = YES;
-        _numberBtn1.layer.cornerRadius = 3;
-        _numberBtn1.layer.borderWidth = 0.8;
-        _numberBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
-        [_numberBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_numberBtn1 addTarget:self action:@selector(numBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        _numberBtn1.tag = 200+indexPath.section;
-        [cell addSubview:_numberBtn1];
-        
-        UIButton *numberBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+60, _numberBtn1.frame.origin.y, 30, 30)];
-        numberBtn2.backgroundColor = [UIColor whiteColor];
-        [numberBtn2 setImage:[UIImage imageNamed:@"圆角矩形-3-2"] forState:UIControlStateNormal];
-        numberBtn2.clipsToBounds = YES;
-        numberBtn2.layer.cornerRadius = 3;
-        numberBtn2.layer.borderWidth = 0.8;
-        numberBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
-        [numberBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [numberBtn2 addTarget:self action:@selector(numBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        numberBtn2.tag = 300+indexPath.section;
-        [cell addSubview:numberBtn2];
-        
-        _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
-        _numberLb1.backgroundColor = [UIColor whiteColor];
-        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
-        [_numberLb1 setText:string];
-        [_numberLb1 setTextColor:[UIColor blackColor]];
-        _numberLb1.clipsToBounds = YES;
-        _numberLb1.layer.cornerRadius = 3;
-        _numberLb1.layer.borderWidth = 0.8;
-        _numberLb1.layer.borderColor = [[UIColor grayColor] CGColor];
-        [cell addSubview:_numberLb1];
-
     }
     
    
-    return cell;
-    
 }
 
 - (void)defaultAddress{
@@ -564,35 +474,35 @@
     }];
     
 }
--(void)numBtnPress:(UIButton *)btn{
-    
-    
-    if (btn.tag ==1) {
-        if (_currentNumber>1) {
-            _currentNumber--;
-            NSLog(@"%@",_price);
-            NSLog(@"priceLb-%d",[(priceLb.text)intValue]);
-            
-            NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
-            [_numberLb1 setText:string];
-            
-            int price = ([(totalPice.text)intValue])-([(_price)intValue]);
-            
-            totalPice.text = [NSString stringWithFormat:@"%d",price];
-            
-        }
-    }
-    if (btn.tag == 2) {
-        _currentNumber++;
-        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
-        [_numberLb1 setText:string];
-        
-        int price = [(priceLb.text)intValue]*_currentNumber;
-        
-        totalPice.text = [NSString stringWithFormat:@"%d",price];
-    }
-    
-}
+//-(void)numBtnPress:(UIButton *)btn{
+//    
+//    
+//    if (btn.tag ==1) {
+//        if (_currentNumber>1) {
+//            _currentNumber--;
+//            NSLog(@"%@",_price);
+//            NSLog(@"priceLb-%d",[(priceLb.text)intValue]);
+//            
+//            NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
+//            [_numberLb1 setText:string];
+//            
+//            int price = ([(totalPice.text)intValue])-([(_price)intValue]);
+//            
+//            totalPice.text = [NSString stringWithFormat:@"%d",price];
+//            
+//        }
+//    }
+//    if (btn.tag == 2) {
+//        _currentNumber++;
+//        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
+//        [_numberLb1 setText:string];
+//        
+//        int price = [(priceLb.text)intValue]*_currentNumber;
+//        
+//        totalPice.text = [NSString stringWithFormat:@"%d",price];
+//    }
+//    
+//}
 -(void)keyboardReturn:(UIButton *)button{
    
     [_textField resignFirstResponder];

@@ -91,6 +91,7 @@
     LoginViewController *login;
     BOOL loginsucess;
     NSInteger  product;
+    NSMutableDictionary *dictionary;
     
     
     
@@ -108,6 +109,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     number = 0;
+    dictionary = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor grayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.hidesBottomBarWhenPushed = YES;
@@ -122,9 +124,7 @@
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
     [self data];
-    
-   
-    
+    //商品参数
     _immgeView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"1.jpg"]];
     _immgeView.backgroundColor = [UIColor greenColor];
     
@@ -148,8 +148,6 @@
     [self.view addSubview:_carView];
     [self shopTabBar];
     
-    //商品参数
-    [self parameterData];
     
     // Do any additional setup after loading the view.
 }
@@ -240,6 +238,9 @@
         self.menuPopover.intcart = YES;
         self.menuPopover.Distinguish = YES;
         self.menuPopover.delegate = self;
+        
+        self.menuPopover.dic = dictionary;
+        
         [UIView animateWithDuration:0.4f animations:^{
             self.menuPopover.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64);
         }];
@@ -252,6 +253,7 @@
         self.menuPopover.delegate = self;
         self.menuPopover.intcart = YES;
         self.menuPopover.Distinguish = NO;
+        self.menuPopover.dic = dictionary;
         [UIView animateWithDuration:0.4f animations:^{
             self.menuPopover.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64);
         }];
@@ -259,7 +261,9 @@
     }
 }
 -(void)data{
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,COMMON,model.paraId,model.goodsId,model.cPartnerId];
     
@@ -270,21 +274,17 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
-        NSLog(@"%@",dic[@"info"]);
-    
+     
         if (dic[@"data"] !=[NSNull null]){
+            [dictionary setDictionary:dic[@"data"]];
             NSDictionary *array = dic[@"data"];
-            
-                detailsModel *model = [detailsModel modelWithDic:array];
-                [self.datas addObject:model];
-            
+            detailsModel *model = [detailsModel modelWithDic:array];
+            [self.datas addObject:model];
         }
-        
-        [_tableView reloadData];
-        
-        
+         [hud hide:YES];
+        [self parameterData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
     
@@ -539,6 +539,7 @@
     self.menuPopover = [[MenuPopover alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-64) menuItems:self.menuItems];
     self.menuPopover.intcart = NO;
     self.menuPopover.delegate = self;
+    self.menuPopover.dic = dictionary;
     [UIView animateWithDuration:0.4f animations:^{
         self.menuPopover.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64);
     }];
@@ -546,7 +547,10 @@
 }
 
 -(void)parameterData{
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:PARAMETER,COMMON,model.paraId];
     NSLog(@"path--%@",path);
@@ -559,16 +563,18 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
+    
         if (dic[@"data"] !=[NSNull null]){
             NSDictionary *array = dic[@"data"];
             detailsModel *model = [detailsModel modelWithDic:array];
             [self.datas addObject:model];
-            NSLog(@"model.name--%@",self.datas);
         }
+        [hud hide:YES];
+        [_tableView reloadData];
         //默认选中图文详情
         [self btnPress1];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
 }

@@ -24,6 +24,7 @@
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)menuItems;
 @property(nonatomic,assign)BOOL  intcart;
 @property(nonatomic,assign)BOOL  Distinguish;
+@property(nonatomic,strong)NSMutableDictionary *dic;
 
 @end
 
