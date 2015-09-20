@@ -46,7 +46,6 @@
 {
     NSInteger _currentNumber;
     UIButton *versionSelectButton;
-    NSMutableArray *editionArray;
     UITableView *menuItemsTableView;
     NSMutableDictionary *dicdata;
 
@@ -57,7 +56,9 @@
     
     if (self)
     {
-        [self requestdata];
+        NSLog(@"%@",self.dic)
+        ;
+        [self data];
         dicdata = [NSMutableDictionary dictionary];
         self.backgroundColor =  [[UIColor grayColor]colorWithAlphaComponent:0.5];
         _currentNumber = 1;
@@ -84,25 +85,25 @@
     [self addSubview:menuItemsTableView];
 
 }
--(void)requestdata{
-    SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path = [NSString stringWithFormat:PRODUCTMESSAGE,COMMON,model.goodsId];
- 
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
-        [editionArray addObjectsFromArray:dic[@"data"]];
-        [self data];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
-
-}
+//-(void)requestdata{
+//    SingleModel *model = [SingleModel sharedSingleModel];
+//    NSString *path = [NSString stringWithFormat:PRODUCTMESSAGE,COMMON,model.goodsId];
+// 
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    
+//    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//        NSLog(@"%@",dic);
+//        [editionArray addObjectsFromArray:dic[@"data"]];
+//        [self data];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"%@",error);
+//    }];
+//
+//}
 -(void)data{
     
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -133,18 +134,22 @@
         return 90;
     }
     if (indexPath.row==1) {
-        if (editionArray.count==0) {
+        if ([self.dic[@"version"]count]==0) {
             menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-90-130-64-35, SCREEN_WIDTH, 90+130+64+35);
             return 35;
         }
-        if (editionArray.count/2==0) {
-            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*((editionArray.count)/2)-90-130-64, SCREEN_WIDTH, 35*((editionArray.count)/2)+90+130+64);
-            return 35*((editionArray.count)/2);
+        if ([self.dic[@"version"] count]==1) {
+            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-90-130-64-35-35, SCREEN_WIDTH, 90+130+64+35+35);
+            return 70;
+        }
+        if ([self.dic[@"version"]count]/2==0) {
+            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*(([self.dic[@"version"]count])/2)-90-130-64, SCREEN_WIDTH, 35*(([self.dic[@"version"]count])/2)+90+130+64);
+            return 35*(([self.dic[@"version"]count])/2);
             
         }
         else{
-            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*((editionArray.count)/2+1)-90-130-64, SCREEN_WIDTH, 35*((editionArray.count)/2+1)+90+130+64);
-            return 35*((editionArray.count)/2+1);
+            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*(([self.dic[@"version"]count])/2+1)-90-130-64, SCREEN_WIDTH, 35*(([self.dic[@"version"]count])/2+1)+90+130+64);
+            return 35*(([self.dic[@"version"]count])/2+1);
         }
     }
     if (indexPath.row==3) {
@@ -196,11 +201,12 @@
         [versionLb setTextColor:[UIColor grayColor]];
         [cell addSubview:versionLb];
         
-        for (NSInteger i=0; i<editionArray.count; i++) {
+        for (NSInteger i=0; i<[self.dic[@"version"]count]; i++) {
             UIButton *editionbutton = [UIButton buttonWithType:UIButtonTypeCustom];
             editionbutton.frame = CGRectMake(15+(i%2)*((SCREEN_WIDTH-40)/2)+(i%2)*10, CGRectGetMaxY(versionLb.frame)+5+(i/2)*35, (SCREEN_WIDTH-40)/2, 30);
             editionbutton.backgroundColor = [UIColor whiteColor];
-            [editionbutton setTitle:editionArray[i] forState:UIControlStateNormal];
+            [editionbutton setTitle:self.dic[@"version"][i][@"maValue"] forState:UIControlStateNormal];
+            editionbutton.titleLabel.font = [UIFont systemFontOfSize:13];
             editionbutton.layer.cornerRadius = 3;
             editionbutton.layer.borderWidth = 0.5;
             editionbutton.layer.borderColor = [[UIColor grayColor]CGColor];
