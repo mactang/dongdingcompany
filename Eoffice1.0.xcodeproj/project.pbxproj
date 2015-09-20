@@ -263,6 +263,11 @@
 		61AD52E81B57A2D40037FED8 /* Menu_PopOver_BG@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AD52E31B57A2D40037FED8 /* Menu_PopOver_BG@2x.png */; };
 		61AD52E91B57A2D40037FED8 /* options_pointer.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AD52E41B57A2D40037FED8 /* options_pointer.png */; };
 		61AD52EA1B57A2D40037FED8 /* options_pointer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AD52E51B57A2D40037FED8 /* options_pointer@2x.png */; };
+		61AF901A1BAE7AC3007BBDAF /* 办公商品1-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AF90181BAE7AC3007BBDAF /* 办公商品1-2.png */; };
+		61AF901B1BAE7AC3007BBDAF /* 保养维修11-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AF90191BAE7AC3007BBDAF /* 保养维修11-2.png */; };
+		61AF901D1BAE7B39007BBDAF /* 办公商品.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AF901C1BAE7B39007BBDAF /* 办公商品.png */; };
+		61AF901F1BAE7B7F007BBDAF /* 保养维修1.png in Resources */ = {isa = PBXBuildFile; fileRef = 61AF901E1BAE7B7F007BBDAF /* 保养维修1.png */; };
+		61AF90221BAE7CE2007BBDAF /* OrderSuccessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61AF90211BAE7CE2007BBDAF /* OrderSuccessController.m */; };
 		61B0FF991B5F2DC1002CF349 /* DatePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B0FF981B5F2DC1002CF349 /* DatePickView.m */; };
 		61B0FF9C1B5F4641002CF349 /* DispatchingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B0FF9B1B5F4641002CF349 /* DispatchingView.m */; };
 		61B0FF9F1B5F6739002CF349 /* ContrastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B0FF9E1B5F6739002CF349 /* ContrastViewController.m */; };
@@ -677,6 +682,12 @@
 		61AD52E31B57A2D40037FED8 /* Menu_PopOver_BG@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu_PopOver_BG@2x.png"; sourceTree = "<group>"; };
 		61AD52E41B57A2D40037FED8 /* options_pointer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = options_pointer.png; sourceTree = "<group>"; };
 		61AD52E51B57A2D40037FED8 /* options_pointer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "options_pointer@2x.png"; sourceTree = "<group>"; };
+		61AF90181BAE7AC3007BBDAF /* 办公商品1-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "办公商品1-2.png"; sourceTree = "<group>"; };
+		61AF90191BAE7AC3007BBDAF /* 保养维修11-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "保养维修11-2.png"; sourceTree = "<group>"; };
+		61AF901C1BAE7B39007BBDAF /* 办公商品.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "办公商品.png"; sourceTree = "<group>"; };
+		61AF901E1BAE7B7F007BBDAF /* 保养维修1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "保养维修1.png"; sourceTree = "<group>"; };
+		61AF90201BAE7CE2007BBDAF /* OrderSuccessController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderSuccessController.h; sourceTree = "<group>"; };
+		61AF90211BAE7CE2007BBDAF /* OrderSuccessController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderSuccessController.m; sourceTree = "<group>"; };
 		61B0FF971B5F2DC1002CF349 /* DatePickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatePickView.h; sourceTree = "<group>"; };
 		61B0FF981B5F2DC1002CF349 /* DatePickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatePickView.m; sourceTree = "<group>"; };
 		61B0FF9A1B5F4641002CF349 /* DispatchingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchingView.h; sourceTree = "<group>"; };
@@ -1022,7 +1033,11 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				61AF901C1BAE7B39007BBDAF /* 办公商品.png */,
+				61AF901E1BAE7B7F007BBDAF /* 保养维修1.png */,
 				61DA8F551BA12CC500824499 /* youzhixiang.png */,
+				61AF90181BAE7AC3007BBDAF /* 办公商品1-2.png */,
+				61AF90191BAE7AC3007BBDAF /* 保养维修11-2.png */,
 				61DA8F511BA126BB00824499 /* logo.png */,
 				61731B231B954D0D00B04D85 /* goodsBig */,
 				96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */,
@@ -1213,6 +1228,8 @@
 				61AD52D11B577C350037FED8 /* OrderController.m */,
 				61FA8A781B9D80090090507E /* OrderAddressViewController.h */,
 				61FA8A791B9D80090090507E /* OrderAddressViewController.m */,
+				61AF90201BAE7CE2007BBDAF /* OrderSuccessController.h */,
+				61AF90211BAE7CE2007BBDAF /* OrderSuccessController.m */,
 				61A0A27E1B5918FE00C4496A /* PayViewController.h */,
 				61A0A27F1B5918FE00C4496A /* PayViewController.m */,
 				61A8AE5B1B5A30D8001F2339 /* InvoiceAlterView.h */,
@@ -1748,6 +1765,7 @@
 				61AD52E81B57A2D40037FED8 /* Menu_PopOver_BG@2x.png in Resources */,
 				61793A831B54AF3800CFD83A /* cell_01.png in Resources */,
 				61793A841B54AF3800CFD83A /* cell_02.png in Resources */,
+				61AF901D1BAE7B39007BBDAF /* 办公商品.png in Resources */,
 				617FE4E71B60D5B8007EBFB2 /* sangen.png in Resources */,
 				615B29531B4FAE4B004E7546 /* Images.xcassets in Resources */,
 				614B972B1B9EF1F20095A795 /* markdown.css in Resources */,
@@ -1787,6 +1805,7 @@
 				617FE4571B607A87007EBFB2 /* dingdanxiaotu.png in Resources */,
 				61068AA31B5CCEE0008BE40A /* shouye1.png in Resources */,
 				615CF61D1B6F0D2400B369E7 /* dianhua.png in Resources */,
+				61AF901A1BAE7AC3007BBDAF /* 办公商品1-2.png in Resources */,
 				6160F21D1B7C9C7100D55489 /* 圆角矩形-3-2.png in Resources */,
 				6166AA251BA02D0F00D7FDD1 /* box@2x.png in Resources */,
 				6166AA281BA02D0F00D7FDD1 /* deliveryStaff2@2x.png in Resources */,
@@ -1852,6 +1871,7 @@
 				617FE4E61B60D5B8007EBFB2 /* pos1.png in Resources */,
 				619957271B745DFC002F30B6 /* heibaiyitiji.png in Resources */,
 				96821FCA1B8AF5DC00EC7276 /* citychoose.plist in Resources */,
+				61AF901F1BAE7B7F007BBDAF /* 保养维修1.png in Resources */,
 				617FE4E41B60D5B8007EBFB2 /* lijigoumai.png in Resources */,
 				614B97251B9EF1F20095A795 /* ios-social-sdk-login-detail.html in Resources */,
 				617FE4E81B60D5B8007EBFB2 /* sousuo.png in Resources */,
@@ -1890,6 +1910,7 @@
 				617FE4DA1B60D5B8007EBFB2 /* dayingji.png in Resources */,
 				96BA8F2E1B8EBA650062C8D8 /* 蓝色确认40.png in Resources */,
 				615B298C1B4FB048004E7546 /* 1.jpg in Resources */,
+				61AF901B1BAE7AC3007BBDAF /* 保养维修11-2.png in Resources */,
 				6167FA4A1B7F0E02004A1BD0 /* check-NO.png in Resources */,
 				61793A851B54AF3800CFD83A /* cell_03.png in Resources */,
 				61793A861B54AF3800CFD83A /* cell_04.png in Resources */,
@@ -1955,6 +1976,7 @@
 				61A8AE571B5A0BB3001F2339 /* GYZAlterview.m in Sources */,
 				612C57B91B8AB3200048FF28 /* ReturnSuccessController.m in Sources */,
 				6166AA2B1BA02D0F00D7FDD1 /* SDRefreshFooterView.m in Sources */,
+				61AF90221BAE7CE2007BBDAF /* OrderSuccessController.m in Sources */,
 				6183424D1B5658720097E8A4 /* LewPopupViewAnimationDrop.m in Sources */,
 				61A1FFE01B67179300AFC8C2 /* SafeViewController.m in Sources */,
 				615B29B81B4FB27A004E7546 /* FixController.m in Sources */,
