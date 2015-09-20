@@ -24,6 +24,9 @@
 #import "AddressModel.h"
 #import "TarBarButton.h"
 #import "LoginViewController.h"
+#import "OrderSuccessController.h"
+
+
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
@@ -521,8 +524,11 @@
 -(void)btnPress:(UIButton *)btn{
     if (btn.tag == 1000) {
         [self sureOrder];
-        PayViewController *pay = [[PayViewController alloc]init];
-        [self.navigationController pushViewController:pay animated:YES];
+//        PayViewController *pay = [[PayViewController alloc]init];
+//        [self.navigationController pushViewController:pay animated:YES];
+        
+        OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
+        [self.navigationController pushViewController:orderSucc animated:YES];
         
     }
 }

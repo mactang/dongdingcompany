@@ -1,22 +1,22 @@
 //
-//  MaintainController.m
-//  EOffice
+//  OrderSuccessController.m
+//  Eoffice1.0
 //
-//  Created by gyz on 15/7/8.
+//  Created by gyz on 15/9/20.
 //  Copyright (c) 2015年 gl. All rights reserved.
 //
 
-#import "MaintainController.h"
+#import "OrderSuccessController.h"
 
-@interface MaintainController ()
+@interface OrderSuccessController ()
 
 @end
 
-@implementation MaintainController
+@implementation OrderSuccessController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = NO;
+    self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     // Do any additional setup after loading the view.
 }
 

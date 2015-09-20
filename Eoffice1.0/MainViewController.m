@@ -192,9 +192,9 @@
 
 -(void)button{
     
-    UIButton *ComodityBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 230, 145, 85)];
-    [ComodityBtn setTitle:@"商品" forState:UIControlStateNormal];
-    [ComodityBtn setImage:[UIImage imageNamed:@"shangpin"] forState:UIControlStateNormal];
+    UIButton *ComodityBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 220, 300, 136)];
+//    [ComodityBtn setTitle:@"商品" forState:UIControlStateNormal];
+    [ComodityBtn setImage:[UIImage imageNamed:@"办公商品"] forState:UIControlStateNormal];
     [ComodityBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [ComodityBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
     ComodityBtn.tag = 1000;
@@ -202,101 +202,103 @@
     ComodityBtn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:ComodityBtn];
     
-    UILabel *ComodityLb = [[UILabel alloc]initWithFrame:CGRectMake(15, 60, 130, 20)];
-    ComodityLb.text = @"各种办公设备和周边器材";
-    ComodityLb.font = [UIFont systemFontOfSize:10];
-    ComodityLb.textColor = [UIColor grayColor];
-    [ComodityBtn addSubview:ComodityLb];
+//    UILabel *ComodityLb = [[UILabel alloc]initWithFrame:CGRectMake(15, 60, 130, 20)];
+//    ComodityLb.text = @"各种办公设备和周边器材";
+//    ComodityLb.font = [UIFont systemFontOfSize:10];
+//    ComodityLb.textColor = [UIColor grayColor];
+//    [ComodityBtn addSubview:ComodityLb];
     
-    
-    UIButton *logisticsBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ComodityBtn.frame) + 10, 230, 145, 85)];
-    [logisticsBtn setTitle:@"物业" forState:UIControlStateNormal];
-    [logisticsBtn setImage:[UIImage imageNamed:@"wuye1"] forState:UIControlStateNormal];
-    [logisticsBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [logisticsBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-    logisticsBtn.tag = 1001;
-    logisticsBtn.font = [UIFont systemFontOfSize:22];
-    logisticsBtn.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:logisticsBtn];
-    
-    UIButton *logisticsName = [[UIButton alloc]initWithFrame:CGRectMake(15, 20, 20, 20)];
-    
-    logisticsName.font = [UIFont systemFontOfSize:10];
-    
-    
-    [logisticsName setImage:[UIImage imageNamed:@"wuye4"] forState:UIControlStateNormal];
-   // [logisticsBtn addSubview:logisticsName];
-    
-    UILabel *logisticsLb = [[UILabel alloc]initWithFrame:CGRectMake(25, 60, 130, 20)];
-    logisticsLb.text = @"快速运送 到门服务";
-    logisticsLb.font = [UIFont systemFontOfSize:10];
-    logisticsLb.textColor = [UIColor grayColor];
-    [logisticsBtn addSubview:logisticsLb];
-    
-    
-    UIButton *MaintainBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(ComodityBtn.frame)+10,145, 85)];
+    UIButton *MaintainBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(ComodityBtn.frame)+10,300, 136)];
     [MaintainBtn setTitle:@"保养维修" forState:UIControlStateNormal];
-    [MaintainBtn setImage:[UIImage imageNamed:@"weixiubaoyang"] forState:UIControlStateNormal];
+    [MaintainBtn setImage:[UIImage imageNamed:@"保养维修1"] forState:UIControlStateNormal];
     [MaintainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];    [MaintainBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
     MaintainBtn.tag = 1002;
     MaintainBtn.font = [UIFont systemFontOfSize:22];
     MaintainBtn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:MaintainBtn];
     
-    UILabel *MaintainLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
-    MaintainLb.text = @"自营上门服务，足不出户";
-    MaintainLb.font = [UIFont systemFontOfSize:10];
-    MaintainLb.textColor = [UIColor grayColor];
-    [MaintainBtn addSubview:MaintainLb];
+//    UILabel *MaintainLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
+//    MaintainLb.text = @"自营上门服务，足不出户";
+//    MaintainLb.font = [UIFont systemFontOfSize:10];
+//    MaintainLb.textColor = [UIColor grayColor];
+//    [MaintainBtn addSubview:MaintainLb];
     
-    UIButton *leaseBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(MaintainBtn.frame)+10, CGRectGetMaxY(ComodityBtn.frame)+10,145, 85)];
-    [leaseBtn setTitle:@"办公租赁" forState:UIControlStateNormal];
-    [leaseBtn setImage:[UIImage imageNamed:@"zulin"] forState:UIControlStateNormal];
-    [leaseBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [leaseBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-    leaseBtn.tag = 1003;
-    leaseBtn.font = [UIFont systemFontOfSize:22];
-    leaseBtn.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:leaseBtn];
     
-    UILabel *leaseLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
-    leaseLb.text = @"各种办公设备和周边器材";
-    leaseLb.font = [UIFont systemFontOfSize:10];
-    leaseLb.textColor = [UIColor grayColor];
-    [leaseBtn addSubview:leaseLb];
-    
-    UIButton *fixBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(MaintainBtn.frame)+10, 145, 85)];
-    [fixBtn setTitle:@"装修" forState:UIControlStateNormal];
-    [fixBtn setImage:[UIImage imageNamed:@"zhuangxiu"] forState:UIControlStateNormal];
-    [fixBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [fixBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-    fixBtn.tag = 1004;
-    fixBtn.font = [UIFont systemFontOfSize:22];
-    fixBtn.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:fixBtn];
-    
-    UILabel *fixLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
-    fixLb.text = @"各种办公设备和周边器材";
-    fixLb.font = [UIFont systemFontOfSize:10];
-    fixLb.textColor = [UIColor grayColor];
-    [fixBtn addSubview:fixLb];
-
-    
-    UIButton *personBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fixBtn.frame)+10, CGRectGetMaxY(MaintainBtn.frame)+10, 145, 85)];
-    [personBtn setTitle:@"人事" forState:UIControlStateNormal];
-    [personBtn setImage:[UIImage imageNamed:@"renshi"] forState:UIControlStateNormal];
-    [personBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [personBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-    personBtn.tag = 1005;
-    personBtn.font = [UIFont systemFontOfSize:22];
-    personBtn.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:personBtn];
-    
-    UILabel *personLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
-    personLb.text = @"各种办公设备和周边器材";
-    personLb.font = [UIFont systemFontOfSize:10];
-    personLb.textColor = [UIColor grayColor];
-    [personBtn addSubview:personLb];
+//    UIButton *logisticsBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(ComodityBtn.frame) + 10, 230, 145, 85)];
+//    [logisticsBtn setTitle:@"物业" forState:UIControlStateNormal];
+//    [logisticsBtn setImage:[UIImage imageNamed:@"wuye1"] forState:UIControlStateNormal];
+//    [logisticsBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//    [logisticsBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+//    logisticsBtn.tag = 1001;
+//    logisticsBtn.font = [UIFont systemFontOfSize:22];
+//    logisticsBtn.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:logisticsBtn];
+//    
+//    UIButton *logisticsName = [[UIButton alloc]initWithFrame:CGRectMake(15, 20, 20, 20)];
+//    
+//    logisticsName.font = [UIFont systemFontOfSize:10];
+//    
+//    
+//    [logisticsName setImage:[UIImage imageNamed:@"wuye4"] forState:UIControlStateNormal];
+//   // [logisticsBtn addSubview:logisticsName];
+//    
+//    UILabel *logisticsLb = [[UILabel alloc]initWithFrame:CGRectMake(25, 60, 130, 20)];
+//    logisticsLb.text = @"快速运送 到门服务";
+//    logisticsLb.font = [UIFont systemFontOfSize:10];
+//    logisticsLb.textColor = [UIColor grayColor];
+//    [logisticsBtn addSubview:logisticsLb];
+//    
+//    
+//    
+//    
+//    UIButton *leaseBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(MaintainBtn.frame)+10, CGRectGetMaxY(ComodityBtn.frame)+10,145, 85)];
+//    [leaseBtn setTitle:@"办公租赁" forState:UIControlStateNormal];
+//    [leaseBtn setImage:[UIImage imageNamed:@"zulin"] forState:UIControlStateNormal];
+//    [leaseBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//    [leaseBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+//    leaseBtn.tag = 1003;
+//    leaseBtn.font = [UIFont systemFontOfSize:22];
+//    leaseBtn.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:leaseBtn];
+//    
+//    UILabel *leaseLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
+//    leaseLb.text = @"各种办公设备和周边器材";
+//    leaseLb.font = [UIFont systemFontOfSize:10];
+//    leaseLb.textColor = [UIColor grayColor];
+//    [leaseBtn addSubview:leaseLb];
+//    
+//    UIButton *fixBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(MaintainBtn.frame)+10, 145, 85)];
+//    [fixBtn setTitle:@"装修" forState:UIControlStateNormal];
+//    [fixBtn setImage:[UIImage imageNamed:@"zhuangxiu"] forState:UIControlStateNormal];
+//    [fixBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//    [fixBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+//    fixBtn.tag = 1004;
+//    fixBtn.font = [UIFont systemFontOfSize:22];
+//    fixBtn.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:fixBtn];
+//    
+//    UILabel *fixLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
+//    fixLb.text = @"各种办公设备和周边器材";
+//    fixLb.font = [UIFont systemFontOfSize:10];
+//    fixLb.textColor = [UIColor grayColor];
+//    [fixBtn addSubview:fixLb];
+//
+//    
+//    UIButton *personBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fixBtn.frame)+10, CGRectGetMaxY(MaintainBtn.frame)+10, 145, 85)];
+//    [personBtn setTitle:@"人事" forState:UIControlStateNormal];
+//    [personBtn setImage:[UIImage imageNamed:@"renshi"] forState:UIControlStateNormal];
+//    [personBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//    [personBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+//    personBtn.tag = 1005;
+//    personBtn.font = [UIFont systemFontOfSize:22];
+//    personBtn.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:personBtn];
+//    
+//    UILabel *personLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
+//    personLb.text = @"各种办公设备和周边器材";
+//    personLb.font = [UIFont systemFontOfSize:10];
+//    personLb.textColor = [UIColor grayColor];
+//    [personBtn addSubview:personLb];
     
 }
 -(void)btnPress:(UIButton *)btn{
