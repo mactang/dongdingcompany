@@ -32,8 +32,8 @@
     UIButton *chooseBtn2;
     UIButton *allBtn;
     UILabel *totoalBL;
-    int _currentNumber;
-    UIButton *colorBtn;
+    
+    UIButton *versionButton;
     NSMutableArray *btnMutableArray;
     NSMutableArray *numberIndex;
    
@@ -42,6 +42,11 @@
     BOOL isAllDelete;
     UIButton *editorBtn;
     UIButton *currentbutton;
+    NSString *chooseType;
+    UIButton *selectButton;
+    UILabel *countBL;
+    ShopCarModel *countModel;
+    
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -298,6 +303,8 @@
             [self.datas addObject:model];
             
         }
+        }else {
+        
         }
         [_tableView reloadData];
         
@@ -372,7 +379,7 @@
         //lb3.backgroundColor = [UIColor redColor];
         lb1.lineBreakMode = NSLineBreakByTruncatingTail;
         lb1.numberOfLines = 2;
-        lb1.text = @"Apple MacBook Pro MF839CH/A 13.3英寸宽屏笔记本电脑 128GB 闪存";
+        lb1.text = [NSString stringWithFormat:@"%@",model.name];
         [cell addSubview:lb1];
         
         UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, CGRectGetMaxY(lb1.frame), 30, 20)];
@@ -413,10 +420,11 @@
         [bl setTextColor:[UIColor grayColor]];
         [cell addSubview:bl];
         
-        UILabel *countBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl.frame), 30, 50, 20)];
+        countBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl.frame), 30, 50, 20)];
         countBL.font = [UIFont systemFontOfSize:15];
         countBL.text = [NSString stringWithFormat:@"%@",model.count];
         [countBL setTextColor:[UIColor grayColor]];
+        countBL.tag = indexPath.row+100;
         [cell addSubview:countBL];
         
        editorBtn = [[UIButton alloc]initWithFrame:CGRectMake(268, 60, 40, 20)];
@@ -442,40 +450,58 @@
         [bl setTextColor:[UIColor grayColor]];
         [cell addSubview:bl];
             
-            int x = 0;
-            int pag = 10;
-            
-            btnMutableArray = [[NSMutableArray alloc]init]; //将button放到数组里面
+//            int x = 0;
+//            int pag = 10;
+//            
+//            btnMutableArray = [[NSMutableArray alloc]init]; //将button放到数组里面
+//            for (int i = 0; i<4; i++) {
+//            
+//            colorBtn = [[UIButton alloc]initWithFrame:CGRectMake(x +pag , CGRectGetMaxY(bl.frame)+10, 70, 35)];
+//            colorBtn.backgroundColor = [UIColor whiteColor];
+//            colorBtn.clipsToBounds = YES;
+//            colorBtn.layer.cornerRadius = 3;
+//            colorBtn.layer.borderWidth = 0.8;
+//            colorBtn.layer.borderColor = [[UIColor grayColor] CGColor];
+//            [colorBtn setTitle:@"学蓝色" forState:UIControlStateNormal];
+//            [colorBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//            [colorBtn addTarget:self action:@selector(colorBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+//            cell.tag = i +10;
+//            [cell addSubview:colorBtn];
+//            x = CGRectGetMaxX(colorBtn.frame);
+//           [btnMutableArray addObject:colorBtn];
+//            }
             for (int i = 0; i<4; i++) {
-            
-            colorBtn = [[UIButton alloc]initWithFrame:CGRectMake(x +pag , CGRectGetMaxY(bl.frame)+10, 70, 35)];
-            colorBtn.backgroundColor = [UIColor whiteColor];
-            colorBtn.clipsToBounds = YES;
-            colorBtn.layer.cornerRadius = 3;
-            colorBtn.layer.borderWidth = 0.8;
-            colorBtn.layer.borderColor = [[UIColor grayColor] CGColor];
-            [colorBtn setTitle:@"学蓝色" forState:UIControlStateNormal];
-            [colorBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            [colorBtn addTarget:self action:@selector(colorBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-            cell.tag = i +10;
-            [cell addSubview:colorBtn];
-            x = CGRectGetMaxX(colorBtn.frame);
-           [btnMutableArray addObject:colorBtn];
+                
+//                办公娱乐全能高清机皇（大显存）办公娱乐全能高清机皇（大显存）办公娱乐全能高清机皇（活力红）办公娱乐全能高清机皇（活力红）i3独显性价比系列（便携高清版）i3独显性价比系列（便携高清版）i3独显性价比系列（大屏娱乐版）i3独显性价比系列（大屏娱乐版）飞匣3000速度激情版（活力红）飞匣3000速度激情版（活力红）飞匣3000速度激情版（酷感黑）飞匣3000速度激情版（酷感黑）飞匣大屏速度激情版（酷感黑）飞匣大屏速度激情版（酷感黑）飞匣大屏速度激情版（魅力蓝）飞匣大屏速度激情版（魅力蓝）飞匣办公经济适用机（大屏版本）飞匣办公经济适用机（大屏版本）
+                NSArray *array = @[@"办公娱乐全能高清机皇（大显存）",@"办公娱乐全能高清机皇（活力红）",@"飞匣办公经济适用机（大屏版本）",@"i3独显性价比系列（便携高清版)"];
+                
+                versionButton = [[UIButton alloc]initWithFrame:CGRectMake(10+(i%2)*((SCREEN_WIDTH-45)/2)+(i%2)*15, CGRectGetMaxY(bl.frame)+18+(i/2)*35, 145, 30)];
+                versionButton.clipsToBounds = YES;
+                versionButton.layer.cornerRadius = 2;
+                versionButton.layer.borderWidth = 1;
+                [versionButton setTitle:array[i] forState:UIControlStateNormal];
+                [versionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                versionButton.font = [UIFont systemFontOfSize:10];
+                if ([array[i] isEqualToString:chooseType]) {
+                    versionButton.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1]CGColor];
+                    selectButton = versionButton;
+                }else{
+                    versionButton.layer.borderColor = [[UIColor grayColor]CGColor];
+                }
+                versionButton.tag = i+10;
+                [versionButton addTarget:self action:@selector(pressBtn:) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:versionButton];
+                
             }
-//        ((UIButton *)[btnMutableArray objectAtIndex:2]).selected = YES;
-//        UILabel *bl1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 100, 50, 20)];
-//        bl1.font = [UIFont systemFontOfSize:17];
-//        bl1.text = @"版本";
-//        [bl1 setTextColor:[UIColor grayColor]];
-//        [cell addSubview:bl1];
+
         
-        UILabel *bl2 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(colorBtn.frame)+25, 100, 20)];
+        UILabel *bl2 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(versionButton.frame)+25, 100, 20)];
         bl2.font = [UIFont systemFontOfSize:17];
         bl2.text = @"购买数量";
         [bl2 setTextColor:[UIColor grayColor]];
         [cell addSubview:bl2];
         
-        _numberBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl2.frame)+50, CGRectGetMaxY(colorBtn.frame)+20, 30, 30)];
+        _numberBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl2.frame)+50, CGRectGetMaxY(versionButton.frame)+20, 30, 30)];
         _numberBtn1.backgroundColor = [UIColor whiteColor];
         [_numberBtn1 setImage:[UIImage imageNamed:@"圆角矩形-3"] forState:UIControlStateNormal];
         
@@ -485,7 +511,7 @@
         _numberBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
         [_numberBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_numberBtn1 addTarget:self action:@selector(NumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        _numberBtn1.tag = 10000;
+        _numberBtn1.tag = indexPath.row;
         [cell addSubview:_numberBtn1];
         
         UIButton *numberBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+60, _numberBtn1.frame.origin.y, 30, 30)];
@@ -496,18 +522,26 @@
         numberBtn2.layer.borderWidth = 0.8;
         numberBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
         [numberBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [numberBtn2 addTarget:self action:@selector(NumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        numberBtn2.tag = 10001;
+        [numberBtn2 addTarget:self action:@selector(addNumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+        numberBtn2.tag = indexPath.row;
+        
         [cell addSubview:numberBtn2];
+        
+            if (indexPath.row > 1) {
+                countModel = self.datas[indexPath.row%2];
+            }else{
+            
+                countModel = self.datas[0];
+            }
         
         _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
         _numberLb1.backgroundColor = [UIColor whiteColor];
-        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
-        [_numberLb1 setText:string];
+        [_numberLb1 setText:[NSString stringWithFormat:@"%@",countModel.count]];
         [_numberLb1 setTextColor:[UIColor blackColor]];
         _numberLb1.clipsToBounds = YES;
         _numberLb1.layer.cornerRadius = 3;
         _numberLb1.layer.borderWidth = 0.8;
+            _numberLb1.textAlignment = NSTextAlignmentCenter;
         _numberLb1.layer.borderColor = [[UIColor grayColor] CGColor];
         [cell addSubview:_numberLb1];
 
@@ -538,33 +572,40 @@
 }
 -(void)NumBtnPress:(UIButton *)btn{
     
+    UILabel *lb = (UILabel *)[_tableView viewWithTag:btn.tag-1+100];
+    int addCount = [[NSString stringWithFormat:@"%@",_numberLb1.text]intValue];
     
-    if (btn.tag ==10000) {
-        if (_currentNumber>1) {
+        if (addCount>1) {
             
-            
-            _currentNumber--;
-            NSLog(@"%d",_currentNumber);
-            
-            NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
+            addCount--;
+            NSString *string = [NSString stringWithFormat:@"%d",addCount];
             [_numberLb1 setText:string];
-            [_tableView reloadData];
-    
+            lb.text = string;
+            
+            
         }
-    }
-    if (btn.tag == 10001) {
-        _currentNumber++;
-        
-        NSLog(@"%d",_currentNumber);
-        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
-        [_numberLb1 setText:string];
-        [_tableView reloadData];
-        NSLog(@"%@",_numberLb1.text);
-        
-    }
+    
     
     
 }
+-(void)addNumBtnPress:(UIButton *)btn{
+    
+    UILabel *lb = (UILabel *)[self.view viewWithTag:btn.tag-1+100];
+    NSLog(@"%@",lb);
+    int addCount = [[NSString stringWithFormat:@"%@",_numberLb1.text]intValue];
+    
+        
+        addCount++;
+        NSString *string = [NSString stringWithFormat:@"%d",addCount];
+        [_numberLb1 setText:string];
+        lb.text = string;
+        
+    
+    
+    
+    
+}
+
 
 -(void)editorPress:(UIButton *)btn{
     
@@ -581,7 +622,7 @@
         return;
     }
     
-    currentbutton.selected = YES;
+    currentbutton.selected = NO;
     btn.selected =! btn.selected;
     currentbutton = btn;
     
