@@ -69,10 +69,9 @@
     
     
     NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.jsessionid,model.userkey];
+    
     NSLog(@"%@",path);
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
@@ -169,6 +168,7 @@
         lb1.font = [UIFont systemFontOfSize:15];
         lb1.text = [NSString stringWithFormat:@"%@",model.name];
         lb1.textColor = [UIColor whiteColor];
+        lb1.textAlignment = NSTextAlignmentCenter;
         [detailImageView addSubview:lb1];
     }
     

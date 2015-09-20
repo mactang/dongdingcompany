@@ -64,7 +64,7 @@
     _tableView.editing = NO;
     [self.view addSubview:_tableView];
     UIButton *addBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 510, 300, 40)];
-    addBtn.backgroundColor = [UIColor redColor];
+    addBtn.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     [addBtn setTitle:@"新增收获地址" forState:UIControlStateNormal];
     addBtn.titleLabel.font = [UIFont systemFontOfSize:18];
     addBtn.clipsToBounds = YES;

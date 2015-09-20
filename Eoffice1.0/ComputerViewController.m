@@ -377,7 +377,7 @@ static const CGFloat MJDuration = 2.0;
     
     NSString *string = OFFICE;
     [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",string,model.imgUrl]]];
-    NSLog(@"%@",imageView.image);
+    NSLog(@"%@",model.imgUrl);
     [cell addSubview:imageView];
     
     UIButton *price = [[UIButton alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(imageView.frame)+20, 80, 20)];

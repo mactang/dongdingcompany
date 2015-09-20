@@ -103,26 +103,39 @@
 
     SingleModel *model = [SingleModel sharedSingleModel];
     
+    NSString *sex;
+    if ([sexLb.text isEqual:@"男"]) {
+        sexLb.text = @"m";
+        sex = @"m";
+    }
+    if ([sexLb.text isEqual:@"女"]) {
+        sexLb.text = @"f";
+        
+    }
+    if ([sexLb.text isEqual:@"保密"]) {
+        sexLb.text = @"m";
+        
+    }
     
-    NSString *path= [NSString stringWithFormat:PERSONREVISE,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sexLb.text,_nickName.text,model.userkey];
     NSLog(@"path--%@",path);
     
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
+    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:@{@"nike":_nickName.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",string);
+            
+            NSLog(@"%@",dic[@"info"]);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-
 }
 - (void)downData{
     
@@ -201,9 +214,10 @@
     if (indexPath.row == 1) {
         cell.textLabel.text = @"用户名";
         
-        _nameBl = [[UILabel alloc]initWithFrame:CGRectMake(250, 10, 60, 20)];
+        _nameBl = [[UILabel alloc]initWithFrame:CGRectMake(230, 10, 60, 20)];
         _nameBl.font = [UIFont systemFontOfSize:12];
         [_nameBl setText:[NSString stringWithFormat:@"%@",model.name]];
+        _nameBl.textAlignment =NSTextAlignmentCenter;
         [cell addSubview:_nameBl];
     }
     if (indexPath.row == 2) {
@@ -211,8 +225,10 @@
         _nickName = [[UITextField alloc]initWithFrame:CGRectMake(210, 10, 100, 30)];
         _nickName.backgroundColor = [UIColor whiteColor];
         _nickName.placeholder = [NSString stringWithFormat:@"%@",model.shorname];
-        _nickName.clearButtonMode = UITextFieldViewModeAlways;
+        _nickName.clearButtonMode = UITextFieldViewModeWhileEditing;
         _nickName.delegate = self;
+        _nickName.textAlignment = NSTextAlignmentCenter;
+        _nickName.text = [NSString stringWithFormat:@"%@",model.shorname];
         [cell addSubview:_nickName];
     }
     if (indexPath.row == 3) {
@@ -224,7 +240,7 @@
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         NSString *value = [ud objectForKey:@"mySex"];
         sexLb.text = value;
-        
+        sexLb.textAlignment = NSTextAlignmentCenter;
         sexLb.textColor = [UIColor blackColor];
         [cell addSubview:sexLb];
     }

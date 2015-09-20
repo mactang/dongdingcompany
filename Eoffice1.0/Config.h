@@ -39,9 +39,9 @@
 //用户注册界面
 #define VERIFICATION 1010
 
-#define COMMON @"http://192.168.0.65:8080/phone/"
+#define COMMON @"http://120.26.124.171/phone/"
 
-#define OFFICE @"http://192.168.0.65:8080/eoffice/"
+#define OFFICE @"http://121.43.193.193"
 
 //用户登录接口
 #define LOGIN @"%@user!Login.action?username=%@&password=%@"
@@ -112,7 +112,7 @@
 
 //个人信息
 #define   PERSONCONME @"%@user!toUpdateMyMsg.action;jsessionid=%@?userkey=%@"
-#define   PERSONREVISE @"%@user!updateMyMsg.action;jsessionid=%@?userkey=%@"
+#define   PERSONREVISE @"%@user!updateMyMsg.action?birthday=%@&sex=%@&nike=%@&userkey=%@"
 //安全设置
 #define SAFEVALIDATE @"%@sms!getPhoneSms.action;jsessionid=%@?userkey=%@"
 #define SAFENEWPHONE @"%@user!updatePhone.action;jsessionid=%@?userkey=%@"

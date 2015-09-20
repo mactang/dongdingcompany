@@ -39,6 +39,7 @@
 
 
 
+
 +(PersonInformationModel *)modelWithDic:(NSDictionary *)dic;
 -(id)initWithDic:(NSDictionary *)dic;
 @end
