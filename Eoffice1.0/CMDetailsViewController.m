@@ -249,7 +249,6 @@
     }
     else if (btn.tag == 2002){
         self.menuPopover = [[MenuPopover alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-64) menuItems:self.menuItems];
-        self.menuPopover.backgroundColor = [UIColor grayColor];
         self.menuPopover.delegate = self;
         self.menuPopover.intcart = YES;
         self.menuPopover.Distinguish = NO;
@@ -263,8 +262,6 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,COMMON,model.paraId,model.goodsId,model.cPartnerId];
-    NSLog(@"path--%@",path);
-    NSLog(@"wGoodsId--%@",_numberbutton.titleLabel.text);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -275,14 +272,12 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"%@",dic[@"info"]);
-        
-        
+    
         if (dic[@"data"] !=[NSNull null]){
             NSDictionary *array = dic[@"data"];
             
                 detailsModel *model = [detailsModel modelWithDic:array];
                 [self.datas addObject:model];
-                NSLog(@"model.name--%@",self.datas);
             
         }
         

@@ -76,40 +76,62 @@
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
 //    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
 //    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    ligthButton.font = [UIFont systemFontOfSize:14];
+    ligthButton.titleLabel.font = [UIFont systemFontOfSize:14];
    // ligthButton.backgroundColor = [UIColor redColor];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     self.navigationItem.title = @"确认订单";
     
     _currentNumber = 1;
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -1, 320, 540) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-70) style:UITableViewStyleGrouped];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.scrollEnabled = NO;
+    [self footviewinterface];
     [self.view addSubview:_tableView];
-    
     [self defaultAddress];
-    //键盘空白收回
-//    self.view.userInteractionEnabled = YES;
-//    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(fingerTapped:)];
-//    [self.view addGestureRecognizer:singleTap];
+
     
 
 }
-//-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer
-//
-//{
-//    
-//    [self.view endEditing:YES];
-//    
-//    
-//}
-- (void)leftItemClicked{
+-(void)footviewinterface{
+    UIView   *headerview = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-64-70, SCREEN_WIDTH, 70)];
+    headerview.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:headerview];
+    UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.5)];
+    lineview.backgroundColor = [UIColor lightGrayColor];
+    [headerview addSubview:lineview];
+    UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(140, 10, 45, 20)];
+    [btn1 setTitle:@"合计 :￥" forState:UIControlStateNormal];
+    [btn1 setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
+    btn1.titleLabel.font = [UIFont systemFontOfSize:12];
+    [headerview addSubview:btn1];
     
+    totalPice = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), 10, 60, 20)];
+    totalPice.text = priceLb.text;
+    totalPice.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+    totalPice.font = [UIFont systemFontOfSize:12];
+    [headerview addSubview:totalPice];
+    
+    UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalPice.frame), 10, 70, 50)];
+    [btn3 setTitle:@"确定" forState:UIControlStateNormal];
+    btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+    btn3.clipsToBounds = YES;
+    btn3.layer.cornerRadius = 5;
+    btn3.tag = 1000;
+    [btn3 addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+    [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    btn3.titleLabel.font = [UIFont systemFontOfSize:20];
+    [headerview addSubview:btn3];
+
+//    [self.tableView beginUpdates];
+//    [self.tableView setTableHeaderView:headerview];
+//    [self.tableView endUpdates];
+
+}
+- (void)leftItemClicked{
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:payWay forKey:@"payWay"];
@@ -127,106 +149,141 @@
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.datas.count*3;
+    return self.datas.count;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
+        return 4;
+    }
+    if (section==1) {
         return 1;
     }
-    else if (section == 1){
-        return 7;
-    }else{
     return 1;
-    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
    
     if (indexPath.section == 0) {
-        return 100;
-    }
-    else if (indexPath.section == 1){
-    
-        if (indexPath.row == 0) {
-            return 80;
-        }
         return 40;
     }
-    else if (indexPath.section == 2)
-    {
-    
-        return 72;
-    }
-    else{
-        return 60;
-    }
-   
+    return 140;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-
-    return 1;
+    if (section==0) {
+         return 100;
+    }
+    return 5;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
 
-    return 5;
+    return 0.5;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+   
+    if (section!=0) {
+        return nil;
+    }
+    NSString *headerIndetifier = @"MyHeader";
+    UITableViewHeaderFooterView * control = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerIndetifier];
+    if (!control) {
+        control = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:headerIndetifier];
+        if (section==0) {
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
+            view.backgroundColor = [UIColor whiteColor];
+            [control addSubview:view];
+            AddressModel *model = self.datas[section];
+            SingleModel *sing = [SingleModel sharedSingleModel];
+            sing.addressId = model.addressId;
+            
+            UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 40, 20)];
+            [btn setTitle:@"收货人 :" forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            btn.titleLabel.font = [UIFont systemFontOfSize:10];
+            [view addSubview:btn];
+            
+            UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame), 20, 100, 20)];
+            lb1.text = model.receiver;
+            [view addSubview:lb1];
+            
+            UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame), 20, 130, 20)];
+            lb2.text = model.telphone;
+            [view addSubview:lb2];
+            
+            UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(btn.frame)+5, 40, 20)];
+            [btn1 setTitle:@"地址 :" forState:UIControlStateNormal];
+            [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            btn1.titleLabel.font = [UIFont systemFontOfSize:10];
+            [view addSubview:btn1];
+            
+            addressLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), CGRectGetMaxY(btn.frame)+2, 250, 40)];
+            addressLb.font = [UIFont systemFontOfSize:12];
+            //lb3.backgroundColor = [UIColor redColor];
+            addressLb.lineBreakMode = NSLineBreakByWordWrapping;
+            addressLb.numberOfLines = 0;
+            addressLb.text = model.address;
+            [view addSubview:addressLb];
+            
+            UIButton *headerbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+            headerbutton.frame  = view.bounds;
+            headerbutton.backgroundColor = [UIColor clearColor];
+            [headerbutton addTarget:self action:@selector(headerbuttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            [control addSubview:headerbutton];
+            
+        }
+       
+    }
+    return control;
+
+}
+-(void)headerbuttonPressed:(UIButton *)button{
+    OrderAddressViewController *addre = [[OrderAddressViewController alloc]init];
+    addre.regularText = addressLb.text;
+    [self.navigationController pushViewController:addre animated:YES];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
     static NSString *identity = @"cell";
-    
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
-    
     cell.clipsToBounds = YES;
-    
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
     NSLog(@"%lu",(unsigned long)self.datas.count);
     if (indexPath.section == 0) {
-       // cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSArray *message = @[@"配送方式",@"支付方式",@"发票方式",];
+        NSArray *thewhyarray = @[dispatch,payWay,invoice];
         
-        AddressModel *model = self.datas[indexPath.section];
-        SingleModel *sing = [SingleModel sharedSingleModel];
-        sing.addressId = model.addressId;
-        
-        cell.tag = 1000;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 40, 20)];
-        [btn setTitle:@"收货人 :" forState:UIControlStateNormal];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont systemFontOfSize:10];
-        [cell addSubview:btn];
-        
-        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame), 20, 100, 20)];
-        lb1.text = model.receiver;
-        [cell addSubview:lb1];
-        
-        UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame), 20, 130, 20)];
-        lb2.text = model.telphone;
-        [cell addSubview:lb2];
-        
-        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(btn.frame)+5, 40, 20)];
-        [btn1 setTitle:@"地址 :" forState:UIControlStateNormal];
-        [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        btn1.titleLabel.font = [UIFont systemFontOfSize:10];
-        [cell addSubview:btn1];
-        
-        
-        
-        addressLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), CGRectGetMaxY(btn.frame)+2, 250, 40)];
-        addressLb.font = [UIFont systemFontOfSize:12];
-        //lb3.backgroundColor = [UIColor redColor];
-        addressLb.lineBreakMode = NSLineBreakByWordWrapping;
-        addressLb.numberOfLines = 0;
-        addressLb.text = model.address;
-        [cell addSubview:addressLb];
+        if (indexPath.row!=3) {
+             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
+            cell.textLabel.text = message[indexPath.row];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            cell.detailTextLabel.text = thewhyarray[indexPath.row];
+            
+        }
+        else{
+            _textField = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, 320, 40)];
+            _textField.placeholder = @"给卖家留言";
+            _textField.tag = 1;
+            _textField.delegate = self;
+            _textField.backgroundColor = [UIColor whiteColor];
+            [cell addSubview:_textField];
+            //7数字键盘回收
+            //创建一个view作为inputAcceStoryView
+            UIView *view = [[UIView alloc]init];
+            view.frame = CGRectMake(0, 0, 0, 40);
+            view.backgroundColor = [UIColor grayColor];
+            _textField.inputAccessoryView = view;
+            UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
+            backButton.frame = CGRectMake(10, 0, 100, 40);
+            [backButton setTitle:@"收回键盘" forState:UIControlStateNormal];
+            [backButton addTarget:self action:@selector(keyboardReturn:) forControlEvents:UIControlEventTouchUpInside];
+            [view addSubview:backButton];
+        }
         
     }
-    if (indexPath.section == 1) {
-    
-    if (indexPath.row == 0) {
+    else{
+        
         cell.selectionStyle = UITableViewCellEditingStyleNone;
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
         imageView.image = [UIImage imageNamed:@"tu1"];
@@ -273,12 +330,16 @@
         lb5.text = @"128G";
         [cell addSubview:lb5];
         
-            }
-    if (indexPath.row == 1) {
-        cell.textLabel.text = @"购买数量";
-        cell.selectionStyle = UITableViewCellEditingStyleNone;
+        UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(imageView.frame)+10, SCREEN_WIDTH-20, 0.5)];
+        lineview.backgroundColor = [UIColor lightGrayColor];
+        [cell addSubview:lineview];
         
-        _numberBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(185, 5, 30, 30)];
+        UILabel *titlelabel = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(lineview), widgetFrameY(lineview)+20, 60, 25)];
+        titlelabel.text = @"购买数量";
+        titlelabel.font = [UIFont systemFontOfSize:15];
+        [cell addSubview:titlelabel];
+    
+        _numberBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(185, widgetFrameY(titlelabel)-5, 30, 30)];
         _numberBtn1.backgroundColor = [UIColor whiteColor];
         [_numberBtn1 setImage:[UIImage imageNamed:@"圆角矩形-3"] forState:UIControlStateNormal];
         
@@ -288,7 +349,7 @@
         _numberBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
         [_numberBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_numberBtn1 addTarget:self action:@selector(numBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        _numberBtn1.tag = 1;
+        _numberBtn1.tag = 200+indexPath.section;
         [cell addSubview:_numberBtn1];
         
         UIButton *numberBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+60, _numberBtn1.frame.origin.y, 30, 30)];
@@ -300,7 +361,7 @@
         numberBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
         [numberBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [numberBtn2 addTarget:self action:@selector(numBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        numberBtn2.tag = 2;
+        numberBtn2.tag = 300+indexPath.section;
         [cell addSubview:numberBtn2];
         
         _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
@@ -313,95 +374,10 @@
         _numberLb1.layer.borderWidth = 0.8;
         _numberLb1.layer.borderColor = [[UIColor grayColor] CGColor];
         [cell addSubview:_numberLb1];
-        
-    }
-    else if (indexPath.row == 2) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
-        
-        cell.textLabel.text = @"配送方式";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.detailTextLabel.text = dispatch;
-        
-    }
-    else if (indexPath.row == 3) {
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
-        cell.textLabel.text = @"支付方式";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        cell.detailTextLabel.text = payWay;
-        
 
-        
     }
-    else if (indexPath.row == 4) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
-        cell.textLabel.text = @"发票信息";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.detailTextLabel.text = invoice;
-    }
-    else if (indexPath.row == 5) {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        _textField = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, 320, 40)];
-        _textField.placeholder = @"给卖家留言";
-        _textField.tag = 1;
-        _textField.delegate = self;
-        _textField.backgroundColor = [UIColor whiteColor];
-        [cell addSubview:_textField];
-        //7数字键盘回收
-        //创建一个view作为inputAcceStoryView
-        UIView *view = [[UIView alloc]init];
-        view.frame = CGRectMake(0, 0, 0, 40);
-        view.backgroundColor = [UIColor grayColor];
-        _textField.inputAccessoryView = view;
-        UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        backButton.frame = CGRectMake(10, 0, 100, 40);
-        [backButton setTitle:@"收回键盘" forState:UIControlStateNormal];
-        [backButton addTarget:self action:@selector(keyboardReturn:) forControlEvents:UIControlEventTouchUpInside];
-        [view addSubview:backButton];
-    }
-    else if (indexPath.row == 6) {
-        UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(140, 15, 60, 20)];
-        lb2.font = [UIFont systemFontOfSize:12];
-        lb2.text = @"工1件商品";
-        [cell addSubview:lb2];
-        
-        UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb2.frame), 15, 40, 20)];
-        lb3.font = [UIFont systemFontOfSize:13];
-        lb3.text = @"合计 :";
-        [cell addSubview:lb3];
-        
-        UILabel *lb4 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb3.frame), 15, 60, 20)];
-        lb4.font = [UIFont systemFontOfSize:13];
-        lb4.text = @"34000.00";
-        [cell addSubview:lb4];
-    }
-    }
-    if (indexPath.section == 2) {
-        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(140, 10, 45, 20)];
-        [btn1 setTitle:@"合计 :￥" forState:UIControlStateNormal];
-        [btn1 setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
-        btn1.titleLabel.font = [UIFont systemFontOfSize:12];
-        [cell addSubview:btn1];
-        
-        totalPice = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), 10, 60, 20)];
-        totalPice.text = priceLb.text;
-        totalPice.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-        totalPice.font = [UIFont systemFontOfSize:12];
-        [cell addSubview:totalPice];
-        
-        UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalPice.frame), 10, 70, 50)];
-        [btn3 setTitle:@"确定" forState:UIControlStateNormal];
-        btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-        btn3.clipsToBounds = YES;
-        btn3.layer.cornerRadius = 5;
-        btn3.tag = 1000;
-        [btn3 addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-        [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        btn3.titleLabel.font = [UIFont systemFontOfSize:20];
-        [cell addSubview:btn3];
-        
-    }
+    
+   
     return cell;
     
 }
@@ -413,7 +389,6 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:ADDRESS,COMMON,model.jsessionid,model.userkey];
-    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
@@ -423,17 +398,14 @@
         NSLog(@"%@",dic);
         
         if (dic[@"data"] !=[NSNull null]) {
-            for (NSInteger i=0; i<[dic[@"data"]count]; i++) {
-                if (![dic[@"data"][i][@"defaultAD"]isEqualToString:@"Y"]) {
-                    NSArray *array = dic[@"data"];
-                    for(NSDictionary *subDict in array)
-                    {
-                    AddressModel *model = [AddressModel modelWithDic:subDict];
-                    [self.datas addObject:model];
-                        NSLog(@"%@",self.datas);
-                    }
-                }
+            NSArray *array = dic[@"data"];
+            for(NSDictionary *subDict in array)
+            {
+                AddressModel *model = [AddressModel modelWithDic:subDict];
+                [self.datas addObject:model];
+
             }
+
         }
         [_tableView reloadData];
         
@@ -493,14 +465,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        OrderAddressViewController *addre = [[OrderAddressViewController alloc]init];
-        addre.regularText = addressLb.text;
-        [self.navigationController pushViewController:addre animated:YES];
-    }
-    
-    if (indexPath.section == 1) {
-        if (indexPath.row==2) {
-            
+        if (indexPath.row==0) {
             
             DispatchingView *alter=[[DispatchingView alloc]initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
             alter.rightBlock=^()
@@ -517,7 +482,7 @@
             };
             [alter show];
         }
-        if (indexPath.row==3) {
+        if (indexPath.row==1) {
     
         GYZAlterview *alter=[[GYZAlterview alloc]initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         alter.rightBlock=^()
@@ -534,7 +499,7 @@
         };
         [alter show];
         }
-        if (indexPath.row == 4) {
+        if (indexPath.row == 2) {
             InvoiceAlterView *alter=[[InvoiceAlterView  alloc]initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
             alter.rightBlock=^()
             {
@@ -555,17 +520,12 @@
 }
 -(void)btnPress:(UIButton *)btn{
     if (btn.tag == 1000) {
-    
-        
         [self sureOrder];
         PayViewController *pay = [[PayViewController alloc]init];
         [self.navigationController pushViewController:pay animated:YES];
         
     }
-    
-    
 }
-
 - (void)sureOrder{
     
     SingleModel *sing = [SingleModel sharedSingleModel];
@@ -598,15 +558,11 @@
     }];
     
 }
-
-
 -(void)numBtnPress:(UIButton *)btn{
     
     
     if (btn.tag ==1) {
         if (_currentNumber>1) {
-            
-            
             _currentNumber--;
             NSLog(@"%@",_price);
             NSLog(@"priceLb-%d",[(priceLb.text)intValue]);
@@ -630,11 +586,7 @@
         totalPice.text = [NSString stringWithFormat:@"%d",price];
     }
     
-    
-    
 }
-
-
 -(void)keyboardReturn:(UIButton *)button{
    
     [_textField resignFirstResponder];
