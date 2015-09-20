@@ -67,13 +67,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor grayColor];
-    
+    self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
+    self.navigationController.navigationBarHidden = YES;
     
     isClssify = NO;
    //[self downData];
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 30, 320, 430) style:UITableViewStyleGrouped];
+    UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 40, 80, 20)];
+    myOrder.text = @"我的订单";
+    myOrder.textColor = [UIColor grayColor];
+    myOrder.textAlignment = NSTextAlignmentCenter;
+    myOrder.font = [UIFont systemFontOfSize:13];
+    [self.view addSubview:myOrder];
+    
+    dropDownMenuList = [[NSArray alloc]initWithObjects:@"全部",@"待发货",@"退换货/维修",@"待评价", nil];
+    
+    
+    
+    dd1= [[DropDown1 alloc]initWithFrame:CGRectMake(0, 70, 100, 0)];
+    [dd1.textButton setTitle:@"所有" forState:UIControlStateNormal];
+    [dd1.textButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    dd1.delegate = self;
+    dd1.tableArray = dropDownMenuList;
+    dd1.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:dd1];
+    
+    UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(dd1.frame), dd1.frame.origin.y, 220, dd1.frame.size.height)];
+    lb.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:lb];
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(dd1.frame)+10, 320, 430) style:UITableViewStyleGrouped];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     //    _tableView.scrollEnabled = YES;
@@ -81,17 +104,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    dropDownMenuList = [[NSArray alloc]initWithObjects:@"全部",@"待发货",@"退换货/维修",@"待评价", nil];
     
-    
-    
-    dd1= [[DropDown1 alloc]initWithFrame:CGRectMake(0, 0, 100, 0)];
-    [dd1.textButton setTitle:@"所有" forState:UIControlStateNormal];
-    [dd1.textButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    dd1.delegate = self;
-    dd1.tableArray = dropDownMenuList;
-    dd1.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:dd1];
 
     
 }
@@ -228,8 +241,8 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey != nil) {
-        self.navigationController.navigationBarHidden = NO;
-        [self.navigationItem setTitle:@"我的订单"];
+//        self.navigationController.navigationBarHidden = NO;
+//        [self.navigationItem setTitle:@"我的订单"];
     }
     else{
         
@@ -727,8 +740,8 @@
         
     }
     if (model.userkey != nil) {
-        self.navigationController.navigationBarHidden = NO;
-        [self.navigationItem setTitle:@"我的订单"];
+//        self.navigationController.navigationBarHidden = NO;
+//        [self.navigationItem setTitle:@"我的订单"];
         [self downData];
     }else{
     self.navigationController.navigationBarHidden = YES;

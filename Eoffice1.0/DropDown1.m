@@ -44,13 +44,17 @@
         tv.separatorColor = [UIColor lightGrayColor];
         tv.hidden = YES;
         [self addSubview:tv];
-        textButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
+        textButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, 25)];
         textButton.backgroundColor = [UIColor clearColor];
         textButton.font = [UIFont systemFontOfSize:12];
         [textButton setTitleColor:[UIColor colorWithRed:63.24/255. green:64.00/255. blue:127.00/255. alpha:1] forState:UIControlStateNormal];
+
+        //[textButton setImage:[UIImage imageNamed:@"xiala"] forState:UIControlStateNormal];
         [textButton addTarget:self action:@selector(dropdown) forControlEvents:UIControlEventTouchUpInside];
-        [textButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
         
+        UIButton *button  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(textButton.frame)-20, textButton.frame.origin.y, 30, 30)];
+        [button setImage:[UIImage imageNamed:@"xiala"] forState:UIControlStateNormal];
+        [self addSubview:button];
         
         [self addSubview:textButton];
         
@@ -119,6 +123,7 @@
      //dropDownMenu.title = [NSString stringWithFormat:@"%@▼",selection];
     
     [textButton setTitle:[NSString stringWithFormat:@"%@▼",[tableArray objectAtIndex:[indexPath row]]] forState:UIControlStateNormal];
+    
     showList = NO;
     tv.hidden = YES;
     
