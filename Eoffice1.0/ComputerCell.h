@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class detailsModel;
 @interface ComputerCell : UICollectionViewCell
 @property(nonatomic,strong)UILabel *titleLabel;
+@property(nonatomic ,strong)UIImageView *imgView;
+@property(nonatomic ,strong)UILabel *detailmessage;
+@property(nonatomic ,strong)UILabel *price;
+@property(nonatomic,strong)detailsModel *model;
 @end

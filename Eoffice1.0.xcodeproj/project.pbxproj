@@ -1215,8 +1215,8 @@
 		615B29BD1B4FB27D004E7546 /* ComputerController */ = {
 			isa = PBXGroup;
 			children = (
-				615B29BF1B4FB29F004E7546 /* ComputerCell.m */,
 				615B29BE1B4FB29F004E7546 /* ComputerCell.h */,
+				615B29BF1B4FB29F004E7546 /* ComputerCell.m */,
 				61731B201B954AE200B04D85 /* GoodsBigViewController.h */,
 				61731B211B954AE200B04D85 /* GoodsBigViewController.m */,
 				615B29C01B4FB29F004E7546 /* ComputerViewController.h */,
@@ -2154,7 +2154,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2195,7 +2195,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -2228,7 +2228,7 @@
 					"\"$(SRCROOT)/Headers/Public/umeng_ios_social_sdk_3.3.6_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI\"",
 				);
 				INFOPLIST_FILE = Eoffice1.0/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2265,7 +2265,7 @@
 					"\"$(SRCROOT)/Headers/Public/umeng_ios_social_sdk_3.3.6_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI\"",
 				);
 				INFOPLIST_FILE = Eoffice1.0/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
