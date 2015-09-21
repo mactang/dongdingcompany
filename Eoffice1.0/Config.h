@@ -67,7 +67,7 @@
 #define PARAMETER @"%@product!getParameters.action?paraId=%@"
 
 //电脑
-#define COMPUTER @"%@product!getMidGoodsList.action?cartId=%@&page=0"
+#define COMPUTER @"%@product!getMidGoodsList.action?cartId=%@&page=%@"
 
 //购物车接口
 #define SHOPCAR @"%@order!getBasket.action;jsessionid=%@?userkey=%@"
