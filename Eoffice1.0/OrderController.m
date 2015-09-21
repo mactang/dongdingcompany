@@ -54,6 +54,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSLog(@"%@",_shopCartId);
     [self defaultAddress];
     
 }

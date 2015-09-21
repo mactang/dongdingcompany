@@ -18,6 +18,7 @@
 #import "AFNetworking.h"
 #import "LoginViewController.h"
 #import "SingleModel.h"
+#import "UIKit+AFNetworking.h"
 
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate>
 @property(nonatomic,strong)UITableView *tableView;
@@ -73,18 +74,18 @@
     isClssify = NO;
    //[self downData];
     
-    UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 40, 80, 20)];
+    UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 80, 20)];
     myOrder.text = @"我的订单";
-    myOrder.textColor = [UIColor grayColor];
+    myOrder.textColor = [UIColor blackColor];
     myOrder.textAlignment = NSTextAlignmentCenter;
-    myOrder.font = [UIFont systemFontOfSize:13];
+    myOrder.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:myOrder];
     
     dropDownMenuList = [[NSArray alloc]initWithObjects:@"全部",@"待发货",@"退换货/维修",@"待评价", nil];
     
     
     
-    dd1= [[DropDown1 alloc]initWithFrame:CGRectMake(0, 70, 100, 0)];
+    dd1= [[DropDown1 alloc]initWithFrame:CGRectMake(0, 70, 120, 0)];
     [dd1.textButton setTitle:@"所有" forState:UIControlStateNormal];
     [dd1.textButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     dd1.delegate = self;
@@ -297,14 +298,15 @@
     }
         docstatus = [NSString stringWithFormat:@"%@",model1.orderDescription];
     
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"dingdanxiaotu"]];
-        imageView.frame = CGRectMake(10, 5, 40, 40);
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
+    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model1.list[0][@"imgurl"]]]];
         [cell addSubview:imageView];
+    NSLog(@"%@",model1.list[0][@"imgurl"]);
         UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, imageView.frame.origin.y, 150, 30)];
         lb1.font = [UIFont systemFontOfSize:10];
         lb1.lineBreakMode = NSLineBreakByTruncatingTail;
         lb1.numberOfLines = 2;
-        lb1.text = @"联想（Lenovo）G50-70M 15.6英寸笔记本电脑（i5-4258U 4G 500G GT820M 2G独显 DVD刻录 Win8）金属黑";
+        lb1.text = [NSString stringWithFormat:@"%@",model1.list[0][@"name"]];
         [cell addSubview:lb1];
         
         UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(lb1.frame.origin.x, CGRectGetMaxY(lb1.frame), 30, 20)];
@@ -333,12 +335,12 @@
         
         UILabel *lb6 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+40, lb1.frame.origin.y, 60, 20)];
         lb6.font = [UIFont systemFontOfSize:10];
-        lb6.text = lb6.text = [NSString stringWithFormat:@"%@",model1.list[0][@"price"]];;
+        lb6.text = lb6.text = [NSString stringWithFormat:@"￥%@",model1.list[0][@"price"]];;
         [cell addSubview:lb6];
         
         UILabel *lb7 = [[UILabel alloc]initWithFrame:CGRectMake(lb6.frame.origin.x+40, CGRectGetMaxY(lb6.frame)+10, 60, 20)];
         lb7.font = [UIFont systemFontOfSize:10];
-        lb7.text = @"×1";
+        lb7.text = [NSString stringWithFormat:@"x%@",model1.list[0][@"count"]];
         [cell addSubview:lb7];
 
  
@@ -362,7 +364,7 @@
         
         UILabel *lbT3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lbT2.frame), lbT.frame.origin.y, 60, 20)];
         lbT3.font = [UIFont systemFontOfSize:10];
-        lbT3.text = @"￥36030.00";
+        lbT3.text = [NSString stringWithFormat:@"￥%@",model1.totalFee];
         [cell addSubview:lbT3];
 
         

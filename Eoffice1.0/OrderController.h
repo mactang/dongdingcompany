@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderController : UIViewController
-
+@property(strong,nonatomic)NSMutableArray *shopCartId;
 @end

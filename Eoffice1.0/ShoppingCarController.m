@@ -10,8 +10,10 @@
 #import "RDVTabBarController.h"
 #import "SingleModel.h"
 #import "AFNetworking.h"
+#import "UIKit+AFNetworking.h"
 #import "ShopCarModel.h"
-
+#import "OrderController.h"
+#import "ShopCartId.h"
 @interface ShoppingCarController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
@@ -32,6 +34,7 @@
     UIButton *chooseBtn2;
     UIButton *allBtn;
     UILabel *totoalBL;
+    int total;
     
     UIButton *versionButton;
     NSMutableArray *btnMutableArray;
@@ -46,6 +49,8 @@
     UIButton *selectButton;
     UILabel *countBL;
     ShopCarModel *countModel;
+    
+    NSMutableArray *cartIdArray;
     
 }
 -(NSMutableArray *)datas{
@@ -63,6 +68,7 @@
     [self downData];
     invoiceSelector = 0;
     isAllDelete = NO;
+    total = 0;
     numberIndex = [NSMutableArray array];
     DeleteRow = [NSMutableArray array];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -109,8 +115,8 @@
     
     totoalBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+10, allBtn.frame.origin.y-10, 100, 20)];
     totoalBL.font = [UIFont systemFontOfSize:13];
-    totoalBL.text = @"合计:￥34000.00";
-    totoalBL.textColor = [UIColor redColor];
+    
+    totoalBL.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     [totView addSubview:totoalBL];
     UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+50, CGRectGetMaxY(totoalBL.frame), 60, 20)];
     LB1.font = [UIFont systemFontOfSize:13];
@@ -118,6 +124,7 @@
     LB1.textColor = [UIColor blackColor];
     [totView addSubview:LB1];
     
+    cartIdArray = [NSMutableArray array];
     
     UIButton *sure = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totoalBL.frame)+10, 10, 60, 50)];
     sure.font = [UIFont systemFontOfSize:17];
@@ -125,10 +132,71 @@
     sure.clipsToBounds = YES;
     sure.layer.cornerRadius = 5;
     [sure setTitle:@"确定" forState:UIControlStateNormal];
+    [sure addTarget:self action:@selector(sureShopCar) forControlEvents:UIControlEventTouchUpInside];
     [sure setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [totView addSubview:sure];
     
     // Do any additional setup after loading the view.
+}
+-(void)sureShopCar{
+ NSLog(@"%@",cartIdArray);
+    [self cartData];
+    
+}
+-(void)cartData{
+
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *carString = [[NSString alloc]init] ;
+
+    
+    carString = cartIdArray[0];
+    for (int i = 1; i<cartIdArray.count; i++) {
+        
+        
+        carString = [NSString stringWithFormat:@"%@,%@",carString, cartIdArray[i]];
+        
+    }
+    NSLog(@"%@",carString);
+   
+    
+    NSString *path= [NSString stringWithFormat:SHOPCARTID,COMMON,model.userkey,carString];
+    
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+            NSDictionary *array = dic[@"data"];
+            
+
+                ShopCartId *model = [ShopCartId modelWithDic:array];
+                NSLog(@"%lu",(unsigned long)model.list.count);
+            OrderController *order  = [[OrderController alloc]init];
+            order.shopCartId = [NSMutableArray array];
+            for (int i = 0; i<model.list.count; i++) {
+                
+                
+                
+                order.shopCartId[i] = model.list[i][@"cartId"];
+                
+                NSLog(@"%@",model.list[i][@"cartId"]);
+            }
+            
+            [self.navigationController pushViewController:order animated:YES];
+        }else {
+            
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+
 }
 -(void)delegatePress{
 
@@ -266,7 +334,7 @@
         
        
         if (i%2!=0) {
-            UIButton *btn = (UIButton *)[_tableView viewWithTag:i];
+            UIButton *btn = (UIButton *)[_tableView viewWithTag:i+49];
             NSLog(@"btn--%@",btn);
             btn.selected =! btn.selected;
         }
@@ -352,23 +420,26 @@
     cell.clipsToBounds = YES;
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     
-   
     
     if (indexPath.row == 0||indexPath.row%2==0) {
         
         
         ShopCarModel *model = self.datas[indexPath.row/2];
+        
+        cartIdArray[indexPath.row/2] = model.cartId;
+       
         chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         chooseBtn.frame = CGRectMake(10, 30, 20, 20);
         [chooseBtn setImage:[UIImage imageNamed:@"check-NO"] forState:UIControlStateNormal];
         [chooseBtn setImage:[UIImage imageNamed:@"check-YES"] forState:UIControlStateSelected];
         [chooseBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        chooseBtn.tag = indexPath.row + 1;
+        chooseBtn.tag = indexPath.row + 50;
         
         [cell addSubview:chooseBtn];
         
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(chooseBtn.frame)+10, 10, 60, 60)];
-        imageView.image = [UIImage imageNamed:@"tu1"];
+       
+        [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.cartImg]]];
         [cell addSubview:imageView];
         
         UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, imageView.frame.origin.y, 120, 40)];
@@ -407,7 +478,7 @@
         UILabel *priceLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(LB.frame), 10, 40, 20)];
         priceLB.font = [UIFont systemFontOfSize:15];
         priceLB.text = [NSString stringWithFormat:@"%@",model.price];
-       // priceLB.textAlignment = NSTextAlignmentCenter;
+        priceLB.tag = indexPath.row + 40;
         priceLB.textColor = [UIColor blackColor];
         [cell addSubview:priceLB];
         
@@ -423,6 +494,11 @@
         [countBL setTextColor:[UIColor grayColor]];
         countBL.tag = indexPath.row+100;
         [cell addSubview:countBL];
+        
+        
+        total= [[NSString stringWithFormat:@"%@",model.price]intValue]*[[NSString stringWithFormat:@"%@",model.count]intValue] +total;
+        NSString *totalString = [NSString stringWithFormat:@"%d",total];
+        totoalBL.text = [NSString stringWithFormat:@"合计:￥%@",totalString];
         
        editorBtn = [[UIButton alloc]initWithFrame:CGRectMake(268, 60, 40, 20)];
         //[btn setImage:[UIImage imageNamed:@"editor"] forState:UIControlStateNormal];
@@ -508,7 +584,7 @@
         _numberBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
         [_numberBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_numberBtn1 addTarget:self action:@selector(NumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        //_numberBtn1.tag = indexPath.row;
+        _numberBtn1.tag = indexPath.row;
         [cell addSubview:_numberBtn1];
         
         UIButton *numberBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+60, _numberBtn1.frame.origin.y, 30, 30)];
@@ -520,7 +596,7 @@
         numberBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
         [numberBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [numberBtn2 addTarget:self action:@selector(addNumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-        //numberBtn2.tag = indexPath.row;
+        numberBtn2.tag = indexPath.row;
         
         [cell addSubview:numberBtn2];
         
@@ -570,6 +646,10 @@
 -(void)NumBtnPress:(UIButton *)btn{
     
     UILabel *lb = (UILabel *)[_tableView viewWithTag:btn.tag-1+100];
+    UILabel *priceLb = (UILabel *)[_tableView viewWithTag:btn.tag-1+40];
+    
+    int price = [[NSString stringWithFormat:@"%@",priceLb.text]intValue];
+    
     int addCount = [[NSString stringWithFormat:@"%@",_numberLb1.text]intValue];
     
         if (addCount>1) {
@@ -579,6 +659,9 @@
             [_numberLb1 setText:string];
             lb.text = string;
             
+            total = total - price;
+            NSString *totalString = [NSString stringWithFormat:@"%d",total];
+            totoalBL.text = [NSString stringWithFormat:@"合计:￥%@",totalString];
             
         }
     
@@ -589,6 +672,10 @@
     
     UILabel *lb = (UILabel *)[self.view viewWithTag:btn.tag-1+100];
     NSLog(@"%@",lb);
+    
+    UILabel *priceLb = (UILabel *)[_tableView viewWithTag:btn.tag-1+40];
+    
+    int price = [[NSString stringWithFormat:@"%@",priceLb.text]intValue];
     int addCount = [[NSString stringWithFormat:@"%@",_numberLb1.text]intValue];
     
         
@@ -597,7 +684,9 @@
         [_numberLb1 setText:string];
         lb.text = string;
         
-    
+    total = total + price;
+    NSString *totalString = [NSString stringWithFormat:@"%d",total];
+    totoalBL.text = [NSString stringWithFormat:@"合计:￥%@",totalString];
     
     
     

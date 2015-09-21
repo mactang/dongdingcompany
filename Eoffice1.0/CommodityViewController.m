@@ -55,13 +55,13 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-    UIButton *cbt = [[UIButton alloc]initWithFrame:CGRectMake(0, 64, 20, 40)];
+    UIButton *cbt = [[UIButton alloc]initWithFrame:CGRectMake(5, 75, 30, 25)];
     [cbt addTarget:self action:@selector(openOrCloseLeftList) forControlEvents:UIControlEventTouchUpInside];
-    [cbt setImage:[UIImage imageNamed:@"椭圆-5.png"] forState:UIControlStateNormal];
+    [cbt setImage:[UIImage imageNamed:@"classify1"] forState:UIControlStateNormal];
     cbt.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:cbt];
     
-    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(30, 69, SCREEN_WIDTH-40, 30)];
+    self.searchBar = [[UISearchBar alloc]initWithFrame:CGRectMake(CGRectGetMaxX(cbt.frame)+5, 71, SCREEN_WIDTH-60, 33)];
     [self.view addSubview:self.searchBar];
     
     self.myscrollview = [[UIScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.searchBar.frame), SCREEN_WIDTH, SCREEN_HEIGHT-CGRectGetMaxY(self.searchBar.frame))];
@@ -70,7 +70,7 @@
     self.myscrollview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myscrollview];
 
-    self.searchBar.backgroundColor = [UIColor lightGrayColor];
+    self.searchBar.backgroundColor = [UIColor colorWithRed:232./255 green:232./255 blue:232./255 alpha:1];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"输入商家、分类和产品";
     for (UIView *view in self.searchBar.subviews) {
@@ -85,19 +85,19 @@
             break;
         }
     }
-    UIColor *innerColor = [UIColor lightGrayColor];
+   
     for (UIView* subview in [[self.searchBar.subviews lastObject] subviews]) {
         if ([subview isKindOfClass:[UITextField class]]) {
             UITextField *textField = (UITextField*)subview;
-            textField.backgroundColor = innerColor;
+            textField.backgroundColor = [UIColor colorWithRed:232./255 green:232./255 blue:232./255 alpha:1];
         }
     }
     self.searchBar.clipsToBounds = YES;
     self.searchBar.layer.masksToBounds = YES;
     self.searchBar.layer.cornerRadius = 15;
     
-    self.searchBar.layer.borderColor = [[UIColor blackColor]CGColor];
-    self.searchBar.layer.borderWidth = 1;
+//    self.searchBar.layer.borderColor = [[UIColor blackColor]CGColor];
+//    self.searchBar.layer.borderWidth = 1;
 
 }
 -(void)leftItemClicked{

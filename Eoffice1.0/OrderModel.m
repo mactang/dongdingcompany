@@ -22,8 +22,9 @@
         self.size = dic[@"size"];
         self.imgurl = dic[@"imgurl"];
         self.orderId = dic[@"orderId"];
-        self.docstatus =dic[@"docstatus"];
-        self.list =dic[@"list"];
+        self.docstatus = dic[@"docstatus"];
+        self.list = dic[@"list"];
+        self.totalFee = dic[@"totalFee"];
     }
     
     return self;

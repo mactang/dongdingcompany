@@ -16,6 +16,7 @@
 @property (copy,nonatomic) NSString *subTotal;
 @property (copy,nonatomic) NSString *goodsId;
 @property (copy,nonatomic) NSString *cartId;
+@property (copy,nonatomic) NSString *cartImg;
 
 
 +(ShopCarModel *)modelWithDic:(NSDictionary *)dic;
