@@ -54,7 +54,10 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self defaultAddress];
     
+}
+-(void)initerfacedata{
     self.view.backgroundColor = [UIColor whiteColor];
     
     //payWay = @"";
@@ -74,30 +77,25 @@
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
-//    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
-//    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    //    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
+    //    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     ligthButton.titleLabel.font = [UIFont systemFontOfSize:14];
-   // ligthButton.backgroundColor = [UIColor redColor];
+    // ligthButton.backgroundColor = [UIColor redColor];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     self.navigationItem.title = @"确认订单";
     
     _currentNumber = 1;
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-70) style:UITableViewStyleGrouped];
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,64, SCREEN_WIDTH, SCREEN_HEIGHT-70-64) style:UITableViewStyleGrouped];
+//   self.automaticallyAdjustsScrollViewInsets = NO;
+//   self.edgesForExtendedLayout = UIRectEdgeNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    [self footviewinterface];
     [self.view addSubview:_tableView];
-    [self defaultAddress];
-
     
-
 }
 -(void)footviewinterface{
-    UIView   *headerview = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-64-70, SCREEN_WIDTH, 70)];
+    UIView   *headerview = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-70, SCREEN_WIDTH, 70)];
     headerview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:headerview];
     UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.5)];
@@ -118,6 +116,8 @@
     UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalPice.frame), 10, 70, 50)];
     [btn3 setTitle:@"确定" forState:UIControlStateNormal];
     btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+    btn3.backgroundColor = [UIColor redColor];
+
     btn3.clipsToBounds = YES;
     btn3.layer.cornerRadius = 5;
     btn3.tag = 1000;
@@ -125,7 +125,7 @@
     [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn3.titleLabel.font = [UIFont systemFontOfSize:20];
     [headerview addSubview:btn3];
-
+//
 //    [self.tableView beginUpdates];
 //    [self.tableView setTableHeaderView:headerview];
 //    [self.tableView endUpdates];
@@ -149,7 +149,8 @@
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return self.datas.count;
+    NSLog(@"%ld",self.datas.count);
+    return 3;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -191,6 +192,7 @@
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
             view.backgroundColor = [UIColor whiteColor];
             [control addSubview:view];
+            NSLog(@"%@",self.datas[section]);
             AddressModel *model = self.datas[section];
             SingleModel *sing = [SingleModel sharedSingleModel];
             sing.addressId = model.addressId;
@@ -305,7 +307,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-        [hud hide:YES];
+        
         [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
@@ -320,8 +322,10 @@
             }
 
         }
+        [hud hide:YES];
+        [self initerfacedata];
+        [self footviewinterface];
         [_tableView reloadData];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
