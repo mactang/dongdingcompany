@@ -376,7 +376,7 @@ static const CGFloat MJDuration = 2.0;
     UIImageView *imageView = [[UIImageView  alloc]initWithFrame:CGRectMake(10, 5, 130, 140)];
     
     NSString *string = OFFICE;
-    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",string,model.imgUrl]]];
+    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.imgUrl]]];
     NSLog(@"%@",model.imgUrl);
     [cell addSubview:imageView];
     
