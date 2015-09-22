@@ -30,6 +30,8 @@
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
 @property(nonatomic,strong)NSMutableArray *datas;
+@property(nonatomic,strong)NSMutableArray *orderlist;
+@property(nonatomic,strong)NSString *totalprice;
 @end
 
 @implementation OrderController
@@ -51,9 +53,15 @@
     }
     return _datas;
 }
+-(NSMutableArray *)orderlist{
+    if (_orderlist==nil) {
+        _orderlist = [NSMutableArray array];
+    }
+    return _orderlist;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[self orderlistrequest];
+    [self orderlistrequest];
 }
 -(void)initerfacedata{
     self.view.backgroundColor = [UIColor whiteColor];
@@ -99,19 +107,16 @@
     UIView *lineview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 0.5)];
     lineview.backgroundColor = [UIColor lightGrayColor];
     [headerview addSubview:lineview];
-    UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(140, 10, 45, 20)];
-    [btn1 setTitle:@"合计 :￥" forState:UIControlStateNormal];
-    [btn1 setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
-    btn1.titleLabel.font = [UIFont systemFontOfSize:12];
-    [headerview addSubview:btn1];
     
-    totalPice = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), 10, 60, 20)];
-    totalPice.text = priceLb.text;
+
+    totalPice = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH-120, 25)];
+    totalPice.text = [NSString stringWithFormat:@"合计:￥%@",self.totalprice];
     totalPice.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-    totalPice.font = [UIFont systemFontOfSize:12];
+    totalPice.font = [UIFont systemFontOfSize:14];
+    totalPice.textAlignment = NSTextAlignmentRight;
     [headerview addSubview:totalPice];
     
-    UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalPice.frame), 10, 70, 50)];
+    UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-80, 10, 70, 50)];
     [btn3 setTitle:@"确定" forState:UIControlStateNormal];
     btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     btn3.backgroundColor = [UIColor redColor];
@@ -147,8 +152,8 @@
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    NSLog(@"%ld",self.datas.count);
-    return 3;
+    
+    return self.orderlist.count +1;;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -164,7 +169,7 @@
     if (indexPath.section == 0) {
         return 40;
     }
-    return 140;
+    return 90;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -287,37 +292,38 @@
         
         OrderTableViewCell *cell = [OrderTableViewCell cellWithTableView:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//       cell.selectionStyle = UITableViewCellEditingStyleNone;
-         return cell;
+        cell.dic = self.orderlist[indexPath.row];
+        return cell;
         
     }
 }
 #pragma mark 订单列表网络请求
-//-(void)orderlistrequest{
-//    
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    hud.mode = MBProgressHUDModeIndeterminate;
-//    hud.labelText = @"Loading";
-//    SingleModel *model = [SingleModel sharedSingleModel];
-//    NSString *path= [NSString stringWithFormat:SUBMITORDER,COMMON,model.userkey,[NSString stringWithFormat:@"%@",self.ordernumber]];
-//    NSLog(@"%@",path);
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-//        
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-//        NSLog(@"%@",dic);
-//        if (dic[@"data"] !=[NSNull null]) {
-//        }
-//        [hud hide:YES];
-//        [self defaultAddress];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        [hud hide:YES];
-//        NSLog(@"%@",error);
-//    }];
-//
-//    
-//}
+-(void)orderlistrequest{
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path= [NSString stringWithFormat:SUBMITORDER,COMMON,model.userkey,[NSString stringWithFormat:@"%@",self.shopCartId]];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]) {
+            self.totalprice = [NSString stringWithFormat:@"%@",dic[@"data"][@"total"]];
+         
+            [self.orderlist addObjectsFromArray:dic[@"data"][@"list"]];
+        }
+        [hud hide:YES];
+        [self defaultAddress];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"%@",error);
+    }];
+
+}
 #pragma mark 地址网络请求
 - (void)defaultAddress{
     

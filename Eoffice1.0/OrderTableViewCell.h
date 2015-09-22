@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderTableViewCell : UITableViewCell
+@property(strong,nonatomic)NSDictionary *dic;
 + (instancetype)cellWithTableView:(UITableView *)tableview;
 @end
