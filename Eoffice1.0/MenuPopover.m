@@ -142,14 +142,14 @@
             menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-90-130-64-35-35, SCREEN_WIDTH, 90+130+64+35+35);
             return 70;
         }
-        if ([self.dic[@"version"]count]/2==0) {
-            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*(([self.dic[@"version"]count])/2)-90-130-64, SCREEN_WIDTH, 35*(([self.dic[@"version"]count])/2)+90+130+64);
-            return 35*(([self.dic[@"version"]count])/2);
+        if ([self.dic[@"version"]count]%2==0) {
+            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*(([self.dic[@"version"]count])/2)-90-130-64-35, SCREEN_WIDTH, 35*(([self.dic[@"version"]count])/2)+90+130+64+35);
+            return 35+35*(([self.dic[@"version"]count])/2);
             
         }
         else{
-            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*(([self.dic[@"version"]count])/2+1)-90-130-64, SCREEN_WIDTH, 35*(([self.dic[@"version"]count])/2+1)+90+130+64);
-            return 35*(([self.dic[@"version"]count])/2+1);
+            menuItemsTableView.frame = CGRectMake(0, SCREEN_HEIGHT-35*(([self.dic[@"version"]count])/2+1)-90-130-64-35, SCREEN_WIDTH, 35*(([self.dic[@"version"]count])/2+1)+90+130+64+35);
+            return 35+35*(([self.dic[@"version"]count])/2+1);
         }
     }
     if (indexPath.row==3) {

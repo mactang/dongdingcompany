@@ -26,7 +26,6 @@
 #import "LoginViewController.h"
 #import "OrderSuccessController.h"
 #import "OrderTableViewCell.h"
-
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
@@ -54,8 +53,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self defaultAddress];
-    
+    [self orderlistrequest];
 }
 -(void)initerfacedata{
     self.view.backgroundColor = [UIColor whiteColor];
@@ -293,10 +291,34 @@
          return cell;
         
     }
-    
-   
 }
+#pragma mark 订单列表网络请求
+-(void)orderlistrequest{
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path= [NSString stringWithFormat:SUBMITORDER,COMMON,model.userkey,[NSString stringWithFormat:@"%@",self.ordernumber]];
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        if (dic[@"data"] !=[NSNull null]) {
+        }
+        [hud hide:YES];
+        [self defaultAddress];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"%@",error);
+    }];
 
+    
+}
+#pragma mark 地址网络请求
 - (void)defaultAddress{
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -310,8 +332,6 @@
         
         [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
-        
         if (dic[@"data"] !=[NSNull null]) {
             NSArray *array = dic[@"data"];
             for(NSDictionary *subDict in array)
@@ -332,8 +352,6 @@
     }];
     
 }
-
-
 - (void)selectedRegular:(NSNotification *)notify{
     
     NSString *reglarText = notify.object;

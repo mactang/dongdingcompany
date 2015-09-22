@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderController : UIViewController
-
+@property(nonatomic,assign)NSNumber *ordernumber;
 @end
