@@ -18,6 +18,7 @@
 @property (strong,nonatomic) NSString *imgurl;
 @property (strong,nonatomic) NSString *orderId;
 @property (strong,nonatomic) NSString *docstatus;
+@property (strong,nonatomic) NSString *totalFee;
 
 @property (strong,nonatomic) NSArray *list;
 

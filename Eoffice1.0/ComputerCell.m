@@ -15,23 +15,24 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-//        self.backgroundColor = [UIColor purpleColor];
+        self.backgroundColor = [UIColor whiteColor];
         self.imgView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, CGRectGetWidth(self.frame)-10, CGRectGetWidth(self.frame)-10)];
         self.imgView.backgroundColor = [UIColor groupTableViewBackgroundColor];
         [self addSubview:self.imgView];
         
-        self.price = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(self.imgView.frame), CGRectGetWidth(self.frame)-10, 20)];
+        self.price = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(self.imgView.frame)+5, CGRectGetWidth(self.frame)-10, 20)];
         self.price.backgroundColor = [UIColor whiteColor];
         self.price.textAlignment = NSTextAlignmentLeft;
-        self.price.textAlignment = NSTextAlignmentCenter;
+        self.price.font = [UIFont systemFontOfSize:15];
+        self.price.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         [self addSubview:self.price];
         
-        self.detailmessage = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(self.price.frame), CGRectGetWidth(self.frame)-10, 40)];
+        self.detailmessage = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(self.price.frame), self.imgView.frame.size.width, 30)];
         self.detailmessage.numberOfLines = 2;
         self.detailmessage.backgroundColor = [UIColor whiteColor];
         self.detailmessage.lineBreakMode = NSLineBreakByTruncatingTail;
         self.detailmessage.font  =[UIFont systemFontOfSize:12];
-        self.detailmessage.text = @"Apple MacBook Pro MF839CH/A 13.3英寸宽屏笔记本电脑 128GB 闪存";
+        //self.detailmessage.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.detailmessage];
                 
 
@@ -40,6 +41,7 @@
 }
 -(void)setModel:(detailsModel *)model{
     self.price.text = [NSString stringWithFormat: @"￥%@",model.price ];
+    self.detailmessage.text = [NSString stringWithFormat: @"%@",model.name ];
     [self.imgView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.imgUrl]]];
 }
 @end

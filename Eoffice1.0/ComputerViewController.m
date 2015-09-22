@@ -23,6 +23,7 @@
 #import "SDRefresh.h"
 #import "TarBarButton.h"
 #import "MJRefresh.h"
+#import "classifyDetailaModel.h"
 /**
  *  随机颜色
  */
@@ -345,30 +346,58 @@ static const CGFloat MJDuration = 2.0;
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, 60)];
     view.backgroundColor = [UIColor whiteColor];
     
-    UIButton *syntBT = [[UIButton alloc]initWithFrame:CGRectMake(40, 20, 50, 30)];
+    classifyDetailaModel *syntBT = [[classifyDetailaModel alloc]initWithFrame:CGRectMake(40, 20, 50, 30)];
     //syntBT.backgroundColor = [UIColor brownColor];
     [syntBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [syntBT setImage:[UIImage imageNamed:@"classify1"] forState:UIControlStateNormal];
     [syntBT setTitle:@"综合" forState:UIControlStateNormal];
+    syntBT.font = [UIFont systemFontOfSize:15];
     [view addSubview:syntBT];
     
-    UIButton *volumBT = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(syntBT.frame)+20, syntBT.frame.origin.y, 50, 30)];
+    UIButton *button  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(syntBT.frame)-10, syntBT.frame.origin.y+12, 13, 13)];
+    [button setImage:[UIImage imageNamed:@"clBelow"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
+    button.tag = 100;
+    [view addSubview:button];
+    
+    UILabel *lb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(button.frame)+8, syntBT.frame.origin.y+5, 0.5, 25)];
+    lb.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
+    [view addSubview:lb];
+    
+    UIButton *volumBT = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(syntBT.frame)+20, syntBT.frame.origin.y+3, 50, 30)];
     // volumBT.backgroundColor = [UIColor brownColor];
     [volumBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [volumBT setTitle:@"销量" forState:UIControlStateNormal];
+    volumBT.font = [UIFont systemFontOfSize:15];;
     [view addSubview:volumBT];
+    
+    UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(volumBT.frame)+8, syntBT.frame.origin.y+5, 0.5, 25)];
+    lb1.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
+    [view addSubview:lb1];
     
     UIButton *priceBT = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(volumBT.frame)+20, volumBT.frame.origin.y, 50, 30)];
     //priceBT.backgroundColor = [UIColor brownColor];
     [priceBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [priceBT setTitle:@"价格" forState:UIControlStateNormal];
+    priceBT.font = [UIFont systemFontOfSize:15];
     [view addSubview:priceBT];
+    
+    UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceBT.frame)+8, syntBT.frame.origin.y+5, 0.5, 25)];
+    lb2.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
+    [view addSubview:lb2];
     
     UIButton *screenBT = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceBT.frame)+20, priceBT.frame.origin.y, 50, 30)];
     //  screenBT.backgroundColor = [UIColor brownColor];
     [screenBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [screenBT addTarget:self action:@selector(screenPress) forControlEvents:UIControlEventTouchUpInside ];
     [screenBT setTitle:@"筛选" forState:UIControlStateNormal];
+    screenBT.font = [UIFont systemFontOfSize:15];
     [view addSubview:screenBT];
+    
+    UIButton *button1  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(screenBT.frame), screenBT.frame.origin.y+12, 13, 13)];
+    [button1 setImage:[UIImage imageNamed:@"clBelow"] forState:UIControlStateNormal];
+    [button1 setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
+    [view addSubview:button1];
     
     
     [self.view addSubview:view];

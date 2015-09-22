@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "classifyButton.h"
 @class DropDown1;
 @protocol  DropDown1Delegate <NSObject>
 
@@ -29,6 +30,6 @@
 @property (nonatomic,retain) UITableView *tv;
 @property (nonatomic,retain) NSArray *tableArray;
 
-@property (nonatomic,retain) UIButton *textButton;
+@property (nonatomic,retain) classifyButton *textButton;
 - (void)setSelectionOptions:(NSArray *)selectionOptions withTitles:(NSArray *)selectionOptionTitles;
 @end

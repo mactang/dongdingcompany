@@ -37,28 +37,33 @@
     if(self){
         showList = NO; //默认不显示下拉框
         
-        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 30, 100, 50)];
+        tv = [[UITableView alloc] initWithFrame:CGRectMake(0, 30, 120, 50)];
         tv.delegate = self;
         tv.dataSource = self;
         tv.backgroundColor = [UIColor grayColor];
         tv.separatorColor = [UIColor lightGrayColor];
         tv.hidden = YES;
         [self addSubview:tv];
-        textButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, 25)];
+        textButton = [[classifyButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width-10, 25)];
         textButton.backgroundColor = [UIColor clearColor];
         textButton.font = [UIFont systemFontOfSize:12];
         [textButton setTitleColor:[UIColor colorWithRed:63.24/255. green:64.00/255. blue:127.00/255. alpha:1] forState:UIControlStateNormal];
-
-        //[textButton setImage:[UIImage imageNamed:@"xiala"] forState:UIControlStateNormal];
+        textButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [textButton setImage:[UIImage imageNamed:@"classify"] forState:UIControlStateNormal];
         [textButton addTarget:self action:@selector(dropdown) forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *button  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(textButton.frame)-20, textButton.frame.origin.y, 30, 30)];
-        [button setImage:[UIImage imageNamed:@"xiala"] forState:UIControlStateNormal];
-        [self addSubview:button];
-        
         [self addSubview:textButton];
         
+        UIButton *button  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(textButton.frame)-10, textButton.frame.origin.y+10, 13, 13)];
+        [button setImage:[UIImage imageNamed:@"clBelow"] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
+        button.tag = 100;
+        [self addSubview:button];
+        
+        
        
+        
+        
+
         
     }
     return self;
@@ -107,10 +112,11 @@
     }
     
     cell.textLabel.text = [tableArray objectAtIndex:[indexPath row]];
+    cell.textLabel.textColor = [UIColor blackColor];
     cell.textLabel.font = [UIFont systemFontOfSize:10];
-    
+    cell.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -121,6 +127,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
      //dropDownMenu.title = [NSString stringWithFormat:@"%@▼",selection];
+    
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    cell.textLabel.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+    cell.backgroundColor = [UIColor whiteColor];
     
     [textButton setTitle:[NSString stringWithFormat:@"%@▼",[tableArray objectAtIndex:[indexPath row]]] forState:UIControlStateNormal];
     
@@ -134,6 +145,13 @@
     frame.size.height = 0;
     tv.frame = frame;
     [self.delegate dropDownControlView:self didFinishWithSelection:[NSString stringWithFormat:@"%@",[tableArray objectAtIndex:[indexPath row]]]];
+}
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    cell.textLabel.textColor = [UIColor blackColor];
+    cell.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
+    
 }
 #pragma mark - Configuration
 

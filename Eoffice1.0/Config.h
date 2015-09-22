@@ -71,6 +71,8 @@
 
 //购物车接口
 #define SHOPCAR @"%@order!getBasket.action;jsessionid=%@?userkey=%@"
+#define SHOPCARTID @"%@order!referBasket.action?userkey=%@&cartIds=%@"
+
 
 #define DELETESHOPCAR  @"%@order!removeBasket.action?cartId=%@"
 

@@ -22,7 +22,8 @@
         self.subTotal = dic[@"subTotal"];
         self.goodsId = dic[@"goodsId"];
         self.cartId = dic[@"cartId"];
-        
+        self.cartImg = dic[@"cartImg"];
+        self.version = dic[@"version"];
         
     }
     

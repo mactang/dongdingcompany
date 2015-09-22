@@ -266,7 +266,7 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,COMMON,model.paraId,model.goodsId,model.cPartnerId];
-    
+    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
