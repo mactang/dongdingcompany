@@ -183,7 +183,7 @@
         [cell addSubview:self.deleteBtn];
         
         UILabel *pricelable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+20, 15, SCREEN_WIDTH-110, 25)];
-        pricelable.textColor = [UIColor redColor];
+        pricelable.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         pricelable.font = [UIFont systemFontOfSize:16];
         pricelable.text = [NSString stringWithFormat:@"￥%.2f",[dicdata[@"price"]floatValue]];
         [cell addSubview:pricelable];

@@ -57,6 +57,8 @@
     NSString *goodId;
     NSMutableArray *versionCartId;
     NSString *cartId;
+    NSMutableArray *versionCount;
+    NSString *count;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -75,6 +77,8 @@
     versionGoodId = [NSMutableArray array];
     
     versionCartId = [NSMutableArray array];
+    
+    versionCount = [NSMutableArray array];
     
     invoiceSelector = 0;
     isAllDelete = NO;
@@ -535,7 +539,7 @@
         ShopCarModel *model = self.datas[indexPath.row/2];
             NSLog(@"%ld",indexPath.row%2);
         versionCartId[indexPath.row/2] = model.cartId;
-            
+        
         UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 80, 20)];
         bl.font = [UIFont systemFontOfSize:17];
         bl.text = @"版本信息";
@@ -615,7 +619,7 @@
         _numberLb1.layer.borderColor = [[UIColor grayColor] CGColor];
         [cell addSubview:_numberLb1];
 
-        
+            
         
         
     }
@@ -625,6 +629,7 @@
 -(void)versionPress:(UIButton *)btn{
     goodId = versionGoodId[(btn.tag-10)/2];
     cartId = versionCartId[(btn.tag-10)/2];
+    
     NSLog(@"%@",cartId);
     if (versionSelectButton == btn) {
         return;
@@ -683,7 +688,7 @@
             
         }
     
-    
+    count = [NSString stringWithFormat:@"%@",lb.text];
     
 }
 -(void)addNumBtnPress:(UIButton *)btn{
@@ -706,7 +711,7 @@
     NSString *totalString = [NSString stringWithFormat:@"%d",total];
     totoalBL.text = [NSString stringWithFormat:@"合计:￥%@",totalString];
     
-    
+    count = [NSString stringWithFormat:@"%@",lb.text];
     
 }
 
@@ -758,7 +763,7 @@
 -(void)editorData{
     
     
-    NSString *path= [NSString stringWithFormat:EDITORVERSION,COMMON,cartId,goodId,_numberLb1.text];
+    NSString *path= [NSString stringWithFormat:EDITORVERSION,COMMON,cartId,goodId,count];
     
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
