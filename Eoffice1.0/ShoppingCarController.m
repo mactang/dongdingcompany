@@ -53,6 +53,10 @@
     NSMutableArray *cartIdArray;
     UIButton *versionSelectButton;
     
+    NSMutableArray *versionGoodId;
+    NSString *goodId;
+    NSMutableArray *versionCartId;
+    NSString *cartId;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -67,6 +71,11 @@
     [self.navigationItem setTitle:@"我的购物车"];
     
     [self downData];
+    
+    versionGoodId = [NSMutableArray array];
+    
+    versionCartId = [NSMutableArray array];
+    
     invoiceSelector = 0;
     isAllDelete = NO;
     total = 0;
@@ -523,16 +532,16 @@
     }
     
         if(indexPath.row%2 !=0){
-        ShopCarModel *model = self.datas[indexPath.row%2];
+        ShopCarModel *model = self.datas[indexPath.row/2];
+            NSLog(@"%ld",indexPath.row%2);
+        versionCartId[indexPath.row/2] = model.cartId;
+            
         UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 80, 20)];
         bl.font = [UIFont systemFontOfSize:17];
         bl.text = @"版本信息";
         [bl setTextColor:[UIColor grayColor]];
         [cell addSubview:bl];
             for (int i = 0; i<model.version.count; i++) {
-                
-//                办公娱乐全能高清机皇（大显存）办公娱乐全能高清机皇（大显存）办公娱乐全能高清机皇（活力红）办公娱乐全能高清机皇（活力红）i3独显性价比系列（便携高清版）i3独显性价比系列（便携高清版）i3独显性价比系列（大屏娱乐版）i3独显性价比系列（大屏娱乐版）飞匣3000速度激情版（活力红）飞匣3000速度激情版（活力红）飞匣3000速度激情版（酷感黑）飞匣3000速度激情版（酷感黑）飞匣大屏速度激情版（酷感黑）飞匣大屏速度激情版（酷感黑）飞匣大屏速度激情版（魅力蓝）飞匣大屏速度激情版（魅力蓝）飞匣办公经济适用机（大屏版本）飞匣办公经济适用机（大屏版本）
-                NSArray *array = @[@"办公娱乐全能高清机皇（大显存）",@"办公娱乐全能高清机皇（活力红）",@"飞匣办公经济适用机（大屏版本）",@"i3独显性价比系列（便携高清版)"];
                 
                 versionButton = [[UIButton alloc]initWithFrame:CGRectMake(10+(i%2)*((SCREEN_WIDTH-45)/2)+(i%2)*15, CGRectGetMaxY(bl.frame)+18+(i/2)*35, 145, 30)];
                 versionButton.clipsToBounds = YES;
@@ -541,7 +550,9 @@
                 [versionButton setTitle:model.version[i][@"maValue"] forState:UIControlStateNormal];
                 [versionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 versionButton.font = [UIFont systemFontOfSize:10];
-                if ([array[i] isEqualToString:chooseType]) {
+                versionGoodId[i] = model.version[i][@"goodsId"];
+                
+                if ([model.version[i][@"maValue"] isEqualToString:chooseType]) {
                     versionButton.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1]CGColor];
                     selectButton = versionButton;
                 }else{
@@ -612,6 +623,9 @@
     return cell;
 }
 -(void)versionPress:(UIButton *)btn{
+    goodId = versionGoodId[(btn.tag-10)/2];
+    cartId = versionCartId[(btn.tag-10)/2];
+    NSLog(@"%@",cartId);
     if (versionSelectButton == btn) {
         return;
     }
@@ -627,6 +641,8 @@
     }
     versionSelectButton = btn;
 }
+
+
 -(void)colorBtnPress:(UIButton *)btn{
 
    
@@ -697,6 +713,7 @@
 
 -(void)editorPress:(UIButton *)btn{
     
+   
     
     if (currentbutton==btn) {
         
@@ -705,29 +722,81 @@
         
         
             [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
+    NSLog(@"%@",btn.titleLabel.text);
         btn.selected =! btn.selected;
-        return;
+        NSLog(@"%@",btn.titleLabel.text);
+        if (!invoiceSelector) {
+             [self editorData];
+        }
+                return;
     }
+    if (invoiceSelector) {
     
+    }
     currentbutton.selected = NO;
     btn.selected =! btn.selected;
     currentbutton = btn;
     
+    NSLog(@"%@",btn.titleLabel.text);
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
     
     selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     
     invoiceSelector = !invoiceSelector;
 
-    if (!invoiceSelector) {
-        invoiceSelector = YES;
-        
-        }
+//    if (!invoiceSelector) {
+//        invoiceSelector = YES;
+//        
+//        }
     [_tableView reloadRowsAtIndexPaths:@[selectIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
-
     
+    
+    
+}
+
+-(void)editorData{
+    
+    
+    NSString *path= [NSString stringWithFormat:EDITORVERSION,COMMON,cartId,goodId,_numberLb1.text];
+    
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+            NSDictionary *array = dic[@"data"];
+            
+            
+            ShopCartId *model = [ShopCartId modelWithDic:array];
+            NSLog(@"%lu",(unsigned long)model.list.count);
+            OrderController *order  = [[OrderController alloc]init];
+            order.shopCartId = model.list[0][@"cartId"];
+            
+            for (int i = 1; i<model.list.count; i++) {
+                
+                
+                order.shopCartId = [NSString stringWithFormat:@"%@,%@",order.shopCartId,model.list[i][@"cartId"]];
+                
+                
+                
+                
+            }
+            NSLog(@"%@",order.shopCartId);
+            [self.navigationController pushViewController:order animated:YES];
+        }else {
+            
+        }
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
     
 }
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
