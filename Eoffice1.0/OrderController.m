@@ -53,7 +53,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self orderlistrequest];
+    //[self orderlistrequest];
 }
 -(void)initerfacedata{
     self.view.backgroundColor = [UIColor whiteColor];
@@ -293,31 +293,31 @@
     }
 }
 #pragma mark 订单列表网络请求
--(void)orderlistrequest{
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = @"Loading";
-    SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:SUBMITORDER,COMMON,model.userkey,[NSString stringWithFormat:@"%@",self.ordernumber]];
-    NSLog(@"%@",path);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
-        if (dic[@"data"] !=[NSNull null]) {
-        }
-        [hud hide:YES];
-        [self defaultAddress];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [hud hide:YES];
-        NSLog(@"%@",error);
-    }];
-
-    
-}
+//-(void)orderlistrequest{
+//    
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.mode = MBProgressHUDModeIndeterminate;
+//    hud.labelText = @"Loading";
+//    SingleModel *model = [SingleModel sharedSingleModel];
+//    NSString *path= [NSString stringWithFormat:SUBMITORDER,COMMON,model.userkey,[NSString stringWithFormat:@"%@",self.ordernumber]];
+//    NSLog(@"%@",path);
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+//        
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//        NSLog(@"%@",dic);
+//        if (dic[@"data"] !=[NSNull null]) {
+//        }
+//        [hud hide:YES];
+//        [self defaultAddress];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        [hud hide:YES];
+//        NSLog(@"%@",error);
+//    }];
+//
+//    
+//}
 #pragma mark 地址网络请求
 - (void)defaultAddress{
     
