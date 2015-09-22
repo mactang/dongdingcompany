@@ -309,6 +309,7 @@
 		9638F0C01B900FD400882D8C /* ManageAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9638F0BF1B900FD400882D8C /* ManageAddressCell.m */; };
 		96821FCA1B8AF5DC00EC7276 /* citychoose.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96821FC71B8AF5DC00EC7276 /* citychoose.plist */; };
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
+		9689A8391BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */; };
 		9690D6021B8D85C000B47495 /* ChangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9690D6011B8D85C000B47495 /* ChangeModel.m */; };
 		9695ADE81B957A9A004A7A1B /* ButtonImageWithTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE11B957A9A004A7A1B /* ButtonImageWithTitle.m */; };
 		9695ADE91B957A9A004A7A1B /* CalculateStringSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 9695ADE31B957A9A004A7A1B /* CalculateStringSpace.m */; };
@@ -767,6 +768,8 @@
 		96821FC71B8AF5DC00EC7276 /* citychoose.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = citychoose.plist; sourceTree = "<group>"; };
 		96821FC81B8AF5DC00EC7276 /* CityChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseView.h; sourceTree = "<group>"; };
 		96821FC91B8AF5DC00EC7276 /* CityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CityChooseView.m; sourceTree = "<group>"; usesTabs = 0; };
+		9689A8371BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+AlerViewBlocks.h"; sourceTree = "<group>"; };
+		9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+AlerViewBlocks.m"; sourceTree = "<group>"; };
 		9690D6001B8D85C000B47495 /* ChangeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeModel.h; sourceTree = "<group>"; };
 		9690D6011B8D85C000B47495 /* ChangeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeModel.m; sourceTree = "<group>"; };
 		9695ADE01B957A9A004A7A1B /* ButtonImageWithTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonImageWithTitle.h; sourceTree = "<group>"; };
@@ -1666,6 +1669,15 @@
 			path = citychoose;
 			sourceTree = "<group>";
 		};
+		9689A8361BB15C34003E99B0 /* UIAlertViewBlock */ = {
+			isa = PBXGroup;
+			children = (
+				9689A8371BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.h */,
+				9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */,
+			);
+			path = UIAlertViewBlock;
+			sourceTree = "<group>";
+		};
 		9695ADDF1B9579C0004A7A1B /* Classtype */ = {
 			isa = PBXGroup;
 			children = (
@@ -1674,6 +1686,7 @@
 				9695ADE11B957A9A004A7A1B /* ButtonImageWithTitle.m */,
 				610D5A081B9FCCFD00301F3A /* TarBarButton.h */,
 				610D5A091B9FCCFD00301F3A /* TarBarButton.m */,
+				9689A8361BB15C34003E99B0 /* UIAlertViewBlock */,
 				61DA8F4C1BA1210900824499 /* NewButton.h */,
 				61DA8F4D1BA1210900824499 /* NewButton.m */,
 				61A1CB961BAFA6FE00903122 /* classifyButton.h */,
@@ -2122,6 +2135,7 @@
 				61B0FFA31B5F7EB0002CF349 /* DropDown1.m in Sources */,
 				615B29481B4FAE4B004E7546 /* main.m in Sources */,
 				618FD7501B87058400090608 /* HMSegmentedControl.m in Sources */,
+				9689A8391BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m in Sources */,
 				615B29A11B4FB22B004E7546 /* LoginViewController.m in Sources */,
 				6165C3201B535CD000FF71FB /* CMDetailsViewController.m in Sources */,
 				6197F0831B58DD29000EC83E /* RDVTabBar.m in Sources */,
