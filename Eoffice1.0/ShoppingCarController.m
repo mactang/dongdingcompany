@@ -178,16 +178,18 @@
                 ShopCartId *model = [ShopCartId modelWithDic:array];
                 NSLog(@"%lu",(unsigned long)model.list.count);
             OrderController *order  = [[OrderController alloc]init];
-            order.shopCartId = [NSMutableArray array];
-            for (int i = 0; i<model.list.count; i++) {
+            order.shopCartId = model.list[0][@"cartId"];
+    
+            for (int i = 1; i<model.list.count; i++) {
                 
                 
+                order.shopCartId = [NSString stringWithFormat:@"%@,%@",order.shopCartId,model.list[i][@"cartId"]];
+
                 
-                order.shopCartId[i] = model.list[i][@"cartId"];
                 
-                NSLog(@"%@",model.list[i][@"cartId"]);
+    
             }
-            
+            NSLog(@"%@",order.shopCartId);
             [self.navigationController pushViewController:order animated:YES];
         }else {
             

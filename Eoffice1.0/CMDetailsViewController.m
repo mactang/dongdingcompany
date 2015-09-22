@@ -614,7 +614,7 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationItem.backBarButtonItem = backItem;
     OrderController *order = [[OrderController alloc]init];
-    order.ordernumber = orderid;
+   
     [self.navigationController pushViewController:order animated:YES];
 
 }

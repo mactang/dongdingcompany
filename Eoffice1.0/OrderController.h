@@ -10,8 +10,7 @@
 
 @interface OrderController : UIViewController
 
-@property(nonatomic,assign)NSNumber *ordernumber;
 
-@property(strong,nonatomic)NSMutableArray *shopCartId;
+@property(strong,nonatomic)NSString *shopCartId;
 
 @end
