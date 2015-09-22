@@ -51,6 +51,7 @@
     ShopCarModel *countModel;
     
     NSMutableArray *cartIdArray;
+    UIButton *versionSelectButton;
     
 }
 -(NSMutableArray *)datas{
@@ -228,7 +229,7 @@
             // [self downData];
             [numberIndex removeAllObjects];
         }
-        else{
+        if(isAllDelete == YES){
             
             [self AllDeleteData];
             [self.datas removeAllObjects];
@@ -339,6 +340,9 @@
             btn.selected =! btn.selected;
         }
     }
+   // if (sender.selected == YES) {
+        isAllDelete = YES;
+   // }
     allBtn.selected = !allBtn.selected;
     
 }
@@ -517,33 +521,13 @@
     }
     
         if(indexPath.row%2 !=0){
+        ShopCarModel *model = self.datas[indexPath.row%2];
         UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 80, 20)];
         bl.font = [UIFont systemFontOfSize:17];
         bl.text = @"版本信息";
         [bl setTextColor:[UIColor grayColor]];
         [cell addSubview:bl];
-            
-//            int x = 0;
-//            int pag = 10;
-//            
-//            btnMutableArray = [[NSMutableArray alloc]init]; //将button放到数组里面
-//            for (int i = 0; i<4; i++) {
-//            
-//            colorBtn = [[UIButton alloc]initWithFrame:CGRectMake(x +pag , CGRectGetMaxY(bl.frame)+10, 70, 35)];
-//            colorBtn.backgroundColor = [UIColor whiteColor];
-//            colorBtn.clipsToBounds = YES;
-//            colorBtn.layer.cornerRadius = 3;
-//            colorBtn.layer.borderWidth = 0.8;
-//            colorBtn.layer.borderColor = [[UIColor grayColor] CGColor];
-//            [colorBtn setTitle:@"学蓝色" forState:UIControlStateNormal];
-//            [colorBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//            [colorBtn addTarget:self action:@selector(colorBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-//            cell.tag = i +10;
-//            [cell addSubview:colorBtn];
-//            x = CGRectGetMaxX(colorBtn.frame);
-//           [btnMutableArray addObject:colorBtn];
-//            }
-            for (int i = 0; i<4; i++) {
+            for (int i = 0; i<model.version.count; i++) {
                 
 //                办公娱乐全能高清机皇（大显存）办公娱乐全能高清机皇（大显存）办公娱乐全能高清机皇（活力红）办公娱乐全能高清机皇（活力红）i3独显性价比系列（便携高清版）i3独显性价比系列（便携高清版）i3独显性价比系列（大屏娱乐版）i3独显性价比系列（大屏娱乐版）飞匣3000速度激情版（活力红）飞匣3000速度激情版（活力红）飞匣3000速度激情版（酷感黑）飞匣3000速度激情版（酷感黑）飞匣大屏速度激情版（酷感黑）飞匣大屏速度激情版（酷感黑）飞匣大屏速度激情版（魅力蓝）飞匣大屏速度激情版（魅力蓝）飞匣办公经济适用机（大屏版本）飞匣办公经济适用机（大屏版本）
                 NSArray *array = @[@"办公娱乐全能高清机皇（大显存）",@"办公娱乐全能高清机皇（活力红）",@"飞匣办公经济适用机（大屏版本）",@"i3独显性价比系列（便携高清版)"];
@@ -552,7 +536,7 @@
                 versionButton.clipsToBounds = YES;
                 versionButton.layer.cornerRadius = 2;
                 versionButton.layer.borderWidth = 1;
-                [versionButton setTitle:array[i] forState:UIControlStateNormal];
+                [versionButton setTitle:model.version[i][@"maValue"] forState:UIControlStateNormal];
                 [versionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 versionButton.font = [UIFont systemFontOfSize:10];
                 if ([array[i] isEqualToString:chooseType]) {
@@ -562,7 +546,7 @@
                     versionButton.layer.borderColor = [[UIColor grayColor]CGColor];
                 }
                 versionButton.tag = i+10;
-                [versionButton addTarget:self action:@selector(pressBtn:) forControlEvents:UIControlEventTouchUpInside];
+                [versionButton addTarget:self action:@selector(versionPress:) forControlEvents:UIControlEventTouchUpInside];
                 [cell addSubview:versionButton];
                 
             }
@@ -624,6 +608,22 @@
     }
     
     return cell;
+}
+-(void)versionPress:(UIButton *)btn{
+    if (versionSelectButton == btn) {
+        return;
+    }
+    versionSelectButton.selected = NO;
+    btn.selected = YES;
+    if(versionSelectButton.selected == NO){
+        versionSelectButton.layer.borderColor = [[UIColor grayColor] CGColor];
+    }
+    if (btn.selected) {
+        
+        btn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
+        
+    }
+    versionSelectButton = btn;
 }
 -(void)colorBtnPress:(UIButton *)btn{
 
@@ -739,14 +739,14 @@
 - (void)isPublicBtnPress:(UIButton*)btn{
     
     NSLog(@"%ld",(long)btn.tag);
-    NSString *string = [NSString stringWithFormat:@"%ld",(long)btn.tag];
+    NSString *string = [NSString stringWithFormat:@"%ld",(long)btn.tag-50];
     [numberIndex addObject:string];
     NSLog(@"%@",numberIndex);
     
     
     btn.selected = !btn.selected;
     if (btn.selected == YES) {
-        ShopCarModel *model = self.datas[(btn.tag-1)%2];
+        ShopCarModel *model = self.datas[(btn.tag-1-49)%2];
         _cartId = model.cartId;
         [DeleteRow addObject:_cartId];
     }
