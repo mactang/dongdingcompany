@@ -119,7 +119,6 @@
     UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-80, 10, 70, 50)];
     [btn3 setTitle:@"确定" forState:UIControlStateNormal];
     btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-    btn3.backgroundColor = [UIColor redColor];
 
     btn3.clipsToBounds = YES;
     btn3.layer.cornerRadius = 5;
@@ -140,16 +139,7 @@
     [ud setObject:payWay forKey:@"payWay"];
     [ud setObject:invoice forKey:@"invoice"];
     [ud setObject:dispatch forKey:@"dispatch"];
-//    NSArray *array = self.navigationController.viewControllers;
-//    //取出里面的对应元素（对象）,并返回
-//    //popToViewController:是返回到这个对象
-//    [self.navigationController popToViewController:array[4] animated:YES];
-   // self.navigationController.navigationBarHidden = YES;
-    NSArray *array = self.navigationController.viewControllers;
-    
-    self.navigationController.navigationBar.translucent = YES;
-    [self.navigationController popToViewController:array[4] animated:YES];
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     

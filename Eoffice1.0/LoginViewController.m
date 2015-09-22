@@ -17,6 +17,7 @@
 #import "OrderController.h"
 #import "TarBarButton.h"
 #import "MainViewController.h"
+#import "UIAlertView+AlerViewBlocks.h"
 @interface LoginViewController ()
 
 @end
@@ -325,7 +326,9 @@
 
 
     NSLog(@"..");
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     UITextField *name_field = (UITextField *)[self.view viewWithTag:NAME_FIELD];
     UITextField *pwd_field = (UITextField *)[self.view viewWithTag:PASSWORD_FIELD];
     
@@ -334,11 +337,10 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
-        
+        [hud hide:YES];
         if ([dic[@"status"] integerValue]==0) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"登录失败" message:@"请输入正确的账号" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             //设置提示框样式（可以输入账号密码）
@@ -382,11 +384,27 @@
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        if (error.code==-1004) {
+           
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接服务器失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+                
+            }];
+        
+        }
+        if (error.code==-1001) {
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+                
+            }];
+
+        }
         NSLog(@"%@",error);
         
     }];
 
 }
+//Code=-1004不能连接到服务器
+//Code=-1001连接超时
 - (void)registerLogin{
 
     RegisterViewController *registerview = [[RegisterViewController alloc]init];

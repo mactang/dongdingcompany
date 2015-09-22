@@ -40,7 +40,7 @@
         
         self.price = [[UILabel alloc]init];
         self.price.backgroundColor = [UIColor whiteColor];
-        self.price.textColor = [UIColor redColor];
+        self.price.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         [self.contentView addSubview:self.price];
         
         
