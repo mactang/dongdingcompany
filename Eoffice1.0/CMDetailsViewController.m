@@ -584,13 +584,10 @@
     product = shopnumber;
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey !=nil&&!sucess) {
-        UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-        self.navigationItem.backBarButtonItem = backItem;
-        OrderController *order = [[OrderController alloc]init];
-        [self.navigationController pushViewController:order animated:YES];
+        [self addData:NO];
     }
     if (model.userkey!=nil&&sucess) {
-        [self addData];
+        [self addData:YES];
     }
     if (model.userkey==nil) {
         login = [[LoginViewController alloc]init];
@@ -604,18 +601,25 @@
 -(void)reloadata{
     if (loginsucess) {
         [login.navigationController popViewControllerAnimated:NO];
-        [self addData];
+        [self addData:YES];
     }
     else{
         [login.navigationController popViewControllerAnimated:NO];
-        UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-        self.navigationItem.backBarButtonItem = backItem;
-        OrderController *order = [[OrderController alloc]init];
-        [self.navigationController pushViewController:order animated:YES];
+        [self addData:NO];
+
     }
 }
+-(void)ordercpntroller:(NSNumber *)orderid{
+    
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
+    OrderController *order = [[OrderController alloc]init];
+    order.ordernumber = orderid;
+    [self.navigationController pushViewController:order animated:YES];
+
+}
 #pragma mark  加入购物车网络请求
--(void)addData{
+-(void)addData:(BOOL)sucess{
     
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",product]];
@@ -630,10 +634,22 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         UIAlertView *alertview;
         if ([dic[@"status"] integerValue]==1) {
-            alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"去购物车" otherButtonTitles:@"继续逛逛", nil];
+            if (sucess) {
+                 alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"去购物车" otherButtonTitles:@"继续逛逛", nil];
+            }
+            else{
+                [self ordercpntroller:dic[@"data"]];
+              
+            }
         }
         else{
-            alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"重新提交" otherButtonTitles:@"取消", nil];
+            if (sucess) {
+                alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"重新提交" otherButtonTitles:@"取消", nil];
+            }
+            else{
+                alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"订单提交失败" delegate:self cancelButtonTitle:@"重新提交" otherButtonTitles:@"取消", nil];
+            }
+            
         }
         [alertview show];
         [hud hide:YES];

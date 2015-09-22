@@ -129,4 +129,6 @@
 #define  SERVICESUBMIT @"%@repair!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
 //版本信息
 #define PRODUCTMESSAGE @"%@product!selectedByVersion.action?goodsId=%@"
+//提交商品生成订单
+#define SUBMITORDER  @"%@order!referBasket.action?userkey=%@&cartIds=%@"
 #endif
