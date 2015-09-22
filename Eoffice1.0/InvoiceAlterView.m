@@ -195,7 +195,7 @@
         typeButton.layer.borderWidth = 1;
         [typeButton setTitle:array[i] forState:UIControlStateNormal];
         [typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        typeButton.font = [UIFont systemFontOfSize:10];
+        typeButton.titleLabel.font = [UIFont systemFontOfSize:10];
             if ([array[i] isEqualToString:chooseType]) {
                 typeButton.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1]CGColor];
                 selectButton = typeButton;
@@ -215,7 +215,7 @@
         [button1 setTitle:@"保存发票信息" forState:UIControlStateNormal];
         [button1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         button1.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-        button1.font = [UIFont systemFontOfSize:12];
+        button1.titleLabel.font = [UIFont systemFontOfSize:12];
         button1.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1]CGColor];
         [button1 addTarget:self action:@selector(keepBtn) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:button1];
@@ -227,7 +227,7 @@
         [button2 setTitle:@"取消" forState:UIControlStateNormal];
         [button2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         button2.backgroundColor = [UIColor whiteColor];
-        button2.font = [UIFont systemFontOfSize:12];
+        button2.titleLabel.font = [UIFont systemFontOfSize:12];
         button2.layer.borderColor = [[UIColor grayColor]CGColor];
         [cell addSubview:button2];
         
