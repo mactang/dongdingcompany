@@ -61,6 +61,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self footviewinterface];
     [self orderlistrequest];
 }
 -(void)initerfacedata{
@@ -110,7 +111,6 @@
     
 
     totalPice = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH-120, 25)];
-    totalPice.text = [NSString stringWithFormat:@"合计:￥%@",self.totalprice];
     totalPice.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     totalPice.font = [UIFont systemFontOfSize:14];
     totalPice.textAlignment = NSTextAlignmentRight;
@@ -313,7 +313,7 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]) {
             self.totalprice = [NSString stringWithFormat:@"%@",dic[@"data"][@"total"]];
-         
+            totalPice.text = [NSString stringWithFormat:@"合计:￥%@",self.totalprice];
             [self.orderlist addObjectsFromArray:dic[@"data"][@"list"]];
         }
         [hud hide:YES];
@@ -350,7 +350,6 @@
         }
         [hud hide:YES];
         [self initerfacedata];
-        [self footviewinterface];
         [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
