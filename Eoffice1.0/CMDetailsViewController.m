@@ -49,6 +49,7 @@
 #import "TarBarButton.h"
 #import "LoginViewController.h"
 #import "ShoppingCarController.h"
+#import "CalculateStringSpace.h"
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
 @interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>
 
@@ -695,132 +696,32 @@
 }
 -(void)btnPress1{
     
+    NSArray *keysArray = [NSArray array];
+    NSArray *AllvalueArray = [NSArray array];
     
     NSLog(@"%@",model1.data[@"转速"]);
-    UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];
-    goodsNameLb.text = @"商品名称:";
-    goodsNameLb.font = [UIFont systemFontOfSize:10];
-    goodsNameLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:goodsNameLb];
-    
-    UILabel *nameLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(goodsNameLb.frame)-3, 10, 80, 20)];
-    nameLb.text = @"明基KL1220E";
-    nameLb.font = [UIFont systemFontOfSize:10];
-    nameLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:nameLb];
-    
-    //
-    UILabel *BrandLb = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(goodsNameLb.frame)+5, 40, 20)];
-    BrandLb.text = @"品牌:";
-    BrandLb.font = [UIFont systemFontOfSize:10];
-    BrandLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:BrandLb];
-    
-    UILabel *Brand = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(BrandLb.frame)-3, BrandLb.frame.origin.y, 80, 20)];
-    Brand.text = @"明基（BenQ）";
-    Brand.font = [UIFont systemFontOfSize:10];
-    Brand.textColor = [UIColor grayColor];
-    [_detailView addSubview:Brand];
-    
-    UILabel *WeightLb = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(BrandLb.frame)+5, 60, 20)];
-    WeightLb.text = @"商品毛重:";
-    WeightLb.font = [UIFont systemFontOfSize:10];
-    WeightLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:WeightLb];
-    
-    UILabel *Weight = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(WeightLb.frame)-3, WeightLb.frame.origin.y, 80, 20)];
-    Weight.text = @"4.0kg";
-    Weight.font = [UIFont systemFontOfSize:10];
-    Weight.textColor = [UIColor grayColor];
-    [_detailView addSubview:Weight];
-    
-    UILabel *panelLb = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(WeightLb.frame)+5, 40, 20)];
-    panelLb.text = @"面板:";
-    panelLb.font = [UIFont systemFontOfSize:10];
-    panelLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:panelLb];
-    
-    UILabel *panel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(panelLb.frame)-3, panelLb.frame.origin.y, 80, 20)];
-    panel.text = @"TN";
-    panel.font = [UIFont systemFontOfSize:10];
-    panel.textColor = [UIColor grayColor];
-    [_detailView addSubview:panel];
-    
-    UILabel *sizeLb = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(panelLb.frame)+5, 40, 20)];
-    sizeLb.text = @"尺寸:";
-    sizeLb.font = [UIFont systemFontOfSize:10];
-    sizeLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:sizeLb];
-    
-    UILabel *size = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(sizeLb.frame)-3, sizeLb.frame.origin.y, 80, 20)];
-    size.text = [NSString stringWithFormat:@"%@",model1.data[@"尺寸"]];
-    size.font = [UIFont systemFontOfSize:10];
-    size.textColor = [UIColor grayColor];
-    [_detailView addSubview:size];
-    
-    
-    UILabel *goodsNumberLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(goodsNameLb.frame)+80, 10, 50, 20)];
-    goodsNumberLb.text = @"商品编码:";
-    goodsNumberLb.font = [UIFont systemFontOfSize:10];
-    goodsNumberLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:goodsNumberLb];
-    
-    UILabel *numberLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(goodsNumberLb.frame)-3, 10, 80, 20)];
-    numberLb.text = @"明基KL1220E";
-    numberLb.font = [UIFont systemFontOfSize:10];
-    numberLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:numberLb];
-    
-    //
-    UILabel *timeLb = [[UILabel alloc]initWithFrame:CGRectMake(goodsNumberLb.frame.origin.x, CGRectGetMaxY(goodsNumberLb.frame)+5, 60, 20)];
-    timeLb.text = @"上架时间:";
-    timeLb.font = [UIFont systemFontOfSize:10];
-    timeLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:timeLb];
-    
-    UILabel *time = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(timeLb.frame)-3,timeLb.frame.origin.y, 100, 20)];
-    time.text = @"2014-05-04 09:33:48";
-    time.font = [UIFont systemFontOfSize:10];
-    time.textColor = [UIColor grayColor];
-    [_detailView addSubview:time];
-    
-    UILabel *fromLb = [[UILabel alloc]initWithFrame:CGRectMake(goodsNumberLb.frame.origin.x, CGRectGetMaxY(timeLb.frame)+5, 60, 20)];
-    fromLb.text = @"商品产地:";
-    fromLb.font = [UIFont systemFontOfSize:10];
-    fromLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:fromLb];
-    
-    UILabel *from = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(fromLb.frame)-3, fromLb.frame.origin.y, 80, 20)];
-    from.text = @"中国大陆";
-    from.font = [UIFont systemFontOfSize:10];
-    from.textColor = [UIColor grayColor];
-    [_detailView addSubview:from];
-    
-    UILabel *interfaceLb = [[UILabel alloc]initWithFrame:CGRectMake(goodsNumberLb.frame.origin.x, CGRectGetMaxY(fromLb.frame)+5, 40, 20)];
-    interfaceLb.text = @"接口:";
-    interfaceLb.font = [UIFont systemFontOfSize:10];
-    interfaceLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:interfaceLb];
-    
-    UILabel *interface = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(interfaceLb.frame)-3, interfaceLb.frame.origin.y, 80, 20)];
-    interface.text = @"DVI.VGA";
-    interface.font = [UIFont systemFontOfSize:10];
-    interface.textColor = [UIColor grayColor];
-    [_detailView addSubview:interface];
-    
-    UILabel *proportionLb = [[UILabel alloc]initWithFrame:CGRectMake(goodsNumberLb.frame.origin.x, CGRectGetMaxY(interfaceLb.frame)+5, 40, 20)];
-    proportionLb.text = @"比例:";
-    proportionLb.font = [UIFont systemFontOfSize:10];
-    proportionLb.textColor = [UIColor grayColor];
-    [_detailView addSubview:proportionLb];
-    
-    UILabel *proportion = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(proportionLb.frame)-3, proportionLb.frame.origin.y, 80, 20)];
-    proportion.text = @"16:9";
-    proportion.font = [UIFont systemFontOfSize:10];
-    proportion.textColor = [UIColor grayColor];
-    [_detailView addSubview:proportion];
-    
-    
+    keysArray = [model1.data allKeys];
+    AllvalueArray = [model1.data allValues];
+    NSLog(@"%@",keysArray);
+//    editionbutton.frame = CGRectMake(15+(i%2)*((SCREEN_WIDTH-40)/2)+(i%2)*10, CGRectGetMaxY(versionLb.frame)+5+(i/2)*35, (SCREEN_WIDTH-40)/2, 30);
+
+    for (NSInteger i=0; i<keysArray.count; i++) {
+        
+        CGSize size = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"%@:%@",keysArray[i],AllvalueArray[i]] font:[UIFont systemFontOfSize:12] constraintSize:CGSizeMake((SCREEN_WIDTH-15)/2, 40)];
+        
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5+(i%2)*((SCREEN_WIDTH-15)/2)+(i%2)*5, 15+(i/2)*45, size.width, size.height)];
+        label.font = [UIFont systemFontOfSize:12];
+        label.numberOfLines = 2;
+        label.text = [NSString stringWithFormat:@"%@:%@",keysArray[i],AllvalueArray[i]];
+        [_detailView addSubview:label];
+        
+        if (i!=1+(i/2)*2) {
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(3, 50+(i/2)*44, SCREEN_WIDTH-10, 0.5)];
+            view.backgroundColor = [UIColor whiteColor];
+            [_detailView addSubview:view];
+        }
+        
+    }
     
 }
 -(void)btnPress:(UIButton *)btn{
