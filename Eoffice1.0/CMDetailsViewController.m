@@ -51,7 +51,7 @@
 #import "ShoppingCarController.h"
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
 @interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>
-    
+
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)UIImageView *immgeView;
 
@@ -78,6 +78,8 @@
 
 @property(nonatomic, strong)NSString *back;
 
+@property(nonatomic, strong)NSMutableArray *parameterDatas;
+
 @end
 
 @implementation CMDetailsViewController
@@ -92,7 +94,7 @@
     BOOL loginsucess;
     NSInteger  product;
     NSMutableDictionary *dictionary;
-    
+    detailsModel *model1;
     
     
     
@@ -104,7 +106,12 @@
     return _datas;
 }
 
-
+-(NSMutableArray *)parameterDatas{
+    if (_parameterDatas == nil) {
+        _parameterDatas = [NSMutableArray array];
+    }
+    return _parameterDatas;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -113,7 +120,7 @@
     self.view.backgroundColor = [UIColor grayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.hidesBottomBarWhenPushed = YES;
-  
+    
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
@@ -124,16 +131,17 @@
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
     [self data];
+    [self parameterData];
     //商品参数
     _immgeView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"1.jpg"]];
     _immgeView.backgroundColor = [UIColor greenColor];
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-   // _tableView.showsVerticalScrollIndicator = YES;
+    // _tableView.showsVerticalScrollIndicator = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
-//    _tableView.scrollEnabled = YES;
+    //    _tableView.scrollEnabled = YES;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -154,13 +162,13 @@
 
 -(void)leftItemClicked{
     
-   self.navigationController.navigationBar.translucent = YES;
-   [self.navigationController popViewControllerAnimated:YES];
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
 -(void)buttonClicked:(UIButton *)btn{
-
+    
     
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -171,14 +179,14 @@
 }
 -(void)shopTabBar{
     UIButton *shopCarBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
-   // [shopCarBtn setTitle:@"购物车" forState:UIControlStateNormal];
+    // [shopCarBtn setTitle:@"购物车" forState:UIControlStateNormal];
     shopCarBtn.backgroundColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
     shopCarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     shopCarBtn.clipsToBounds = YES;
     shopCarBtn.layer.cornerRadius = 6;
     shopCarBtn.tag = 2000;
     shopCarBtn.selected = YES;
-   // [shopCarBtn setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
+    // [shopCarBtn setImage:[UIImage imageNamed:@"gouwuche"] forState:UIControlStateNormal];
     [shopCarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [shopCarBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
     [_carView addSubview:shopCarBtn];
@@ -199,7 +207,7 @@
     _numberbutton = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
     _numberbutton.titleLabel.font = [UIFont systemFontOfSize:10];
     [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number
-                      ] forState:UIControlStateNormal];
+                             ] forState:UIControlStateNormal];
     _numberbutton.clipsToBounds = YES;
     _numberbutton.layer.cornerRadius = 10;
     [_numberbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -224,7 +232,7 @@
     shopBtn.clipsToBounds = YES;
     shopBtn.layer.cornerRadius = 6;
     shopBtn.tag = 2002;
-   [shopBtn setImage:[UIImage imageNamed:@"lijigoumai"] forState:UIControlStateNormal];
+    [shopBtn setImage:[UIImage imageNamed:@"lijigoumai"] forState:UIControlStateNormal];
     [shopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [shopBtn addTarget:self action:@selector(shopPress:) forControlEvents:UIControlEventTouchUpInside];
     [_carView addSubview:shopBtn];
@@ -274,15 +282,16 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-     
+        
         if (dic[@"data"] !=[NSNull null]){
             [dictionary setDictionary:dic[@"data"]];
             NSDictionary *array = dic[@"data"];
             detailsModel *model = [detailsModel modelWithDic:array];
             [self.datas addObject:model];
         }
-         [hud hide:YES];
-        [self parameterData];
+        [hud hide:YES];
+        //[self parameterData];
+        [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
@@ -309,7 +318,7 @@
     else if(indexPath.section == 0&&indexPath.row == 1){
         return 90;
     }
-
+    
     else{
         return 60;
     }
@@ -320,11 +329,11 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-
+    
     return 10;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     
     static NSString *identity = @"cell";
     
@@ -386,50 +395,50 @@
         self.pageControl.currentPage = 0;
         //将分页控制控件加在本视图上面
         [cell addSubview:self.pageControl];
-
+        
     }
-     if (indexPath.row == 1 &&indexPath.section == 0) {
-         
-         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-         detailsModel *model = self.datas[indexPath.section];
-       // cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-         UILabel *description = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 100, 40)];
-         description.font = [UIFont systemFontOfSize:12];
-         //lb3.backgroundColor = [UIColor redColor];
-         description.lineBreakMode = NSLineBreakByWordWrapping;
-         description.numberOfLines = 0;
-         NSLog(@"%@",model.name);
+    if (indexPath.row == 1 &&indexPath.section == 0) {
+        
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        detailsModel *model = self.datas[indexPath.section];
+        // cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        UILabel *description = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 100, 40)];
+        description.font = [UIFont systemFontOfSize:12];
+        //lb3.backgroundColor = [UIColor redColor];
+        description.lineBreakMode = NSLineBreakByWordWrapping;
+        description.numberOfLines = 0;
+        NSLog(@"%@",model.name);
         // description.text = model.name;
-         description.text = @"Mac";
-         [cell addSubview:description];
-         
-         UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(description.frame)+5, 10, 20)];
-         priceFLb.font = [UIFont systemFontOfSize:15];
-         priceFLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-         priceFLb.text = @"￥";
-         [cell addSubview:priceFLb];
-         
-         SingleModel *single = [SingleModel sharedSingleModel];
-         UILabel *priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame)+2, priceFLb.frame.origin.y, 80, 20)];
-         priceLb.font = [UIFont systemFontOfSize:15];
-         priceLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-         NSLog(@"%@",single.price);
-         priceLb.text = [NSString stringWithFormat:@"%@",model.price];
-         
-         [cell addSubview:priceLb];
-         
-         ButtonImageWithTitle  *fenxBtb = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(250, 30, 50, 50)];
-         
-         [fenxBtb setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
-         [fenxBtb addTarget:self action:@selector(fenxClicked) forControlEvents:UIControlEventTouchUpInside];
-         [fenxBtb setTitle:@"分享" forState:UIControlStateNormal];
-         [fenxBtb setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-         fenxBtb.titleLabel.font = [UIFont systemFontOfSize:12];
-         fenxBtb.titleLabel.textAlignment = NSTextAlignmentCenter;
-         [cell addSubview:fenxBtb];
-         
-         
-         
+        description.text = @"Mac";
+        [cell addSubview:description];
+        
+        UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(description.frame)+5, 10, 20)];
+        priceFLb.font = [UIFont systemFontOfSize:15];
+        priceFLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
+        priceFLb.text = @"￥";
+        [cell addSubview:priceFLb];
+        
+        SingleModel *single = [SingleModel sharedSingleModel];
+        UILabel *priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame)+2, priceFLb.frame.origin.y, 80, 20)];
+        priceLb.font = [UIFont systemFontOfSize:15];
+        priceLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
+        NSLog(@"%@",single.price);
+        priceLb.text = [NSString stringWithFormat:@"%@",model.price];
+        
+        [cell addSubview:priceLb];
+        
+        ButtonImageWithTitle  *fenxBtb = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(250, 30, 50, 50)];
+        
+        [fenxBtb setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+        [fenxBtb addTarget:self action:@selector(fenxClicked) forControlEvents:UIControlEventTouchUpInside];
+        [fenxBtb setTitle:@"分享" forState:UIControlStateNormal];
+        [fenxBtb setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        fenxBtb.titleLabel.font = [UIFont systemFontOfSize:12];
+        fenxBtb.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [cell addSubview:fenxBtb];
+        
+        
+        
     }
     else if (indexPath.row == 0 && indexPath.section == 1) {
         cell.textLabel.text = @"商家对比";
@@ -443,12 +452,12 @@
         
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 10, 320, 60)];
         //[btn setTitle:@"图文详情" forState:UIControlStateNormal];
-       
-       // btn.backgroundColor = [UIColor redColor];
+        
+        // btn.backgroundColor = [UIColor redColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         [btn addTarget:self action:@selector(showMenuPopOver:) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:btn];
-
+        
         
     }
     else if (indexPath.row == 0 &&indexPath.section == 3) {
@@ -463,28 +472,28 @@
     }
     
     return cell;
-
+    
 }
 
 
 -(void)fenxClicked{
-
+    
     NSLog(@",,");
-//            //友盟分享的appKey
-//        [UMSocialData setAppKey:@"5211818556240bc9ee01db2f"];
-//    
-//    //设置微信AppId，设置分享url，默认使用友盟的网址
-//    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
-//    
-//    //设置手机QQ的AppId，指定你的分享url，若传nil，将使用友盟的网址
-//    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
+    //            //友盟分享的appKey
+    //        [UMSocialData setAppKey:@"5211818556240bc9ee01db2f"];
+    //
+    //    //设置微信AppId，设置分享url，默认使用友盟的网址
+    //    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
+    //
+    //    //设置手机QQ的AppId，指定你的分享url，若传nil，将使用友盟的网址
+    //    [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
     
     
- //        注意：要想进行qq微信分享，下面的设置是必须的
- //       设置微信的appId url设置为空，默认使用友盟的网址
-//        [UMSocialWechatHandler setWXAppId:@"wxd9a39c7122aa6516" url:nil];
-//        
-//        [UMSocialConfig setQQAppId:@"100424468" url:nil importClasses:@[[QQApiInterface class],[TencentOAuth class]]];
+    //        注意：要想进行qq微信分享，下面的设置是必须的
+    //       设置微信的appId url设置为空，默认使用友盟的网址
+    //        [UMSocialWechatHandler setWXAppId:@"wxd9a39c7122aa6516" url:nil];
+    //
+    //        [UMSocialConfig setQQAppId:@"100424468" url:nil importClasses:@[[QQApiInterface class],[TencentOAuth class]]];
     
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:@"5211818556240bc9ee01db2f"
@@ -519,16 +528,16 @@
         
         
     }
-   // [_tableView reloadData];
+    // [_tableView reloadData];
     
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     if (indexPath.row == 0 && indexPath.section == 1) {
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
-
+        
         ContrastViewController *contrast = [[ContrastViewController alloc]init];
         
         [self.navigationController pushViewController:contrast animated:NO];
@@ -550,7 +559,7 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
-
+    
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:PARAMETER,COMMON,model.paraId];
     NSLog(@"path--%@",path);
@@ -563,14 +572,17 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-    
+        
         if (dic[@"data"] !=[NSNull null]){
-            NSDictionary *array = dic[@"data"];
-            detailsModel *model = [detailsModel modelWithDic:array];
-            [self.datas addObject:model];
+            
+            detailsModel *model = [detailsModel modelWithDic:dic];
+            [self.parameterDatas addObject:model];
+            NSLog(@"%@",model.data[@"转速"]);
         }
+        model1 = self.parameterDatas[0];
+        NSLog(@"%@",model1);
         [hud hide:YES];
-        [_tableView reloadData];
+        
         //默认选中图文详情
         [self btnPress1];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -606,7 +618,7 @@
     else{
         [login.navigationController popViewControllerAnimated:NO];
         [self addData:NO];
-
+        
     }
 }
 -(void)ordercpntroller:(NSNumber *)orderid{
@@ -616,7 +628,7 @@
     OrderController *order = [[OrderController alloc]init];
     order.shopCartId = [NSString stringWithFormat:@"%@",orderid];
     [self.navigationController pushViewController:order animated:YES];
-
+    
 }
 #pragma mark  加入购物车网络请求
 -(void)addData:(BOOL)sucess{
@@ -635,12 +647,12 @@
         UIAlertView *alertview;
         if ([dic[@"status"] integerValue]==1) {
             if (sucess) {
-                 alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"去购物车" otherButtonTitles:@"继续逛逛", nil];
+                alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"去购物车" otherButtonTitles:@"继续逛逛", nil];
             }
             else{
                 [self.menuPopover removeFromSuperview];
                 [self ordercpntroller:dic[@"data"]];
-              
+                
             }
         }
         else{
@@ -682,6 +694,9 @@
     
 }
 -(void)btnPress1{
+    
+    
+    NSLog(@"%@",model1.data[@"转速"]);
     UILabel *goodsNameLb = [[UILabel alloc]initWithFrame:CGRectMake(5, 10, 50, 20)];
     goodsNameLb.text = @"商品名称:";
     goodsNameLb.font = [UIFont systemFontOfSize:10];
@@ -738,7 +753,7 @@
     [_detailView addSubview:sizeLb];
     
     UILabel *size = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(sizeLb.frame)-3, sizeLb.frame.origin.y, 80, 20)];
-    size.text = @"21.5-22英寸";
+    size.text = [NSString stringWithFormat:@"%@",model1.data[@"尺寸"]];
     size.font = [UIFont systemFontOfSize:10];
     size.textColor = [UIColor grayColor];
     [_detailView addSubview:size];
@@ -817,24 +832,24 @@
         
         [_detailView addSubview:imageView];
     }
-
+    
     else if (btn.tag == 1002) {
         UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell_04"]];
         imageView.frame = CGRectMake(0, -140, 320, 300);
         imageView.backgroundColor = [UIColor clearColor];
         [_detailView addSubview:imageView];
     }
-   
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     
     
-
+    
     
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
-   
+    
     
     
 }
@@ -854,13 +869,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

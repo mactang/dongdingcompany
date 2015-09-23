@@ -21,6 +21,7 @@
         self.productId = dic[@"productId"];
         self.bparterId = dic[@"bparterId"];
         self.name = dic[@"name"];
+        self.data = dic[@"data"];
     }
     
     return self;

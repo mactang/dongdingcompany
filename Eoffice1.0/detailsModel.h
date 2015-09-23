@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSString *bparterId;
 @property (nonatomic, strong) NSString *imgUrl;
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSDictionary *data;
 +(detailsModel *)modelWithDic:(NSDictionary *)dic;
 -(id)initWithDic:(NSDictionary *)dic;
 @end
