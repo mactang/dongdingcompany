@@ -61,6 +61,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self footviewinterface];
     [self orderlistrequest];
 }
@@ -68,6 +69,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     //payWay = @"";
+//    payWay = @"ddsf";
+//    
+//    invoice = @"fdsdsf";
+//    
+//    dispatch = @"dsfdsf";
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *value = [ud objectForKey:@"payWay"];
     NSString *value1 = [ud objectForKey:@"invoice"];
