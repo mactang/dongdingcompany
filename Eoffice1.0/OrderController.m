@@ -67,7 +67,7 @@
 }
 -(void)initerfacedata{
     self.view.backgroundColor = [UIColor whiteColor];
-    
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
     //payWay = @"";
 //    payWay = @"ddsf";
 //    
