@@ -563,7 +563,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-    
+        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]){
             NSDictionary *array = dic[@"data"];
             detailsModel *model = [detailsModel modelWithDic:array];

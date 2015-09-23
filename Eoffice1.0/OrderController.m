@@ -66,7 +66,7 @@
 }
 -(void)initerfacedata{
     self.view.backgroundColor = [UIColor whiteColor];
-    
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
     //payWay = @"";
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *value = [ud objectForKey:@"payWay"];
