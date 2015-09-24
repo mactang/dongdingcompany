@@ -45,6 +45,7 @@
     NSString *invoice;
     NSString *dispatch;
     NSString *paywayCount ;
+    NSString *addressH;
     
 }
 -(NSMutableArray *)datas{
@@ -61,7 +62,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     [self footviewinterface];
     [self orderlistrequest];
 }
@@ -69,21 +70,37 @@
     self.view.backgroundColor = [UIColor whiteColor];
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
     //payWay = @"";
-//    payWay = @"ddsf";
-//    
-//    invoice = @"fdsdsf";
-//    
-//    dispatch = @"dsfdsf";
+    
+    
+    invoice = @"fdsdsf";
+    
+    dispatch = @"dsfdsf";
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *value = [ud objectForKey:@"payWay"];
     NSString *value1 = [ud objectForKey:@"invoice"];
     NSString *value2 = [ud objectForKey:@"dispatch"];
+    if (value != nil) {
+        payWay = value;
+    }else{
     
-    payWay = value;
+        payWay = @"";
+    }
+    if (value1 != nil) {
+        invoice = value1;
+    }else{
+        
+        invoice = @"";
+    }
+    if (value2 != nil) {
+        dispatch = value2;
+    }else{
+        
+        dispatch = @"";
+    }
     
-    invoice = value1;
     
-    dispatch = value2;
+    
+    
     
     TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -170,7 +187,12 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section==0) {
-         return 100;
+        if ([addressH isEqualToString: @"hight"]) {
+            return 50;
+        }else{
+        return 100;
+        }
+        
     }
     return 5;
 }
@@ -188,42 +210,54 @@
     if (!control) {
         control = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:headerIndetifier];
         if (section==0) {
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
+            UIView *view = [[UIView alloc]init];
             view.backgroundColor = [UIColor whiteColor];
             [control addSubview:view];
-//            NSLog(@"%@",self.datas[section]);
+            NSLog(@"%lu",(unsigned long)self.datas.count);
             NSLog(@"*********");
-            AddressModel *model = self.datas[section];
-            SingleModel *sing = [SingleModel sharedSingleModel];
-            sing.addressId = model.addressId;
+            if (self.datas.count != 0) {
+                view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
+                AddressModel *model = self.datas[section];
+                SingleModel *sing = [SingleModel sharedSingleModel];
+                sing.addressId = model.addressId;
+                
+                UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 40, 20)];
+                [btn setTitle:@"收货人 :" forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                btn.titleLabel.font = [UIFont systemFontOfSize:10];
+                [view addSubview:btn];
+                
+                UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame), 20, 100, 20)];
+                lb1.text = model.receiver;
+                [view addSubview:lb1];
+                
+                UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame), 20, 130, 20)];
+                lb2.text = model.telphone;
+                [view addSubview:lb2];
+                
+                UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(btn.frame)+5, 40, 20)];
+                [btn1 setTitle:@"地址 :" forState:UIControlStateNormal];
+                [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                btn1.titleLabel.font = [UIFont systemFontOfSize:10];
+                [view addSubview:btn1];
+                
+                addressLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), CGRectGetMaxY(btn.frame)+2, 250, 40)];
+                addressLb.font = [UIFont systemFontOfSize:12];
+                //lb3.backgroundColor = [UIColor redColor];
+                addressLb.lineBreakMode = NSLineBreakByWordWrapping;
+                addressLb.numberOfLines = 0;
+                addressLb.text = model.address;
+                [view addSubview:addressLb];
+            }else{
             
-            UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 40, 20)];
-            [btn setTitle:@"收货人 :" forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            btn.titleLabel.font = [UIFont systemFontOfSize:10];
-            [view addSubview:btn];
+                view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
+                
+                UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(12, 15, 100, 20)];
+                lb1.text = @"请添加收获地址";
+                lb1.font = [UIFont systemFontOfSize:13];
+                [view addSubview:lb1];
+            }
             
-            UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame), 20, 100, 20)];
-            lb1.text = model.receiver;
-            [view addSubview:lb1];
-            
-            UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame), 20, 130, 20)];
-            lb2.text = model.telphone;
-            [view addSubview:lb2];
-            
-            UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(btn.frame)+5, 40, 20)];
-            [btn1 setTitle:@"地址 :" forState:UIControlStateNormal];
-            [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            btn1.titleLabel.font = [UIFont systemFontOfSize:10];
-            [view addSubview:btn1];
-            
-            addressLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), CGRectGetMaxY(btn.frame)+2, 250, 40)];
-            addressLb.font = [UIFont systemFontOfSize:12];
-            //lb3.backgroundColor = [UIColor redColor];
-            addressLb.lineBreakMode = NSLineBreakByWordWrapping;
-            addressLb.numberOfLines = 0;
-            addressLb.text = model.address;
-            [view addSubview:addressLb];
             
             UIButton *headerbutton = [UIButton buttonWithType:UIButtonTypeCustom];
             headerbutton.frame  = view.bounds;
@@ -231,6 +265,17 @@
             [headerbutton addTarget:self action:@selector(headerbuttonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [control addSubview:headerbutton];
             
+            UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(290, 15, 20, 20)];
+            [btn1 setImage:[UIImage imageNamed:@"youzhixiang"] forState:UIControlStateNormal];
+            btn1.titleLabel.font = [UIFont systemFontOfSize:10];
+           // [view addSubview:btn1];
+            
+            UIImageView *_weiboContentTextView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-30, 15, 15, 15)];
+            
+            [_weiboContentTextView setImage:[UIImage imageNamed:@"youzhixiang"]];
+            _weiboContentTextView.transform=CGAffineTransformMakeRotation(M_PI);
+            [view addSubview:_weiboContentTextView];
+
         }
        
     }
@@ -251,16 +296,22 @@
             cell.textLabel.font = [UIFont systemFontOfSize:15];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
+        
             NSLog(@"%lu",(unsigned long)self.datas.count);
         
            cell.selectionStyle = UITableViewCellSelectionStyleNone;
            NSArray *message = @[@"配送方式",@"支付方式",@"发票方式",];
-           //NSArray *thewhyarray = @[dispatch,payWay,invoice];
+           NSArray *thewhyarray = @[dispatch,payWay,invoice];
+        
+        
         if (indexPath.row!=3) {
              [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
             cell.textLabel.text = message[indexPath.row];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            //cell.detailTextLabel.text = thewhyarray[indexPath.row];
+            cell.detailTextLabel.text = thewhyarray[indexPath.row];
             
         }
         else{
@@ -289,7 +340,7 @@
         
         OrderTableViewCell *cell = [OrderTableViewCell cellWithTableView:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.dic = self.orderlist[indexPath.row];
+        cell.dic = self.orderlist[indexPath.section-1];
         return cell;
         
     }
@@ -297,12 +348,13 @@
 #pragma mark 订单列表网络请求
 -(void)orderlistrequest{
     
+    NSLog(@"%@",self.shopCartId);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:SUBMITORDER,COMMON,model.userkey,[NSString stringWithFormat:@"%@",self.shopCartId]];
-    
+    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
@@ -329,6 +381,7 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:ADDRESS,COMMON,model.jsessionid,model.userkey];
+    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
@@ -344,6 +397,8 @@
 
             }
 
+        }else{
+        addressH = @"hight";
         }
         [hud hide:YES];
         [self initerfacedata];

@@ -447,7 +447,7 @@
         
         ShopCarModel *model = self.datas[indexPath.row/2];
         
-        cartIdArray[indexPath.row/2] = model.cartId;
+       // cartIdArray[indexPath.row/2] = model.cartId;
        
         chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         chooseBtn.frame = CGRectMake(10, 30, 20, 20);
@@ -824,6 +824,10 @@
 }
 
 - (void)isPublicBtnPress:(UIButton*)btn{
+    
+    ShopCarModel *model = self.datas[(btn.tag-50)/2];
+    
+    [cartIdArray addObject:model.cartId];
     
     NSLog(@"%ld",(long)btn.tag);
     NSString *string = [NSString stringWithFormat:@"%ld",(long)btn.tag-50];
