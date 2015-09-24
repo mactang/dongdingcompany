@@ -34,7 +34,6 @@
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         _currentNumber = 1;
         self.imagiew = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
-        self.imagiew.image = [UIImage imageNamed:@"tu1"];
         [self.contentView addSubview:self.imagiew];
         
         
