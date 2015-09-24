@@ -609,8 +609,7 @@
             
                 countModel = self.datas[0];
             }
-            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-            NSString *value = [ud objectForKey:@"count"];
+
             
             
             
@@ -618,7 +617,8 @@
         _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
         _numberLb1.backgroundColor = [UIColor whiteColor];
         
-            changeCount = [NSString stringWithFormat:@"%@",countModel.count];
+        changeCount = [NSString stringWithFormat:@"%@",countBL.text];
+    
         [_numberLb1 setText:changeCount];
         [_numberLb1 setTextColor:[UIColor blackColor]];
         _numberLb1.clipsToBounds = YES;
@@ -727,8 +727,9 @@
 
 -(void)editorPress:(UIButton *)btn{
     
-   
+  
     
+    changeCount = [NSString stringWithFormat:@"%@",countBL.text];
     if (currentbutton==btn) {
         
         invoiceSelector = !invoiceSelector;
@@ -741,9 +742,7 @@
         NSLog(@"%@",btn.titleLabel.text);
         if (!invoiceSelector) {
              [self editorData];
-            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-            NSString *string = [NSString stringWithFormat:@"%@",_numberLb1.text];
-            [ud setObject:string forKey:@"count"];
+           
         }
                 return;
     }
