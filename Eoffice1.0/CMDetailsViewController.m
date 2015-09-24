@@ -139,7 +139,7 @@
     // Do any additional setup after loading the view.
 }
 -(void)initaliAppreance{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-100) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-50) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     // _tableView.showsVerticalScrollIndicator = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -149,11 +149,11 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    _detailView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-100, SCREEN_WIDTH, 480)];
+    _detailView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-114, SCREEN_WIDTH, 480)];
     _detailView.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     [_tableView addSubview:_detailView];
     
-    _carView = [[UIView alloc]initWithFrame:CGRectMake(0, 450, 320, 100)];
+    _carView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-114, SCREEN_HEIGHT, 50)];
     _carView.backgroundColor = [UIColor whiteColor];
     
     [self.view addSubview:_carView];
@@ -312,13 +312,13 @@
     
     if (indexPath.section == 3&&indexPath.row == 0) {
         if ([model1.data allKeys].count==1||[model1.data allKeys].count==2) {
-            return 50.5+60;
+            return 50.5+55;
         }
         if (([model1.data allKeys].count)%2==0) {
             return (([model1.data allKeys] .count)/2)*45+60;
         }
         else{
-            return (([model1.data allKeys].count)/2)*45+40+60;
+            return (([model1.data allKeys].count)/2)*45+50+55;
         }
 
     }
