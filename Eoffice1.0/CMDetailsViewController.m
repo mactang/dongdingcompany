@@ -203,7 +203,6 @@
     lb1.textColor = [UIColor whiteColor];
     [shopCarBtn addSubview:lb1];
     
-    
     _numberbutton = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
     _numberbutton.titleLabel.font = [UIFont systemFontOfSize:10];
     [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number
