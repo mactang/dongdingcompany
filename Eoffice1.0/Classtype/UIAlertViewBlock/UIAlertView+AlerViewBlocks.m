@@ -33,9 +33,9 @@ static alerBlocks _alertViewBlocks;
     /**
      *  调用blocks
      */
-    _alertViewBlocks(buttonIndex);
-    
-    
+    if (buttonIndex==0) {
+        _alertViewBlocks(buttonIndex);
+    }
 }
 
 

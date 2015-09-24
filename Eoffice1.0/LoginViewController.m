@@ -388,13 +388,13 @@
         if (error.code==-1004) {
            
             [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接服务器失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-                
+                [self clickLogin];
             }];
         
         }
         if (error.code==-1001) {
             [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-                
+                [self clickLogin];
             }];
 
         }
