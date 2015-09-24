@@ -14,6 +14,7 @@
 #import "ShopCarModel.h"
 #import "OrderController.h"
 #import "ShopCartId.h"
+#import "CMDetailsViewController.h"
 @interface ShoppingCarController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
@@ -61,6 +62,7 @@
     NSString *count;
     
     NSString *changeCount;
+    BOOL isAllOrder;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -347,6 +349,7 @@
 }
 
 - (void)allSelect:(UIButton*)sender{
+    
     NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
     for (int i = 0; i < [anArrayOfIndexPath count]; i++) {
         
@@ -356,11 +359,19 @@
             NSLog(@"btn--%@",btn);
             btn.selected =! btn.selected;
         }
+        
+        ShopCarModel *model = self.datas[i/2];
+        
+        cartIdArray[i/2] = model.cartId;
     }
-   // if (sender.selected == YES) {
+        allBtn.selected = !allBtn.selected;
+    if (sender.selected == YES) {
+        
         isAllDelete = YES;
-   // }
-    allBtn.selected = !allBtn.selected;
+        
+      
+    }
+
     
 }
 - (void)downData{
@@ -447,7 +458,10 @@
         
         ShopCarModel *model = self.datas[indexPath.row/2];
         
-       // cartIdArray[indexPath.row/2] = model.cartId;
+        if (isAllOrder == YES) {
+           cartIdArray[indexPath.row/2] = model.cartId;
+        }
+        
        
         chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         chooseBtn.frame = CGRectMake(10, 30, 20, 20);
@@ -820,6 +834,17 @@
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    ShopCarModel *model = self.datas[indexPath.row/2];
+    SingleModel *sing = [SingleModel sharedSingleModel];
+    sing.goodsId = model.goodsId;
+    NSLog(@"%@",model.goodsId);
+    sing.paraId = @"123";
+    sing.cPartnerId = @"443";
+    
+    CMDetailsViewController *cmd = [[CMDetailsViewController alloc]init];
+    [self.navigationController pushViewController:cmd animated:YES];
+    
     
 }
 
