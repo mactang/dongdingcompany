@@ -1649,8 +1649,8 @@
 		9638F0B71B900F4700882D8C /* manageAddress */ = {
 			isa = PBXGroup;
 			children = (
-				9638F0B91B900F4700882D8C /* AddressViewController.m */,
 				9638F0B81B900F4700882D8C /* AddressViewController.h */,
+				9638F0B91B900F4700882D8C /* AddressViewController.m */,
 				9638F0BE1B900FD400882D8C /* ManageAddressCell.h */,
 				9638F0BF1B900FD400882D8C /* ManageAddressCell.m */,
 				61FA8A7B1B9D86FD0090507E /* OrederManagerCell.h */,

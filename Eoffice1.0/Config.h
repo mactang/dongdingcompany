@@ -39,8 +39,8 @@
 //用户注册界面
 #define VERIFICATION 1010
 
-#define COMMON @"http://120.26.124.171/phone/"
-//#define COMMON @"http://192.168.0.65:8080/phone/"
+//#define COMMON @"http://120.26.124.171/phone/"
+#define COMMON @"http://192.168.0.65:8080/phone/"
 
 //#define OFFICE @"http://121.43.193.193"
 
@@ -102,7 +102,7 @@
 #define  RETUNGOODSEXPLAIN @"%@return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
 #define  BACKBEASON @"%@return!getReasonList.action;jsessionid=%@?userkey=%@"
 //默认地址设置
-#define DEFAULTADDREDD  @"%@order!setDefalutAdress.action;id=%@?userkey=%@"
+#define DEFAULTADDREDD  @"%@order!setDefalutAdress.action?id=%@&userkey=%@"
 
 
 #define REGISTERVERIF @"%@sms!getPhoneSms.action"

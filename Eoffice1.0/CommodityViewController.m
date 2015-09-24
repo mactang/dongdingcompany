@@ -19,6 +19,7 @@
 #import "CMDetailsViewController.h"
 #import "ButtonImageWithTitle.h"
 #import "TarBarButton.h"
+#import "UIAlertView+AlerViewBlocks.h"
 @interface CommodityViewController ()
 
 @property(nonatomic, strong)UISearchBar *searchBar;
@@ -40,9 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self data];
     self.view.backgroundColor = [UIColor whiteColor];
-    
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
@@ -50,7 +49,7 @@
     leftButton.frame = CGRectMake(0, 0, 20, 20);
     [leftButton setTitle:@"办公设备" forState:UIControlStateNormal];
     [leftButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    leftButton.font = [UIFont systemFontOfSize:14];
+    leftButton.titleLabel.font = [UIFont systemFontOfSize:14];
     // ligthButton.backgroundColor = [UIColor redColor];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
@@ -69,7 +68,7 @@
     self.myscrollview.showsVerticalScrollIndicator = YES;
     self.myscrollview.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.myscrollview];
-
+    
     self.searchBar.backgroundColor = [UIColor colorWithRed:232./255 green:232./255 blue:232./255 alpha:1];
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"输入商家、分类和产品";
@@ -85,7 +84,7 @@
             break;
         }
     }
-   
+    
     for (UIView* subview in [[self.searchBar.subviews lastObject] subviews]) {
         if ([subview isKindOfClass:[UITextField class]]) {
             UITextField *textField = (UITextField*)subview;
@@ -96,8 +95,8 @@
     self.searchBar.layer.masksToBounds = YES;
     self.searchBar.layer.cornerRadius = 15;
     
-//    self.searchBar.layer.borderColor = [[UIColor blackColor]CGColor];
-//    self.searchBar.layer.borderWidth = 1;
+    [self data];
+    
 
 }
 -(void)leftItemClicked{
@@ -120,6 +119,10 @@
 }
 -(void)data{
     
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+
     NSString *path= [NSString stringWithFormat:COMMODITYMIDDLE,COMMON];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -129,6 +132,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+
         NSArray *array = dic[@"data"];
         NSLog(@"array--%@",array);
         for(NSDictionary *subDict in array)
@@ -138,7 +142,6 @@
             NSLog(@"model.name--%@",self.datas);
         }
         //刷新表
-        
         for (NSInteger i=0; i<self.datas.count; i++) {
             CategoryBig *model = [[CategoryBig alloc]init];
             model = self.datas[i];
@@ -158,9 +161,21 @@
                 [self imageviewdata:button];
             }
         }
-        
+        [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
+        [hud hide:YES];
+        if (error.code==-1004) {
+            
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接服务器失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+                [self data];
+            }];
+            
+        }
+        if (error.code==-1001) {
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+                [self data];
+            }];
+        }
     }];
 }
 -(void)imageviewdata:(UIButton *)buttonframe{
