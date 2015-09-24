@@ -59,6 +59,8 @@
     NSString *cartId;
     NSMutableArray *versionCount;
     NSString *count;
+    
+    NSString *changeCount;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -607,10 +609,17 @@
             
                 countModel = self.datas[0];
             }
-        
+
+            
+            
+            
+
         _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
         _numberLb1.backgroundColor = [UIColor whiteColor];
-        [_numberLb1 setText:[NSString stringWithFormat:@"%@",countModel.count]];
+        
+        changeCount = [NSString stringWithFormat:@"%@",countBL.text];
+    
+        [_numberLb1 setText:changeCount];
         [_numberLb1 setTextColor:[UIColor blackColor]];
         _numberLb1.clipsToBounds = YES;
         _numberLb1.layer.cornerRadius = 3;
@@ -718,8 +727,9 @@
 
 -(void)editorPress:(UIButton *)btn{
     
-   
+  
     
+    changeCount = [NSString stringWithFormat:@"%@",countBL.text];
     if (currentbutton==btn) {
         
         invoiceSelector = !invoiceSelector;
@@ -732,6 +742,7 @@
         NSLog(@"%@",btn.titleLabel.text);
         if (!invoiceSelector) {
              [self editorData];
+           
         }
                 return;
     }
