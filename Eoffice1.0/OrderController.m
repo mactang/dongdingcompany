@@ -191,7 +191,8 @@
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
             view.backgroundColor = [UIColor whiteColor];
             [control addSubview:view];
-            NSLog(@"%@",self.datas[section]);
+//            NSLog(@"%@",self.datas[section]);
+            NSLog(@"*********");
             AddressModel *model = self.datas[section];
             SingleModel *sing = [SingleModel sharedSingleModel];
             sing.addressId = model.addressId;
@@ -254,12 +255,12 @@
         
            cell.selectionStyle = UITableViewCellSelectionStyleNone;
            NSArray *message = @[@"配送方式",@"支付方式",@"发票方式",];
-           NSArray *thewhyarray = @[dispatch,payWay,invoice];
+           //NSArray *thewhyarray = @[dispatch,payWay,invoice];
         if (indexPath.row!=3) {
              [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
             cell.textLabel.text = message[indexPath.row];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            cell.detailTextLabel.text = thewhyarray[indexPath.row];
+            //cell.detailTextLabel.text = thewhyarray[indexPath.row];
             
         }
         else{

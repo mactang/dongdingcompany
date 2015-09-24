@@ -116,6 +116,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]){
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+}
     number = 0;
     dictionary = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor grayColor];
@@ -132,12 +135,11 @@
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
     [self data];
-    [self parameterData];
-    //商品参数
-    _immgeView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"1.jpg"]];
-    _immgeView.backgroundColor = [UIColor greenColor];
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+
+    // Do any additional setup after loading the view.
+}
+-(void)initaliAppreance{
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-100) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     // _tableView.showsVerticalScrollIndicator = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -147,7 +149,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
-    _detailView = [[UIView alloc]initWithFrame:CGRectMake(0, 470, 320, 480)];
+    _detailView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-100, SCREEN_WIDTH, 480)];
     _detailView.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     [_tableView addSubview:_detailView];
     
@@ -156,11 +158,8 @@
     
     [self.view addSubview:_carView];
     [self shopTabBar];
-    
-    
-    // Do any additional setup after loading the view.
-}
 
+}
 -(void)leftItemClicked{
     
     self.navigationController.navigationBar.translucent = YES;
@@ -283,7 +282,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
+        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]){
             [dictionary setDictionary:dic[@"data"]];
             NSDictionary *array = dic[@"data"];
@@ -292,7 +291,8 @@
         }
         [hud hide:YES];
         //[self parameterData];
-        [_tableView reloadData];
+                 [self parameterData];
+//        [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
@@ -300,7 +300,7 @@
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4*self.datas.count;
+    return 4;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -311,7 +311,16 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 3&&indexPath.row == 0) {
-        return 480;
+        if ([model1.data allKeys].count==1||[model1.data allKeys].count==2) {
+            return 50.5+60;
+        }
+        if (([model1.data allKeys].count)%2==0) {
+            return (([model1.data allKeys] .count)/2)*45+60;
+        }
+        else{
+            return (([model1.data allKeys].count)/2)*45+40+60;
+        }
+
     }
     else if(indexPath.section == 0&&indexPath.row == 0){
         return 170;
@@ -330,8 +339,12 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section==3) {
+        return 0.5;
+    }
     
     return 10;
+   
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -471,12 +484,8 @@
         [segmentedControl2 addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
         [cell addSubview:segmentedControl2];
     }
-    
     return cell;
-    
 }
-
-
 -(void)fenxClicked{
     
     NSLog(@",,");
@@ -583,7 +592,8 @@
         model1 = self.parameterDatas[0];
         NSLog(@"%@",model1);
         [hud hide:YES];
-        
+        [self initaliAppreance];
+        [_tableView reloadData];
         //默认选中图文详情
         [self btnPress1];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -716,9 +726,10 @@
         [_detailView addSubview:label];
         
         if (i!=1+(i/2)*2) {
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(3, 50+(i/2)*44, SCREEN_WIDTH-10, 0.5)];
+            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(3, 50+(i/2)*45, SCREEN_WIDTH-6, 0.5)];
             view.backgroundColor = [UIColor whiteColor];
             [_detailView addSubview:view];
+            _detailView.frame = CGRectMake(0, SCREEN_HEIGHT-100, SCREEN_WIDTH, 50+(i/2)*45);
         }
         
     }
