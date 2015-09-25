@@ -21,7 +21,7 @@
 @property(nonatomic, strong)UIButton *numberBtn1;
 @property(nonatomic,strong)UILabel *numberLb1;
 @property (strong,nonatomic)UIButton * tmpBtn;
-@property(nonatomic,assign)NSString *cartId;
+@property(nonatomic,copy)NSString *cartId;
 @property (strong,nonatomic)UIButton *selectButton;
 @end
 
@@ -443,7 +443,15 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
+//    static NSString *ID =@"Cell";
+//    ManageAddressCell *cell = [tableview dequeueReusableCellWithIdentifier:ID];
+//    if (cell == nil) {
+//        cell = [[ManageAddressCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+//    }
+//    return cell;
+//}
+
+
     static NSString *identity = @"cell";
     
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
@@ -779,9 +787,6 @@
 //        
 //        }
     [_tableView reloadRowsAtIndexPaths:@[selectIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    
-    
     
 }
 

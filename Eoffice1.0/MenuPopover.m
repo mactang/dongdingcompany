@@ -383,9 +383,7 @@
     else{
         if (_delegate &&[_delegate respondsToSelector:@selector(pushlogincontroller:shopnumber:)]) {
             [_delegate pushlogincontroller:NO shopnumber:_currentNumber];
-        
     }
-   
   }
 }
 -(NSInteger)numBtnPress:(UIButton *)btn{

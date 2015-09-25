@@ -110,7 +110,7 @@
 #define ORDERCLASSIFY @"%@order!getList.action;jsessionid=%@?userkey=%@"
 
 //信息反馈
-#define FEEDBACK @"%@feedback!add.action;jsessionid=%@?userkey=%@"
+#define FEEDBACK @"%@feedback!add.action;userkey=%@&content=%@"
 
 #define  RETUNGOODSSTATE @"%@replace!returnStatus.action;jsessionid=%@?userkey=%@&returnId=%@"
 

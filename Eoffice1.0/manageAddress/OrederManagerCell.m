@@ -37,19 +37,24 @@
         phonelabel.font = [UIFont systemFontOfSize:17];
         [self.contentView addSubview:phonelabel];
         
+        self.clickbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.clickbutton.frame = CGRectMake(SCREEN_WIDTH-40, 40, 20, 20);
+        [self.clickbutton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        [self.clickbutton setImage:[UIImage imageNamed:@"大勾"] forState:UIControlStateSelected];
+        [self.clickbutton addTarget:self action:@selector(checkPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:self.clickbutton];
+
+        
         detailaddresslabel = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(titlelabel), widgetFrameY(titlelabel)+5+widgetboundsHeight(titlelabel), SCREEN_WIDTH-35, 40)];
         detailaddresslabel.font = [UIFont systemFontOfSize:13];
         detailaddresslabel.numberOfLines = 2;
         [self.contentView addSubview:detailaddresslabel];
         
-       
-        
+
         whetherdefault = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.clickbutton.frame)+3, 80, 100, 40)];
         whetherdefault.font = [UIFont systemFontOfSize:13];
         whetherdefault.textColor = [UIColor blackColor];
         [self.contentView addSubview:whetherdefault];
-        
-        
         
     }
     return self;

@@ -758,8 +758,8 @@
 		61EBC6CE1B68E9D2002D0373 /* ExchangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeViewController.m; sourceTree = "<group>"; };
 		61FA8A781B9D80090090507E /* OrderAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderAddressViewController.h; sourceTree = "<group>"; };
 		61FA8A791B9D80090090507E /* OrderAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderAddressViewController.m; sourceTree = "<group>"; };
-		61FA8A7B1B9D86FD0090507E /* OrederManagerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrederManagerCell.h; sourceTree = "<group>"; };
-		61FA8A7C1B9D86FD0090507E /* OrederManagerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrederManagerCell.m; sourceTree = "<group>"; };
+		61FA8A7B1B9D86FD0090507E /* OrederManagerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrederManagerCell.h; path = manageAddress/OrederManagerCell.h; sourceTree = "<group>"; };
+		61FA8A7C1B9D86FD0090507E /* OrederManagerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OrederManagerCell.m; path = manageAddress/OrederManagerCell.m; sourceTree = "<group>"; };
 		791DCCBB2AD078D5D692C874 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9638F0B81B900F4700882D8C /* AddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressViewController.h; sourceTree = "<group>"; };
 		9638F0B91B900F4700882D8C /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
@@ -1277,6 +1277,8 @@
 				969E18F21BAE826E001DE59E /* OrderTableViewCell.m */,
 				61FA8A781B9D80090090507E /* OrderAddressViewController.h */,
 				61FA8A791B9D80090090507E /* OrderAddressViewController.m */,
+				61FA8A7B1B9D86FD0090507E /* OrederManagerCell.h */,
+				61FA8A7C1B9D86FD0090507E /* OrederManagerCell.m */,
 				61AF90201BAE7CE2007BBDAF /* OrderSuccessController.h */,
 				61AF90211BAE7CE2007BBDAF /* OrderSuccessController.m */,
 				61A0A27E1B5918FE00C4496A /* PayViewController.h */,
@@ -1653,8 +1655,6 @@
 				9638F0B91B900F4700882D8C /* AddressViewController.m */,
 				9638F0BE1B900FD400882D8C /* ManageAddressCell.h */,
 				9638F0BF1B900FD400882D8C /* ManageAddressCell.m */,
-				61FA8A7B1B9D86FD0090507E /* OrederManagerCell.h */,
-				61FA8A7C1B9D86FD0090507E /* OrederManagerCell.m */,
 			);
 			path = manageAddress;
 			sourceTree = "<group>";

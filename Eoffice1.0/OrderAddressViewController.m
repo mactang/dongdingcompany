@@ -43,7 +43,6 @@
     }
     return _datas;
 }
-@synthesize regularText = _regularText;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.signbutton = 0;
@@ -152,7 +151,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     OrederManagerCell *cell = [OrederManagerCell cellWithTableView:tableView];
-    AddressModel *model = self.datas[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.tag = 1000;
     cell.buttontag = indexPath.row;
@@ -162,24 +160,7 @@
         cell.clickbutton.selected = YES;
         anotherButton = cell.clickbutton;
     }
-    if ([_regularText isEqualToString:model.address]) {
-        
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        
-        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-    }
-    
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(280, 20, 30, 30)];
-    [btn setImage:[UIImage imageNamed:@"大勾"] forState:UIControlStateSelected];
-    [btn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    
     return cell;
-}
--(void)btnPress:(UIButton *)btn{
- 
-    btn.selected =! btn.selected;
 }
 -(void)checkPressed:(UIButton *)button{
     NSLog(@"++++++++");
