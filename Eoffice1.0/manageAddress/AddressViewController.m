@@ -89,20 +89,27 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,COMMON,self.dataarray[self.signbutton][@"addressId"],model.userkey];
-    NSLog(@"%@",path);
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         [hud hide:YES];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic[@"info"]);
-        [_tableView reloadData];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if ([dic[@"status"] integerValue]==1) {
+            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            alterview.tag=90;
+            [alterview show];
+        }
+        else{
+            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"点击重试" otherButtonTitles:@"取消",nil];
+            alterview.tag = 80;
+            alterview.delegate = self;
+            [alterview show];
+        }
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
     }];
-
 
 }
 - (void)downData{
@@ -118,12 +125,12 @@
         [hud hide:YES];
         [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
+
         [self.dataarray removeAllObjects];
         [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]) {
             for (NSInteger i=0; i<[dic[@"data"]count]; i++) {
-                if (dic[@"data"][i][@"defaultAD"] !=[NSNull class]) {
+                if (![dic[@"data"][i][@"defaultAD"] isKindOfClass:[NSNull class]] ) {
                     if (![dic[@"data"][i][@"defaultAD"]isEqualToString:@"N"]) {
                         self.signbutton = i;
                     }
@@ -260,20 +267,30 @@
 //    
 //}
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    if (buttonIndex == 1) {
-        NSLog(@"....");
-    }else{
-        
-         NSIndexPath *path = [NSIndexPath indexPathForRow:_btnNumber inSection:0];
-        [self.datas removeObjectAtIndex:_btnNumber];
-        [self.dataarray removeObjectAtIndex:_btnNumber];
-        [_tableView beginUpdates];
-        [_tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
-        [_tableView endUpdates];
-        [self deleteData];
-        
+    if (alertView.tag==90) {
+        return;
     }
+    if (alertView.tag==80) {
+        if (buttonIndex==0) {
+            [self clickTryagain];
+        }
+    }
+    else{
+        if (buttonIndex == 1) {
+            NSLog(@"....");
+        }else{
+            
+            NSIndexPath *path = [NSIndexPath indexPathForRow:_btnNumber inSection:0];
+            [self.datas removeObjectAtIndex:_btnNumber];
+            [self.dataarray removeObjectAtIndex:_btnNumber];
+            [_tableView beginUpdates];
+            [_tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
+            [_tableView endUpdates];
+            [self deleteData];
+        }
+
+    }
+    
 }
 -(void)deleteData{
     
@@ -325,6 +342,36 @@
     [self downData];
     
 }
+-(void)clickTryagain{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,COMMON,self.dataarray[self.signbutton][@"addressId"],model.userkey];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        [hud hide:YES];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if ([dic[@"status"] integerValue]==1) {
+            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            alterview.tag = 80;
+            [alterview show];
+        }
+        else{
+            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"点击重试" otherButtonTitles:@"取消",nil];
+            alterview.tag = 80;
+            alterview.delegate = self;
+            [alterview show];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"%@",error);
+    }];
+    
+}
+
 ////继承该方法时,左右滑动会出现删除按钮(自定义按钮),点击按钮时的操作
 //- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
 //    

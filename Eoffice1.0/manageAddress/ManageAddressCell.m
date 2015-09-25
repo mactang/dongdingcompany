@@ -70,12 +70,14 @@
 //   if (![model.defaultsign isKindOfClass:[NSNull class]]) {
 //            self.clickbutton.selected = YES;
 //    }
-    if ([model.defaultsign isEqualToString:@"Y"]) {
-        self.clickbutton.selected = YES;
-    }else{
-        self.clickbutton.selected = NO;
+    if (![model.defaultsign isKindOfClass:[NSNull class]]) {
+        if ([model.defaultsign isEqualToString:@"Y"]) {
+            self.clickbutton.selected = YES;
+        }else{
+            self.clickbutton.selected = NO;
+        }
     }
-    titlelabel.text = model.receiver;
+        titlelabel.text = model.receiver;
     if ([model.telphone isKindOfClass:[NSNull class]]) {
         phonelabel.text = @"暂无";
     }else{

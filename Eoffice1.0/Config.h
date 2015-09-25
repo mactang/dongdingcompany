@@ -102,7 +102,7 @@
 #define  RETUNGOODSEXPLAIN @"%@return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
 #define  BACKBEASON @"%@return!getReasonList.action;jsessionid=%@?userkey=%@"
 //默认地址设置
-#define DEFAULTADDREDD  @"%@order!setDefalutAdress.action;id=%@?userkey=%@"
+#define DEFAULTADDREDD  @"%@order!setDefalutAdress.action?id=%@&userkey=%@"
 
 
 #define REGISTERVERIF @"%@sms!getPhoneSms.action"

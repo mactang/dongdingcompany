@@ -189,12 +189,12 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    NSDictionary *parameter=@{@"address":addresslabel.text,@"telPhone":_phoneLB.text,@"receiver":_nameLB.text,@"post":_emailLB.text,@"id":self.cityid};
+    NSDictionary *parameter=@{@"address":addresslabel.text,@"telPhone":_phoneLB.text,@"receiver":_nameLB.text,@"isDefault":@"Y",@"post":_emailLB.text,@"city":self.cityid};
     [manager POST:path parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
+        NSLog(@"%@",dic[@"info"]);
         UIAlertView *alertview;
         NSString *stirng;
         if ([dic[@"status"] integerValue]==1) {
