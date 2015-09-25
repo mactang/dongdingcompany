@@ -129,6 +129,7 @@
 		6167FA491B7F0E02004A1BD0 /* check-YES.png in Resources */ = {isa = PBXBuildFile; fileRef = 6167FA471B7F0E02004A1BD0 /* check-YES.png */; };
 		6167FA4A1B7F0E02004A1BD0 /* check-NO.png in Resources */ = {isa = PBXBuildFile; fileRef = 6167FA481B7F0E02004A1BD0 /* check-NO.png */; };
 		6167FA4C1B7F0EB3004A1BD0 /* editor.png in Resources */ = {isa = PBXBuildFile; fileRef = 6167FA4B1B7F0EB3004A1BD0 /* editor.png */; };
+		6168985B1BB4D6E20083205B /* ShopCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6168985A1BB4D6E20083205B /* ShopCarCell.m */; };
 		616C47141B55E9CB00DF22B2 /* topic_Cell_Bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 616C47131B55E9CB00DF22B2 /* topic_Cell_Bg.png */; };
 		6172F5431B6C6ADB007BDBD2 /* AddAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6172F5421B6C6ADB007BDBD2 /* AddAddressController.m */; };
 		61731B221B954AE200B04D85 /* GoodsBigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61731B211B954AE200B04D85 /* GoodsBigViewController.m */; };
@@ -512,6 +513,8 @@
 		6167FA471B7F0E02004A1BD0 /* check-YES.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-YES.png"; sourceTree = "<group>"; };
 		6167FA481B7F0E02004A1BD0 /* check-NO.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-NO.png"; sourceTree = "<group>"; };
 		6167FA4B1B7F0EB3004A1BD0 /* editor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editor.png; sourceTree = "<group>"; };
+		616898591BB4D6E20083205B /* ShopCarCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopCarCell.h; sourceTree = "<group>"; };
+		6168985A1BB4D6E20083205B /* ShopCarCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopCarCell.m; sourceTree = "<group>"; };
 		616C47131B55E9CB00DF22B2 /* topic_Cell_Bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topic_Cell_Bg.png; sourceTree = "<group>"; };
 		6172F5411B6C6ADB007BDBD2 /* AddAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddAddressController.h; sourceTree = "<group>"; };
 		6172F5421B6C6ADB007BDBD2 /* AddAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddAddressController.m; sourceTree = "<group>"; };
@@ -1635,6 +1638,8 @@
 				61793A5F1B54A78B00CFD83A /* BigPhotoCell.m */,
 				61E0FB0D1B53A43D0080F41B /* CMdetailCell.h */,
 				61E0FB0E1B53A43D0080F41B /* CMdetailCell.m */,
+				616898591BB4D6E20083205B /* ShopCarCell.h */,
+				6168985A1BB4D6E20083205B /* ShopCarCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2131,6 +2136,7 @@
 				6189BFFF1B78341800BB9694 /* OrderModel.m in Sources */,
 				96A70D0C1B943E9A00C0F1F5 /* PersonInformationModel.m in Sources */,
 				615B29A91B4FB24F004E7546 /* LeftSortsViewController.m in Sources */,
+				6168985B1BB4D6E20083205B /* ShopCarCell.m in Sources */,
 				615B29A51B4FB22B004E7546 /* PersonViewController.m in Sources */,
 				61B0FFA31B5F7EB0002CF349 /* DropDown1.m in Sources */,
 				615B29481B4FAE4B004E7546 /* main.m in Sources */,

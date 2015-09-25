@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol ShoppingCarControllerDeledate<NSObject>
+-(void)allSelected:(UITableView *)tableView;
+@end
 @interface ShoppingCarController : UIViewController
-
+@property(nonatomic,assign)id<ShoppingCarControllerDeledate>delegate;
 @end
