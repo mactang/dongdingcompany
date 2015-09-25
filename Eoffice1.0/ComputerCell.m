@@ -40,6 +40,7 @@
     return self;
 }
 -(void)setModel:(detailsModel *)model{
+    
     self.price.text = [NSString stringWithFormat: @"￥%@",model.price ];
     self.detailmessage.text = [NSString stringWithFormat: @"%@",model.name ];
     [self.imgView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.imgUrl]]];
