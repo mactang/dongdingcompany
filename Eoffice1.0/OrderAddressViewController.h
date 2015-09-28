@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderAddressViewController : UIViewController
-@property (nonatomic,retain)NSString *regularText;
+
 @end

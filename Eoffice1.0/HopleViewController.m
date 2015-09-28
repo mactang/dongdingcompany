@@ -65,7 +65,7 @@
     idealLB.textColor = [UIColor blackColor];
     [idealPhone addSubview:idealLB];
 
-        TextView = [[UITextView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(idealLB.frame)+10, 300, 200)];
+    TextView = [[UITextView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(idealLB.frame)+10, 300, 200)];
     TextView.clipsToBounds = YES;
     TextView.layer.cornerRadius = 5;
     TextView.layer.borderWidth = 1;
@@ -84,7 +84,7 @@
     UIButton *sureBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(TextView.frame)+10, 300, 40)];
     sureBtn.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     [sureBtn setTitle:@"提交" forState:UIControlStateNormal];
-    sureBtn.font = [UIFont systemFontOfSize:18];
+    sureBtn.titleLabel.font = [UIFont systemFontOfSize:18];
     sureBtn.clipsToBounds = YES;
     sureBtn.layer.cornerRadius = 5;
     [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -99,7 +99,6 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-
 -(void)photoPress{
     photoAlterView *alter=[[photoAlterView alloc]initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
     alter.rightBlock=^()
@@ -128,7 +127,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:FEEDBACK,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:FEEDBACK,COMMON,model.userkey,TextView.text];
     NSLog(@"%@",path);
     
     
@@ -137,7 +136,7 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:@{@"content":TextView.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];

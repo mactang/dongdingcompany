@@ -16,7 +16,7 @@
 #import "ShopCartId.h"
 #import "CMDetailsViewController.h"
 #import "ShopCarCell.h"
-@interface ShoppingCarController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ShoppingCarController ()<UITableViewDataSource,UITableViewDelegate,celldelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic, strong)UIButton *numberBtn1;
@@ -58,13 +58,15 @@
     NSMutableArray *versionGoodId;
     NSString *goodId;
     NSMutableArray *versionCartId;
-    NSString *cartId;
+    NSString *cartIdTwo;
     NSMutableArray *versionCount;
     NSString *count;
     
     NSString *changeCount;
     BOOL isAllOrder;
     BOOL selectedAll;
+    
+    NSMutableArray *cellarraydata;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -75,6 +77,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    cellarraydata = [NSMutableArray array];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     [self.navigationItem setTitle:@"我的购物车"];
     
@@ -129,7 +132,7 @@
     [totView addSubview:LB];
     
     UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(LB.frame)+10, allBtn.frame.origin.y, 40, 20)];
-    btn.font = [UIFont systemFontOfSize:17];
+    btn.titleLabel.font = [UIFont systemFontOfSize:17];
     [btn setTitle:@"删除" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(delegatePress) forControlEvents:UIControlEventTouchUpInside];
@@ -149,7 +152,7 @@
     cartIdArray = [NSMutableArray array];
     
     UIButton *sure = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totoalBL.frame)+10, 10, 60, 50)];
-    sure.font = [UIFont systemFontOfSize:17];
+    sure.titleLabel.font = [UIFont systemFontOfSize:17];
     sure.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     sure.clipsToBounds = YES;
     sure.layer.cornerRadius = 5;
@@ -663,25 +666,38 @@
 //    }
     NSLog(@"%lu",(unsigned long)self.datas.count);
     ShopCarCell *cell = [ShopCarCell cellWithTableView:tableView];
+    cell.numbercell = indexPath.row;
     cell.myModel = self.datas[indexPath.row];
+    cell.delegate = self;
     if (selectedAll == YES) {
-        cell.chooseBtn.selected = YES;
+         cell.chooseBtn.selected = YES;
+        NSLog(@"%@",cellarraydata);
+        for (NSInteger i=0; i<cellarraydata.count; i++) {
+            if (indexPath.row==[cellarraydata[i]integerValue]) {
+                cell.chooseBtn.selected=NO;
+            }
+            else{
+                cell.chooseBtn.selected = YES;
+            }
+        }
+       
     }
     else{
     
         cell.chooseBtn.selected = NO;
     }
-    cell.chooseBtn.tag = indexPath.row + 50;
-    NSLog(@"%ld",(long)indexPath.row);
     //cell.chooseBtn.selected =! cell.chooseBtn.selected;
 //    [cell.chooseBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
+-(void)signMutablearray:(NSMutableArray *)array{
+    cellarraydata  = array;
+}
 -(void)versionPress:(UIButton *)btn{
     goodId = versionGoodId[(btn.tag-10)/2];
-    cartId = versionCartId[(btn.tag-10)/2];
+    cartIdTwo = versionCartId[(btn.tag-10)/2];
     
-    NSLog(@"%@",cartId);
+    
     if (versionSelectButton == btn) {
         return;
     }
@@ -816,7 +832,7 @@
 -(void)editorData{
     
     
-    NSString *path= [NSString stringWithFormat:EDITORVERSION,COMMON,cartId,goodId,count];
+    NSString *path= [NSString stringWithFormat:EDITORVERSION,COMMON,cartIdTwo,goodId,count];
     
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

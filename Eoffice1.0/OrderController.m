@@ -26,6 +26,7 @@
 #import "LoginViewController.h"
 #import "OrderSuccessController.h"
 #import "OrderTableViewCell.h"
+#import "CalculateStringSpace.h"
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
@@ -46,6 +47,7 @@
     NSString *dispatch;
     NSString *paywayCount ;
     NSString *addressH;
+    NSInteger signsection;
     
 }
 -(NSMutableArray *)datas{
@@ -97,10 +99,6 @@
         
         dispatch = @"";
     }
-    
-    
-    
-    
     
     TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -190,8 +188,17 @@
         if ([addressH isEqualToString: @"hight"]) {
             return 50;
         }else{
-        return 100;
+            for (NSInteger i=0; i<self.datas.count; i++) {
+                AddressModel *model = self.datas[i];
+                if ([model.defaultsign isEqualToString:@"Y"]) {
+                    signsection = i;
+                }
+            }
+            AddressModel *model = self.datas[signsection];
+            CGSize size = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"地址:%@",model.address] font:[UIFont systemFontOfSize:14] constraintSize:CGSizeMake(SCREEN_WIDTH-35, 40)];
+        return size.height+50;
         }
+
     }
     return 5;
 }
@@ -213,39 +220,32 @@
             view.backgroundColor = [UIColor whiteColor];
             [control addSubview:view];
             NSLog(@"%lu",(unsigned long)self.datas.count);
-            NSLog(@"*********");
             if (self.datas.count != 0) {
-                view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
-                AddressModel *model = self.datas[section];
+                AddressModel *model = self.datas[signsection];
                 SingleModel *sing = [SingleModel sharedSingleModel];
                 sing.addressId = model.addressId;
                 
-                UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 40, 20)];
-                [btn setTitle:@"收货人 :" forState:UIControlStateNormal];
-                [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                btn.titleLabel.font = [UIFont systemFontOfSize:10];
-                [view addSubview:btn];
-                
-                UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame), 20, 100, 20)];
-                lb1.text = model.receiver;
+                UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH/2-30, 20)];
+                lb1.font = [UIFont systemFontOfSize:14];
+                lb1.text = [NSString stringWithFormat:@"收货人:%@",model.receiver];
                 [view addSubview:lb1];
                 
-                UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame), 20, 130, 20)];
-                lb2.text = model.telphone;
+                UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame), 10, SCREEN_WIDTH/2-25, 20)];
+                lb2.font = [UIFont systemFontOfSize:14];
+                if ([model.telphone isKindOfClass:[NSNull class]]) {
+                    lb2.text=@"暂无";
+                }else{
+                    lb2.text = [NSString stringWithFormat:@"手机号:%@",model.telphone];
+                }
                 [view addSubview:lb2];
                 
-                UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(btn.frame)+5, 40, 20)];
-                [btn1 setTitle:@"地址 :" forState:UIControlStateNormal];
-                [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-                btn1.titleLabel.font = [UIFont systemFontOfSize:10];
-                [view addSubview:btn1];
+                CGSize size = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"地址:%@",model.address]font:[UIFont systemFontOfSize:14] constraintSize:CGSizeMake(SCREEN_WIDTH-35, 40)];
                 
-                addressLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame), CGRectGetMaxY(btn.frame)+2, 250, 40)];
-                addressLb.font = [UIFont systemFontOfSize:12];
-                //lb3.backgroundColor = [UIColor redColor];
-                addressLb.lineBreakMode = NSLineBreakByWordWrapping;
-                addressLb.numberOfLines = 0;
-                addressLb.text = model.address;
+                addressLb = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(lb1), CGRectGetMaxY(lb1.frame)+10, size.width, size.height)];
+                addressLb.font = [UIFont systemFontOfSize:14];
+                addressLb.numberOfLines = 2;
+                addressLb.text = [NSString stringWithFormat:@"地址:%@",model.address];
+                view.frame = CGRectMake(0, 0, SCREEN_WIDTH, size.height+50);
                 [view addSubview:addressLb];
             }else{
             
@@ -256,21 +256,14 @@
                 lb1.font = [UIFont systemFontOfSize:13];
                 [view addSubview:lb1];
             }
-            
-            
             UIButton *headerbutton = [UIButton buttonWithType:UIButtonTypeCustom];
             headerbutton.frame  = view.bounds;
             headerbutton.backgroundColor = [UIColor clearColor];
             [headerbutton addTarget:self action:@selector(headerbuttonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [control addSubview:headerbutton];
+        
             
-            UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(290, 15, 20, 20)];
-            [btn1 setImage:[UIImage imageNamed:@"youzhixiang"] forState:UIControlStateNormal];
-            btn1.titleLabel.font = [UIFont systemFontOfSize:10];
-           // [view addSubview:btn1];
-            
-            UIImageView *_weiboContentTextView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-30, 15, 15, 15)];
-            
+            UIImageView *_weiboContentTextView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-30, (widgetboundsHeight(view)-15)/2, 15, 15)];
             [_weiboContentTextView setImage:[UIImage imageNamed:@"youzhixiang"]];
             _weiboContentTextView.transform=CGAffineTransformMakeRotation(M_PI);
             [view addSubview:_weiboContentTextView];
@@ -283,7 +276,6 @@
 }
 -(void)headerbuttonPressed:(UIButton *)button{
     OrderAddressViewController *addre = [[OrderAddressViewController alloc]init];
-    addre.regularText = addressLb.text;
     [self.navigationController pushViewController:addre animated:YES];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -295,23 +287,20 @@
             cell.textLabel.font = [UIFont systemFontOfSize:15];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
-         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
         
             NSLog(@"%lu",(unsigned long)self.datas.count);
         
-           cell.selectionStyle = UITableViewCellSelectionStyleNone;
-           NSArray *message = @[@"配送方式",@"支付方式",@"发票方式",];
-           NSArray *thewhyarray = @[dispatch,payWay,invoice];
-        
-        
+             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+             NSArray *message = @[@"配送方式",@"支付方式",@"发票方式",];
+             NSArray *thewhyarray = @[dispatch,payWay,invoice];
         if (indexPath.row!=3) {
              [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
             cell.textLabel.text = message[indexPath.row];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.detailTextLabel.text = thewhyarray[indexPath.row];
-            
         }
         else{
             _textField = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, 320, 40)];
@@ -359,6 +348,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]) {
             self.totalprice = [NSString stringWithFormat:@"%@",dic[@"data"][@"total"]];
             totalPice.text = [NSString stringWithFormat:@"合计:￥%@",self.totalprice];
@@ -387,16 +377,17 @@
         
         [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]) {
             NSArray *array = dic[@"data"];
             for(NSDictionary *subDict in array)
             {
                 AddressModel *model = [AddressModel modelWithDic:subDict];
                 [self.datas addObject:model];
-
             }
 
-        }else{
+        }
+        else{
         addressH = @"hight";
         }
         [hud hide:YES];
@@ -414,6 +405,7 @@
 //    UITableViewCell *cell = (UITableViewCell*)[self.view viewWithTag:1000];
 //    cell.detailTextLabel.text = reglarText;
     addressLb.text = reglarText;
+    [_tableView reloadData];
     
     
 }
@@ -510,6 +502,13 @@
 
 }
 -(void)btnPress:(UIButton *)btn{
+    
+//    phone/order!wbasketCommit.action?userkey=?&cartIds=?&payway=?&id=?&invoice=?&total=?
+//    
+//    payway是支付方式，0，1
+//    invoice是是否开发票，Y,N
+//    id是地址ID
+    
     if (btn.tag == 1000) {
         [self sureOrder];
 //        PayViewController *pay = [[PayViewController alloc]init];

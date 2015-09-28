@@ -39,8 +39,8 @@
 //用户注册界面
 #define VERIFICATION 1010
 
-#define COMMON @"http://120.26.124.171/phone/"
-//#define COMMON @"http://192.168.0.65:8080/phone/"
+//#define COMMON @"http://120.26.124.171/phone/"
+#define COMMON @"http://192.168.0.65:8080/phone/"
 
 //#define OFFICE @"http://121.43.193.193"
 
@@ -110,7 +110,7 @@
 #define ORDERCLASSIFY @"%@order!getList.action;jsessionid=%@?userkey=%@"
 
 //信息反馈
-#define FEEDBACK @"%@feedback!add.action;jsessionid=%@?userkey=%@"
+#define FEEDBACK @"%@feedback!add.action;userkey=%@&content=%@"
 
 #define  RETUNGOODSSTATE @"%@replace!returnStatus.action;jsessionid=%@?userkey=%@&returnId=%@"
 
