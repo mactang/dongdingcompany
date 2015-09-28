@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 @class ShopCarModel;
+@protocol celldelegate <NSObject>
+
+-(void)signMutablearray:(NSMutableArray *)array;
+
+@end
 @interface ShopCarCell : UITableViewCell
 
 @property(nonatomic, strong)ShopCarModel *myModel;
@@ -16,5 +21,7 @@
 @property(nonatomic, strong)UILabel *nameLB;
 @property(nonatomic, strong)UILabel *priceLB;
 @property(nonatomic, strong)UILabel *countBL;
+@property(nonatomic,assign)NSInteger numbercell;
+@property(nonatomic,assign)id<celldelegate>delegate;
 + (ShopCarCell *)cellWithTableView:(UITableView *)tableView;
 @end

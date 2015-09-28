@@ -17,11 +17,15 @@
 {
 
     UIButton *selectedButton;
+    NSMutableArray *allcellnumber;
+    
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        allcellnumber = [NSMutableArray array];
+        
         ShoppingCarController *shop = [[ShoppingCarController alloc]init];
         shop.delegate = self;
         // Initialization code
@@ -35,8 +39,6 @@
         
         self.ImageView = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.chooseBtn.frame)+10, 10, 60, 60)];
         [self.contentView addSubview:self.ImageView];
-        
-        
         self.nameLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.ImageView.frame)+5, self.ImageView.frame.origin.y, 120, 40)];
         self.nameLB.font = [UIFont systemFontOfSize:10];
         self.nameLB.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -70,9 +72,20 @@
     return self;
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
+    
+    NSLog(@"%ld",btn.tag);
     //selectedButton.selected = NO;
     btn.selected =! btn.selected;
    // selectedButton = btn;
+    if (!btn.selected) {
+        if (![allcellnumber containsObject:[NSString stringWithFormat:@"%ld",btn.tag]]) {
+            [allcellnumber addObject:[NSString stringWithFormat:@"%ld",btn.tag]];
+        }
+    }
+    NSLog(@"%@",allcellnumber);
+    if (_delegate &&[_delegate respondsToSelector:@selector(signMutablearray:)]) {
+        [self.delegate signMutablearray:allcellnumber];
+    }
     
 }
 -(void)allSelectButton:(UITableView *)tableView{
@@ -80,7 +93,8 @@
     self.chooseBtn.selected = YES;
 }
 -(void)setMyModel:(ShopCarModel *)myModel{
-    
+    self.chooseBtn.tag = self.numbercell;
+
     _myModel = myModel;
     
     [self.ImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",myModel.cartImg]]];
