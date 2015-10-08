@@ -35,10 +35,11 @@
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
-    
+    SingleModel *sing = [SingleModel sharedSingleModel];
     UILabel *photoLB = [[UILabel alloc]initWithFrame:CGRectMake(20, 80, 150, 20)];
     photoLB.font = [UIFont systemFontOfSize:14];
-    photoLB.text = @"手机号：13618090081";
+    photoLB.text = [NSString stringWithFormat:@"%@",sing.telphone];
+    photoLB.textAlignment = NSTextAlignmentCenter;
     photoLB.textColor = [UIColor blackColor];
     [self.view addSubview:photoLB];
     
@@ -214,14 +215,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

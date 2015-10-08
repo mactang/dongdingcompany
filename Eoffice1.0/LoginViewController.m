@@ -355,9 +355,13 @@
             NSString *userkey = dic[@"data"][@"userkey"];
             NSLog(@"userkey--%@",userkey);
             NSString *jsessionid = subDic[@"jsessionId"];
+            NSString *telphone = dic[@"data"][@"telphone"];
+            NSLog(@"telphone--%@",telphone);
+            NSLog(@"jsessionid--%@",jsessionid);
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
             model.jsessionid = jsessionid;
+            model.telphone = telphone;
             
             if (self.iflogin) {
                 if (_delegate &&[_delegate respondsToSelector:@selector(reloadshopcart)]) {
