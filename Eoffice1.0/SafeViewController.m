@@ -10,6 +10,7 @@
 #import "PassWordViewController.h"
 #import "RDVTabBarController.h"
 #import "PhoneReviseViewController.h"
+#import "SingleModel.h"
 @interface SafeViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @end
@@ -82,8 +83,10 @@
     
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     if (indexPath.section == 0&&indexPath.row == 0) {
+        SingleModel *sing = [SingleModel sharedSingleModel];
+        
         cell.textLabel.text = @"修改手机号码";
-        cell.detailTextLabel.text = @"12345678901";
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",sing.telphone];
         cell.detailTextLabel.textColor = [UIColor blackColor];
     }
     
@@ -130,14 +133,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

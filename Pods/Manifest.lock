@@ -20,22 +20,31 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - JBASIHTTPRequest (2.1):
+    - Reachability (~> 3.2)
+  - JSONKit (1.5pre)
   - MBProgressHUD (0.9.1)
   - MJRefresh (2.2.0)
+  - Reachability (3.2)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5.4)
+  - JBASIHTTPRequest (~> 2.1)
+  - JSONKit (~> 1.5pre)
   - MBProgressHUD (~> 0.9.1)
   - MJRefresh (~> 2.2.0)
   - SDWebImage (~> 3.7.3)
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  JBASIHTTPRequest: bcb52c0c249fe21a236e16c2747d663d3d5d0007
+  JSONKit: bae313ce6a6c444f40489a6c0b023f399888871f
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MJRefresh: 65a2bf14abb6feeaed8696aa1551f70e15ab0a08
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
 
 COCOAPODS: 0.38.2

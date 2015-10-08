@@ -44,10 +44,12 @@
     photoLB.textColor = [UIColor blackColor];
     [self.view addSubview:photoLB];
     
+    SingleModel *sing = [SingleModel sharedSingleModel];
     _phoneField = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoLB.frame), 75, 155, 30)];
     _phoneField.backgroundColor = [UIColor whiteColor];
     _phoneField.clipsToBounds = YES;
-    [_phoneField setText:@"13618090081"];
+    [_phoneField setText:[NSString stringWithFormat:@"%@",sing.telphone]];
+    _phoneField.textAlignment =NSTextAlignmentCenter;
     [self.view addSubview:_phoneField];
     
     
@@ -162,7 +164,6 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
-    
     NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",_phoneField.text);
     
@@ -188,7 +189,6 @@
 -(void)valiData{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     
     NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",_phoneField.text);
@@ -262,14 +262,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
