@@ -46,7 +46,7 @@
         [self addSubview:tv];
         textButton = [[classifyButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width-10, 25)];
         textButton.backgroundColor = [UIColor clearColor];
-        textButton.font = [UIFont systemFontOfSize:12];
+        textButton.titleLabel.font = [UIFont systemFontOfSize:12];
         [textButton setTitleColor:[UIColor colorWithRed:63.24/255. green:64.00/255. blue:127.00/255. alpha:1] forState:UIControlStateNormal];
         textButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [textButton setImage:[UIImage imageNamed:@"classify"] forState:UIControlStateNormal];
@@ -58,12 +58,6 @@
         [button setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
         button.tag = 100;
         [self addSubview:button];
-        
-        
-       
-        
-        
-
         
     }
     return self;

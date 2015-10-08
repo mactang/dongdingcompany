@@ -198,7 +198,7 @@
     [ComodityBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [ComodityBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
     ComodityBtn.tag = 1000;
-    ComodityBtn.font = [UIFont systemFontOfSize:22];
+    ComodityBtn.titleLabel.font = [UIFont systemFontOfSize:22];
     ComodityBtn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:ComodityBtn];
     

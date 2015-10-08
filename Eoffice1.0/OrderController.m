@@ -73,7 +73,6 @@
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
     //payWay = @"";
     
-    
     invoice = @"fdsdsf";
     
     dispatch = @"dsfdsf";
@@ -120,6 +119,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
     
 }
 -(void)footviewinterface{
@@ -188,12 +188,6 @@
         if ([addressH isEqualToString: @"hight"]) {
             return 50;
         }else{
-            for (NSInteger i=0; i<self.datas.count; i++) {
-                AddressModel *model = self.datas[i];
-                if ([model.defaultsign isEqualToString:@"Y"]) {
-                    signsection = i;
-                }
-            }
             AddressModel *model = self.datas[signsection];
             CGSize size = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"地址:%@",model.address] font:[UIFont systemFontOfSize:14] constraintSize:CGSizeMake(SCREEN_WIDTH-35, 40)];
         return size.height+50;
@@ -219,9 +213,9 @@
             UIView *view = [[UIView alloc]init];
             view.backgroundColor = [UIColor whiteColor];
             [control addSubview:view];
-            NSLog(@"%lu",(unsigned long)self.datas.count);
             if (self.datas.count != 0) {
                 AddressModel *model = self.datas[signsection];
+              
                 SingleModel *sing = [SingleModel sharedSingleModel];
                 sing.addressId = model.addressId;
                 
@@ -286,7 +280,6 @@
             cell.clipsToBounds = YES;
             cell.textLabel.font = [UIFont systemFontOfSize:15];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
@@ -342,13 +335,13 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:SUBMITORDER,COMMON,model.userkey,[NSString stringWithFormat:@"%@",self.shopCartId]];
-    NSLog(@"%@",path);
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
+        
         if (dic[@"data"] !=[NSNull null]) {
             self.totalprice = [NSString stringWithFormat:@"%@",dic[@"data"][@"total"]];
             totalPice.text = [NSString stringWithFormat:@"合计:￥%@",self.totalprice];
@@ -370,20 +363,26 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:ADDRESS,COMMON,model.jsessionid,model.userkey];
-    NSLog(@"%@",path);
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         
         [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
+
         if (dic[@"data"] !=[NSNull null]) {
             NSArray *array = dic[@"data"];
             for(NSDictionary *subDict in array)
             {
                 AddressModel *model = [AddressModel modelWithDic:subDict];
                 [self.datas addObject:model];
+            }
+            for (NSInteger i=0; i<self.datas.count; i++) {
+                AddressModel *model = self.datas[i];
+                if ([model.defaultsign isEqualToString:@"Y"]) {
+                    signsection = i;
+                }
             }
 
         }
@@ -402,10 +401,9 @@
 - (void)selectedRegular:(NSNotification *)notify{
     
     NSString *reglarText = notify.object;
-//    UITableViewCell *cell = (UITableViewCell*)[self.view viewWithTag:1000];
-//    cell.detailTextLabel.text = reglarText;
-    addressLb.text = reglarText;
-    [_tableView reloadData];
+    signsection = [reglarText integerValue];
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     
     
 }
@@ -415,10 +413,8 @@
     NSLog(@"%@",reglarText);
     payWay = reglarText;
     
-    
-    [_tableView reloadData];
-    
-
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     
 }
 - (void)selectedDispatch:(NSNotification *)notify{
@@ -426,22 +422,17 @@
     NSString *reglarText = notify.object;
     NSLog(@"%@",reglarText);
     dispatch = reglarText;
-    
-    
-    [_tableView reloadData];
-    
-    
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     
 }
-
 - (void)selectedinvoice:(NSNotification *)notify{
     
     NSString *reglarText = notify.object;
     NSLog(@"%@",reglarText);
     invoice = reglarText;
-    
-    
-    [_tableView reloadData];
+    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
+    [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     
     
     
@@ -614,8 +605,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSLog(@"%@",model.userkey);
-    NSLog(@"%@",[model.userkey class]);
+ 
     if (model.userkey == nil) {
         if (!login) {
             login = [[LoginViewController alloc]init];
