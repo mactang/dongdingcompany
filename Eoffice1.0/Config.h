@@ -78,7 +78,7 @@
 #define DELETESHOPCAR  @"%@order!removeBasket.action?cartId=%@"
 
 //订单接口
-#define ORDER @"%@order!getList.action?docstatus=-1&userkey=%@"
+#define ORDER @"%@order!getList.action?docstatus=-1&userkey=%@&page=%@"
 
 #define DELETEORDER @"%@order!deleteOrder.action?orderId=%@"
 

@@ -17,15 +17,14 @@
 {
 
     UIButton *selectedButton;
-    NSMutableArray *allcellnumber;
+   
     
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        allcellnumber = [NSMutableArray array];
-        
+       
         ShoppingCarController *shop = [[ShoppingCarController alloc]init];
         shop.delegate = self;
         // Initialization code
@@ -77,15 +76,26 @@
     //selectedButton.selected = NO;
     btn.selected =! btn.selected;
    // selectedButton = btn;
-    if (!btn.selected) {
-        if (![allcellnumber containsObject:[NSString stringWithFormat:@"%ld",btn.tag]]) {
-            [allcellnumber addObject:[NSString stringWithFormat:@"%ld",btn.tag]];
+    if (self.signcell==YES) {
+        if (!btn.selected) {
+            if (_delegate &&[_delegate respondsToSelector:@selector(signMutablearray:)]) {
+                [self.delegate signMutablearray:btn.tag];
+            }
+            
         }
+
     }
-    NSLog(@"%@",allcellnumber);
-    if (_delegate &&[_delegate respondsToSelector:@selector(signMutablearray:)]) {
-        [self.delegate signMutablearray:allcellnumber];
+    else{
+        if (btn.selected) {
+            
+            if (_delegate &&[_delegate respondsToSelector:@selector(signMutablearray:)]) {
+                [self.delegate signMutablearray:btn.tag];
+            }
+
+        }
+        
     }
+    
     
 }
 -(void)allSelectButton:(UITableView *)tableView{

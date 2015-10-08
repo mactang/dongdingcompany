@@ -17,7 +17,7 @@
 #import "OrederManagerCell.h"
 #import "AddressViewController.h"
 
-@interface OrderAddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,buttondelegate,reloaddelegate,reloadAddressdelegate>
+@interface OrderAddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,reloaddelegate,reloadAddressdelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)NSMutableArray *nameDatas;
 @property(nonatomic, strong)NSMutableArray *phoneDatas;
@@ -155,10 +155,8 @@
     cell.tag = 1000;
     cell.buttontag = indexPath.row;
     cell.model = self.datas[indexPath.row];
-    cell.delegate = self;
     if (indexPath.row == self.signbutton) {
-        cell.clickbutton.selected = YES;
-        anotherButton = cell.clickbutton;
+       cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     return cell;
 }
@@ -170,14 +168,6 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-#pragma mark buttondelegate methds
--(void)buttondelegate:(UIButton *)button{
-    anotherButton.selected  = NO;
-    self.signbutton = button.tag-100;
-    button.selected = YES;
-    anotherButton = button;
-}
-
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
@@ -197,31 +187,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-//    AddressModel *model = self.datas[indexPath.row];
-//    SingleModel *single = [SingleModel sharedSingleModel];
-//    single.addressId = model.addressId;
-//    
-//    ChangeAddrssController *change = [[ChangeAddrssController alloc]initwithtitle:self.dataarray[indexPath.row]];
-//    change.view.frame = self.view.bounds;
-//    change.delegate = self;
-//    [self.navigationController pushViewController:change animated:YES];
-//    UITableViewCell *cell = (UITableViewCell *)[self.view viewWithTag:1000];
-//    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    
- //  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
     AddressModel *model = self.datas[indexPath.row];
-    
     SingleModel *sing = [SingleModel sharedSingleModel];
     sing.addressId = model.addressId;
-    
-    NSLog(@"%@",model.fullAddress);
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"selectedAddress" object:model.address];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"selectedAddress" object:[NSString stringWithFormat:@"%ld",indexPath.row]];
     
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{

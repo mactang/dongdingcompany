@@ -21,10 +21,11 @@
         self.color = dic[@"color"];
         self.size = dic[@"size"];
         self.imgurl = dic[@"imgurl"];
-        self.orderId = dic[@"orderId"];
+        self.orderId = [NSString stringWithFormat:@"%@",dic[@"orderId"]];
         self.docstatus = dic[@"docstatus"];
         self.list = dic[@"list"];
         self.totalFee = dic[@"totalFee"];
+        self.totalCount = dic[@"totalCount"];
     }
     
     return self;

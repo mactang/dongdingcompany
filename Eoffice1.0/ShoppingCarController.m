@@ -67,6 +67,7 @@
     BOOL selectedAll;
     
     NSMutableArray *cellarraydata;
+   
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -355,48 +356,26 @@
     
 }
 
-- (void)allSelect:(UIButton*)sender{
+- (void)allSelect:(UIButton *)sender{
     
-//    UITableView *tableView = (UITableView *)[self.view viewWithTag:1000];
-//    
-//    if ([self.delegate respondsToSelector:@selector(allSelectButton:)]) {
-//        
-//        [self.delegate performSelector:@selector(allSelectButton:) withObject:tableView];
-//        
-//    }
-    
+
     selectedAll = ! selectedAll;
+
+    [cellarraydata removeAllObjects];
     [_tableView reloadData];
-//    NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
-//    NSLog(@"%lu",(unsigned long)anArrayOfIndexPath.count);
-//    for (int i = 0; i < [anArrayOfIndexPath count]; i++) {
-//        
-//       
-//       // if (i%2!=0) {
-//            UIButton *btn = (UIButton *)[_tableView viewWithTag:i+50];
-//            NSLog(@"btn--%@",btn);
-//            btn.selected =! btn.selected;
-//       // }
-//        
-//        ShopCarModel *model = self.datas[i];
-//        
-//        cartIdArray[i] = model.cartId;
-//    }
-        allBtn.selected = !allBtn.selected;
+
+    allBtn.selected = !allBtn.selected;
     if (sender.selected == YES) {
         
         isAllDelete = YES;
         
-      
     }
 
-    
 }
 - (void)downData{
     
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     
     NSString *path= [NSString stringWithFormat:SHOPCAR,COMMON,model.jsessionid,model.userkey];
     NSLog(@"%@",path);
@@ -434,24 +413,8 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-//    if (indexPath.row!=0&&indexPath.row%2!=0) {
-//        
-//        
-//        if (invoiceSelector && selectIndexPath.row == indexPath.row) {
-//            return 170;
-//            
-//        }
-//        return 0;
-//        //   tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-//        
-//    }
-//    else{
-        return 90;
-//    }
-    
-    
+    return 90;
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
     return 1;
@@ -462,236 +425,40 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     
-//    static NSString *identity = @"cell";
-//    
-//    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
-//    
-//    cell.selectionStyle = UITableViewCellEditingStyleNone;
-//    cell.clipsToBounds = YES;
-//    cell.textLabel.font = [UIFont systemFontOfSize:15];
-//    
-//    
-//    if (indexPath.row == 0||indexPath.row%2==0) {
-//        
-//        
-//        ShopCarModel *model = self.datas[indexPath.row/2];
-//        
-//        if (isAllOrder == YES) {
-//           cartIdArray[indexPath.row/2] = model.cartId;
-//        }
-//        
-//       
-//        chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        chooseBtn.frame = CGRectMake(10, 30, 20, 20);
-//        [chooseBtn setImage:[UIImage imageNamed:@"check-NO"] forState:UIControlStateNormal];
-//        [chooseBtn setImage:[UIImage imageNamed:@"check-YES"] forState:UIControlStateSelected];
-//        [chooseBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-//        chooseBtn.tag = indexPath.row + 50;
-//        
-//        [cell addSubview:chooseBtn];
-//        
-//        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(chooseBtn.frame)+10, 10, 60, 60)];
-//       
-//        [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.cartImg]]];
-//        [cell addSubview:imageView];
-//        
-//        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, imageView.frame.origin.y, 120, 40)];
-//        lb1.font = [UIFont systemFontOfSize:10];
-//        //lb3.backgroundColor = [UIColor redColor];
-//        lb1.lineBreakMode = NSLineBreakByTruncatingTail;
-//        lb1.numberOfLines = 2;
-//        lb1.text = [NSString stringWithFormat:@"%@",model.name];
-//        [cell addSubview:lb1];
-//        
-//        UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, CGRectGetMaxY(lb1.frame), 30, 20)];
-//        lb2.font = [UIFont systemFontOfSize:10];
-//        lb2.text = @"颜色:";
-//        [cell addSubview:lb2];
-//        
-//        UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb2.frame), CGRectGetMaxY(lb1.frame), 30, 20)];
-//        lb3.font = [UIFont systemFontOfSize:10];
-//        lb3.text = @"宾利蓝";
-//        [cell addSubview:lb3];
-//        
-//        UILabel *lb4 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb3.frame)+15, CGRectGetMaxY(lb1.frame), 30, 20)];
-//        lb4.font = [UIFont systemFontOfSize:10];
-//        lb4.text = @"尺寸:";
-//        [cell addSubview:lb4];
-//        
-//        UILabel *lb5 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb4.frame), CGRectGetMaxY(lb1.frame), 30, 20)];
-//        lb5.font = [UIFont systemFontOfSize:10];
-//        lb5.text = @"128G";
-//        [cell addSubview:lb5];
-//        
-//        UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(235, 10, 13, 20)];
-//        LB.font = [UIFont systemFontOfSize:15];
-//        LB.text = @"￥";
-//        LB.textColor = [UIColor blackColor];
-//        [cell addSubview:LB];
-//        UILabel *priceLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(LB.frame), 10, 40, 20)];
-//        priceLB.font = [UIFont systemFontOfSize:15];
-//        priceLB.text = [NSString stringWithFormat:@"%@",model.price];
-//        priceLB.tag = indexPath.row + 40;
-//        priceLB.textColor = [UIColor blackColor];
-//        [cell addSubview:priceLB];
-//        
-//        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(275, 30, 11, 20)];
-//        bl.font = [UIFont systemFontOfSize:15];
-//        bl.text = @"x";
-//        [bl setTextColor:[UIColor grayColor]];
-//        [cell addSubview:bl];
-//        
-//        countBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl.frame), 30, 50, 20)];
-//        countBL.font = [UIFont systemFontOfSize:15];
-//        countBL.text = [NSString stringWithFormat:@"%@",model.count];
-//        [countBL setTextColor:[UIColor grayColor]];
-//        countBL.tag = indexPath.row+100;
-//        [cell addSubview:countBL];
-//        
-//        
-//        total= [[NSString stringWithFormat:@"%@",model.price]intValue]*[[NSString stringWithFormat:@"%@",model.count]intValue] +total;
-//        NSString *totalString = [NSString stringWithFormat:@"%d",total];
-//        totoalBL.text = [NSString stringWithFormat:@"合计:￥%@",totalString];
-//        
-//       editorBtn = [[UIButton alloc]initWithFrame:CGRectMake(268, 60, 40, 20)];
-//        //[btn setImage:[UIImage imageNamed:@"editor"] forState:UIControlStateNormal];
-//        [editorBtn setTitle:@"编辑" forState:UIControlStateNormal];
-//        [editorBtn setTitle:@"确定" forState:UIControlStateSelected];
-//        editorBtn.font = [UIFont systemFontOfSize:15];
-//        [editorBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-//        [editorBtn setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateSelected];
-//        [editorBtn addTarget:self action:@selector(editorPress:) forControlEvents:UIControlEventTouchUpInside];
-//        editorBtn.tag = indexPath.row;
-//       // currentbutton = editorBtn;
-//        [cell addSubview:editorBtn];
-//        
-//        
-//
-//    }
-//    
-//        if(indexPath.row%2 !=0){
-//        ShopCarModel *model = self.datas[indexPath.row/2];
-//            NSLog(@"%ld",indexPath.row%2);
-//        versionCartId[indexPath.row/2] = model.cartId;
-//        
-//        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 80, 20)];
-//        bl.font = [UIFont systemFontOfSize:17];
-//        bl.text = @"版本信息";
-//        [bl setTextColor:[UIColor grayColor]];
-//        [cell addSubview:bl];
-//            for (int i = 0; i<model.version.count; i++) {
-//                
-//                versionButton = [[UIButton alloc]initWithFrame:CGRectMake(10+(i%2)*((SCREEN_WIDTH-45)/2)+(i%2)*15, CGRectGetMaxY(bl.frame)+18+(i/2)*35, 145, 30)];
-//                versionButton.clipsToBounds = YES;
-//                versionButton.layer.cornerRadius = 2;
-//                versionButton.layer.borderWidth = 1;
-//                [versionButton setTitle:model.version[i][@"maValue"] forState:UIControlStateNormal];
-//                [versionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//                versionButton.font = [UIFont systemFontOfSize:10];
-//                versionGoodId[i] = model.version[i][@"goodsId"];
-//                
-//                if ([model.version[i][@"maValue"] isEqualToString:chooseType]) {
-//                    versionButton.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1]CGColor];
-//                    selectButton = versionButton;
-//                }else{
-//                    versionButton.layer.borderColor = [[UIColor grayColor]CGColor];
-//                }
-//                versionButton.tag = i+10;
-//                [versionButton addTarget:self action:@selector(versionPress:) forControlEvents:UIControlEventTouchUpInside];
-//                [cell addSubview:versionButton];
-//                
-//            }
-//
-//        
-//        UILabel *bl2 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(versionButton.frame)+25, 100, 20)];
-//        bl2.font = [UIFont systemFontOfSize:17];
-//        bl2.text = @"购买数量";
-//        [bl2 setTextColor:[UIColor grayColor]];
-//        [cell addSubview:bl2];
-//        
-//        _numberBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bl2.frame)+50, CGRectGetMaxY(versionButton.frame)+20, 30, 30)];
-//        _numberBtn1.backgroundColor = [UIColor whiteColor];
-//        [_numberBtn1 setImage:[UIImage imageNamed:@"圆角矩形-3"] forState:UIControlStateNormal];
-//        
-//        _numberBtn1.clipsToBounds = YES;
-//        _numberBtn1.layer.cornerRadius = 3;
-//        _numberBtn1.layer.borderWidth = 0.8;
-//        _numberBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
-//        [_numberBtn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [_numberBtn1 addTarget:self action:@selector(NumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-//        _numberBtn1.tag = indexPath.row;
-//        [cell addSubview:_numberBtn1];
-//        
-//        UIButton *numberBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+60, _numberBtn1.frame.origin.y, 30, 30)];
-//        numberBtn2.backgroundColor = [UIColor whiteColor];
-//        [numberBtn2 setImage:[UIImage imageNamed:@"圆角矩形-3-2"] forState:UIControlStateNormal];
-//        numberBtn2.clipsToBounds = YES;
-//        numberBtn2.layer.cornerRadius = 3;
-//        numberBtn2.layer.borderWidth = 0.8;
-//        numberBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
-//        [numberBtn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [numberBtn2 addTarget:self action:@selector(addNumBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-//        numberBtn2.tag = indexPath.row;
-//        
-//        [cell addSubview:numberBtn2];
-//        
-//            if (indexPath.row > 1) {
-//                countModel = self.datas[indexPath.row%2];
-//            }else{
-//            
-//                countModel = self.datas[0];
-//            }
-//
-//            
-//            
-//            
-//
-//        _numberLb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+5, _numberBtn1.frame.origin.y, 50, 30)];
-//        _numberLb1.backgroundColor = [UIColor whiteColor];
-//        
-//        changeCount = [NSString stringWithFormat:@"%@",countBL.text];
-//    
-//        [_numberLb1 setText:changeCount];
-//        [_numberLb1 setTextColor:[UIColor blackColor]];
-//        _numberLb1.clipsToBounds = YES;
-//        _numberLb1.layer.cornerRadius = 3;
-//        _numberLb1.layer.borderWidth = 0.8;
-//            _numberLb1.textAlignment = NSTextAlignmentCenter;
-//        _numberLb1.layer.borderColor = [[UIColor grayColor] CGColor];
-//        [cell addSubview:_numberLb1];
-//
-//            
-//        
-//        
-//    }
     NSLog(@"%lu",(unsigned long)self.datas.count);
     ShopCarCell *cell = [ShopCarCell cellWithTableView:tableView];
     cell.numbercell = indexPath.row;
     cell.myModel = self.datas[indexPath.row];
     cell.delegate = self;
     if (selectedAll == YES) {
+         cell.signcell = YES;
          cell.chooseBtn.selected = YES;
-        NSLog(@"%@",cellarraydata);
         for (NSInteger i=0; i<cellarraydata.count; i++) {
             if (indexPath.row==[cellarraydata[i]integerValue]) {
                 cell.chooseBtn.selected=NO;
-            }
-            else{
-                cell.chooseBtn.selected = YES;
             }
         }
        
     }
     else{
-    
+        cell.signcell = NO;
         cell.chooseBtn.selected = NO;
+        for (NSInteger i=0; i<cellarraydata.count; i++) {
+            if (indexPath.row==[cellarraydata[i]integerValue]) {
+                cell.chooseBtn.selected=YES;
+            }
+        }
     }
     //cell.chooseBtn.selected =! cell.chooseBtn.selected;
 //    [cell.chooseBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
--(void)signMutablearray:(NSMutableArray *)array{
-    cellarraydata  = array;
+
+-(void)signMutablearray:(NSInteger)buttontag{
+    if (![cellarraydata containsObject:[NSString stringWithFormat:@"%ld",buttontag]]) {
+        [cellarraydata addObject:[NSString stringWithFormat:@"%ld",buttontag]];
+        
+    }
 }
 -(void)versionPress:(UIButton *)btn{
     goodId = versionGoodId[(btn.tag-10)/2];

@@ -19,6 +19,7 @@
 @property (strong,nonatomic) NSString *orderId;
 @property (strong,nonatomic) NSString *docstatus;
 @property (strong,nonatomic) NSString *totalFee;
+@property (strong,nonatomic) NSString *totalCount;
 
 @property (strong,nonatomic) NSArray *list;
 

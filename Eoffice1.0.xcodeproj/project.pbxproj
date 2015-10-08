@@ -327,6 +327,7 @@
 		96BA8F301B8EBAE70062C8D8 /* 确认40灰色.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */; };
 		96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E61B8C598700AB448B /* ChangeAddrssController.m */; };
 		96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */; };
+		96FFEE831BB9259400A22D78 /* AllorderviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96FFEE821BB9259400A22D78 /* AllorderviewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -802,6 +803,8 @@
 		96EC75E61B8C598700AB448B /* ChangeAddrssController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddrssController.m; sourceTree = "<group>"; };
 		96EC75E81B8C5AC500AB448B /* ChangeAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddressCell.h; sourceTree = "<group>"; };
 		96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddressCell.m; sourceTree = "<group>"; };
+		96FFEE811BB9259400A22D78 /* AllorderviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllorderviewCell.h; sourceTree = "<group>"; };
+		96FFEE821BB9259400A22D78 /* AllorderviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllorderviewCell.m; sourceTree = "<group>"; };
 		D51261F4F5A952364CD5B06F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1214,6 +1217,8 @@
 				615B299B1B4FB22B004E7546 /* MemberViewController.m */,
 				615B299C1B4FB22B004E7546 /* OrderViewController.h */,
 				615B299D1B4FB22B004E7546 /* OrderViewController.m */,
+				96FFEE811BB9259400A22D78 /* AllorderviewCell.h */,
+				96FFEE821BB9259400A22D78 /* AllorderviewCell.m */,
 				615B299E1B4FB22B004E7546 /* PersonViewController.h */,
 				615B299F1B4FB22B004E7546 /* PersonViewController.m */,
 			);
@@ -2122,6 +2127,7 @@
 				61E971161B7367A1007F42B6 /* detailsModel.m in Sources */,
 				615B29BB1B4FB27A004E7546 /* MaintainController.m in Sources */,
 				61793A7E1B54AB2700CFD83A /* GeneralDetailViewController.m in Sources */,
+				96FFEE831BB9259400A22D78 /* AllorderviewCell.m in Sources */,
 				618149231B5DEC4600E39900 /* DetailNewsViewController.m in Sources */,
 				6181492F1B5E0EFC00E39900 /* PersonalInformationController.m in Sources */,
 				615B29B91B4FB27A004E7546 /* LeaseController.m in Sources */,

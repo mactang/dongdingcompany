@@ -22,10 +22,7 @@
 @end
 
 @implementation AppDelegate
-{
 
-    UIViewController *thirdNavigationController;
-}
 @synthesize nav_controller;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -52,9 +49,6 @@
 #pragma mark - Methods
 
 - (void)setupViewControllers {
-    
-    SingleModel *model = [SingleModel sharedSingleModel];
-    
     
     UIViewController *MainView = [[MainViewController alloc]init];
     MainView.title = @"首页";

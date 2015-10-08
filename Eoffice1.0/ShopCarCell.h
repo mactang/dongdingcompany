@@ -10,7 +10,7 @@
 @class ShopCarModel;
 @protocol celldelegate <NSObject>
 
--(void)signMutablearray:(NSMutableArray *)array;
+-(void)signMutablearray:(NSInteger )buttontag;
 
 @end
 @interface ShopCarCell : UITableViewCell
@@ -22,6 +22,7 @@
 @property(nonatomic, strong)UILabel *priceLB;
 @property(nonatomic, strong)UILabel *countBL;
 @property(nonatomic,assign)NSInteger numbercell;
+@property(nonatomic,assign)BOOL signcell;
 @property(nonatomic,assign)id<celldelegate>delegate;
 + (ShopCarCell *)cellWithTableView:(UITableView *)tableView;
 @end

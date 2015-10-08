@@ -19,25 +19,25 @@
 #import "LoginViewController.h"
 #import "SingleModel.h"
 #import "UIKit+AFNetworking.h"
-
-@interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate>
+#import "AllorderviewCell.h"
+#import "MJRefresh.h"
+#import "UIAlertView+AlerViewBlocks.h"
+@interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate,deletgateOrder,UIAlertViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic,strong)NSMutableArray *classifyDatas;
-
-@property(nonatomic,assign)NSInteger row;
-@property(nonatomic,assign)NSInteger btnNumber;
-@property(nonatomic,assign)NSInteger orderId;
+@property(nonatomic,copy)NSString  *orderId;
 @property(nonatomic,assign)NSString *returnId;
 @property(nonatomic,assign)NSInteger serviceOrderId;
-@property(nonatomic,assign)NSString *docstatus;
+@property(nonatomic,copy)NSString *docstatusign;
+@property(nonatomic,copy)NSString *string;
 @end
 
 @implementation OrderViewController
 {
 
     NSArray *dropDownMenuList;
-     DropDown1 *dd1;
+    DropDown1 *dd1;
     BOOL isClssify;
     NSString *docstatus;
     OrderModel *model1;
@@ -72,6 +72,7 @@
     self.navigationController.navigationBarHidden = YES;
     
     isClssify = NO;
+    self.string = @"1";
    //[self downData];
     
     UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 80, 20)];
@@ -82,8 +83,6 @@
     [self.view addSubview:myOrder];
     
     dropDownMenuList = [[NSArray alloc]initWithObjects:@"全部",@"待发货",@"退换货/维修",@"待评价", nil];
-    
-    
     
     dd1= [[DropDown1 alloc]initWithFrame:CGRectMake(0, 70, 120, 0)];
     [dd1.textButton setTitle:@"所有" forState:UIControlStateNormal];
@@ -97,48 +96,73 @@
     lb.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:lb];
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(dd1.frame)+10, 320, 430) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(dd1.frame), 320, SCREEN_HEIGHT-105-44) style:UITableViewStyleGrouped];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     //    _tableView.scrollEnabled = YES;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    
-    
-
+    self.tableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
     
 }
-
-- (void)dropDownControlView:(DropDown1 *)view didFinishWithSelection:(id)selection{
+-(void)loadMoreData{
+    SingleModel *single = [SingleModel sharedSingleModel];
+    NSInteger pageNumber = [self.datas count] / 6 + 1;
+    self.string = [NSString stringWithFormat:@"%ld",pageNumber];
+    NSString *path= [NSString stringWithFormat:ORDER,COMMON,single.userkey,self.string];;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    if (selection) {
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        if (dic[@"data"] !=[NSNull null]){
+            NSArray *array = dic[@"data"];
+            NSLog(@"%@",dic);
+            for(NSDictionary *subDict in array)
+            {
+    
+                OrderModel *model = [OrderModel modelWithDic:subDict];
+                if (![self.datas containsObject:model]) {
+                    [self.datas addObject:model];
+                }
+            }
+        }
+        [_tableView reloadData];
+        [self.tableView.footer endRefreshing];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+- (void)dropDownControlView:(DropDown1 *)view didFinishWithSelection:(id)selection{
+    if (selection) {
         [dd1.textButton setTitle:[NSString stringWithFormat:@"%@",selection] forState:UIControlStateNormal];
         //dropDownMenu.title = [NSString stringWithFormat:@"%@▼",selection];
         NSLog(@"%@",dd1.textButton.titleLabel.text);
         isClssify = YES;
         if ([dd1.textButton.titleLabel.text isEqualToString:@"全部"]) {
-            _docstatus = @"-1";
+            _docstatusign = @"-1";
         }
         if ([dd1.textButton.titleLabel.text isEqualToString:@"待发货"]) {
-            _docstatus = @"1";
+            _docstatusign = @"1";
         }
         if ([dd1.textButton.titleLabel.text isEqualToString:@"退换货/维修"]) {
-            _docstatus = @"2";
+            _docstatusign = @"2";
         }
         if ([dd1.textButton.titleLabel.text isEqualToString:@"待评价"]) {
-            _docstatus = @"3";
+            _docstatusign = @"3";
         }
         
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            
-           
-            
+        
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [self classifyData];
-//                [self.tableView reloadData];
+//              [self.tableView reloadData];
                 [self.classifyDatas removeAllObjects];
             });
             
@@ -146,24 +170,18 @@
     }
     
 }
-
 -(void)classifyData{
-    
-    
-    NSLog(@"%@",_docstatus);
-
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
-    
     NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey];
-    NSLog(@"%@",path);
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:@{@"docstatus":_docstatus} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:@{@"docstatus":_docstatusign} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -172,7 +190,7 @@
         
         for(NSDictionary *subDict in array)
         {
-            NSLog(@"%@",subDict);
+           
             OrderModel *model = [OrderModel modelWithDic:subDict];
             [self.classifyDatas addObject:model];
             
@@ -185,36 +203,32 @@
         NSLog(@"%@",error);
     }];
 }
+
 - (void)downData{
     
     
     SingleModel *model = [SingleModel sharedSingleModel];
 
     
-    NSString *path= [NSString stringWithFormat:ORDER,COMMON,model.userkey];
-    NSLog(@"%@",path);
+    NSString *path= [NSString stringWithFormat:ORDER,COMMON,model.userkey,self.string];
+
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
-            NSLog(@"%@",dic);
+           NSLog(@"%@",dic);
         for(NSDictionary *subDict in array)
         {
 
-                NSLog(@"%@",subDict);
+            
                 OrderModel *model = [OrderModel modelWithDic:subDict];
                 [self.datas addObject:model];
-            
-        
-            
-            
         }
         }
        
@@ -250,7 +264,9 @@
         
     }
 }
-
+-(void)reloadshopcart{
+    
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
 //    if (indexPath.row == 0) {
@@ -276,373 +292,110 @@
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
     static NSString *identity = @"cell";
-    
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
-    
+    AllorderviewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
+    if (!cell) {
+        cell = [[AllorderviewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
+    }
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.clipsToBounds = YES;
-    NSLog(@"%@",self.datas);
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (isClssify == NO) {
-    model1 = self.datas[indexPath.row];
-    
-    
-    NSLog(@"price--%@",model1.orderDescription);
-        
+        cell.model = self.datas[indexPath.row];
+        cell.delegate = self;
     
     }
     if (isClssify == YES) {
-        model1 = self.classifyDatas[indexPath.row];
-        
+        cell.model = self.classifyDatas[indexPath.row];
+        cell.delegate = self;
     }
-        docstatus = [NSString stringWithFormat:@"%@",model1.orderDescription];
-    
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
-    [imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model1.list[0][@"imgurl"]]]];
-        [cell addSubview:imageView];
-    NSLog(@"%@",model1.list[0][@"imgurl"]);
-        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+5, imageView.frame.origin.y, 150, 30)];
-        lb1.font = [UIFont systemFontOfSize:10];
-        lb1.lineBreakMode = NSLineBreakByTruncatingTail;
-        lb1.numberOfLines = 2;
-        lb1.text = [NSString stringWithFormat:@"%@",model1.list[0][@"name"]];
-        [cell addSubview:lb1];
-        
-        UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(lb1.frame.origin.x, CGRectGetMaxY(lb1.frame), 30, 20)];
-        lb2.font = [UIFont systemFontOfSize:10];
-        lb2.text = @"颜色 :";
-        lb2.textColor = [UIColor grayColor];
-        [cell addSubview:lb2];
-        
-        UILabel *lb3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb2.frame), lb2.frame.origin.y, 30, 20)];
-        lb3.font = [UIFont systemFontOfSize:10];
-        lb3.text = @"土豪金";
-        lb3.textColor = [UIColor grayColor];
-        [cell addSubview:lb3];
-        
-        UILabel *lb4 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb3.frame)+5, lb3.frame.origin.y, 30, 20)];
-        lb4.font = [UIFont systemFontOfSize:10];
-        lb4.text = @"尺寸 :";
-        lb4.textColor = [UIColor grayColor];
-        [cell addSubview:lb4];
-
-        UILabel *lb5 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb4.frame), lb4.frame.origin.y, 30, 20)];
-        lb5.font = [UIFont systemFontOfSize:10];
-        lb5.text = @"128G";
-        lb5.textColor = [UIColor grayColor];
-        [cell addSubview:lb5];
-        
-        UILabel *lb6 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame)+40, lb1.frame.origin.y, 60, 20)];
-        lb6.font = [UIFont systemFontOfSize:10];
-        lb6.text = lb6.text = [NSString stringWithFormat:@"￥%@",model1.list[0][@"price"]];;
-        [cell addSubview:lb6];
-        
-        UILabel *lb7 = [[UILabel alloc]initWithFrame:CGRectMake(lb6.frame.origin.x+40, CGRectGetMaxY(lb6.frame)+10, 60, 20)];
-        lb7.font = [UIFont systemFontOfSize:10];
-        lb7.text = [NSString stringWithFormat:@"x%@",model1.list[0][@"count"]];
-        [cell addSubview:lb7];
-
- 
-        UILabel *lbT = [[UILabel alloc]initWithFrame:CGRectMake(55, CGRectGetMaxY(imageView.frame)+25, 60, 20)];
-        lbT.font = [UIFont systemFontOfSize:10];
-        lbT.text = @"共1件商品";
-        lbT.textColor = [UIColor grayColor];
-        [cell addSubview:lbT];
-        
-        UILabel *lbT1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lbT.frame)+5, lbT.frame.origin.y, 80, 20)];
-        lbT1.font = [UIFont systemFontOfSize:10];
-        lbT1.text = @"运费 :￥30.00";
-        lbT1.textColor = [UIColor grayColor];
-        [cell addSubview:lbT1];
-        
-        UILabel *lbT2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lbT1.frame)+5, lbT.frame.origin.y, 30, 20)];
-        lbT2.font = [UIFont systemFontOfSize:10];
-        lbT2.text = @"合计 :";
-        lbT2.textColor = [UIColor grayColor];
-        [cell addSubview:lbT2];
-        
-        UILabel *lbT3 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lbT2.frame), lbT.frame.origin.y, 60, 20)];
-        lbT3.font = [UIFont systemFontOfSize:10];
-        lbT3.text = [NSString stringWithFormat:@"￥%@",model1.totalFee];
-        [cell addSubview:lbT3];
-
-        
-        if ([docstatus isEqualToString:@"待付款"]) {
-            self.row = indexPath.row;
-        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(170,CGRectGetMaxY(lbT.frame)+20, 60, 20)];
-       [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
-        [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
-        
-        btn1.clipsToBounds = YES;
-        _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
-            SingleModel *single = [SingleModel sharedSingleModel];
-            single.orderId = model1.orderId;
-            NSLog(@"%ld",(long)btn1.tag);
-        btn1.tag = indexPath.row;
-        btn1.font = [UIFont systemFontOfSize:12];
-        btn1.layer.cornerRadius = 3;
-        btn1.layer.borderWidth = 1;
-        btn1.layer.borderColor = [[UIColor grayColor]CGColor];
-        [cell addSubview:btn1];
-        UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn3 setTitle:@"马上付款" forState:UIControlStateNormal];
-        [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        btn3.clipsToBounds = YES;
-        btn3.font = [UIFont systemFontOfSize:12];
-        btn3.layer.cornerRadius = 3;
-        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn3.tag = 1000;
-        btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [cell addSubview:btn3];
-        }
-        
-        if ([docstatus isEqualToString:@"订单完成"]) {
-            
-        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(100, CGRectGetMaxY(lbT.frame)+20, 60, 20)];
-        [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
-        [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
-        btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
-            NSLog(@"%ld",(long)_row);
-        btn1.tag = indexPath.row;
-        btn1.font = [UIFont systemFontOfSize:12];
-        btn1.layer.cornerRadius = 3;
-        btn1.layer.borderWidth = 1;
-        btn1.layer.borderColor = [[UIColor grayColor]CGColor];
-        [cell addSubview:btn1];
-
-        UIButton *btn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn2 setTitle:@"查看物流" forState:UIControlStateNormal];
-        [btn2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        btn2.clipsToBounds = YES;
-        btn2.font = [UIFont systemFontOfSize:12];
-        btn2.layer.cornerRadius = 3;
-        btn2.layer.borderWidth = 1;
-        btn2.layer.borderColor = [[UIColor grayColor]CGColor];
-        [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1001;
-        [cell addSubview:btn2];
-
-        UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn3 setTitle:@"确认收货" forState:UIControlStateNormal];
-        [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        btn3.clipsToBounds = YES;
-        btn3.font = [UIFont systemFontOfSize:12];
-        btn3.layer.cornerRadius = 3;
-        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-            btn2.tag = 1002;
-        btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-       
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [cell addSubview:btn3];
-            
-        }
-        if ([docstatus isEqualToString:@"待发货"]) {
-            
-        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(170, CGRectGetMaxY(lbT.frame)+20, 60, 20)];
-        [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
-        [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
-        btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
-         NSLog(@"model.orderId--%ld",(long)_row);
-        btn1.tag = indexPath.row;
-            
-        btn1.font = [UIFont systemFontOfSize:12];
-        btn1.layer.cornerRadius = 3;
-        btn1.layer.borderWidth = 1;
-        btn1.layer.borderColor = [[UIColor grayColor]CGColor];
-        [cell addSubview:btn1];
-
-
-        UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn3 setTitle:@"提醒发货" forState:UIControlStateNormal];
-        [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        btn3.clipsToBounds = YES;
-        btn3.font = [UIFont systemFontOfSize:12];
-        btn3.layer.cornerRadius = 3;
-        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn3.tag = 1003;
-        btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [cell addSubview:btn3];
-            
-        }
-        if ([docstatus isEqualToString:@"退换货"]) {
-            
-        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(40, CGRectGetMaxY(lbT.frame)+20, 60, 20)];
-        [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
-        [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
-        btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
-            NSLog(@"%ld",(long)btn1.tag);
-             btn1.tag = indexPath.row;
-        btn1.font = [UIFont systemFontOfSize:12];
-        btn1.layer.cornerRadius = 3;
-        btn1.layer.borderWidth = 1;
-        btn1.layer.borderColor = [[UIColor grayColor]CGColor];
-        [cell addSubview:btn1];
-
-        UIButton *btn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn2 setTitle:@"退换货" forState:UIControlStateNormal];
-        [btn2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        btn2.clipsToBounds = YES;
-        btn2.font = [UIFont systemFontOfSize:12];
-        btn2.layer.cornerRadius = 3;
-        btn2.layer.borderWidth = 1;
-        btn2.layer.borderColor = [[UIColor grayColor]CGColor];
-        [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1004;
-        [cell addSubview:btn2];
-
-        UIButton *btn4 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn4 setTitle:@"维修" forState:UIControlStateNormal];
-        [btn4 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        btn4.clipsToBounds = YES;
-        btn4.font = [UIFont systemFontOfSize:12];
-        btn4.layer.cornerRadius = 3;
-        btn4.layer.borderWidth = 1;
-        btn4.layer.borderColor = [[UIColor grayColor]CGColor];
-        [btn4 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn4.tag = 1005;
-        _serviceOrderId = indexPath.row;
-        [cell addSubview:btn4];
-
-        UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn4.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn3 setTitle:@"马上评价" forState:UIControlStateNormal];
-        [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        btn3.clipsToBounds = YES;
-        btn3.font = [UIFont systemFontOfSize:12];
-        btn3.layer.cornerRadius = 3;
-            [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-            btn3.tag = 1005;
-        btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [cell addSubview:btn3];
-        
-        }
-        if ([docstatus isEqualToString:@"待收货"]) {
-        UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(100, CGRectGetMaxY(lbT.frame)+20, 60, 20)];
-        [btn1 setTitle:@"删除订单" forState:UIControlStateNormal];
-        [btn1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [btn1 addTarget:self action:@selector(delegateBtn:) forControlEvents:UIControlEventTouchUpInside];
-        btn1.clipsToBounds = YES;
-       _row = [[NSString stringWithFormat:@"%@",model1.orderId]intValue];
-            NSLog(@"model.orderId--%ld",(long)_row);
-         btn1.tag = indexPath.row;
-        btn1.font = [UIFont systemFontOfSize:12];
-        btn1.layer.cornerRadius = 3;
-        btn1.layer.borderWidth = 1;
-        btn1.layer.borderColor = [[UIColor grayColor]CGColor];
-        [cell addSubview:btn1];
-
-        UIButton *btn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn1.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn2 setTitle:@"查看结果" forState:UIControlStateNormal];
-        [btn2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        btn2.clipsToBounds = YES;
-        btn2.font = [UIFont systemFontOfSize:12];
-        btn2.layer.cornerRadius = 3;
-        btn2.layer.borderWidth = 1;
-            OrderModel *model = self.datas[indexPath.row];
-            _returnId = model.orderId;
-        btn2.layer.borderColor = [[UIColor grayColor]CGColor];
-        [btn2 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.tag = 1006;
-        [cell addSubview:btn2];
-
-        UIButton *btn3 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn2.frame)+5, btn1.frame.origin.y, 60, 20)];
-        [btn3 setTitle:@"马上评价" forState:UIControlStateNormal];
-        [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        btn3.clipsToBounds = YES;
-        btn3.font = [UIFont systemFontOfSize:12];
-        btn3.layer.cornerRadius = 3;
-        [btn3 addTarget:self action:@selector(buttonPress:) forControlEvents:UIControlEventTouchUpInside];
-        btn3.tag = 1007;
-        btn3.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        [cell addSubview:btn3];
-        
-         
-    }
-    
-    
-
-
-    
     return cell;
 }
--(void)delegateBtn:(UIButton *)btn{
-    
-    NSLog(@"%ld",(long)_row);
-    
-    _btnNumber = btn.tag;
-   
-    _orderId = _row;
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"删除订单" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消",nil];
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if ([alertView.message isEqualToString:@"确定要删除该订单"]) {
+        if (buttonIndex == 1) {
+            
+        }else{
+            [self deleteData];
+            
+        }
+    }
+    if ([alertView.message isEqualToString:@"删除失败"]) {
+        if (buttonIndex==0) {
+            [self deleteData];
+        }
+    }
+
+}
+#pragma mark  orderdelegatemathds
+//OrderModel *model = [OrderModel modelWithDic:subDict];
+//[self.datas addObject:model];
+-(void)delegatemethds:(NSString *)orderid{
+    _orderId = orderid;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要删除该订单" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消",nil];
     //设置提示框样式（可以输入账号密码）
     alert.alertViewStyle = UIAlertViewStyleDefault;
-    _row = btn.tag;
+    alert.delegate = self;
     [alert show];
     
-}
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    
-    if (buttonIndex == 1) {
-        NSLog(@"....");
-    }else{
-        
-        
-         [self.datas removeObjectAtIndex:_btnNumber];
-
-         [_tableView reloadData];
-        [self deleteData];
-        
-    }
-}
+} 
 -(void)deleteData{
-
-    NSLog(@"row--%ld",(long)_orderId);
-    NSString *string = [NSString stringWithFormat:@"%ld",(long)_orderId];
     
-    NSString *path= [NSString stringWithFormat:DELETEORDER,COMMON,string];
+    NSString *path= [NSString stringWithFormat:DELETEORDER,COMMON,_orderId];
     NSLog(@"%@",path);
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-
-    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSArray *array = dic[@"status"];
-        NSString *string = [NSString stringWithFormat:@"%@",array];
-        NSLog(@"array--%@",string);
-        if ([string isEqualToString:@"1"]) {
-            
-
+        NSString *messagestring;
+        NSString *signstring;
+        NSString *cancelsting;
+        if ([dic[@"status"] integerValue]==1) {
+            messagestring = @"删除成功";
+            signstring = @"确定";
+            cancelsting = nil;
+            NSIndexPath *path;
+            for (NSInteger i=0; i<self.datas.count; i++) {
+                OrderModel *model = self.datas[i];
+                if ([model.orderId isEqualToString:_orderId]) {
+                    path = [NSIndexPath indexPathForRow:i inSection:0];
+                    [self.datas removeObjectAtIndex:i];
+                    break;
+                }
+            }
+            [self.tableView beginUpdates];
+            [self.tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+           
         }
         else{
+            messagestring = @"删除失败";
+            signstring = @"点击重试";
+            cancelsting = @"取消";
+        }
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:messagestring delegate:self cancelButtonTitle:signstring otherButtonTitles:cancelsting,nil];
+        alert.delegate = self;
+        [alert show];
+        [hud hide:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        if (error.code==-1004) {
+            
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接服务器失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+                [self deleteData];
+            }];
+            
+        }
+        if (error.code==-1001) {
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+                [self deleteData];
+            }];
+            
         }
 
-       
-
-
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
 
@@ -658,7 +411,7 @@
         LogisticsDetailsController *lg = [[LogisticsDetailsController alloc]init];
         
         [self.navigationController pushViewController:lg animated:YES];
-        NSLog(@",,");
+
     }
     
     //退换货
@@ -683,15 +436,10 @@
 }
 -(void)exchageStateDatas{
     
-    
-    
-    
-    
     SingleModel *model = [SingleModel sharedSingleModel];
-    int i = [(model.reasonId)intValue];
-    
+   
     NSString *path= [NSString stringWithFormat:RETUNGOODSSTATE,COMMON,model.jsessionid,model.userkey,_returnId];
-    NSLog(@"%@",path);
+   
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -703,30 +451,23 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSArray *array = dic[@"status"];
         NSString *string = [NSString stringWithFormat:@"%@",array];
-        NSLog(@"array--%@",string);
         if ([string isEqualToString:@"1"]) {
-            
             
         }
         else{
         }
         
-
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
     
-    
 }
-
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSLog(@"%@",model.userkey);
-    NSLog(@"%@",[model.userkey class]);
+  
     if (model.userkey == nil) {
         if (!login) {
             login = [[LoginViewController alloc]init];
@@ -750,8 +491,6 @@
     }
     
 }
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
