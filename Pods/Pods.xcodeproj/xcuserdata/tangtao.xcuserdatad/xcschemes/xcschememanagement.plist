@@ -9,6 +9,16 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>JBASIHTTPRequest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>JSONKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -24,6 +34,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>Reachability.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -33,6 +48,21 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>0203872F567108922EBCD5567E2F13BD</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>112416DC9D4E6937F96BAED76FF8C30F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>1893DE70459B9C5430E1E53597BF9817</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>26E09602BBE7FC53E5E8A12A3545F794</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +92,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8597D00E0F98185AC47B8096DCA022B2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>93A8AD23701074F5AADD9741242F6BFC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9C7FF6885A0F712BE0E54A230AE14003</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -73,6 +113,11 @@
 			<true/>
 		</dict>
 		<key>B69F15816BE68A90C98F1898CC0EED5C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C1E2FAA31FC209AB29A36B4329D57E73</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -88,6 +133,11 @@
 			<true/>
 		</dict>
 		<key>ED9519FAF86145BCC503C8904BA95FDA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FBB6D320CC3353BD0093AE2A151B9C93</key>
 		<dict>
 			<key>primary</key>
 			<true/>
