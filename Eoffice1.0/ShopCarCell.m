@@ -178,7 +178,9 @@
     
     addCount++;
     NSString *string = [NSString stringWithFormat:@"%d",addCount];
+    
     [self.number setText:string];
+    
     self.countBL.text = string;
     
     addTotal = [NSString stringWithFormat:@"%d",price];
@@ -215,14 +217,15 @@
     if (btn.selected == YES) {
         
                 if (_delegate &&[_delegate respondsToSelector:@selector(chooseCount:)]) {
+                    
                     [self.delegate chooseCount:addTotal];
 
-            
         }
  
     }else{
         
         if (_delegate &&[_delegate respondsToSelector:@selector(noChooseCount:)]) {
+            
             [self.delegate noChooseCount:addTotal];
         
     }

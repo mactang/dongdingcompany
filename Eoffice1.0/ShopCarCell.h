@@ -18,6 +18,8 @@
 -(void)totalPrice:(NSString *)totalPrices;
 -(void)totalPricrArray:(NSString *)totalPricrArray;
 
+-(void)allChoosePrice:(NSString *)allChoosePriceLB;
+
 @end
 @interface ShopCarCell : UITableViewCell
 {
@@ -46,4 +48,5 @@
 + (ShopCarCell *)cellWithTableView:(UITableView *)tableView;
 
 - (void)setChecked:(BOOL)checked;
+- (void)allSetChecked:(BOOL)checked;
 @end
