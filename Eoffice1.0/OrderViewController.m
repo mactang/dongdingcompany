@@ -339,7 +339,7 @@
     alert.delegate = self;
     [alert show];
     
-} 
+}
 -(void)deleteData{
     
     NSString *path= [NSString stringWithFormat:DELETEORDER,COMMON,_orderId];
