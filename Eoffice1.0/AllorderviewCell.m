@@ -61,7 +61,8 @@
 }
 -(void)setModel:(OrderModel *)model{
     
-   [self.picimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.list[0][@"imgurl"]]]];
+    
+    [self.picimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.list[0][@"imgurl"]]]];
     
     CGSize unitsize = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"￥%.2f",[model.list[0][@"price"]floatValue]] font:[UIFont systemFontOfSize:13] constraintSize:CGSizeMake(SCREEN_WIDTH-widgetBoundsWidth(self.picimageview)-25-100, 25)];
     self.unitPrice.frame = CGRectMake(SCREEN_WIDTH-unitsize.width-5, 10, unitsize.width, unitsize.height);
@@ -88,7 +89,7 @@
     self.lineview.backgroundColor = [UIColor lightGrayColor];
     
     NSMutableAttributedString *totalstring = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"合计:￥%.2f",[model.totalFee floatValue]]];
-    [totalstring addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, 3)];
+    [totalstring addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204.0/255.0 green:0/255.0 blue:0/255.0 alpha:1] range:NSMakeRange(0, 3)];
     
     CGSize totalprice = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"合计:￥%.2f",[model.totalFee floatValue]] font:[UIFont systemFontOfSize:13] constraintSize:CGSizeMake(SCREEN_WIDTH/2, 20)];
     self.totalPrice.frame = CGRectMake(SCREEN_WIDTH-totalprice.width-5, CGRectGetMaxY(self.lineview.frame)+10, totalprice.width, totalprice.height);
