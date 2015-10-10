@@ -504,12 +504,16 @@
     //
     //        [UMSocialConfig setQQAppId:@"100424468" url:nil importClasses:@[[QQApiInterface class],[TencentOAuth class]]];
     
+    NSString *shareText = @"友盟社会化组件可以让移动应用快速具备社会化分享、登录、评论、喜欢等功能，并提供实时、全面的社会化数据统计分析服务。 http://www.umeng.com/social";             //分享内嵌文字
+    UIImage *shareImage = [UIImage imageNamed:@"UMS_social_demo"];
+    
     [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"5211818556240bc9ee01db2f"
-                                      shareText:nil
-                                     shareImage:nil
-                                shareToSnsNames:nil
+                                         appKey:@"53290df956240b6b4a0084b3"
+                                      shareText:shareText
+                                     shareImage:shareImage
+                                shareToSnsNames:[NSArray arrayWithObjects: UMShareToWechatSession, UMShareToWechatTimeline, UMShareToQzone, UMShareToQQ, UMShareToSina, UMShareToTencent, nil]
                                        delegate:self];
+     
     
     
 }

@@ -212,6 +212,7 @@
     
     NSString *path= [NSString stringWithFormat:ORDER,COMMON,model.userkey,self.string];
 
+    NSLog(@"path--%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
