@@ -154,11 +154,16 @@
     [btn addTarget:self action:@selector(delegatePress) forControlEvents:UIControlEventTouchUpInside];
     [totView addSubview:btn];
     
-    totoalBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+10, allBtn.frame.origin.y-10, 100, 20)];
-    totoalBL.font = [UIFont systemFontOfSize:13];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+20, allBtn.frame.origin.y-10, 50, 20)];
+    label.text = @"合计: ￥";
+    label.font = [UIFont systemFontOfSize:13];
+    label.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+    [totView addSubview:label];
     
+    totoalBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame), allBtn.frame.origin.y-10, 100, 20)];
+    totoalBL.font = [UIFont systemFontOfSize:13];
     totoalBL.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-    totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",totalEvery];
+    totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
     [totView addSubview:totoalBL];
     UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+50, CGRectGetMaxY(totoalBL.frame), 60, 20)];
     LB1.font = [UIFont systemFontOfSize:13];
@@ -404,17 +409,20 @@
         }
     }
     if (sender.selected == YES){
+        
         for (NSDictionary *dic in contacts) {
             [dic setValue:@"YES" forKey:@"checked"];
         }
-        otherAllTotal = totalEvery;
+        //otherAllTotal = totalEvery;
         NSLog(@"%d",totalEvery);
-        totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",otherAllTotal];
+        totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
     }else{
         for (NSDictionary *dic in contacts) {
             [dic setValue:@"NO" forKey:@"checked"];
         }
-        totoalBL.text = @"合计: ￥";
+        totoalBL.text = @"";
+        
+       // totalEvery = 0;
        // [(UIButton*)sender setTitle:@"全选" forState:UIControlStateNormal];
     }
 
@@ -462,6 +470,7 @@
                 total = [[NSString stringWithFormat:@"%@",totoalArray[i]]intValue];
                 everyCount = [[NSString stringWithFormat:@"%@",totoalCount[i]]intValue];
                 totalEvery = total*everyCount + totalEvery;
+                
                 
             }
             
@@ -580,13 +589,13 @@
 -(void)subCount:(NSString *)subCountLB{
     
     int m = [[NSString stringWithFormat:@"%@",subCountLB]intValue];
-    totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",otherAllTotal-m];
+    totoalBL.text = [NSString stringWithFormat:@"%d",otherAllTotal-m];
     otherAllTotal = [[NSString stringWithFormat:@"%d",otherAllTotal-m]intValue];
     NSLog(@"totalEvery--%d",totalEvery);
     if (selectedAll == YES) {
         
     totalEvery = totalEvery - m;
-    totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",totalEvery];
+    totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
     NSLog(@"totalEvery-m--%d",totalEvery);
         
     }
@@ -596,11 +605,12 @@
 -(void)addCount:(NSString *)addCountLB{
 
     int m = [[NSString stringWithFormat:@"%@",addCountLB]intValue];
-    totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",m+otherAllTotal];
+    totoalBL.text = [NSString stringWithFormat:@"%d",m+otherAllTotal];
     otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
     if (selectedAll == YES) {
     totalEvery = totalEvery + m;
-    totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",totalEvery];
+        
+    totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
 
     }
 }
@@ -614,18 +624,24 @@
     NSLog(@"m--%d",m);
     NSLog(@"otherAllTotal--%d",otherAllTotal);
     NSLog(@"m+otherAllTotal--%d",m+otherAllTotal);
-    if (selectedAll == NO) {
-        int n = [[NSString stringWithFormat:@"合计: ￥%@",totoalBL.text]intValue];
-        
-    totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",m+n];
+    if (selectedAll == YES) {
+        int n = totalEvery;
+    totoalBL.text = [NSString stringWithFormat:@"%d",m+n];
     
+        int m = [[NSString stringWithFormat:@"%@",totoalBL.text]intValue];
+        NSLog(@"totoalBL.text--%@",totoalBL.text);
+        NSLog(@"n--%d",n);
+        NSLog(@"m--%d",m);
+        NSLog(@"totalEvery--%d",totalEvery);
+        
+        totalEvery = m;
    // otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
-        selectedAll = YES;
+     //   selectedAll = YES;
     }else{
     
-        totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",m+otherAllTotal];
+        totoalBL.text = [NSString stringWithFormat:@"%d",m+otherAllTotal];
         otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
-        selectedAll=NO;
+       // selectedAll=NO;
     }
 }
 
@@ -634,12 +650,12 @@
     int m = [[NSString stringWithFormat:@"%@",chooseCountLB]intValue];
     if (selectedAll == NO) {
         
-        totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",otherAllTotal-m];
+        totoalBL.text = [NSString stringWithFormat:@"%d",otherAllTotal-m];
         
         otherAllTotal = [[NSString stringWithFormat:@"%d",otherAllTotal-m]intValue];
     }else{
         totalEvery = totalEvery - m;
-        totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",totalEvery];
+        totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
         
     }
     

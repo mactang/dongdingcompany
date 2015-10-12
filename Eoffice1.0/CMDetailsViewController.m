@@ -511,7 +511,7 @@
                                          appKey:@"53290df956240b6b4a0084b3"
                                       shareText:shareText
                                      shareImage:shareImage
-                                shareToSnsNames:[NSArray arrayWithObjects: UMShareToWechatSession, UMShareToWechatTimeline, UMShareToQzone, UMShareToQQ, UMShareToSina, UMShareToTencent, nil]
+                                shareToSnsNames:[NSArray arrayWithObjects: UMShareToWechatSession, UMShareToWechatTimeline, UMShareToQzone, UMShareToQQ, UMShareToSina, UMShareToTencent,UMShareToSms, nil]
                                        delegate:self];
      
     
