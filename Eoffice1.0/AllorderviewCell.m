@@ -56,6 +56,15 @@
         
         self.delegatebutton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.contentView addSubview:self.delegatebutton];
+        
+        self.resultbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.contentView addSubview:self.resultbutton];
+        
+        self.returnbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.contentView addSubview:self.returnbutton];
+        
+        self.repairbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self.contentView addSubview:self.repairbutton];
     }
     return self;
 }
@@ -106,15 +115,30 @@
     self.anotherview.frame = CGRectMake(5, CGRectGetMaxY(self.totalnumber.frame)+10, SCREEN_WIDTH-10, 0.5);
     self.anotherview.backgroundColor = [UIColor lightGrayColor];
     
-    self.orderbutton.frame = CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-30)/4-10, widgetFrameY(self.anotherview)+10, (SCREEN_WIDTH-30)/4, SCREEN_WIDTH/12);
-    if ([model.orderDescription isEqualToString:@"待发货"]) {
-        [self.orderbutton setTitle:@"提醒发货" forState:UIControlStateNormal];
-    }
+    self.orderbutton.frame = CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-70)/4-10, widgetFrameY(self.anotherview)+10, (SCREEN_WIDTH-70)/4, SCREEN_WIDTH/12);
     self.orderbutton.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     self.orderbutton.layer.cornerRadius = 3;
     self.orderbutton.layer.borderWidth = 0.5;
     self.orderbutton.layer.borderColor = [[UIColor grayColor]CGColor];
-    self.orderbutton.titleLabel.font = [UIFont systemFontOfSize:15];
+    self.orderbutton.titleLabel.font = [UIFont systemFontOfSize:14];
+    if ([model.orderDescription isEqualToString:@"待付款"]) {
+        [self.orderbutton setTitle:@"马上付款" forState:UIControlStateNormal];
+    }
+    if ([model.orderDescription isEqualToString:@"待收货"]) {
+        [self.orderbutton setTitle:@"确认收货" forState:UIControlStateNormal];
+    }
+    if ([model.orderDescription isEqualToString:@"待发货"]) {
+        [self.orderbutton setTitle:@"提醒发货" forState:UIControlStateNormal];
+    }
+    if ([model.orderDescription isEqualToString:@"已完成"]) {
+        [self.orderbutton setTitle:@"马上评价" forState:UIControlStateNormal];
+    }
+    if ([model.orderDescription isEqualToString:@"申请退货中"]) {
+        [self.orderbutton setTitle:@"马上评价" forState:UIControlStateNormal];
+        self.orderbutton.backgroundColor = [UIColor whiteColor];
+    }
+    NSLog(@"%@",model.orderDescription);
+    
     
     self.logisticsbutton.frame = CGRectMake(widgetFrameX(self.orderbutton)-widgetBoundsWidth(self.orderbutton)-5, widgetFrameY(self.orderbutton), widgetBoundsWidth(self.orderbutton), widgetboundsHeight(self.orderbutton));
     [self.logisticsbutton setTitle:@"查看物流" forState:UIControlStateNormal];
@@ -123,16 +147,66 @@
     self.logisticsbutton.layer.borderWidth = 0.5;
     self.logisticsbutton.clipsToBounds = YES;
     self.logisticsbutton.layer.borderColor = [[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1]CGColor];
-    self.logisticsbutton.titleLabel.font = [UIFont systemFontOfSize:15];
+    self.logisticsbutton.titleLabel.font = [UIFont systemFontOfSize:14];
     
     self.delegatebutton.frame  = CGRectMake(widgetFrameX(self.logisticsbutton)-widgetBoundsWidth(self.logisticsbutton)-5, widgetFrameY(self.logisticsbutton), widgetBoundsWidth(self.logisticsbutton), widgetboundsHeight(self.logisticsbutton));
+    if ([model.orderDescription isEqualToString:@"待付款"]||[model.orderDescription isEqualToString:@"待发货"]) {
+        self.delegatebutton.frame = CGRectMake(widgetFrameX(self.orderbutton)-widgetBoundsWidth(self.orderbutton)-5, widgetFrameY(self.orderbutton), widgetBoundsWidth(self.orderbutton), widgetboundsHeight(self.orderbutton));
+        self.logisticsbutton.hidden = YES;
+        self.returnbutton.hidden = YES;
+        self.repairbutton.hidden = YES;
+        self.resultbutton.hidden = YES;
+    }
+    if ([model.orderDescription isEqualToString:@"已完成"]) {
+        self.repairbutton.frame = CGRectMake(widgetFrameX(self.orderbutton)-widgetBoundsWidth(self.orderbutton)-5, widgetFrameY(self.orderbutton), widgetBoundsWidth(self.orderbutton), widgetboundsHeight(self.orderbutton));
+        [self.repairbutton setTitle:@"维修" forState:UIControlStateNormal];
+        [self.repairbutton setTitleColor:[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1] forState:UIControlStateNormal];
+        self.repairbutton.layer.cornerRadius = 3;
+        self.repairbutton.layer.borderWidth = 0.5;
+        self.repairbutton.clipsToBounds = YES;
+        self.repairbutton.layer.borderColor = [[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1]CGColor];
+        self.repairbutton.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        self.returnbutton.frame = CGRectMake(widgetFrameX(self.logisticsbutton)-widgetBoundsWidth(self.logisticsbutton)-5, widgetFrameY(self.logisticsbutton), widgetBoundsWidth(self.logisticsbutton), widgetboundsHeight(self.logisticsbutton));
+        [self.returnbutton setTitle:@"退换货" forState:UIControlStateNormal];
+        [self.returnbutton setTitleColor:[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1] forState:UIControlStateNormal];
+        self.returnbutton.layer.cornerRadius = 3;
+        self.returnbutton.layer.borderWidth = 0.5;
+        self.returnbutton.clipsToBounds = YES;
+        self.returnbutton.layer.borderColor = [[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1]CGColor];
+        self.returnbutton.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        self.delegatebutton.frame = CGRectMake(widgetFrameX(self.returnbutton)-widgetBoundsWidth(self.returnbutton)-5, widgetFrameY(self.returnbutton), widgetBoundsWidth(self.returnbutton), widgetboundsHeight(self.returnbutton));
+        self.logisticsbutton.hidden = YES;
+        self.repairbutton.hidden = NO;
+        self.returnbutton.hidden = NO;
+        self.resultbutton.hidden = YES;
+    }
+    if ([model.orderDescription isEqualToString:@"待收货"]) {
+        self.logisticsbutton.hidden = NO;
+        self.returnbutton.hidden = YES;
+        self.repairbutton.hidden = YES;
+        self.resultbutton.hidden = YES;
+    }
+    if ([model.orderDescription isEqualToString:@"申请退货中"]) {
+        self.logisticsbutton.hidden = YES;
+        self.repairbutton.hidden = YES;
+        self.returnbutton.hidden = YES;
+        self.resultbutton.hidden = NO;
+        self.resultbutton.frame = CGRectMake(widgetFrameX(self.orderbutton)-widgetBoundsWidth(self.orderbutton)-5, widgetFrameY(self.orderbutton), widgetBoundsWidth(self.orderbutton), widgetboundsHeight(self.orderbutton));
+        self.resultbutton.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+        self.resultbutton.layer.cornerRadius = 3;
+        self.resultbutton.layer.borderWidth = 0.5;
+        self.resultbutton.layer.borderColor = [[UIColor grayColor]CGColor];
+        self.resultbutton.titleLabel.font = [UIFont systemFontOfSize:14];
+    }
     [self.delegatebutton setTitle:@"删除订单" forState:UIControlStateNormal];
     [self.delegatebutton setTitleColor:[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1] forState:UIControlStateNormal];
     self.delegatebutton.layer.cornerRadius = 3;
     self.delegatebutton.layer.borderWidth = 0.5;
     self.delegatebutton.layer.borderColor = [[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1]CGColor];
     [self.delegatebutton addTarget:self action:@selector(delegateOrder) forControlEvents:UIControlEventTouchUpInside];
-    self.delegatebutton.titleLabel.font = [UIFont systemFontOfSize:15];
+    self.delegatebutton.titleLabel.font = [UIFont systemFontOfSize:14];
     NSLog(@"%@",model.orderId);
     stringmodel = model.orderId;
     

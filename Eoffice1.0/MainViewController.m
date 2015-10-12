@@ -56,7 +56,7 @@
     UIImage *rightImage = [UIImage imageNamed:@"xiaoxi"];
     [rightButton setBackgroundImage:rightImage forState:UIControlStateNormal];
     [rightButton setTitle:@"消息" forState:UIControlStateNormal];
-    rightButton.font = [UIFont systemFontOfSize:12];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:12];
     [view addSubview:rightButton];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -213,7 +213,7 @@
     [MaintainBtn setImage:[UIImage imageNamed:@"保养维修1"] forState:UIControlStateNormal];
     [MaintainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];    [MaintainBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
     MaintainBtn.tag = 1002;
-    MaintainBtn.font = [UIFont systemFontOfSize:22];
+    MaintainBtn.titleLabel.font = [UIFont systemFontOfSize:22];
     MaintainBtn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:MaintainBtn];
     
