@@ -29,6 +29,8 @@
 @implementation ShoppingCarController
 
 {
+    
+    UIView *totView;
     BOOL invoiceSelector;
     NSIndexPath *selectIndexPath;
     UIButton *chooseBtn;
@@ -42,6 +44,12 @@
     int everyCount;
     int totalEvery;
     int otherAllTotal;
+    int onAllChoosePrice;
+    
+    BOOL onAllChoose;
+    
+    //记录总价格
+    int isAllChoose;
     
     UIButton *versionButton;
     NSMutableArray *btnMutableArray;
@@ -70,6 +78,7 @@
     NSString *changeCount;
     BOOL isAllOrder;
     BOOL selectedAll;
+   
     
     NSMutableArray *cellarraydata;
     
@@ -100,6 +109,7 @@
     [self downData];
     
     selectedAll = NO;
+    
     versionGoodId = [NSMutableArray array];
     
     versionCartId = [NSMutableArray array];
@@ -109,6 +119,10 @@
     invoiceSelector = 0;
     isAllDelete = NO;
     total = 0;
+    onAllChoosePrice = 0;
+    onAllChoose = NO;
+    
+    isAllChoose = 0;
     numberIndex = [NSMutableArray array];
     DeleteRow = [NSMutableArray array];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -130,58 +144,11 @@
     _tableView.tag = 1000;
     [self.view addSubview:_tableView];
     
-    UIView *totView = [[UIView alloc]initWithFrame:CGRectMake(0, 440, 320, 80)];
+   totView = [[UIView alloc]initWithFrame:CGRectMake(0, 440, 320, 80)];
     totView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:totView];
     
-    allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    allBtn.frame = CGRectMake(10, 20, 20, 20);
-    [allBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
-    [allBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
-    [allBtn addTarget:self action:@selector(allSelect:) forControlEvents:UIControlEventTouchUpInside];
-    [totView addSubview:allBtn];
     
-    UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(allBtn.frame)+10, allBtn.frame.origin.y, 40, 20)];
-    LB.font = [UIFont systemFontOfSize:17];
-    LB.text = @"全选";
-    LB.textColor = [UIColor blackColor];
-    [totView addSubview:LB];
-    
-    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(LB.frame)+10, allBtn.frame.origin.y, 40, 20)];
-    btn.titleLabel.font = [UIFont systemFontOfSize:17];
-    [btn setTitle:@"删除" forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btn addTarget:self action:@selector(delegatePress) forControlEvents:UIControlEventTouchUpInside];
-    [totView addSubview:btn];
-    
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+20, allBtn.frame.origin.y-10, 50, 20)];
-    label.text = @"合计: ￥";
-    label.font = [UIFont systemFontOfSize:13];
-    label.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-    [totView addSubview:label];
-    
-    totoalBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame), allBtn.frame.origin.y-10, 100, 20)];
-    totoalBL.font = [UIFont systemFontOfSize:13];
-    totoalBL.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-    totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
-    [totView addSubview:totoalBL];
-    UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+50, CGRectGetMaxY(totoalBL.frame), 60, 20)];
-    LB1.font = [UIFont systemFontOfSize:13];
-    LB1.text = @"不含运费";
-    LB1.textColor = [UIColor blackColor];
-    [totView addSubview:LB1];
-    
-    cartIdArray = [NSMutableArray array];
-    
-    UIButton *sure = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totoalBL.frame)+10, 10, 60, 50)];
-    sure.titleLabel.font = [UIFont systemFontOfSize:17];
-    sure.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-    sure.clipsToBounds = YES;
-    sure.layer.cornerRadius = 5;
-    [sure setTitle:@"确定" forState:UIControlStateNormal];
-    [sure addTarget:self action:@selector(sureShopCar) forControlEvents:UIControlEventTouchUpInside];
-    [sure setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [totView addSubview:sure];
     
     // Do any additional setup after loading the view.
 }
@@ -373,24 +340,23 @@
 
 - (void)allSelect:(UIButton*)sender{
     
-
-    
-   // selectedAll = ! selectedAll;
-           allBtn.selected = !allBtn.selected;
+    allBtn.selected = !allBtn.selected;
     if (sender.selected == YES) {
         
         isAllDelete = YES;
+        selectedAll = NO;
         NSLog(@"%lu",(unsigned long)self.datas.count);
         for (int i=0; i<self.datas.count; i++) {
             ShopCarModel *model = self.datas[i];
             
             [cartIdArray addObject:model.cartId];
         }
-        selectedAll = YES;
+       
 
     }else{
         isAllDelete = NO;
-        selectedAll = NO;
+        selectedAll = YES;
+       // selectedAll = NO;
     }
 
     NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
@@ -413,9 +379,18 @@
         for (NSDictionary *dic in contacts) {
             [dic setValue:@"YES" forKey:@"checked"];
         }
-        //otherAllTotal = totalEvery;
-        NSLog(@"%d",totalEvery);
+        
+        if (onAllChoose == YES) {
+            totalEvery = totalEvery + onAllChoosePrice;
+            totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
+            onAllChoose = NO;
+            onAllChoosePrice = 0;
+        }else{
+        
         totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
+            
+        }
+        otherAllTotal = 0;
     }else{
         for (NSDictionary *dic in contacts) {
             [dic setValue:@"NO" forKey:@"checked"];
@@ -474,9 +449,57 @@
                 
             }
             
-           // totoalBL.text = [NSString stringWithFormat:@"合计: ￥%d",totalEvery];
-//            int n = [[NSString stringWithFormat:@"%d",totalEvery]intValue];
-//             otherAllTotal = n ;
+            
+            allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            allBtn.frame = CGRectMake(10, 20, 20, 20);
+            allBtn.selected = YES;
+            [allBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
+            [allBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
+            [allBtn addTarget:self action:@selector(allSelect:) forControlEvents:UIControlEventTouchUpInside];
+            [totView addSubview:allBtn];
+            
+            UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(allBtn.frame)+10, allBtn.frame.origin.y, 40, 20)];
+            LB.font = [UIFont systemFontOfSize:17];
+            LB.text = @"全选";
+            LB.textColor = [UIColor blackColor];
+            [totView addSubview:LB];
+            
+            UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(LB.frame)+10, allBtn.frame.origin.y, 40, 20)];
+            btn.titleLabel.font = [UIFont systemFontOfSize:17];
+            [btn setTitle:@"删除" forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            [btn addTarget:self action:@selector(delegatePress) forControlEvents:UIControlEventTouchUpInside];
+            [totView addSubview:btn];
+            
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+20, allBtn.frame.origin.y-10, 50, 20)];
+            label.text = @"合计: ￥";
+            label.font = [UIFont systemFontOfSize:13];
+            label.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+            [totView addSubview:label];
+            
+            totoalBL = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(label.frame), allBtn.frame.origin.y-10, 100, 20)];
+            totoalBL.font = [UIFont systemFontOfSize:13];
+            totoalBL.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+            totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
+            [totView addSubview:totoalBL];
+            UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(btn.frame)+50, CGRectGetMaxY(totoalBL.frame), 60, 20)];
+            LB1.font = [UIFont systemFontOfSize:13];
+            LB1.text = @"不含运费";
+            LB1.textColor = [UIColor blackColor];
+            [totView addSubview:LB1];
+            
+            cartIdArray = [NSMutableArray array];
+            
+            UIButton *sure = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(LB1.frame)+10, 10, 60, 50)];
+            sure.titleLabel.font = [UIFont systemFontOfSize:17];
+            sure.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+            sure.clipsToBounds = YES;
+            sure.layer.cornerRadius = 5;
+            [sure setTitle:@"确定" forState:UIControlStateNormal];
+            [sure addTarget:self action:@selector(sureShopCar) forControlEvents:UIControlEventTouchUpInside];
+            [sure setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [totView addSubview:sure];
+            
         }else {
         
         }
@@ -513,10 +536,10 @@
     
     for (int i = 0; i <self.datas.count; i++) {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setValue:@"NO" forKey:@"checked"];
+        [dic setValue:@"YES" forKey:@"checked"];
         [contacts addObject:dic];
     }
-    NSLog(@"%lu",contacts.count);
+    NSLog(@"%lu",(unsigned long)contacts.count);
     
     
      static NSString * identifier = @"Cell";
@@ -529,6 +552,7 @@
     cell.delegate = self;
     NSUInteger row = [indexPath row];
     NSMutableDictionary *dic = [contacts objectAtIndex:row];
+    
     if ([[dic objectForKey:@"checked"] isEqualToString:@"NO"]) {
         [dic setObject:@"NO" forKey:@"checked"];
         [cell setChecked:NO];
@@ -547,8 +571,6 @@
     NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
     
     NSLog(@"count--%lu",(unsigned long)anArrayOfIndexPath.count);
-    NSLog(@"btn.tag--%ld",(long)btn.tag);
-   // NSIndexPath *indexPath= [anArrayOfIndexPath objectAtIndex:btn.tag];
     
     NSIndexPath *path = [NSIndexPath indexPathForRow:btn.tag inSection:0];
     
@@ -568,13 +590,10 @@
     
     [cartIdArray addObject:model.cartId];
     
-    NSLog(@"%ld",(long)btn.tag);
+   
     NSString *string = [NSString stringWithFormat:@"%ld",(long)btn.tag];
     [numberIndex addObject:string];
-    NSLog(@"%@",numberIndex);
     
-    
-   // btn.selected = !btn.selected;
     if (btn.selected == YES) {
         ShopCarModel *model = self.datas[btn.tag];
         _cartId = model.cartId;
@@ -589,72 +608,121 @@
 -(void)subCount:(NSString *)subCountLB{
     
     int m = [[NSString stringWithFormat:@"%@",subCountLB]intValue];
-    totoalBL.text = [NSString stringWithFormat:@"%d",otherAllTotal-m];
-    otherAllTotal = [[NSString stringWithFormat:@"%d",otherAllTotal-m]intValue];
-    NSLog(@"totalEvery--%d",totalEvery);
-    if (selectedAll == YES) {
-        
+      if (selectedAll == NO) {
     totalEvery = totalEvery - m;
     totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
-    NSLog(@"totalEvery-m--%d",totalEvery);
-        
+    
+      }else{
+      
+          totoalBL.text = [NSString stringWithFormat:@"%d",otherAllTotal-m];
+          otherAllTotal = [[NSString stringWithFormat:@"%d",otherAllTotal-m]intValue];
+      }
+    isAllChoose = isAllChoose - m;
+    
+}
+-(void)noChooseSubCount:(NSString *)noChooseSubCount{
+  int m = [[NSString stringWithFormat:@"%@",noChooseSubCount]intValue];
+    if (selectedAll == YES) {
+    totalEvery = totalEvery - m;
     }
+    isAllChoose = isAllChoose - m;
     
     
 }
 -(void)addCount:(NSString *)addCountLB{
 
     int m = [[NSString stringWithFormat:@"%@",addCountLB]intValue];
-    totoalBL.text = [NSString stringWithFormat:@"%d",m+otherAllTotal];
-    otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
-    if (selectedAll == YES) {
+    
+    if (selectedAll == NO) {
     totalEvery = totalEvery + m;
         
     totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
 
+    }else{
+        totalEvery = totalEvery + m;
+        totoalBL.text = [NSString stringWithFormat:@"%d",m+otherAllTotal];
+        otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
+        
     }
+    
+    isAllChoose = isAllChoose +m;
+    
+}
+-(void)noChooseAddCount:(NSString *)noChooseAddCount{
+ 
+    int m = [[NSString stringWithFormat:@"%@",noChooseAddCount]intValue];
+    NSLog(@"%d",totalEvery);
+    if (selectedAll == YES) {
+    totalEvery = totalEvery + m;
+     NSLog(@"%d",totalEvery);
+    }
+    
+    isAllChoose = isAllChoose +m;
+    onAllChoosePrice = 0;
+    
 }
 
 -(void)chooseCount:(NSString *)chooseCountLB{
-    //    NSLog(@"addCountLB--%d",totalEvery);
     
+   
     int m = [[NSString stringWithFormat:@"%@",chooseCountLB]intValue];
-    //int n = [[NSString stringWithFormat:@"%d",totalEvery]intValue];
     
-    NSLog(@"m--%d",m);
-    NSLog(@"otherAllTotal--%d",otherAllTotal);
-    NSLog(@"m+otherAllTotal--%d",m+otherAllTotal);
+    
     if (selectedAll == YES) {
-        int n = totalEvery;
-    totoalBL.text = [NSString stringWithFormat:@"%d",m+n];
-    
-        int m = [[NSString stringWithFormat:@"%@",totoalBL.text]intValue];
-        NSLog(@"totoalBL.text--%@",totoalBL.text);
-        NSLog(@"n--%d",n);
-        NSLog(@"m--%d",m);
-        NSLog(@"totalEvery--%d",totalEvery);
-        
-        totalEvery = m;
-   // otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
-     //   selectedAll = YES;
-    }else{
     
         totoalBL.text = [NSString stringWithFormat:@"%d",m+otherAllTotal];
         otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
-       // selectedAll=NO;
+        
+                
+        if (otherAllTotal == totalEvery) {
+            allBtn.selected = YES;
+        }
+        
+       
+    }else{
+        
+        
+        totoalBL.text = [NSString stringWithFormat:@"%d",m+totalEvery];
+        
+        totalEvery = totalEvery+m;
+
+          onAllChoosePrice = onAllChoosePrice - m;
+        
+            if (onAllChoosePrice<=0) {
+                onAllChoosePrice = 0;
+            }
+      
+        if (isAllChoose == totalEvery) {
+            allBtn.selected = YES;
+        }
+        otherAllTotal = 0;
+      
+
     }
+   
+    
+    
 }
 
 -(void)noChooseCount:(NSString *)chooseCountLB{
     allBtn.selected = NO;
     int m = [[NSString stringWithFormat:@"%@",chooseCountLB]intValue];
-    if (selectedAll == NO) {
-        
+    
+    if (selectedAll == YES) {
+    
         totoalBL.text = [NSString stringWithFormat:@"%d",otherAllTotal-m];
-        
+    
         otherAllTotal = [[NSString stringWithFormat:@"%d",otherAllTotal-m]intValue];
+        
     }else{
+        onAllChoose = YES;
+        
+       
+        onAllChoosePrice = m + onAllChoosePrice;
+        
         totalEvery = totalEvery - m;
+        isAllChoose =   onAllChoosePrice  + totalEvery;
+        
         totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
         
     }
@@ -706,8 +774,6 @@
 
 -(void)editorPress:(UIButton *)btn{
     
-  
-    
     changeCount = [NSString stringWithFormat:@"%@",countBL.text];
     if (currentbutton==btn) {
         
@@ -715,10 +781,10 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
         
         
-            [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    NSLog(@"%@",btn.titleLabel.text);
+        [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+   
         btn.selected =! btn.selected;
-        NSLog(@"%@",btn.titleLabel.text);
+        
         if (!invoiceSelector) {
              [self editorData];
            
@@ -731,18 +797,13 @@
     currentbutton.selected = NO;
     btn.selected =! btn.selected;
     currentbutton = btn;
-    
-    NSLog(@"%@",btn.titleLabel.text);
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:btn.tag+1 inSection:0];
     
     selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     
     invoiceSelector = !invoiceSelector;
 
-//    if (!invoiceSelector) {
-//        invoiceSelector = YES;
-//        
-//        }
+
     [_tableView reloadRowsAtIndexPaths:@[selectIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     
@@ -767,7 +828,6 @@
         if (dic[@"data"] !=[NSNull null]){
             NSDictionary *array = dic[@"data"];
             
-            
             ShopCartId *model = [ShopCartId modelWithDic:array];
             NSLog(@"%lu",(unsigned long)model.list.count);
             OrderController *order  = [[OrderController alloc]init];
@@ -778,9 +838,7 @@
                 
                 order.shopCartId = [NSString stringWithFormat:@"%@,%@",order.shopCartId,model.list[i][@"cartId"]];
                 
-                
-                
-                
+
             }
             NSLog(@"%@",order.shopCartId);
             [self.navigationController pushViewController:order animated:YES];

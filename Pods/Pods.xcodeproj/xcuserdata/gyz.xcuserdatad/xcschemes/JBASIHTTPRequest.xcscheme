@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BAD8D81AE8784DAF936DED79"
+               BlueprintIdentifier = "BD0FC416C5EB9220774F4CDD"
                BuildableName = "libJBASIHTTPRequest.a"
                BlueprintName = "JBASIHTTPRequest"
                ReferencedContainer = "container:Pods.xcodeproj">
