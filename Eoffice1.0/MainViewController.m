@@ -96,9 +96,7 @@
     NewsViewController *news = [[NewsViewController alloc]init];
     [self.navigationController pushViewController:news animated:YES];
 }
-
 -(void)button{
-    
     UIButton *ComodityBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 220, 300, 136)];
 //    [ComodityBtn setTitle:@"商品" forState:UIControlStateNormal];
     [ComodityBtn setImage:[UIImage imageNamed:@"办公商品"] forState:UIControlStateNormal];
