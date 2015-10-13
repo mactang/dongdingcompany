@@ -25,13 +25,11 @@
 #import "CommodityViewController.h"
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate,deletgateOrder,UIAlertViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
-@property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic,strong)NSMutableArray *classifyDatas;
 @property(nonatomic,copy)NSString  *orderId;
 @property(nonatomic,assign)NSString *returnId;
 @property(nonatomic,assign)NSInteger serviceOrderId;
 @property(nonatomic,copy)NSString *docstatusign;
-@property(nonatomic,copy)NSString *string;
 @property(nonatomic,copy)NSString *moredata;
 @property(nonatomic,strong)UILabel *labelsign;
 @property(nonatomic,strong)UIButton *strollbutton;
@@ -42,21 +40,10 @@
 
     NSArray *dropDownMenuList;
     DropDown1 *dd1;
-    BOOL isClssify;
     NSString *docstatus;
     OrderModel *model1;
     LoginViewController *login;
-    BOOL  orderbool;
-    BOOL  refresh;
-    
 }
--(NSMutableArray *)datas{
-    if (_datas == nil) {
-        _datas = [NSMutableArray array];
-    }
-    return _datas;
-}
-
 -(NSMutableArray *)classifyDatas{
     if (_classifyDatas == nil) {
         _classifyDatas = [NSMutableArray array];
@@ -76,13 +63,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     self.navigationController.navigationBarHidden = YES;
-    isClssify = NO;
-    self.string = @"1";
     self.moredata = @"-1";
-   //[self downData];
-    orderbool = NO;
-    refresh = NO;
-    
+    _docstatusign = @"-1";
     UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 80, 20)];
     myOrder.text = @"我的订单";
     myOrder.textColor = [UIColor blackColor];
@@ -115,80 +97,47 @@
     
 }
 -(void)loadMoreData{
-    if (!refresh) {
-        SingleModel *single = [SingleModel sharedSingleModel];
-        NSInteger pageNumber = [self.datas count] / 6 + 1;
-        self.string = [NSString stringWithFormat:@"%ld",pageNumber];
-        NSString *path= [NSString stringWithFormat:ORDER,COMMON,single.userkey,self.string];;
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSInteger pageNumber = [self.classifyDatas count] / 6 + 1;
+    self.moredata = [NSString stringWithFormat:@"%ld",pageNumber];
+    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey,self.moredata];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager POST:path parameters:@{@"docstatus":_docstatusign} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        
-        [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+            NSArray *array = dic[@"data"];
             
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-            
-            if (dic[@"data"] !=[NSNull null]){
-                NSArray *array = dic[@"data"];
-                NSLog(@"%@",dic);
-                for(NSDictionary *subDict in array)
-                {
-                    OrderModel *model = [OrderModel modelWithDic:subDict];
-                    if (![self.datas containsObject:model]) {
-                        [self.datas addObject:model];
-                    }
+            for(NSDictionary *subDict in array)
+            {
+                
+                OrderModel *model = [OrderModel modelWithDic:subDict];
+                if (![self.classifyDatas containsObject:model]) {
+                    [self.classifyDatas addObject:model];
                 }
             }
-            [_tableView reloadData];
-            [self.tableView.footer endRefreshing];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@",error);
-        }];
-    }
-    else{
-        SingleModel *model = [SingleModel sharedSingleModel];
-        NSInteger pageNumber = [self.classifyDatas count] / 6 + 1;
-        self.moredata = [NSString stringWithFormat:@"%ld",pageNumber];
-        NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey,self.moredata];
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        
-        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        
-        [manager POST:path parameters:@{@"docstatus":_docstatusign} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
-        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-            if (dic[@"data"] !=[NSNull null]){
-                NSArray *array = dic[@"data"];
-                
-                for(NSDictionary *subDict in array)
-                {
-                    
-                    OrderModel *model = [OrderModel modelWithDic:subDict];
-                    if (![self.classifyDatas containsObject:model]) {
-                        [self.classifyDatas addObject:model];
-                    }
-                }
-                
-            }
-            [_tableView reloadData];
-            [self.tableView.footer endRefreshing];
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@",error);
-        }];
-        
-    }
+        }
+        [_tableView reloadData];
+        [self.tableView.footer endRefreshing];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+
+    
     
 }
 - (void)dropDownControlView:(DropDown1 *)view didFinishWithSelection:(id)selection{
     if (selection) {
-        orderbool = YES;
-        refresh = YES;
         [dd1.textButton setTitle:[NSString stringWithFormat:@"%@",selection] forState:UIControlStateNormal];
         //dropDownMenu.title = [NSString stringWithFormat:@"%@▼",selection];
         NSLog(@"%@",dd1.textButton.titleLabel.text);
-        isClssify = YES;
         if ([dd1.textButton.titleLabel.text isEqualToString:@"全部"]) {
             _docstatusign = @"-1";
         }
@@ -280,66 +229,6 @@
     }];
 }
 
-- (void)downData{
-    
-    
-    SingleModel *model = [SingleModel sharedSingleModel];
-
-    
-    NSString *path= [NSString stringWithFormat:ORDER,COMMON,model.userkey,self.string];
-
-    NSLog(@"path--%@",path);
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (dic[@"data"] !=[NSNull null]){
-            self.tableView.footer.hidden = NO;
-            [self.labelsign removeFromSuperview];
-            [self.strollbutton removeFromSuperview];
-            NSArray *array = dic[@"data"];
-           NSLog(@"%@",dic);
-        for(NSDictionary *subDict in array)
-        {
-                OrderModel *model = [OrderModel modelWithDic:subDict];
-                [self.datas addObject:model];
-        }
-        }
-        else{
-            self.tableView.footer.hidden = YES;
-            if (!self.labelsign) {
-                self.labelsign = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2, SCREEN_WIDTH, 40)];
-            }
-            self.labelsign.text = @"抱歉,没有找到相关订单";
-            self.labelsign.textAlignment = NSTextAlignmentCenter;
-            self.labelsign.font = [UIFont systemFontOfSize:17];
-            [self.view addSubview:self.labelsign];
-            if (!self.strollbutton) {
-                self.strollbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-                
-            }
-            self.strollbutton.frame = CGRectMake((SCREEN_WIDTH-SCREEN_WIDTH/3.5)/2, CGRectGetMaxY(self.labelsign.frame)+10, SCREEN_WIDTH/3.5, SCREEN_WIDTH/10.5);
-            self.strollbutton.layer.borderColor = [[UIColor lightGrayColor]CGColor];
-            self.strollbutton.layer.borderWidth = 1;
-            self.strollbutton.layer.cornerRadius = 2;
-            self.strollbutton.titleLabel.font = [UIFont systemFontOfSize:15];
-            [self.strollbutton setTitle:@"随便逛逛" forState:UIControlStateNormal];
-            [self.strollbutton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            [self.strollbutton addTarget:self action:@selector(gotolookPressed) forControlEvents:UIControlEventTouchUpInside];
-            [self.view addSubview:self.strollbutton];
-
-        }
-        [_tableView reloadData];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
-    
-}
 -(void)gotolookPressed{
     CommodityViewController *cmd = [[CommodityViewController alloc]init];
     self.navigationController.navigationBarHidden = NO;
@@ -347,18 +236,12 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    if (isClssify == NO) {
-        return self.datas.count;
-    }
-    else{
-    
-        return self.classifyDatas.count;
-    }
+    return self.classifyDatas.count;
    
 }
 -(void)reloadata{
 
-    [self downData];
+    [self classifyData];
     
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey != nil) {
@@ -406,15 +289,10 @@
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.clipsToBounds = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    if (isClssify == NO) {
-        cell.model = self.datas[indexPath.row];
-        cell.delegate = self;
+   
+    cell.model = self.classifyDatas[indexPath.row];
+    cell.delegate = self;
     
-    }
-    if (isClssify == YES) {
-        cell.model = self.classifyDatas[indexPath.row];
-        cell.delegate = self;
-    }
     return cell;
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -464,11 +342,11 @@
             signstring = @"确定";
             cancelsting = nil;
             NSIndexPath *path;
-            for (NSInteger i=0; i<self.datas.count; i++) {
-                OrderModel *model = self.datas[i];
+            for (NSInteger i=0; i<self.classifyDatas.count; i++) {
+                OrderModel *model = self.classifyDatas[i];
                 if ([model.orderId isEqualToString:_orderId]) {
                     path = [NSIndexPath indexPathForRow:i inSection:0];
-                    [self.datas removeObjectAtIndex:i];
+                    [self.classifyDatas removeObjectAtIndex:i];
                     break;
                 }
             }
@@ -592,13 +470,11 @@
 //        self.navigationController.navigationBarHidden = NO;
 //        [self.navigationItem setTitle:@"我的订单"];
         self.navigationController.navigationBarHidden = YES;
-        if (orderbool) {
-            [self classifyData];
-        }
-        else{
-            [self downData];
-        }
-    }else{
+       
+        [self classifyData];
+        
+    }
+    else{
     self.navigationController.navigationBarHidden = YES;
     }
     

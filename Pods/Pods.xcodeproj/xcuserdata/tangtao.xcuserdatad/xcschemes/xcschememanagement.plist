@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>IQKeyboardManager.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>JBASIHTTPRequest.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -67,6 +72,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>279C7F00B985AA015AF3A2EA7DCB8FF8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2EB302F24240DA7711AAA2F2415112E5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>31703A63B77124D39D951336E1CF4183</key>
 		<dict>
 			<key>primary</key>
@@ -92,6 +107,21 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>57C1202CA497346BAB262C1CD3414A4A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59655EBF9CDB320CB7D4DCE066931E91</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5BEF327A73A27014AC914D1DB221F6AE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8597D00E0F98185AC47B8096DCA022B2</key>
 		<dict>
 			<key>primary</key>
@@ -112,6 +142,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>B50407465C33B885B6A1B831BF4F9089</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B69F15816BE68A90C98F1898CC0EED5C</key>
 		<dict>
 			<key>primary</key>
@@ -123,6 +158,11 @@
 			<true/>
 		</dict>
 		<key>C9E314BBBF5B932F403759782DE0BA38</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E5633C4E8657832457E8A5451D4C9073</key>
 		<dict>
 			<key>primary</key>
 			<true/>
