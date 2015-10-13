@@ -109,7 +109,6 @@
     }else{
         if (login) {
             [login.view removeFromSuperview];
-            
         }
         [self downData];
     }

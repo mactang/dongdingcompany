@@ -42,7 +42,7 @@
     if (self) {
         arrayData = [NSMutableArray array];
         scrollViewImage = [[UIScrollView alloc] initWithFrame:self.bounds];
-        scrollViewImage.contentSize = CGSizeMake(SCREEN_WIDTH * 3, scrollViewImage.bounds.size.height);
+        scrollViewImage.contentSize = CGSizeMake((SCREEN_WIDTH-24) * 3, scrollViewImage.bounds.size.height);
         scrollViewImage.pagingEnabled = YES;
         scrollViewImage.delegate = self;
         [self addSubview:scrollViewImage];
@@ -71,13 +71,21 @@
     [activityIndicatorView startAnimating];
     imageArray = [NSMutableArray array];
 
-    if ([parameter[1][@"URL"] isEqualToString:@""]) {
-//        [self startRefreshShop];
-    }
-    else
+    for(int i=0;i<5;i++)
     {
-        [self startRefresh];
+       
+        [imageArray addObject:[NSString stringWithFormat:@"%d.jpg",i+1]];
     }
+    [self loadImage];
+    [self startTimer];
+
+//    if ([parameter[1][@"URL"] isEqualToString:@""]) {
+//        [self startRefreshShop];
+//    }
+//    else
+//    {
+//        [self startRefresh];
+//    }
 }
 
 
@@ -97,7 +105,7 @@
     //设置内容偏移量
     
     index = ++index%[imageArray count];
-    [scrollViewImage setContentOffset:CGPointMake(index*320, 0) animated:YES];
+    [scrollViewImage setContentOffset:CGPointMake(index*(SCREEN_WIDTH-24), 0) animated:YES];
     
     [self performSelector:_cmd withObject:nil afterDelay:2.0];
 }
@@ -137,7 +145,7 @@
 - (void)processTimer:(NSTimer *)timer
 {
     //设置内容偏移量
-    [scrollViewImage setContentOffset:CGPointMake(320*2, 0) animated:YES];
+    [scrollViewImage setContentOffset:CGPointMake((SCREEN_WIDTH-24)*2, 0) animated:YES];
 }
 
 
@@ -217,10 +225,10 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
-    if (scrollView.contentOffset.x == 0  || scrollView.contentOffset.x == 640){
+    if (scrollView.contentOffset.x == 0  || scrollView.contentOffset.x == (SCREEN_WIDTH-24)*2){
         if (scrollView.contentOffset.x  == 0) {
             currentPage =  (currentPage - 1 < 0) ? ([imageArray count] - 1) : (currentPage - 1);
-        }else if (scrollView.contentOffset.x == 640) {
+        }else if (scrollView.contentOffset.x == (SCREEN_WIDTH-24)*2) {
             currentPage =  (currentPage + 1 > [imageArray count] - 1) ? 0 : (currentPage + 1);
         }
         [self loadImage];
@@ -240,7 +248,7 @@
 {
     timer.fireDate = [NSDate dateWithTimeIntervalSinceNow:3];
     
-    if(scrollView.contentOffset.x == 640)
+    if(scrollView.contentOffset.x == (SCREEN_WIDTH-24)*2)
     {
 
         if (currentPage > [imageArray count] - 1) {
@@ -258,7 +266,7 @@
         //isCome = 0;
     }
     [self loadImage];
-    [scrollViewImage setContentOffset:CGPointMake(320, 0) animated:NO];
+    [scrollViewImage setContentOffset:CGPointMake(SCREEN_WIDTH-24, 0) animated:NO];
     [self startTimer];
     
 }
@@ -282,7 +290,7 @@
         {
             imagePath = imageArray[currentPage];
         }
-        [imageView sd_setImageWithURL:imagePath];
+//        [imageView sd_setImageWithURL:imagePath];
         [scrollViewImage addSubview:imageView];
         
     }
@@ -291,27 +299,31 @@
 
 - (void)loadImage
 {
-    [scrollViewImage setContentOffset:CGPointMake(320, 0) animated:NO];
+    [scrollViewImage setContentOffset:CGPointMake(SCREEN_WIDTH-24, 0) animated:NO];
     [scrollViewImage.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    NSURL *imagePath = nil ;
+//    NSURL *imagePath = nil ;
     for (int i = -1; i <= 1; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(scrollViewImage.bounds.size.width * (i+1), 0, scrollViewImage.bounds.size.width, scrollViewImage.bounds.size.height)];
-        
+        imageView.contentMode = UIViewContentModeScaleToFill;
         if (currentPage + i < 0 ) {
-            imagePath = imageArray[[imageArray count]- 1];
+//            imagePath = imageArray[[imageArray count]- 1];
+            [imageView setImage: IMAGE_MYSELF(imageArray[[imageArray count]- 1])];
         }
         else if (currentPage + i > [imageArray count] - 1 ) {
-            imagePath = imageArray[0];
+//            imagePath = imageArray[0];
+            [imageView setImage: IMAGE_MYSELF(imageArray[0])];
+            
         }
         else
         {
-            imagePath = imageArray[currentPage+i];
+//            imagePath = imageArray[currentPage+i];
+            [imageView setImage: IMAGE_MYSELF(imageArray[currentPage+i])];
         }
 //        SDWebImageManager *manager = [SDWebImageManager sharedManager];
 //        UIImage *cachedImage = [manager imageCache:imagePath]; // 将需要缓存的图片加载进来
 //        if (cachedImage) { // 如果Cache命中，则直接利用缓存的图片进行有关操作 // Use the cached image immediatly } else { // 如果Cache没有命中，则去下载指定网络位置的图片，并且给出一个委托方法 // Start an async download  [manager downloadWithURL:url delegate:self];
 //        }
-        [imageView sd_setImageWithURL:imagePath placeholderImage:[UIImage imageNamed:@"默认.jpg"]];
+//        [imageView sd_setImageWithURL:imagePath placeholderImage:[UIImage imageNamed:@"默认.jpg"]];
         [scrollViewImage addSubview:imageView];
        
     }

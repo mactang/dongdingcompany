@@ -47,6 +47,7 @@
     OrderModel *model1;
     LoginViewController *login;
     BOOL  orderbool;
+    BOOL  refresh;
     
 }
 -(NSMutableArray *)datas{
@@ -78,9 +79,9 @@
     isClssify = NO;
     self.string = @"1";
     self.moredata = @"-1";
-    _docstatusign = @"-1";
    //[self downData];
     orderbool = NO;
+    refresh = NO;
     
     UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 80, 20)];
     myOrder.text = @"我的订单";
@@ -114,7 +115,7 @@
     
 }
 -(void)loadMoreData{
-    if ([_docstatusign isEqualToString:@"-1"]) {
+    if (!refresh) {
         SingleModel *single = [SingleModel sharedSingleModel];
         NSInteger pageNumber = [self.datas count] / 6 + 1;
         self.string = [NSString stringWithFormat:@"%ld",pageNumber];
@@ -145,7 +146,6 @@
         }];
     }
     else{
-        
         SingleModel *model = [SingleModel sharedSingleModel];
         NSInteger pageNumber = [self.classifyDatas count] / 6 + 1;
         self.moredata = [NSString stringWithFormat:@"%ld",pageNumber];
@@ -184,6 +184,7 @@
 - (void)dropDownControlView:(DropDown1 *)view didFinishWithSelection:(id)selection{
     if (selection) {
         orderbool = YES;
+        refresh = YES;
         [dd1.textButton setTitle:[NSString stringWithFormat:@"%@",selection] forState:UIControlStateNormal];
         //dropDownMenu.title = [NSString stringWithFormat:@"%@▼",selection];
         NSLog(@"%@",dd1.textButton.titleLabel.text);
