@@ -18,6 +18,7 @@
 #import "NewsViewController.h"
 #import "GoodsBigViewController.h"
 #import "NewButton.h"
+#import "ImageCarousel.h"
 @interface MainViewController ()
 @property(nonatomic, strong)UIPageControl *pageControl;
 @end
@@ -56,7 +57,7 @@
     UIImage *rightImage = [UIImage imageNamed:@"xiaoxi"];
     [rightButton setBackgroundImage:rightImage forState:UIControlStateNormal];
     [rightButton setTitle:@"消息" forState:UIControlStateNormal];
-    rightButton.font = [UIFont systemFontOfSize:12];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:12];
     [view addSubview:rightButton];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -77,43 +78,15 @@
     self.navigationController.navigationBarHidden = YES;
     
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-    
 
-   
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UIScrollView *scrollView = [[UIScrollView alloc] init];
-    scrollView.frame = CGRectMake(10, 80, 295, 150);
-    scrollView.contentSize = CGSizeMake(280*3, 130);
-    // 一页的大小应该是frame的大小
-    scrollView.pagingEnabled = YES;
-    scrollView.delegate = self;
-    scrollView.showsHorizontalScrollIndicator = NO;
-    scrollView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:scrollView];
-    scrollView.tag = 1001;
-    [scrollView setContentOffset:CGPointMake(280, 0)];
-    
-    _currentIndex = 0;
-    _imagesArray = [[NSMutableArray alloc] init];
-    
-    for(int i=0;i<5;i++)
-    {
-        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg",i+1]];
-        [_imagesArray addObject:image];
-    }
-    
-    [self loadPage];
-    
-    //分页控制控件
-    self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(120, 200, 120, 0)];
-    //分页的页数
-    self.pageControl.numberOfPages = 3;
-    //当前显示的分页
-    self.pageControl.currentPage = 0;
-    //将分页控制控件加在本视图上面
-    [self.view addSubview:self.pageControl];
+    NSDictionary *parameter = [NSDictionary dictionaryWithObjectsAndKeys: nil];
+    NSDictionary *url = [NSDictionary dictionaryWithObjectsAndKeys:@"轮播接口",@"URL", nil];
+    NSArray *arrayParameter = [NSArray arrayWithObjects:parameter,url, nil];
+    ImageCarousel *imagecarousel = [[ImageCarousel alloc] initWithFrame:CGRectMake(12, 80,SCREEN_WIDTH-24, SCREEN_WIDTH/2-30) andDataSource:arrayParameter];
+    imagecarousel.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:imagecarousel];
     
     [self button];
     
@@ -123,72 +96,6 @@
     NewsViewController *news = [[NewsViewController alloc]init];
     [self.navigationController pushViewController:news animated:YES];
 }
-- (void)loadPage
-{
-    // 清空当前已有的imageVIew
-    for(UIView *view in [self.view viewWithTag:1001].subviews)
-    {
-        if([view isKindOfClass:[UIImageView class]])
-            [view removeFromSuperview];
-    }
-    UIImageView *currentImageView = [[UIImageView alloc] init];
-    UIImageView *nextImageView = [[UIImageView alloc] init];
-    UIImageView *preImageView = [[UIImageView alloc] init];
-    
-    // 当前页
-    currentImageView.image = [_imagesArray objectAtIndex:_currentIndex];
-    currentImageView.frame = CGRectMake(280, 0, 280, 130);
-    [[self.view viewWithTag:1001] addSubview:currentImageView];
-    
-    // 右侧页
-    nextImageView.image = [_imagesArray objectAtIndex:_currentIndex+1<_imagesArray.count?_currentIndex+1:0];
-    nextImageView.frame = CGRectMake(560, 0, 280, 130);
-    [[self.view viewWithTag:1001] addSubview:nextImageView];
-    
-    // 左侧页
-    preImageView.image = [_imagesArray objectAtIndex:_currentIndex-1<0?_imagesArray.count-1:_currentIndex-1];
-    preImageView.frame = CGRectMake(0, 0, 280, 130);
-    [[self.view viewWithTag:1001] addSubview:preImageView];
-    
-    
-}
-// 当减速结束时调用
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-    /*
-     int index = scrollView.contentOffset.x/320;
-     if(index == 0)
-     [scrollView setContentOffset:CGPointMake(320*5, 0)];
-     if(index == 6)
-     [scrollView setContentOffset:CGPointMake(320, 0)];
-     */
-    
-    int index = scrollView.contentOffset.x/280;
-    if(index == 0)
-    {
-        // 向左翻页
-        _currentIndex = _currentIndex-1<0?_imagesArray.count-1:_currentIndex-1;
-        [self loadPage];
-        [scrollView setContentOffset:CGPointMake(280, 0)];
-    }
-    else if (index == 2)
-    {
-        // 向右翻页
-        _currentIndex = _currentIndex+1==_imagesArray.count?0:_currentIndex+1;
-        [self loadPage];
-        [scrollView setContentOffset:CGPointMake(280, 0)];
-        
-    }
-    else
-        NSLog(@"没有翻页不做任何改变");
-}
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    int gap = scrollView.contentOffset.x/280.0;
-    
-    self.pageControl.currentPage = gap;
-}
-
 
 -(void)button{
     
@@ -211,9 +118,10 @@
     UIButton *MaintainBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(ComodityBtn.frame)+10,300, 136)];
     [MaintainBtn setTitle:@"保养维修" forState:UIControlStateNormal];
     [MaintainBtn setImage:[UIImage imageNamed:@"保养维修1"] forState:UIControlStateNormal];
-    [MaintainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];    [MaintainBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+    [MaintainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [MaintainBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
     MaintainBtn.tag = 1002;
-    MaintainBtn.font = [UIFont systemFontOfSize:22];
+    MaintainBtn.titleLabel.font = [UIFont systemFontOfSize:22];
     MaintainBtn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:MaintainBtn];
     

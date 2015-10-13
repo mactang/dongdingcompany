@@ -19,7 +19,7 @@
 #import "PersonInformationModel.h"
 #import "SingleModel.h"
 #import "LoginViewController.h"
-@interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate>{
+@interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate,persondelegate>{
     LoginViewController *login;
 }
 @property(nonatomic,strong)UITableView *tableView;
@@ -101,14 +101,14 @@
     if (model.userkey == nil) {
         if (!login) {
             login = [[LoginViewController alloc]init];
-            [self.view addSubview:login.view];
             login.delegate = self;
+            [self.view addSubview:login.view];
+           
         }
         
     }else{
         if (login) {
             [login.view removeFromSuperview];
-            
         }
         [self downData];
     }
@@ -119,6 +119,15 @@
     
     [self downData];
     
+}
+-(void)reloadshopcart{
+    
+}
+-(void)repeatlogin{
+    login = [[LoginViewController alloc]init];
+    login.delegate = self;
+    [self.view addSubview:login.view];
+
 }
 -(void)buttonPress{
     
@@ -217,6 +226,7 @@
     
     if (indexPath.row == 1) {
         PersonalInformationController *perIn = [[PersonalInformationController alloc]init];
+        perIn.delegate = self;
         [self.navigationController pushViewController:perIn animated:YES];
     }
     if (indexPath.row == 2) {

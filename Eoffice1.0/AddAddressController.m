@@ -38,7 +38,7 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-128) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -46,7 +46,7 @@
     [self.view addSubview:_tableView];
     
     UIButton *confirmbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    confirmbutton.frame = CGRectMake(10, CGRectGetMaxY(_tableView.frame)+20, SCREEN_WIDTH-20, 40);
+    confirmbutton.frame = CGRectMake(10, SCREEN_HEIGHT-64, SCREEN_WIDTH-20, 40);
     confirmbutton.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     [confirmbutton setTitle:@"确定" forState:UIControlStateNormal];
     confirmbutton.titleLabel.font = [UIFont systemFontOfSize:17];
@@ -163,7 +163,7 @@
         string = [Mobliejudge valiMobile:_phoneLB.text];
     }
     else if (![Mobliejudge isValidateEmail:_emailLB.text]){
-        string = @"请输入正确的邮箱";
+        string = @"请输入正确的邮编";
     }
     else{
         [self datarequest];

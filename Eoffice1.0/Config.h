@@ -107,7 +107,7 @@
 
 #define REGISTERVERIF @"%@sms!getPhoneSms.action"
 
-#define ORDERCLASSIFY @"%@order!getList.action;jsessionid=%@?userkey=%@"
+#define ORDERCLASSIFY @"%@order!getList.action;jsessionid=%@?userkey=%@&page=%@"
 
 //信息反馈
 #define FEEDBACK @"%@feedback!add.action;userkey=%@&content=%@"

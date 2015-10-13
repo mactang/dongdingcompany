@@ -28,7 +28,7 @@
     }else{
         frameHeight = frame.size.height;
     }
-    tabheight = frameHeight - 60;
+    tabheight = frameHeight - 25;
     
     frame.size.height = 30.0f;
     
@@ -93,7 +93,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

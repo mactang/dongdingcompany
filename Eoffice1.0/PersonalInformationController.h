@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol persondelegate <NSObject>
 
+-(void)repeatlogin;
+
+@end
 @interface PersonalInformationController : UIViewController
-
+@property(nonatomic,assign)id<persondelegate>delegate;
 @end

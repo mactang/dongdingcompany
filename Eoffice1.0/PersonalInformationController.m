@@ -18,7 +18,6 @@
 #import "SingleModel.h"
 #import "PersonInformationModel.h"
 #import "CalendarManager.h"
-
 @interface PersonalInformationController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIApplicationDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong)UIImage *imageName;
@@ -169,13 +168,15 @@
     }];
     
 }
-
-
 -(void)backPress{
     
+//  self.tabBarController.selectedIndex = 2;
+//    [self.view removeFromSuperview];
+    SingleModel *model = [SingleModel sharedSingleModel];
+    model.userkey = nil;
     self.navigationController.navigationBarHidden = YES;
     [self.navigationController popToRootViewControllerAnimated:YES];
-    
+    [_delegate repeatlogin];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     

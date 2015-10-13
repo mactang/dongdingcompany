@@ -26,5 +26,8 @@
 @property(nonatomic,strong)UIButton *orderbutton;
 @property(nonatomic,strong)UIButton *logisticsbutton;
 @property(nonatomic,strong)UIButton *delegatebutton;
+@property(nonatomic,strong)UIButton *resultbutton;
+@property(nonatomic,strong)UIButton *returnbutton;
+@property(nonatomic,strong)UIButton *repairbutton;
 @property(nonatomic,assign)id<deletgateOrder>delegate;
 @end
