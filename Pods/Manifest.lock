@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - IQKeyboardManager (3.3.2)
   - JBASIHTTPRequest (2.1):
     - Reachability (~> 3.2)
   - JSONKit (1.5pre)
@@ -32,6 +33,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5.4)
+  - IQKeyboardManager (~> 3.3.2)
   - JBASIHTTPRequest (~> 2.1)
   - JSONKit (~> 1.5pre)
   - MBProgressHUD (~> 0.9.1)
@@ -40,6 +42,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  IQKeyboardManager: d863eb0bca424d1f6dad6bdd1f856af52664add8
   JBASIHTTPRequest: bcb52c0c249fe21a236e16c2747d663d3d5d0007
   JSONKit: bae313ce6a6c444f40489a6c0b023f399888871f
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad

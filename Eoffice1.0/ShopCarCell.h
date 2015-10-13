@@ -17,8 +17,11 @@
 -(void)noChooseCount:(NSString *)noChooseCountLB;
 -(void)totalPrice:(NSString *)totalPrices;
 -(void)totalPricrArray:(NSString *)totalPricrArray;
-
 -(void)allChoosePrice:(NSString *)allChoosePriceLB;
+
+-(void)noChooseAddCount:(NSString *)noChooseAddCount;
+-(void)noChooseSubCount:(NSString *)noChooseSubCount;
+
 
 @end
 @interface ShopCarCell : UITableViewCell

@@ -164,8 +164,14 @@
             
             [self.delegate subCount:addTotal];
         }
+        }else{
+            if (_delegate &&[_delegate respondsToSelector:@selector(noChooseSubCount:)]) {
+                
+                [self.delegate noChooseSubCount:addTotal];
+            
         }
         
+    }
     }
     
 }
@@ -190,7 +196,13 @@
                 [self.delegate addCount:addTotal];
             }
         
+    }else{
+        if (_delegate &&[_delegate respondsToSelector:@selector(noChooseAddCount:)]) {
+            [self.delegate noChooseAddCount:addTotal];
+        }
+        
     }
+    
     
     
     
@@ -203,6 +215,7 @@
         [self.delegate signMutablearray:btn];
     }
     
+    
     int addCount = [[NSString stringWithFormat:@"%@",self.countBL.text]intValue];
     
     int price = [[NSString stringWithFormat:@"%@",self.priceLB.text]intValue];
@@ -214,6 +227,7 @@
     
     
     addTotal = [NSString stringWithFormat:@"%@",string];
+    
     if (btn.selected == YES) {
         
                 if (_delegate &&[_delegate respondsToSelector:@selector(chooseCount:)]) {
