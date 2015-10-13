@@ -45,7 +45,7 @@
     UIButton *shareButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(authorLB.frame),dateLB.frame.origin.y, 100, 40)];
     shareButton.backgroundColor = [UIColor whiteColor];
     shareButton.clipsToBounds = YES;
-    shareButton.font = [UIFont systemFontOfSize:12];
+    shareButton.titleLabel.font = [UIFont systemFontOfSize:12];
     [shareButton setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
     [shareButton addTarget:self action:@selector(detailPress) forControlEvents:UIControlEventTouchUpInside];
     [shareButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
