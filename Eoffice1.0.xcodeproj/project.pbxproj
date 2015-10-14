@@ -302,6 +302,7 @@
 		96821FCA1B8AF5DC00EC7276 /* citychoose.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96821FC71B8AF5DC00EC7276 /* citychoose.plist */; };
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
 		9689A8391BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */; };
+		9689F7D51BCE30110006954B /* MyMoneybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689F7D41BCE30110006954B /* MyMoneybackViewController.m */; };
 		9690D6021B8D85C000B47495 /* ChangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9690D6011B8D85C000B47495 /* ChangeModel.m */; };
 		969109191BC63C5900A54798 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 969109181BC63C5900A54798 /* libz.1.2.5.dylib */; };
 		9691091C1BC63CB800A54798 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9691091A1BC63CB800A54798 /* AddressBook.framework */; };
@@ -795,6 +796,8 @@
 		96821FC91B8AF5DC00EC7276 /* CityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CityChooseView.m; sourceTree = "<group>"; usesTabs = 0; };
 		9689A8371BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+AlerViewBlocks.h"; sourceTree = "<group>"; };
 		9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+AlerViewBlocks.m"; sourceTree = "<group>"; };
+		9689F7D31BCE30110006954B /* MyMoneybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMoneybackViewController.h; sourceTree = "<group>"; };
+		9689F7D41BCE30110006954B /* MyMoneybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMoneybackViewController.m; sourceTree = "<group>"; };
 		9690D6001B8D85C000B47495 /* ChangeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeModel.h; sourceTree = "<group>"; };
 		9690D6011B8D85C000B47495 /* ChangeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeModel.m; sourceTree = "<group>"; };
 		969109181BC63C5900A54798 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
@@ -1193,6 +1196,7 @@
 		615B29931B4FB08A004E7546 /* CONTROLLER */ = {
 			isa = PBXGroup;
 			children = (
+				9689F7D21BCE2FC30006954B /* MyMoneyback */,
 				615B296C1B4FAFBA004E7546 /* RES */,
 				61A1FFE11B671F9500AFC8C2 /* Order */,
 				6181492C1B5E0E8600E39900 /* Person */,
@@ -1830,6 +1834,15 @@
 			path = UIAlertViewBlock;
 			sourceTree = "<group>";
 		};
+		9689F7D21BCE2FC30006954B /* MyMoneyback */ = {
+			isa = PBXGroup;
+			children = (
+				9689F7D31BCE30110006954B /* MyMoneybackViewController.h */,
+				9689F7D41BCE30110006954B /* MyMoneybackViewController.m */,
+			);
+			path = MyMoneyback;
+			sourceTree = "<group>";
+		};
 		9695ADDF1B9579C0004A7A1B /* Classtype */ = {
 			isa = PBXGroup;
 			children = (
@@ -2363,6 +2376,7 @@
 				618FD7571B8747B200090608 /* BackReasonModel.m in Sources */,
 				61B0FF9C1B5F4641002CF349 /* DispatchingView.m in Sources */,
 				619FCCDB1B86B3FA0075A0AA /* AddressModel.m in Sources */,
+				9689F7D51BCE30110006954B /* MyMoneybackViewController.m in Sources */,
 				61068A781B5C9DC3008BE40A /* InvoiceAlterView.m in Sources */,
 				969E1EA01BC790D400CD9D02 /* CJSONSerialization.m in Sources */,
 				61793A7A1B54A8EE00CFD83A /* JHCellConfig.m in Sources */,

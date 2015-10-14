@@ -19,6 +19,7 @@
 #import "PersonInformationModel.h"
 #import "SingleModel.h"
 #import "LoginViewController.h"
+#import "MyMoneybackViewController.h"
 @interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate,persondelegate>{
     LoginViewController *login;
 }
@@ -44,7 +45,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     [self.navigationItem setTitle:@""];
     
@@ -52,19 +53,18 @@
     NSString *string = @"my";
     model.isBoolmy = [NSString stringWithFormat:@"%@",string];
    // [self downData];
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 440) style:UITableViewStylePlain];
-    _tableView.scrollEnabled = NO;
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49) style:UITableViewStylePlain];
+    _tableView.scrollEnabled = YES;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    
     //[self downData];
     // Do any additional setup after loading the view.
 }
 
 - (void)downData{
     
-    
+    [self.datas removeAllObjects];
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
@@ -79,10 +79,11 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
-        NSDictionary *array = dic[@"data"];
-        PersonInformationModel *model = [PersonInformationModel modelWithDic:array];
+            
+            NSDictionary *array = dic[@"data"];
+            PersonInformationModel *model = [PersonInformationModel modelWithDic:array];
         
-        [self.datas addObject: model];
+           [self.datas addObject: model];
         }
         NSLog(@"%@",self.datas);
         [_tableView reloadData];
@@ -96,9 +97,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSLog(@"%@",model.userkey);
-    NSLog(@"%@",[model.userkey class]);
-    if (model.userkey == nil) {
+       if (model.userkey == nil) {
         if (!login) {
             login = [[LoginViewController alloc]init];
             login.delegate = self;
@@ -112,8 +111,7 @@
         }
         [self downData];
     }
-
-      [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 -(void)reloadata{
     
@@ -137,7 +135,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 6*self.datas.count;
+    return 8*self.datas.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -148,7 +146,6 @@
     
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     
     static NSString *identity = @"cell";
     
@@ -206,12 +203,26 @@
         
     }
     if (indexPath.row == 4) {
-        cell.textLabel.text = @"       安全设置";
+        cell.textLabel.text = @"       我的返现";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"安全设置"];
         [cell addSubview:imageView];
     }
     if (indexPath.row == 5) {
+        
+        cell.textLabel.text = @"       推荐返现";
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
+        imageView.image = [UIImage imageNamed:@"帮助与反馈"];
+        [cell addSubview:imageView];
+        
+    }
+    if (indexPath.row == 6) {
+        cell.textLabel.text = @"       安全设置";
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
+        imageView.image = [UIImage imageNamed:@"安全设置"];
+        [cell addSubview:imageView];
+    }
+    if (indexPath.row == 7) {
         
         cell.textLabel.text = @"       帮助与反馈";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
@@ -219,6 +230,7 @@
         [cell addSubview:imageView];
         
     }
+
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -239,14 +251,20 @@
         AddressViewController *add = [[AddressViewController alloc]init];
         [self.navigationController pushViewController:add animated:YES];
 
-        
     }
     if (indexPath.row == 4) {
+        MyMoneybackViewController *mymoney = [[MyMoneybackViewController alloc]init];
+        [self.navigationController pushViewController:mymoney animated:YES];
+    }
+    if (indexPath.row == 5) {
+        
+    }
+    if (indexPath.row == 6) {
         SafeViewController *safe = [[SafeViewController alloc]init];
         
         [self.navigationController pushViewController:safe animated:YES];
     }
-    if (indexPath.row == 5) {
+    if (indexPath.row == 7) {
         HopleViewController *hope = [[HopleViewController alloc]init];
         [self.navigationController pushViewController:hope animated:YES];
     }

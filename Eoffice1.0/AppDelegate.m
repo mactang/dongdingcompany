@@ -44,10 +44,10 @@
 //    }
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    LoginViewController *login = [[LoginViewController alloc]init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-    
-    self.nav_controller = nav;
+//    LoginViewController *login = [[LoginViewController alloc]init];
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
+//    
+//    self.nav_controller = nav;
     
     
     [self setupViewControllers];

@@ -22,6 +22,7 @@
 @property (copy,nonatomic) NSString *status;
 @property (copy,nonatomic) NSString *name;
 @property (copy,nonatomic) NSString *shorname;
+@property (copy,nonatomic) NSString *username;
 @property (copy,nonatomic) NSString *gender;
 @property (copy,nonatomic) NSString *birthday;
 @property (copy,nonatomic) NSString *idnumber;
