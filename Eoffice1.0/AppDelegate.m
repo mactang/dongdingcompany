@@ -16,7 +16,7 @@
 #import "RDVTabBarItem.h"
 #import "LoginViewController.h"
 #import "SingleModel.h"
-
+#import "IQKeyboardManager.h"
 @interface AppDelegate ()
 
 @end
@@ -27,6 +27,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = YES;
+    //#import "IQKeyboardReturnKeyHandler.h"
+//    IQKeyboardReturnKeyHandler *heare;
+//    heare = [[IQKeyboardReturnKeyHandler alloc] initWithViewController:self];
+//    heare.lastTextFieldReturnKeyType = UIReturnKeyDone;
+//    heare.toolbarManageBehaviour = IQAutoToolbarBySubviews;
+//    - (void)dealloc
+//    {
+//        self.returnKeyHandler = nil;
+//    }
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     
     LoginViewController *login = [[LoginViewController alloc]init];
