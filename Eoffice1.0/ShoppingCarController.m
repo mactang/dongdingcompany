@@ -108,7 +108,7 @@
     
     [self downData];
     
-    selectedAll = NO;
+    selectedAll = YES;
     
     versionGoodId = [NSMutableArray array];
     
@@ -340,11 +340,12 @@
 
 - (void)allSelect:(UIButton*)sender{
     
+    
     allBtn.selected = !allBtn.selected;
     if (sender.selected == YES) {
         
         isAllDelete = YES;
-        selectedAll = NO;
+        selectedAll = YES;
         NSLog(@"%lu",(unsigned long)self.datas.count);
         for (int i=0; i<self.datas.count; i++) {
             ShopCarModel *model = self.datas[i];
@@ -355,7 +356,7 @@
 
     }else{
         isAllDelete = NO;
-        selectedAll = YES;
+        selectedAll = NO;
        // selectedAll = NO;
     }
 
@@ -608,7 +609,7 @@
 -(void)subCount:(NSString *)subCountLB{
     
     int m = [[NSString stringWithFormat:@"%@",subCountLB]intValue];
-      if (selectedAll == NO) {
+      if (selectedAll == YES || allBtn.selected == YES) {
     totalEvery = totalEvery - m;
     totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
     
@@ -622,7 +623,7 @@
 }
 -(void)noChooseSubCount:(NSString *)noChooseSubCount{
   int m = [[NSString stringWithFormat:@"%@",noChooseSubCount]intValue];
-    if (selectedAll == YES) {
+    if (selectedAll == YES || allBtn.selected == YES) {
     totalEvery = totalEvery - m;
     }
     isAllChoose = isAllChoose - m;
@@ -633,7 +634,7 @@
 
     int m = [[NSString stringWithFormat:@"%@",addCountLB]intValue];
     
-    if (selectedAll == NO) {
+    if (selectedAll == YES || (allBtn.selected == YES&&totalEvery!=0)) {
     totalEvery = totalEvery + m;
         
     totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
@@ -641,7 +642,7 @@
     }else{
         totalEvery = totalEvery + m;
         totoalBL.text = [NSString stringWithFormat:@"%d",m+otherAllTotal];
-        otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
+        //otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
         
     }
     
@@ -652,12 +653,17 @@
  
     int m = [[NSString stringWithFormat:@"%@",noChooseAddCount]intValue];
     
-    if (selectedAll == YES) {
-    totalEvery = totalEvery + m;
+    if (selectedAll == YES || (allBtn.selected == YES&&totalEvery!=0)) {
+    //totalEvery = totalEvery + m;
      
+    }else{
+        NSLog(@"aa");
+        totalEvery = totalEvery + m;
+        //otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
     }
     
     isAllChoose = isAllChoose +m;
+    NSLog(@"isAllChoose***%d",isAllChoose);
     onAllChoosePrice = 0;
     
 }
@@ -667,32 +673,34 @@
    
     int m = [[NSString stringWithFormat:@"%@",chooseCountLB]intValue];
     
-    if (selectedAll == YES) {
+    if (selectedAll == YES &&(allBtn.selected == NO&&totalEvery!=0)) {
     
+        
+        totoalBL.text = [NSString stringWithFormat:@"%d",m+totalEvery];
+        
+        totalEvery = totalEvery+m;
+        
+        onAllChoosePrice = onAllChoosePrice - m;
+        
+        if (onAllChoosePrice<=0) {
+            onAllChoosePrice = 0;
+        }
+        NSLog(@"isAllChoose***%d",isAllChoose);
+        NSLog(@"totalEvery***%d",totalEvery);
+        if (isAllChoose == totalEvery) {
+            allBtn.selected = YES;
+        }
+        otherAllTotal = 0;
+        
+       
+    }else{
+        
         totoalBL.text = [NSString stringWithFormat:@"%d",m+otherAllTotal];
         otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
         
         if (otherAllTotal == totalEvery) {
             allBtn.selected = YES;
         }
-        
-       
-    }else{
-        
-        totoalBL.text = [NSString stringWithFormat:@"%d",m+totalEvery];
-        
-        totalEvery = totalEvery+m;
-
-          onAllChoosePrice = onAllChoosePrice - m;
-        
-            if (onAllChoosePrice<=0) {
-                onAllChoosePrice = 0;
-            }
-      
-        if (isAllChoose == totalEvery) {
-            allBtn.selected = YES;
-        }
-        otherAllTotal = 0;
       
 
     }
@@ -705,22 +713,23 @@
     allBtn.selected = NO;
     int m = [[NSString stringWithFormat:@"%@",chooseCountLB]intValue];
     
-    if (selectedAll == YES) {
+    if (selectedAll == YES&&(allBtn.selected == NO&&totalEvery!=0)) {
     
-        totoalBL.text = [NSString stringWithFormat:@"%d",otherAllTotal-m];
-    
-        otherAllTotal = [[NSString stringWithFormat:@"%d",otherAllTotal-m]intValue];
-        
-    }else{
         onAllChoose = YES;
         
-       
         onAllChoosePrice = m + onAllChoosePrice;
         
         totalEvery = totalEvery - m;
         isAllChoose =   onAllChoosePrice  + totalEvery;
         
         totoalBL.text = [NSString stringWithFormat:@"%d",totalEvery];
+        
+        
+    }else{
+       
+        totoalBL.text = [NSString stringWithFormat:@"%d",otherAllTotal-m];
+        
+        otherAllTotal = [[NSString stringWithFormat:@"%d",otherAllTotal-m]intValue];
         
     }
     
