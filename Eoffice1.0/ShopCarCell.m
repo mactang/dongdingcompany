@@ -22,6 +22,8 @@
     
     int mun;
     NSString *addTotal;
+    
+    
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -158,6 +160,7 @@
         NSString *string = [NSString stringWithFormat:@"%d",addCount];
         [self.number setText:string];
         self.countBL.text = string;
+        self.myModel.count  = string;
         if (self.chooseBtn.selected == YES) {
             
         if (_delegate &&[_delegate respondsToSelector:@selector(subCount:)]) {
@@ -183,8 +186,9 @@
     int price = [[NSString stringWithFormat:@"%@",self.priceLB.text]intValue];
     
     addCount++;
-    NSString *string = [NSString stringWithFormat:@"%d",addCount];
     
+    NSString *string = [NSString stringWithFormat:@"%d",addCount];
+    self.myModel.count  = string;
     [self.number setText:string];
     
     self.countBL.text = string;
