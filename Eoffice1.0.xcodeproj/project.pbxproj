@@ -76,6 +76,9 @@
 		615B29CA1B4FB3B5004E7546 /* UIView_extra.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B29C81B4FB3B5004E7546 /* UIView_extra.m */; };
 		615C160C1B68B34B00EDDA69 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 615C160B1B68B34B00EDDA69 /* libsqlite3.0.dylib */; };
 		615C160E1B68B35F00EDDA69 /* libiconv.2.4.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 615C160D1B68B35F00EDDA69 /* libiconv.2.4.0.dylib */; };
+		615C50391BCE4F2900A6E204 /* 注册横线.png in Resources */ = {isa = PBXBuildFile; fileRef = 615C50381BCE4F2900A6E204 /* 注册横线.png */; };
+		615C503D1BCE6A9100A6E204 /* RecommendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615C503C1BCE6A9100A6E204 /* RecommendViewController.m */; };
+		615C50401BCE6C7C00A6E204 /* RecommCodeGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 615C503F1BCE6C7C00A6E204 /* RecommCodeGenerator.m */; };
 		615CF61D1B6F0D2400B369E7 /* dianhua.png in Resources */ = {isa = PBXBuildFile; fileRef = 615CF61C1B6F0D2400B369E7 /* dianhua.png */; };
 		615CF6231B6F50DC00B369E7 /* 图层-9.png in Resources */ = {isa = PBXBuildFile; fileRef = 615CF61F1B6F50DC00B369E7 /* 图层-9.png */; };
 		615CF6241B6F50DC00B369E7 /* 图层-10.png in Resources */ = {isa = PBXBuildFile; fileRef = 615CF6201B6F50DC00B369E7 /* 图层-10.png */; };
@@ -463,6 +466,11 @@
 		615B29C81B4FB3B5004E7546 /* UIView_extra.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_extra.m; sourceTree = "<group>"; };
 		615C160B1B68B34B00EDDA69 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		615C160D1B68B35F00EDDA69 /* libiconv.2.4.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.4.0.dylib; path = usr/lib/libiconv.2.4.0.dylib; sourceTree = SDKROOT; };
+		615C50381BCE4F2900A6E204 /* 注册横线.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "注册横线.png"; sourceTree = "<group>"; };
+		615C503B1BCE6A9100A6E204 /* RecommendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendViewController.h; sourceTree = "<group>"; };
+		615C503C1BCE6A9100A6E204 /* RecommendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendViewController.m; sourceTree = "<group>"; };
+		615C503E1BCE6C7C00A6E204 /* RecommCodeGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommCodeGenerator.h; sourceTree = "<group>"; };
+		615C503F1BCE6C7C00A6E204 /* RecommCodeGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommCodeGenerator.m; sourceTree = "<group>"; };
 		615CF61C1B6F0D2400B369E7 /* dianhua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dianhua.png; sourceTree = "<group>"; };
 		615CF61F1B6F50DC00B369E7 /* 图层-9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "图层-9.png"; sourceTree = "<group>"; };
 		615CF6201B6F50DC00B369E7 /* 图层-10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "图层-10.png"; sourceTree = "<group>"; };
@@ -1083,6 +1091,7 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				615C50381BCE4F2900A6E204 /* 注册横线.png */,
 				61A1CBA11BAFCF4800903122 /* run */,
 				61A1CB9F1BAFB40000903122 /* classify1.png */,
 				61A1CB9D1BAFABBB00903122 /* clBelow.png */,
@@ -1326,6 +1335,17 @@
 			name = HMSegmentedControl;
 			sourceTree = "<group>";
 		};
+		615C503A1BCE6A1A00A6E204 /* Recommend */ = {
+			isa = PBXGroup;
+			children = (
+				615C503B1BCE6A9100A6E204 /* RecommendViewController.h */,
+				615C503C1BCE6A9100A6E204 /* RecommendViewController.m */,
+				615C503E1BCE6C7C00A6E204 /* RecommCodeGenerator.h */,
+				615C503F1BCE6C7C00A6E204 /* RecommCodeGenerator.m */,
+			);
+			name = Recommend;
+			sourceTree = "<group>";
+		};
 		615CF61E1B6F50CA00B369E7 /* person */ = {
 			isa = PBXGroup;
 			children = (
@@ -1500,6 +1520,7 @@
 				9638F0B71B900F4700882D8C /* manageAddress */,
 				6172F5411B6C6ADB007BDBD2 /* AddAddressController.h */,
 				6172F5421B6C6ADB007BDBD2 /* AddAddressController.m */,
+				615C503A1BCE6A1A00A6E204 /* Recommend */,
 				96EC75E41B8C598700AB448B /* ChangeAddress */,
 				96821FC61B8AF5DC00EC7276 /* citychoose */,
 				61A1FFEC1B67A1BD00AFC8C2 /* ShoppingCarController.h */,
@@ -2272,6 +2293,7 @@
 				617FE4F91B60D5EF007EBFB2 /* 选中.png in Resources */,
 				617FE4DA1B60D5B8007EBFB2 /* dayingji.png in Resources */,
 				96BA8F2E1B8EBA650062C8D8 /* 蓝色确认40.png in Resources */,
+				615C50391BCE4F2900A6E204 /* 注册横线.png in Resources */,
 				615B298C1B4FB048004E7546 /* 1.jpg in Resources */,
 				61A1CBA01BAFB40000903122 /* classify1.png in Resources */,
 				61AF901B1BAE7AC3007BBDAF /* 保养维修11-2.png in Resources */,
@@ -2354,6 +2376,7 @@
 				6184F1DC1B686E9600021F18 /* ScreenViewController.m in Sources */,
 				61E0FB161B53A7430080F41B /* Control.m in Sources */,
 				612C57BD1B8ABD2D0048FF28 /* DynamicScrollView.m in Sources */,
+				615C503D1BCE6A9100A6E204 /* RecommendViewController.m in Sources */,
 				610D5A0A1B9FCCFD00301F3A /* TarBarButton.m in Sources */,
 				61793A6B1B54A7B000CFD83A /* SellerInfoCell.m in Sources */,
 				615B29C31B4FB29F004E7546 /* ComputerViewController.m in Sources */,
@@ -2429,6 +2452,7 @@
 				6197F0831B58DD29000EC83E /* RDVTabBar.m in Sources */,
 				618342511B5658720097E8A4 /* UIViewController+LewPopupViewController.m in Sources */,
 				615B29BA1B4FB27A004E7546 /* LogisticsController.m in Sources */,
+				615C50401BCE6C7C00A6E204 /* RecommCodeGenerator.m in Sources */,
 				61A1CB981BAFA6FE00903122 /* classifyButton.m in Sources */,
 				9689F7DB1BCE5C500006954B /* PresentdetailsCell.m in Sources */,
 				61793A701B54A7F100CFD83A /* UIView+Shortcut.m in Sources */,
