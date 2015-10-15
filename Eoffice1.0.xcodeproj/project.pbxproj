@@ -303,6 +303,8 @@
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
 		9689A8391BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */; };
 		9689F7D51BCE30110006954B /* MyMoneybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689F7D41BCE30110006954B /* MyMoneybackViewController.m */; };
+		9689F7D81BCE5C1D0006954B /* CurrentrecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689F7D71BCE5C1D0006954B /* CurrentrecordCell.m */; };
+		9689F7DB1BCE5C500006954B /* PresentdetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689F7DA1BCE5C500006954B /* PresentdetailsCell.m */; };
 		9690D6021B8D85C000B47495 /* ChangeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9690D6011B8D85C000B47495 /* ChangeModel.m */; };
 		969109191BC63C5900A54798 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 969109181BC63C5900A54798 /* libz.1.2.5.dylib */; };
 		9691091C1BC63CB800A54798 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9691091A1BC63CB800A54798 /* AddressBook.framework */; };
@@ -798,6 +800,10 @@
 		9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+AlerViewBlocks.m"; sourceTree = "<group>"; };
 		9689F7D31BCE30110006954B /* MyMoneybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMoneybackViewController.h; sourceTree = "<group>"; };
 		9689F7D41BCE30110006954B /* MyMoneybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMoneybackViewController.m; sourceTree = "<group>"; };
+		9689F7D61BCE5C1D0006954B /* CurrentrecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentrecordCell.h; sourceTree = "<group>"; };
+		9689F7D71BCE5C1D0006954B /* CurrentrecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentrecordCell.m; sourceTree = "<group>"; };
+		9689F7D91BCE5C500006954B /* PresentdetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentdetailsCell.h; sourceTree = "<group>"; };
+		9689F7DA1BCE5C500006954B /* PresentdetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentdetailsCell.m; sourceTree = "<group>"; };
 		9690D6001B8D85C000B47495 /* ChangeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeModel.h; sourceTree = "<group>"; };
 		9690D6011B8D85C000B47495 /* ChangeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeModel.m; sourceTree = "<group>"; };
 		969109181BC63C5900A54798 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
@@ -1839,6 +1845,10 @@
 			children = (
 				9689F7D31BCE30110006954B /* MyMoneybackViewController.h */,
 				9689F7D41BCE30110006954B /* MyMoneybackViewController.m */,
+				9689F7D61BCE5C1D0006954B /* CurrentrecordCell.h */,
+				9689F7D71BCE5C1D0006954B /* CurrentrecordCell.m */,
+				9689F7D91BCE5C500006954B /* PresentdetailsCell.h */,
+				9689F7DA1BCE5C500006954B /* PresentdetailsCell.m */,
 			);
 			path = MyMoneyback;
 			sourceTree = "<group>";
@@ -2380,6 +2390,7 @@
 				61068A781B5C9DC3008BE40A /* InvoiceAlterView.m in Sources */,
 				969E1EA01BC790D400CD9D02 /* CJSONSerialization.m in Sources */,
 				61793A7A1B54A8EE00CFD83A /* JHCellConfig.m in Sources */,
+				9689F7D81BCE5C1D0006954B /* CurrentrecordCell.m in Sources */,
 				9695ADE81B957A9A004A7A1B /* ButtonImageWithTitle.m in Sources */,
 				61A0A2801B5918FE00C4496A /* PayViewController.m in Sources */,
 				6166AA2C1BA02D0F00D7FDD1 /* SDRefreshHeaderView.m in Sources */,
@@ -2419,6 +2430,7 @@
 				618342511B5658720097E8A4 /* UIViewController+LewPopupViewController.m in Sources */,
 				615B29BA1B4FB27A004E7546 /* LogisticsController.m in Sources */,
 				61A1CB981BAFA6FE00903122 /* classifyButton.m in Sources */,
+				9689F7DB1BCE5C500006954B /* PresentdetailsCell.m in Sources */,
 				61793A701B54A7F100CFD83A /* UIView+Shortcut.m in Sources */,
 				61B0FF991B5F2DC1002CF349 /* DatePickView.m in Sources */,
 				6183424C1B5658720097E8A4 /* LewPopupBackgroundView.m in Sources */,
