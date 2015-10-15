@@ -168,7 +168,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return 4;
+        return 5;
     }
     if (section==1) {
         return 1;
@@ -289,13 +289,14 @@
              cell.selectionStyle = UITableViewCellSelectionStyleNone;
              NSArray *message = @[@"配送方式",@"支付方式",@"发票方式",];
              NSArray *thewhyarray = @[dispatch,payWay,invoice];
-        if (indexPath.row!=3) {
+        if (indexPath.row==0||indexPath.row==1||indexPath.row==2) {
+            
              [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
             cell.textLabel.text = message[indexPath.row];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.detailTextLabel.text = thewhyarray[indexPath.row];
         }
-        else{
+        if (indexPath.row==4){
             _textField = [[UITextField alloc]initWithFrame:CGRectMake(15, 0, 320, 40)];
             _textField.placeholder = @"给卖家留言";
             _textField.tag = 1;
@@ -313,6 +314,16 @@
             [backButton setTitle:@"收回键盘" forState:UIControlStateNormal];
             [backButton addTarget:self action:@selector(keyboardReturn:) forControlEvents:UIControlEventTouchUpInside];
             [view addSubview:backButton];
+        }
+        if (indexPath.row==3){
+           cell.textLabel.text = @"邀请码";
+            _textField = [[UITextField alloc]initWithFrame:CGRectMake(230, 0, 100, 40)];
+            _textField.placeholder = @"请输入邀请码";
+            _textField.tag = 1;
+            _textField.delegate = self;
+            _textField.font = [UIFont systemFontOfSize:13];
+            _textField.backgroundColor = [UIColor whiteColor];
+            [cell addSubview:_textField];
         }
         return cell;
         

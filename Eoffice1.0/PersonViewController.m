@@ -20,6 +20,7 @@
 #import "SingleModel.h"
 #import "LoginViewController.h"
 #import "MyMoneybackViewController.h"
+#import "RecommendViewController.h"
 @interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate,persondelegate>{
     LoginViewController *login;
 }
@@ -257,7 +258,8 @@
         [self.navigationController pushViewController:mymoney animated:YES];
     }
     if (indexPath.row == 5) {
-        
+        RecommendViewController *recomm = [[RecommendViewController alloc]init];
+        [self.navigationController pushViewController:recomm animated:YES];
     }
     if (indexPath.row == 6) {
         SafeViewController *safe = [[SafeViewController alloc]init];

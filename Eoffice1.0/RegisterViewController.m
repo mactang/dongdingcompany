@@ -37,12 +37,13 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 100, 280, 300)];
     imageView.clipsToBounds = YES;
     imageView.layer.cornerRadius = 3;
-    imageView.image = [UIImage imageNamed:@"形状本-8"];
+    imageView.backgroundColor = [UIColor whiteColor];
+    imageView.image = [UIImage imageNamed:@"注册横线"];
     imageView.userInteractionEnabled = YES;
     [self.view addSubview:imageView];
     
     UIView *name_view = [[UIView alloc] init];
-    [name_view setFrame:CGRectMake(0, 0, 280, 56)];
+    [name_view setFrame:CGRectMake(0, 0, 280, 40)];
     [imageView addSubview:name_view];
     
     [self createTextField:1 withView:name_view];
@@ -50,18 +51,18 @@
 
     
     UIView *getPassWord_view = [[UIView alloc] init];
-    [getPassWord_view setFrame:CGRectMake(0, CGRectGetMaxY(name_view.frame)+5, 280, 56)];
+    [getPassWord_view setFrame:CGRectMake(0, CGRectGetMaxY(name_view.frame)+5, 280, 40)];
     [imageView addSubview:getPassWord_view];
     [self createTextField:2 withView:getPassWord_view];
     
     
     UIView *AgePassWord_view = [[UIView alloc] init];
-    [AgePassWord_view setFrame:CGRectMake(0, CGRectGetMaxY(getPassWord_view.frame)+5, 280, 56)];
+    [AgePassWord_view setFrame:CGRectMake(0, CGRectGetMaxY(getPassWord_view.frame)+13, 280, 40)];
     [imageView addSubview:AgePassWord_view];
     [self createTextField:3 withView:AgePassWord_view];
     
     UIView *phoneNumber_view = [[UIView alloc] init];
-    [phoneNumber_view setFrame:CGRectMake(0, CGRectGetMaxY(AgePassWord_view.frame)+5, 280, 56)];
+    [phoneNumber_view setFrame:CGRectMake(0, CGRectGetMaxY(AgePassWord_view.frame)+5, 280, 40)];
     [imageView addSubview:phoneNumber_view];
     [self createTextField:4 withView:phoneNumber_view];
     UIButton *validateBtn = [[UIButton alloc]initWithFrame:CGRectMake(200, 15, 70, 30)];
@@ -76,9 +77,14 @@
     [phoneNumber_view addSubview:validateBtn];
     
     UIView *number_view = [[UIView alloc] init];
-    [number_view setFrame:CGRectMake(0, CGRectGetMaxY(phoneNumber_view.frame)+5, 280, 56)];
+    [number_view setFrame:CGRectMake(0, CGRectGetMaxY(phoneNumber_view.frame)+9, 280, 40)];
     [imageView addSubview:number_view];
     [self createTextField:5 withView:number_view];
+    
+    UIView *invitation_view = [[UIView alloc] init];
+    [invitation_view setFrame:CGRectMake(0, CGRectGetMaxY(number_view.frame)+9, 280, 40)];
+    [imageView addSubview:invitation_view];
+    [self createTextField:6 withView:invitation_view];
     
     
     
@@ -218,6 +224,14 @@
        
     }
 
+    if (isPwd == 6)
+    {
+        text_field.text = @"";
+        text_field.tag = 1005;
+        text_field.placeholder = @"请输入推荐码";
+        iconImageView.image = [UIImage imageNamed:@"图层-12"];
+        
+    }
     text_field.font = [UIFont fontWithName:@"STHeitiK-Medium" size:18];
 }
 
