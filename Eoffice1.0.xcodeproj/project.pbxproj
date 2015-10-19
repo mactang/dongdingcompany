@@ -36,6 +36,9 @@
 		612C57BD1B8ABD2D0048FF28 /* DynamicScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 612C57BC1B8ABD2D0048FF28 /* DynamicScrollView.m */; };
 		612C57BF1B8AC6A30048FF28 /* deletbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = 612C57BE1B8AC6A30048FF28 /* deletbutton.png */; };
 		612C57C11B8AC7AD0048FF28 /* deleteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 612C57C01B8AC7AD0048FF28 /* deleteButton.png */; };
+		614EC0921BD4E3E50001015B /* ComRuleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 614EC0911BD4E3E50001015B /* ComRuleController.m */; };
+		614EC0951BD4E4290001015B /* RcommendBackModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 614EC0941BD4E4290001015B /* RcommendBackModel.m */; };
+		614EC0981BD4E5880001015B /* LetfWordButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 614EC0971BD4E5880001015B /* LetfWordButton.m */; };
 		615B29481B4FAE4B004E7546 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B29471B4FAE4B004E7546 /* main.m */; };
 		615B294B1B4FAE4B004E7546 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B294A1B4FAE4B004E7546 /* AppDelegate.m */; };
 		615B294E1B4FAE4B004E7546 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615B294D1B4FAE4B004E7546 /* ViewController.m */; };
@@ -405,6 +408,12 @@
 		612C57BC1B8ABD2D0048FF28 /* DynamicScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DynamicScrollView.m; sourceTree = "<group>"; };
 		612C57BE1B8AC6A30048FF28 /* deletbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deletbutton.png; sourceTree = "<group>"; };
 		612C57C01B8AC7AD0048FF28 /* deleteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteButton.png; sourceTree = "<group>"; };
+		614EC0901BD4E3E50001015B /* ComRuleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComRuleController.h; sourceTree = "<group>"; };
+		614EC0911BD4E3E50001015B /* ComRuleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComRuleController.m; sourceTree = "<group>"; };
+		614EC0931BD4E4290001015B /* RcommendBackModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RcommendBackModel.h; sourceTree = "<group>"; };
+		614EC0941BD4E4290001015B /* RcommendBackModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RcommendBackModel.m; sourceTree = "<group>"; };
+		614EC0961BD4E5880001015B /* LetfWordButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LetfWordButton.h; sourceTree = "<group>"; };
+		614EC0971BD4E5880001015B /* LetfWordButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LetfWordButton.m; sourceTree = "<group>"; };
 		615B29421B4FAE4B004E7546 /* Eoffice1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eoffice1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		615B29461B4FAE4B004E7546 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		615B29471B4FAE4B004E7546 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1348,6 +1357,8 @@
 		615C503A1BCE6A1A00A6E204 /* Recommend */ = {
 			isa = PBXGroup;
 			children = (
+				614EC0901BD4E3E50001015B /* ComRuleController.h */,
+				614EC0911BD4E3E50001015B /* ComRuleController.m */,
 				615C503B1BCE6A9100A6E204 /* RecommendViewController.h */,
 				615C503C1BCE6A9100A6E204 /* RecommendViewController.m */,
 				615C503E1BCE6C7C00A6E204 /* RecommCodeGenerator.h */,
@@ -1442,6 +1453,8 @@
 				618FD7561B8747B200090608 /* BackReasonModel.m */,
 				61A1CBB41BAFF9B600903122 /* ShopCartId.h */,
 				61A1CBB51BAFF9B600903122 /* ShopCartId.m */,
+				614EC0931BD4E4290001015B /* RcommendBackModel.h */,
+				614EC0941BD4E4290001015B /* RcommendBackModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1907,6 +1920,8 @@
 				9695ADE11B957A9A004A7A1B /* ButtonImageWithTitle.m */,
 				610D5A081B9FCCFD00301F3A /* TarBarButton.h */,
 				610D5A091B9FCCFD00301F3A /* TarBarButton.m */,
+				614EC0961BD4E5880001015B /* LetfWordButton.h */,
+				614EC0971BD4E5880001015B /* LetfWordButton.m */,
 				9689A8361BB15C34003E99B0 /* UIAlertViewBlock */,
 				61DA8F4C1BA1210900824499 /* NewButton.h */,
 				61DA8F4D1BA1210900824499 /* NewButton.m */,
@@ -2401,6 +2416,7 @@
 				612C57BD1B8ABD2D0048FF28 /* DynamicScrollView.m in Sources */,
 				615C503D1BCE6A9100A6E204 /* RecommendViewController.m in Sources */,
 				610D5A0A1B9FCCFD00301F3A /* TarBarButton.m in Sources */,
+				614EC0951BD4E4290001015B /* RcommendBackModel.m in Sources */,
 				61793A6B1B54A7B000CFD83A /* SellerInfoCell.m in Sources */,
 				615B29C31B4FB29F004E7546 /* ComputerViewController.m in Sources */,
 				96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */,
@@ -2466,6 +2482,7 @@
 				969E1E9F1BC790D400CD9D02 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				969E1EAA1BC790D400CD9D02 /* CSerializedJSONData.m in Sources */,
 				6168985B1BB4D6E20083205B /* ShopCarCell.m in Sources */,
+				614EC0981BD4E5880001015B /* LetfWordButton.m in Sources */,
 				615B29A51B4FB22B004E7546 /* PersonViewController.m in Sources */,
 				61B0FFA31B5F7EB0002CF349 /* DropDown1.m in Sources */,
 				615B29481B4FAE4B004E7546 /* main.m in Sources */,
@@ -2510,6 +2527,7 @@
 				96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */,
 				96BA8F2C1B8EADDC0062C8D8 /* Mobliejudge.m in Sources */,
 				96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */,
+				614EC0921BD4E3E50001015B /* ComRuleController.m in Sources */,
 				61B0FF9F1B5F6739002CF349 /* ContrastViewController.m in Sources */,
 				6183424E1B5658720097E8A4 /* LewPopupViewAnimationFade.m in Sources */,
 				969E1EA61BC790D400CD9D02 /* CJSONDataSerializer.m in Sources */,
