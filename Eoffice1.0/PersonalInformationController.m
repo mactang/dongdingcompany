@@ -18,6 +18,7 @@
 #import "SingleModel.h"
 #import "PersonInformationModel.h"
 #import "CalendarManager.h"
+//#import "ASIFormDataRequest.h"
 @interface PersonalInformationController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIApplicationDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong)UIImage *imageName;
@@ -33,12 +34,12 @@
 
 @implementation PersonalInformationController
 {
-
+    
     UILabel *birthdayLb;
     CalendarManager *cm;
     UILabel *sexLb;
     NSString *sex;
-
+    
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -49,8 +50,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.edgesForExtendedLayout=UIRectEdgeNone;
-//    self.navigationController.navigationBar.translucent = YES;
+    //    self.edgesForExtendedLayout=UIRectEdgeNone;
+    //    self.navigationController.navigationBar.translucent = YES;
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
@@ -67,7 +68,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     [self.navigationItem setRightBarButtonItem:rightItem];
     
-     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+    self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     self.navigationItem.title = @"个人信息";
     [self downData];
     
@@ -97,20 +98,20 @@
     // Do any additional setup after loading the view.
 }
 -(void)rightItemClicked{
-
+    
     [self reviseData];
     
 }
 
 -(void)reviseData{
-
+    
     SingleModel *model = [SingleModel sharedSingleModel];
     
     NSString *path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey];
     NSLog(@"path--%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-
+    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
@@ -148,8 +149,8 @@
             NSDictionary *array = dic[@"data"];
             PersonInformationModel *model = [PersonInformationModel modelWithDic:array];
             [self.datas addObject: model];
-                
-        NSLog(@"%@",self.datas);
+            
+            NSLog(@"%@",self.datas);
         }
         [_tableView reloadData];
         
@@ -160,8 +161,8 @@
 }
 -(void)backPress{
     
-//  self.tabBarController.selectedIndex = 2;
-//    [self.view removeFromSuperview];
+    //  self.tabBarController.selectedIndex = 2;
+    //    [self.view removeFromSuperview];
     SingleModel *model = [SingleModel sharedSingleModel];
     model.userkey = nil;
     self.navigationController.navigationBarHidden = YES;
@@ -178,7 +179,7 @@
         return 80;
     }
     else
-    return 50;
+        return 50;
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -196,7 +197,7 @@
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     PersonInformationModel *model = self.datas[0];
-      NSLog(@"%@",model.name);
+    NSLog(@"%@",model.name);
     if (indexPath.row == 0) {
         cell.textLabel.text = @"头像";
         
@@ -225,7 +226,7 @@
         cell.textLabel.text = @"性别";
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedSex:) name:@"mySex" object:nil];
         sexLb = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 100, 20)];
-
+        
         NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
         NSString *value = [ud objectForKey:@"mySex"];
         sexLb.text = value;
@@ -248,7 +249,7 @@
         birthdayLb.textColor = [UIColor blackColor];
         [cell addSubview:birthdayLb];
     }
-       return cell;
+    return cell;
 }
 
 - (void)selectedBirthday:(NSNotification *)notify{
@@ -269,18 +270,18 @@
     //    cell.detailTextLabel.text = reglarText;
     // birthdayLb.text = reglarText;
     sexLb.text = sexText;
-  
+    
     if ([sexLb.text isEqual:@"男"]) {
         sex = @"m";
     }
     if ([sexLb.text isEqual:@"女"]) {
-       sex = @"f";
+        sex = @"f";
     }
     if ([sexLb.text isEqual:@"保密"]) {
-       sex = @"2b";
+        sex = @"2b";
         
     }
-
+    
     
     
 }
@@ -293,7 +294,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     if (indexPath.row == 0) {
         UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                       initWithTitle:@"添 加 图 片"
@@ -322,14 +323,14 @@
         [alter show];
     }
     if (indexPath.row == 4) {
-
+        
         NSDate *date=[NSDate dateWithTimeIntervalSinceNow:9000000];
         _pickview=[[DatePickView alloc] initDatePickWithDate:date datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
         [_pickview initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         [_pickview show];    }
     
-   
-
+    
+    
     
     
 }
@@ -365,7 +366,7 @@
     }
 }
 -(void)bs{
-
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSDictionary *parameters = @{@"foo": @"bar"};
     UIImage *image = [UIImage imageNamed:@"xxxx"];
@@ -413,6 +414,8 @@
         [imageData writeToFile:filePath atomically:YES];
         
         NSLog(@"%@",NSHomeDirectory());
+        //[self upload];
+        // [self uploadImageRequest:image];
     }
     else if ([mediaType isEqualToString:@"public.movie"])
     {
@@ -422,6 +425,194 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+//- (void)uploadImageRequest:(UIImage *)image
+//{
+//    NSData *data = UIImagePNGRepresentation(image);//获取图片数据
+//    NSString *urlStr = [NSString stringWithFormat:UPLOADPHOTO,COMMON];;
+//    //以表格形式的请求对象
+//    __block ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:urlStr]];
+//    request.delegate =self;
+//    request.requestMethod = @"POST";//设置请求方式
+//    request.showAccurateProgress = YES;
+//    //    request.uploadProgressDelegate = showMBProgressHUD(@"正在上传照片...",YES);
+//    //添加请求内容
+//    [request addData:data withFileName:@"classify1.png" andContentType:@"png" forKey:@"attach"];
+//    [request startAsynchronous];
+//
+//    //开始异步请求
+//    __block NSDictionary *infoDic;
+//    [request setCompletionBlock:^{
+//      //  [self hideHud];
+////        NSString *responseString = [request responseString];
+////        infoDic=[responseString objectFromJSONString];
+////        NSLog(@"infoDic......%@",infoDic);
+////        //        hideMBProgressHUD();
+////        if ([[infoDic objectForKey:@"returncode"] integerValue] == 0) {
+////            NSString *fileName = [infoDic objectForKey:@"file"];
+////            [Global shareStance].logoPic = fileName;
+////
+////            //  NSString *type = [infoDic objectForKey:@"type"];
+////
+////            //  BYHDataRequest *update_Request = [[BYHDataRequest alloc]initWithDelegate:self];
+////            //            [update_Request updateImageResumeRequest:[Global shareStance].user.userID album_id:_album.photo_id photo_name:[dataArray objectAtIndex:0] photo_describe:[dataArray objectAtIndex:1] photo_file:fileName photo_type:type requestTarget:1];
+////        }
+//
+//    }];
+//    [request setFailedBlock:^{
+//       // [self hideHud];
+////        CNAlertView *alert = [[CNAlertView alloc] init];
+////        [alert creatAlertView:@"上传失败，请重试！"];
+//    }];
+//
+//}
+
+//- (void)uploadPhoto{
+//    
+//    
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.mode = MBProgressHUDModeIndeterminate;
+//    hud.labelText = @"Loading";
+//    
+//    NSString *urlString= [NSString stringWithFormat:UPLOADPHOTO,COMMON];
+//    // NSLog(@"path--%@",path);
+//    NSLog(@"%@",NSHomeDirectory());
+//    NSString *string = [NSString stringWithFormat:@"%@/Documents/classify1.png",NSHomeDirectory()];
+//    
+//    
+//    // NSString * HttpURL = [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    NSURL *filePath = [NSURL fileURLWithPath:string];
+//    
+//    UIImage *image = [UIImage imageNamed:@""];
+//    
+//    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
+//    
+//    //建立请求对象
+//    
+//    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] init];
+//    
+//    //设置请求路径
+//    
+//    [request setURL:[NSURL URLWithString:urlString]];
+//    
+//    //请求方式
+//    
+//    [request setHTTPMethod:@"POST"];
+//    
+//    //    //一连串上传头标签
+//    //
+//    //    NSString *boundary = [NSString stringWithString:@"---------------------------14737809831466499882746641449"];
+//    //
+//    //    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
+//    //
+//    //    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
+//    //
+//    //    NSMutableData *body = [NSMutableData data];
+//    //
+//    //    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//    //
+//    //    [body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name="userfile"; filename="vim_go.jpg"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//    //
+//    //    [body appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+//    //
+//    //    [body appendData:[NSData dataWithData:imageData]];
+//    //
+//    //    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+//    //
+//    //    [request setHTTPBody:body];
+//    //
+//    //    //上传文件开始
+//    //
+//    //    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+//    //
+//    //    //获得返回值
+//    //
+//    //    NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
+//    //
+//    //    NSLog(@"%@",returnString);
+//    //
+//    
+//    
+//    
+//}
+
+//- (void)upload
+//{
+//    NSString *urlStr = [NSString stringWithFormat:UPLOADPHOTO,COMMON];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr] cachePolicy:0 timeoutInterval:5.0f];
+//    
+//    [self setRequest:request];
+//    
+//    NSLog(@"开始上传...");
+//    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//        
+//        NSLog(@"Result--%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+//        
+//    }];
+//}
+
+- (void)setRequest:(NSMutableURLRequest *)request
+{
+    NSString *boundary = [NSString stringWithFormat:@"Boundary+%08X%08X", arc4random(), arc4random()];
+    NSMutableData *body = [NSMutableData data];
+    //
+    //    // 表单数据
+    //    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
+    //    [param setValue:@"254" forKey:@"empId"];
+    //    [param setValue:@"18718" forKey:@"shopId"];
+    //    /** 遍历字典将字典中的键值对转换成请求格式:
+    //     --Boundary+72D4CD655314C423
+    //     Content-Disposition: form-data; name="empId"
+    //
+    //     254
+    //     --Boundary+72D4CD655314C423
+    //     Content-Disposition: form-data; name="shopId"
+    //
+    //     18718
+    //     */
+    //    [param enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+    //        NSMutableString *fieldStr = [NSMutableString string];
+    //        [fieldStr appendString:[NSString stringWithFormat:@"--%@\r\n", boundary]];
+    //        [fieldStr appendString:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key]];
+    //        [fieldStr appendString:[NSString stringWithFormat:@"%@", obj]];
+    //        [body appendData:[fieldStr dataUsingEncoding:NSUTF8StringEncoding]];
+    //        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    //    }];
+    /// 图片数据部分
+    NSMutableString *topStr = [NSMutableString string];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"classify1.png" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    
+    /**拼装成格式：
+     --Boundary+72D4CD655314C423
+     Content-Disposition: form-data; name="uploadFile"; filename="001.png"
+     Content-Type:image/png
+     Content-Transfer-Encoding: binary
+     
+     ... contents of boris.png ...
+     */
+    [topStr appendString:[NSString stringWithFormat:@"--%@\r\n", boundary]];
+    [topStr appendString:@"Content-Disposition: form-data; name=\"attach\"; filename=\"001.png\"\r\n"];
+    [topStr appendString:@"Content-Type:image/png\r\n"];
+    [topStr appendString:@"Content-Transfer-Encoding: binary\r\n\r\n"];
+    [body appendData:[topStr dataUsingEncoding:NSUTF8StringEncoding]];
+    [body appendData:data];
+    [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    // 结束部分
+    NSString *bottomStr = [NSString stringWithFormat:@"--%@--", boundary];
+    /**拼装成格式：
+     --Boundary+72D4CD655314C423--
+     */
+    [body appendData:[bottomStr dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // 设置请求类型为post请求
+    request.HTTPMethod = @"post";
+    // 设置request的请求体
+    request.HTTPBody = body;
+    // 设置头部数据，标明上传数据总大小，用于服务器接收校验
+    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)body.length] forHTTPHeaderField:@"Content-Length"];
+    // 设置头部数据，指定了http post请求的编码方式为multipart/form-data（上传文件必须用这个）。
+    [request setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary] forHTTPHeaderField:@"Content-Type"];
+}
 
 /**
  *  取消相册 *
@@ -480,13 +671,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

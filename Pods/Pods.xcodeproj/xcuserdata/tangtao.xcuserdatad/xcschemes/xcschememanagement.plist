@@ -49,6 +49,11 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>libqrencode.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -67,6 +72,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>1D345A7E1C602835EC7D83112B9D456F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>26E09602BBE7FC53E5E8A12A3545F794</key>
 		<dict>
 			<key>primary</key>
@@ -78,6 +88,11 @@
 			<true/>
 		</dict>
 		<key>2EB302F24240DA7711AAA2F2415112E5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3115556A4D51FDADB6043B14EC0377AB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,12 +132,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>59B5154DEC6908AAF54B5F46275BEC56</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>5BEF327A73A27014AC914D1DB221F6AE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>6554520CF3805009117CF9F038E758C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8597D00E0F98185AC47B8096DCA022B2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>86FB36FA745F04129F138234A5C32845</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -142,12 +172,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>AF9B9755390A023BA60F06AF791E1E34</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B50407465C33B885B6A1B831BF4F9089</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B69F15816BE68A90C98F1898CC0EED5C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BB7CB1F4D6C196AA1B6D540F10B6C129</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -168,6 +208,11 @@
 			<true/>
 		</dict>
 		<key>E6BC482D68A1F2EEF007B61F0673205F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E6FBA282A9550E9E6F37970FABCF2198</key>
 		<dict>
 			<key>primary</key>
 			<true/>

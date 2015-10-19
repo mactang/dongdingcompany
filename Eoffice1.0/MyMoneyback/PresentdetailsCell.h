@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface PresentdetailsCell : UITableViewCell
-
+@property(nonatomic,strong)UILabel *bankcardWithdrawals;
+@property(nonatomic,strong)UILabel *withdrawalstime;
+@property(nonatomic,strong)UILabel *banktype;
+@property(nonatomic,strong)UILabel *backTailnumber;
+@property(nonatomic,strong)UILabel *moneynumber;
+@property(nonatomic,strong)UILabel *orsucess;
+@property(nonatomic,strong)NSMutableDictionary *dicnationary;
 @end

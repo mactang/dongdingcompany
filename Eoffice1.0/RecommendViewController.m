@@ -45,7 +45,7 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-   
+    
     //[imageView addSubview: image];
     [self downData];
     
@@ -68,8 +68,8 @@
         if (dic[@"data"] !=[NSNull null]){
             NSLog(@"%@",dic);
             NSDictionary *array = dic[@"data"];
-           RcommendBackModel *model = [RcommendBackModel modelWithDic:array];
-           [self.datas addObject: model];
+            RcommendBackModel *model = [RcommendBackModel modelWithDic:array];
+            [self.datas addObject: model];
         }
         
         [self recommendBackView];
@@ -90,7 +90,7 @@
     NSString *string = [NSString stringWithFormat:@"%@",model.registerCount];
     NSString *string1 = [NSString stringWithFormat:@"%@",model.totalAmount];
     NSString *buyString = [NSString stringWithFormat:@"%@",model.buyCount];
-   NSLog(@"%lu",(unsigned long)[string length]);
+    NSLog(@"%lu",(unsigned long)[string length]);
     
     NSMutableAttributedString *personNumberString = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"推荐注册:%@人",string]];
     [personNumberString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204.0/255.0 green:0/255.0 blue:0/255.0 alpha:1] range:NSMakeRange(5, [string length])];
@@ -114,7 +114,7 @@
     readyLb.attributedText = readyString;
     readyLb.font = [UIFont systemFontOfSize:12];
     [view addSubview:readyLb];
-
+    
     // sample
     UIView *otherView = [[UIView alloc]initWithFrame:CGRectMake(0,CGRectGetMaxY(view.frame)+10,320, 450)];
     otherView.backgroundColor = [UIColor whiteColor];
@@ -168,7 +168,7 @@
     [btn setTitle:@"分享" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [otherView addSubview:btn];
-
+    
     
     
 }
@@ -215,13 +215,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

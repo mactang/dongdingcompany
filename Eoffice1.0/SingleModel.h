@@ -36,8 +36,6 @@
 
 @property(nonatomic,assign)NSString *isBoolmy;
 
-@property(nonatomic,assign)NSString *recommendCode;
-
 
 
 //通过类方法，创建唯一的对象
