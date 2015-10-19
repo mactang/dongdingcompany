@@ -353,15 +353,18 @@
             NSString *userkey = dic[@"data"][@"userkey"];
             NSLog(@"userkey--%@",userkey);
             NSString *jsessionid = subDic[@"jsessionId"];
-            NSString *telphone = dic[@"data"][@"telphone"];
+            NSString *telphone = dic[@"data"][@"memberInfo"][@"telphone"];
             NSLog(@"telphone--%@",telphone);
             NSLog(@"jsessionid--%@",jsessionid);
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
             model.jsessionid = jsessionid;
             model.telphone = telphone;
+            model.recommendCode = dic[@"data"][@"memberInfo"][@"recommendCode"];
+            NSLog(@"recommendCode--%@",model.recommendCode);
             
             if (self.iflogin) {
+                
                 if (_delegate &&[_delegate respondsToSelector:@selector(reloadshopcart)]) {
                     [_delegate reloadshopcart];
                     [self.view removeFromSuperview];

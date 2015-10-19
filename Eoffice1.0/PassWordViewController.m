@@ -38,8 +38,8 @@
     SingleModel *sing = [SingleModel sharedSingleModel];
     UILabel *photoLB = [[UILabel alloc]initWithFrame:CGRectMake(20, 80, 150, 20)];
     photoLB.font = [UIFont systemFontOfSize:14];
-    photoLB.text = [NSString stringWithFormat:@"%@",sing.telphone];
-    photoLB.textAlignment = NSTextAlignmentCenter;
+    photoLB.text = [NSString stringWithFormat:@"手机号：%@",sing.telphone];
+    photoLB.textAlignment = NSTextAlignmentLeft;
     photoLB.textColor = [UIColor blackColor];
     [self.view addSubview:photoLB];
     
@@ -149,7 +149,7 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:@{@"phoneNo":@"13618090081"} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:@{@"phoneNo":model.telphone} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];

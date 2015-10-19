@@ -244,16 +244,16 @@
     UITextField *name_field = (UITextField *)[self.view viewWithTag:1001];
     UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
     UITextField *identifying_field = (UITextField *)[self.view viewWithTag:1004];
-    
+   UITextField  *phoneNumber_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
     
     NSString *path = [NSString stringWithFormat:REGISTER,COMMON];
-    NSLog(@"%@",identifying_field.text);
+    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
    
-    [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":@"18782931381"} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":phoneNumber_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];

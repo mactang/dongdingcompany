@@ -132,4 +132,10 @@
 #define PRODUCTMESSAGE @"%@product!selectedByVersion.action?goodsId=%@"
 //提交商品生成订单
 #define SUBMITORDER  @"%@order!referBasket.action?userkey=%@&cartIds=%@"
+
+//推荐返现
+#define RECOMMENBACKMONEY @"%@user!getRecom.action?userkey=%@"
+
+
+
 #endif

@@ -101,6 +101,7 @@
     [self reviseData];
     
 }
+
 -(void)reviseData{
 
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -363,7 +364,22 @@
         
     }
 }
+-(void)bs{
 
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    NSDictionary *parameters = @{@"foo": @"bar"};
+    UIImage *image = [UIImage imageNamed:@"xxxx"];
+    [manager POST:@"http://example.com/resources.json" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:UIImagePNGRepresentation(image)
+                                    name:@"avatar"
+                                fileName:@"avatar.png"
+                                mimeType:@"image/png"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Success: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
+}
 /**
  *  选中照片
  *
@@ -390,9 +406,13 @@
         
         _imageView.image = _imageName;
         
-       
+        // 把头像图片存到本地/Users/gyz/Library/Developer/CoreSimulator/Devices/A8B9BBB3-E7D4-4B15-8CF1-05D22D5591D7/data/Containers/Data/Application/268E87B2-262A-425D-8528-04AC569EE6E2/Documents
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"classify1.png"]];   // 保存文件的名称
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+        [imageData writeToFile:filePath atomically:YES];
         
-        NSLog(@"%@",image);
+        NSLog(@"%@",NSHomeDirectory());
     }
     else if ([mediaType isEqualToString:@"public.movie"])
     {
@@ -402,9 +422,9 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+
 /**
- *  取消相册
- *
+ *  取消相册 *
  *  @param picker picker
  */
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

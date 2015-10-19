@@ -49,7 +49,7 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     [self.navigationItem setTitle:@""];
-    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *string = @"my";
     model.isBoolmy = [NSString stringWithFormat:@"%@",string];
