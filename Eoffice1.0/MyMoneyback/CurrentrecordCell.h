@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface CurrentrecordCell : UITableViewCell
-
+@property(nonatomic,strong)UILabel *namelabel;
+@property(nonatomic,strong)UILabel *moneylabel;
+@property(nonatomic,strong)UILabel *timelabel;
+@property(nonatomic,strong)UIView *lineview;
+@property(nonatomic,strong)UIView *seconedview;
+@property(nonatomic,strong)NSMutableDictionary *dic;
 @end

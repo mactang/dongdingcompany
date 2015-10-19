@@ -302,6 +302,9 @@
 		61FA8A7D1B9D86FD0090507E /* OrederManagerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FA8A7C1B9D86FD0090507E /* OrederManagerCell.m */; };
 		9638F0BA1B900F4700882D8C /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9638F0B91B900F4700882D8C /* AddressViewController.m */; };
 		9638F0C01B900FD400882D8C /* ManageAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9638F0BF1B900FD400882D8C /* ManageAddressCell.m */; };
+		96747BF21BD49A510060704C /* BanklistTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96747BF11BD49A510060704C /* BanklistTableViewCell.m */; };
+		967FC3341BD0970E00E06BD9 /* WithdrawalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 967FC3331BD0970E00E06BD9 /* WithdrawalsViewController.m */; };
+		967FC3371BD0E8E300E06BD9 /* AddBankcardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 967FC3361BD0E8E300E06BD9 /* AddBankcardController.m */; };
 		96821FCA1B8AF5DC00EC7276 /* citychoose.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96821FC71B8AF5DC00EC7276 /* citychoose.plist */; };
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
 		9689A8391BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */; };
@@ -801,6 +804,12 @@
 		9638F0B91B900F4700882D8C /* AddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressViewController.m; sourceTree = "<group>"; };
 		9638F0BE1B900FD400882D8C /* ManageAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageAddressCell.h; sourceTree = "<group>"; };
 		9638F0BF1B900FD400882D8C /* ManageAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageAddressCell.m; sourceTree = "<group>"; };
+		96747BF01BD49A510060704C /* BanklistTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BanklistTableViewCell.h; sourceTree = "<group>"; };
+		96747BF11BD49A510060704C /* BanklistTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BanklistTableViewCell.m; sourceTree = "<group>"; };
+		967FC3321BD0970E00E06BD9 /* WithdrawalsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WithdrawalsViewController.h; sourceTree = "<group>"; };
+		967FC3331BD0970E00E06BD9 /* WithdrawalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WithdrawalsViewController.m; sourceTree = "<group>"; };
+		967FC3351BD0E8E300E06BD9 /* AddBankcardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBankcardController.h; sourceTree = "<group>"; };
+		967FC3361BD0E8E300E06BD9 /* AddBankcardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBankcardController.m; sourceTree = "<group>"; };
 		96821FC71B8AF5DC00EC7276 /* citychoose.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = citychoose.plist; sourceTree = "<group>"; };
 		96821FC81B8AF5DC00EC7276 /* CityChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseView.h; sourceTree = "<group>"; };
 		96821FC91B8AF5DC00EC7276 /* CityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CityChooseView.m; sourceTree = "<group>"; usesTabs = 0; };
@@ -1211,6 +1220,7 @@
 		615B29931B4FB08A004E7546 /* CONTROLLER */ = {
 			isa = PBXGroup;
 			children = (
+				967FC3311BD0968500E06BD9 /* WithdrawalsMoney */,
 				9689F7D21BCE2FC30006954B /* MyMoneyback */,
 				615B296C1B4FAFBA004E7546 /* RES */,
 				61A1FFE11B671F9500AFC8C2 /* Order */,
@@ -1842,6 +1852,19 @@
 			path = manageAddress;
 			sourceTree = "<group>";
 		};
+		967FC3311BD0968500E06BD9 /* WithdrawalsMoney */ = {
+			isa = PBXGroup;
+			children = (
+				967FC3321BD0970E00E06BD9 /* WithdrawalsViewController.h */,
+				967FC3331BD0970E00E06BD9 /* WithdrawalsViewController.m */,
+				96747BF01BD49A510060704C /* BanklistTableViewCell.h */,
+				96747BF11BD49A510060704C /* BanklistTableViewCell.m */,
+				967FC3351BD0E8E300E06BD9 /* AddBankcardController.h */,
+				967FC3361BD0E8E300E06BD9 /* AddBankcardController.m */,
+			);
+			path = WithdrawalsMoney;
+			sourceTree = "<group>";
+		};
 		96821FC61B8AF5DC00EC7276 /* citychoose */ = {
 			isa = PBXGroup;
 			children = (
@@ -2419,6 +2442,7 @@
 				6166AA2C1BA02D0F00D7FDD1 /* SDRefreshHeaderView.m in Sources */,
 				618149411B5E468A00E39900 /* birthdayAlterView.m in Sources */,
 				969E1EA21BC790D400CD9D02 /* CDataScanner_Extensions.m in Sources */,
+				967FC3341BD0970E00E06BD9 /* WithdrawalsViewController.m in Sources */,
 				61E971161B7367A1007F42B6 /* detailsModel.m in Sources */,
 				615B29BB1B4FB27A004E7546 /* MaintainController.m in Sources */,
 				61793A7E1B54AB2700CFD83A /* GeneralDetailViewController.m in Sources */,
@@ -2446,6 +2470,7 @@
 				61B0FFA31B5F7EB0002CF349 /* DropDown1.m in Sources */,
 				615B29481B4FAE4B004E7546 /* main.m in Sources */,
 				618FD7501B87058400090608 /* HMSegmentedControl.m in Sources */,
+				967FC3371BD0E8E300E06BD9 /* AddBankcardController.m in Sources */,
 				9689A8391BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m in Sources */,
 				615B29A11B4FB22B004E7546 /* LoginViewController.m in Sources */,
 				6165C3201B535CD000FF71FB /* CMDetailsViewController.m in Sources */,
@@ -2467,6 +2492,7 @@
 				6172F5431B6C6ADB007BDBD2 /* AddAddressController.m in Sources */,
 				618342501B5658720097E8A4 /* LewPopupViewAnimationSpring.m in Sources */,
 				615B29A31B4FB22B004E7546 /* MemberViewController.m in Sources */,
+				96747BF21BD49A510060704C /* BanklistTableViewCell.m in Sources */,
 				969E1EA91BC790D400CD9D02 /* CJSONSerializer.m in Sources */,
 				61A1FFEE1B67A1BD00AFC8C2 /* ShoppingCarController.m in Sources */,
 				61AD52DC1B579E3C0037FED8 /* MenuPopover.m in Sources */,

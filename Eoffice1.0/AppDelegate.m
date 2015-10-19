@@ -53,7 +53,6 @@
     [self setupViewControllers];
     [self.window setRootViewController:self.viewController];
     
-    
     [self customizeInterface];
     // self.window.rootViewController = self.nav_controller;
     self.window.backgroundColor = [UIColor whiteColor];
