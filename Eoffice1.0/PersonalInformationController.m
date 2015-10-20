@@ -18,8 +18,8 @@
 #import "SingleModel.h"
 #import "PersonInformationModel.h"
 #import "CalendarManager.h"
-//#import "ASIFormDataRequest.h"
-@interface PersonalInformationController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIApplicationDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate>
+#import "ASIFormDataRequest.h"
+@interface PersonalInformationController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIApplicationDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,ASIHTTPRequestDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong)UIImage *imageName;
 @property(nonatomic, strong)NSMutableArray *datas;
@@ -408,14 +408,23 @@
         _imageView.image = _imageName;
         
         // 把头像图片存到本地/Users/gyz/Library/Developer/CoreSimulator/Devices/A8B9BBB3-E7D4-4B15-8CF1-05D22D5591D7/data/Containers/Data/Application/268E87B2-262A-425D-8528-04AC569EE6E2/Documents
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"classify1.png"]];   // 保存文件的名称
-        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
-        [imageData writeToFile:filePath atomically:YES];
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"classify1.png"]];   // 保存文件的名称
+//        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+//        [imageData writeToFile:filePath atomically:YES];
         
-        NSLog(@"%@",NSHomeDirectory());
-        //[self upload];
-        // [self uploadImageRequest:image];
+        NSLog(@"NSHomeDirectory--%@",NSHomeDirectory());
+        
+        
+        NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+        // 获取沙盒目录
+        NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"imge.png"];
+        
+        // 将图片写入文件
+        
+        [imageData writeToFile:fullPath atomically:NO];
+           [self uploadImageRequest:image];     
+    
     }
     else if ([mediaType isEqualToString:@"public.movie"])
     {
@@ -425,194 +434,33 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-//- (void)uploadImageRequest:(UIImage *)image
-//{
-//    NSData *data = UIImagePNGRepresentation(image);//获取图片数据
-//    NSString *urlStr = [NSString stringWithFormat:UPLOADPHOTO,COMMON];;
-//    //以表格形式的请求对象
-//    __block ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:urlStr]];
-//    request.delegate =self;
-//    request.requestMethod = @"POST";//设置请求方式
-//    request.showAccurateProgress = YES;
-//    //    request.uploadProgressDelegate = showMBProgressHUD(@"正在上传照片...",YES);
-//    //添加请求内容
-//    [request addData:data withFileName:@"classify1.png" andContentType:@"png" forKey:@"attach"];
-//    [request startAsynchronous];
-//
-//    //开始异步请求
-//    __block NSDictionary *infoDic;
-//    [request setCompletionBlock:^{
-//      //  [self hideHud];
-////        NSString *responseString = [request responseString];
-////        infoDic=[responseString objectFromJSONString];
-////        NSLog(@"infoDic......%@",infoDic);
-////        //        hideMBProgressHUD();
-////        if ([[infoDic objectForKey:@"returncode"] integerValue] == 0) {
-////            NSString *fileName = [infoDic objectForKey:@"file"];
-////            [Global shareStance].logoPic = fileName;
-////
-////            //  NSString *type = [infoDic objectForKey:@"type"];
-////
-////            //  BYHDataRequest *update_Request = [[BYHDataRequest alloc]initWithDelegate:self];
-////            //            [update_Request updateImageResumeRequest:[Global shareStance].user.userID album_id:_album.photo_id photo_name:[dataArray objectAtIndex:0] photo_describe:[dataArray objectAtIndex:1] photo_file:fileName photo_type:type requestTarget:1];
-////        }
-//
-//    }];
-//    [request setFailedBlock:^{
-//       // [self hideHud];
-////        CNAlertView *alert = [[CNAlertView alloc] init];
-////        [alert creatAlertView:@"上传失败，请重试！"];
-//    }];
-//
-//}
-
-//- (void)uploadPhoto{
-//    
-//    
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    hud.mode = MBProgressHUDModeIndeterminate;
-//    hud.labelText = @"Loading";
-//    
-//    NSString *urlString= [NSString stringWithFormat:UPLOADPHOTO,COMMON];
-//    // NSLog(@"path--%@",path);
-//    NSLog(@"%@",NSHomeDirectory());
-//    NSString *string = [NSString stringWithFormat:@"%@/Documents/classify1.png",NSHomeDirectory()];
-//    
-//    
-//    // NSString * HttpURL = [string stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//    NSURL *filePath = [NSURL fileURLWithPath:string];
-//    
-//    UIImage *image = [UIImage imageNamed:@""];
-//    
-//    NSData *imageData = UIImageJPEGRepresentation(image, 0.8);
-//    
-//    //建立请求对象
-//    
-//    NSMutableURLRequest * request = [[NSMutableURLRequest alloc] init];
-//    
-//    //设置请求路径
-//    
-//    [request setURL:[NSURL URLWithString:urlString]];
-//    
-//    //请求方式
-//    
-//    [request setHTTPMethod:@"POST"];
-//    
-//    //    //一连串上传头标签
-//    //
-//    //    NSString *boundary = [NSString stringWithString:@"---------------------------14737809831466499882746641449"];
-//    //
-//    //    NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary];
-//    //
-//    //    [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
-//    //
-//    //    NSMutableData *body = [NSMutableData data];
-//    //
-//    //    [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//    //
-//    //    [body appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name="userfile"; filename="vim_go.jpg"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-//    //
-//    //    [body appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-//    //
-//    //    [body appendData:[NSData dataWithData:imageData]];
-//    //
-//    //    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//    //
-//    //    [request setHTTPBody:body];
-//    //
-//    //    //上传文件开始
-//    //
-//    //    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-//    //
-//    //    //获得返回值
-//    //
-//    //    NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-//    //
-//    //    NSLog(@"%@",returnString);
-//    //
-//    
-//    
-//    
-//}
-
-//- (void)upload
-//{
-//    NSString *urlStr = [NSString stringWithFormat:UPLOADPHOTO,COMMON];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr] cachePolicy:0 timeoutInterval:5.0f];
-//    
-//    [self setRequest:request];
-//    
-//    NSLog(@"开始上传...");
-//    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        
-//        NSLog(@"Result--%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
-//        
-//    }];
-//}
-
-- (void)setRequest:(NSMutableURLRequest *)request
+- (void)uploadImageRequest:(UIImage *)image
 {
-    NSString *boundary = [NSString stringWithFormat:@"Boundary+%08X%08X", arc4random(), arc4random()];
-    NSMutableData *body = [NSMutableData data];
-    //
-    //    // 表单数据
-    //    NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-    //    [param setValue:@"254" forKey:@"empId"];
-    //    [param setValue:@"18718" forKey:@"shopId"];
-    //    /** 遍历字典将字典中的键值对转换成请求格式:
-    //     --Boundary+72D4CD655314C423
-    //     Content-Disposition: form-data; name="empId"
-    //
-    //     254
-    //     --Boundary+72D4CD655314C423
-    //     Content-Disposition: form-data; name="shopId"
-    //
-    //     18718
-    //     */
-    //    [param enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-    //        NSMutableString *fieldStr = [NSMutableString string];
-    //        [fieldStr appendString:[NSString stringWithFormat:@"--%@\r\n", boundary]];
-    //        [fieldStr appendString:[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key]];
-    //        [fieldStr appendString:[NSString stringWithFormat:@"%@", obj]];
-    //        [body appendData:[fieldStr dataUsingEncoding:NSUTF8StringEncoding]];
-    //        [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    //    }];
-    /// 图片数据部分
-    NSMutableString *topStr = [NSMutableString string];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"classify1.png" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:path];
     
-    /**拼装成格式：
-     --Boundary+72D4CD655314C423
-     Content-Disposition: form-data; name="uploadFile"; filename="001.png"
-     Content-Type:image/png
-     Content-Transfer-Encoding: binary
-     
-     ... contents of boris.png ...
-     */
-    [topStr appendString:[NSString stringWithFormat:@"--%@\r\n", boundary]];
-    [topStr appendString:@"Content-Disposition: form-data; name=\"attach\"; filename=\"001.png\"\r\n"];
-    [topStr appendString:@"Content-Type:image/png\r\n"];
-    [topStr appendString:@"Content-Transfer-Encoding: binary\r\n\r\n"];
-    [body appendData:[topStr dataUsingEncoding:NSUTF8StringEncoding]];
-    [body appendData:data];
-    [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    // 结束部分
-    NSString *bottomStr = [NSString stringWithFormat:@"--%@--", boundary];
-    /**拼装成格式：
-     --Boundary+72D4CD655314C423--
-     */
-    [body appendData:[bottomStr dataUsingEncoding:NSUTF8StringEncoding]];
+    NSString *urlString= [NSString stringWithFormat:UPLOADPHOTO,COMMON];
+     NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:@"imge.png"];
+    //NSString* path =  [[NSBundle mainBundle] pathForResource:@"办公商品" ofType:@"png"];
+#pragma mark 使用ASIHttpRequest 上传图片和数据
+     ASIFormDataRequest *request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [request addFile:fullPath forKey:@"attach"];
+    [request addPostValue:@"asihttp" forKey:@"name"];
+    [request setCompletionBlock:^{
+       //字符串解析成字典
+        NSData *jsonData = [request.responseString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *subDic =  [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
     
-    // 设置请求类型为post请求
-    request.HTTPMethod = @"post";
-    // 设置request的请求体
-    request.HTTPBody = body;
-    // 设置头部数据，标明上传数据总大小，用于服务器接收校验
-    [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)body.length] forHTTPHeaderField:@"Content-Length"];
-    // 设置头部数据，指定了http post请求的编码方式为multipart/form-data（上传文件必须用这个）。
-    [request setValue:[NSString stringWithFormat:@"multipart/form-data; boundary=%@",boundary] forHTTPHeaderField:@"Content-Type"];
+        NSString *string = [NSString stringWithFormat:@"%@",subDic[@"data"][@"fileUrl"]];
+        
+        SingleModel *model = [SingleModel sharedSingleModel];
+        model.fileUrl = string;
+        
+    }];
+    [request setFailedBlock:^{
+        NSLog(@"asi error: %@",request.error.debugDescription);
+    }];
+    [request startAsynchronous];
 }
+
 
 /**
  *  取消相册 *
