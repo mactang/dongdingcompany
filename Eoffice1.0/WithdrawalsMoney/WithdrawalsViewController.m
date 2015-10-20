@@ -49,8 +49,8 @@
     _tableview.sectionFooterHeight = 1;
     _tableview.backgroundColor = [UIColor clearColor];
     _tableview.scrollEnabled = NO;
-    //去掉分割线
-    _tableview.separatorStyle = UITableViewCellSelectionStyleNone;
+//    //去掉分割线
+//    _tableview.separatorStyle = UITableViewCellSelectionStyleNone;
     [self.view addSubview:_tableview];
 //   _tableview.tableFooterView = [[UIView alloc]init];
     
@@ -120,14 +120,16 @@
         if (!cell) {
             cell =  [[BanklistTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
         }
+        cell.cellNo = indexPath.row;
+        cell.datacount = datarray.count;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.backgroundColor = [UIColor whiteColor];
-       
-        cell.dic = datarray[indexPath.row];
+        if (indexPath.row!= datarray.count) {
+            cell.dic = datarray[indexPath.row];
+        }
         return cell;
     }
-    if (datarray.count==0 || datarray.count == indexPath.row+1) {
-        
+    if (datarray.count==0) {
         static NSString *identity = @"mycell";
         UITableViewCell *cell =  [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
         UILabel *addbanklabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 5, SCREEN_WIDTH, 40)];

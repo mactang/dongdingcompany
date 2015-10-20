@@ -12,5 +12,8 @@
 @property(nonatomic,strong)UIImageView *picimageview;
 @property(nonatomic,strong)UILabel *banklabel;
 @property(nonatomic,strong)UILabel *bankNo;
+@property(nonatomic,assign)NSInteger cellNo;
+@property(nonatomic,assign)NSInteger datacount;
 @property(nonatomic,strong)NSMutableDictionary *dic;
+@property(nonatomic,strong)UILabel *addbankcrdlabel;
 @end
