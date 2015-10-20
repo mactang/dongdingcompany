@@ -30,8 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     name = @"唐韬";
-    banknumber = @"6221886510032267876";
-    bankcard = @"中国建设银行";
+    banknumber = @"6221886510032263451";
+    bankcard = @"中国工商银行";
     bankaddress =  @"成都武侯支行";
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -110,6 +110,10 @@
         NSString *string;
         if ([dic[@"status"]integerValue]==1) {
             string = @"添加成功";
+            [self leftItemClicked];
+            if (_delegate && [_delegate respondsToSelector:@selector(reloadlist)]) {
+                [self.delegate reloadlist];
+            }
         }
         else{
             string = @"添加失败";

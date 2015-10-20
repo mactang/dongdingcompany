@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol addbankdelegate <NSObject>
 
+-(void)reloadlist;
+
+@end
 @interface AddBankcardController : UIViewController
-
+@property(nonatomic,assign)id<addbankdelegate>delegate;
 @end

@@ -354,6 +354,8 @@
 		96BA8F2C1B8EADDC0062C8D8 /* Mobliejudge.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BA8F2B1B8EADDC0062C8D8 /* Mobliejudge.m */; };
 		96BA8F2E1B8EBA650062C8D8 /* 蓝色确认40.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BA8F2D1B8EBA650062C8D8 /* 蓝色确认40.png */; };
 		96BA8F301B8EBAE70062C8D8 /* 确认40灰色.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */; };
+		96DFE78F1BD5EF6400329D53 /* 下箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DFE78E1BD5EF6400329D53 /* 下箭头.png */; };
+		96DFE7911BD5EF6900329D53 /* 上箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DFE7901BD5EF6900329D53 /* 上箭头.png */; };
 		96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E61B8C598700AB448B /* ChangeAddrssController.m */; };
 		96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */; };
 		96F47B201BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96F47B181BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle */; };
@@ -896,6 +898,8 @@
 		96BA8F2B1B8EADDC0062C8D8 /* Mobliejudge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mobliejudge.m; sourceTree = "<group>"; };
 		96BA8F2D1B8EBA650062C8D8 /* 蓝色确认40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蓝色确认40.png"; sourceTree = "<group>"; };
 		96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "确认40灰色.png"; sourceTree = "<group>"; };
+		96DFE78E1BD5EF6400329D53 /* 下箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "下箭头.png"; sourceTree = "<group>"; };
+		96DFE7901BD5EF6900329D53 /* 上箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上箭头.png"; sourceTree = "<group>"; };
 		96EC75E51B8C598700AB448B /* ChangeAddrssController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddrssController.h; sourceTree = "<group>"; };
 		96EC75E61B8C598700AB448B /* ChangeAddrssController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddrssController.m; sourceTree = "<group>"; };
 		96EC75E81B8C5AC500AB448B /* ChangeAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddressCell.h; sourceTree = "<group>"; };
@@ -1109,6 +1113,8 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				96DFE7901BD5EF6900329D53 /* 上箭头.png */,
+				96DFE78E1BD5EF6400329D53 /* 下箭头.png */,
 				615C50381BCE4F2900A6E204 /* 注册横线.png */,
 				61A1CBA11BAFCF4800903122 /* run */,
 				61A1CB9F1BAFB40000903122 /* classify1.png */,
@@ -2253,6 +2259,7 @@
 				61AD6AD91BC8B5E600DA07D5 /* UMShareEditViewControlleriPad.xib in Resources */,
 				6160F21E1B7C9C7100D55489 /* 圆角矩形-3.png in Resources */,
 				617FE4F61B60D5EF007EBFB2 /* 收货地址.png in Resources */,
+				96DFE78F1BD5EF6400329D53 /* 下箭头.png in Resources */,
 				617FE5051B60FE52007EBFB2 /* sousou1.png in Resources */,
 				61731B441B959FA700B04D85 /* wuye.png in Resources */,
 				61AD6AD31BC8B5E600DA07D5 /* UMSocialLocalizable.strings in Resources */,
@@ -2334,6 +2341,7 @@
 				615C50391BCE4F2900A6E204 /* 注册横线.png in Resources */,
 				615B298C1B4FB048004E7546 /* 1.jpg in Resources */,
 				61A1CBA01BAFB40000903122 /* classify1.png in Resources */,
+				96DFE7911BD5EF6900329D53 /* 上箭头.png in Resources */,
 				61AF901B1BAE7AC3007BBDAF /* 保养维修11-2.png in Resources */,
 				6167FA4A1B7F0E02004A1BD0 /* check-NO.png in Resources */,
 				61793A851B54AF3800CFD83A /* cell_03.png in Resources */,
