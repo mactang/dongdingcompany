@@ -245,8 +245,29 @@
         NSLog(@"+++++++");
     }
     else{
-        
+        [self sendcodeRequest];
     }
+}
+//发送验证码网路请求
+-(void)sendcodeRequest{
+    SingleModel *model = [SingleModel sharedSingleModel];
+
+    NSString *path = [NSString stringWithFormat:REGISTERMASSAGE,COMMON,model.telphone];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"%@",dic[@"data"]);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
 }
 #pragma mark UITextFieldDelegate
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
