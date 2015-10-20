@@ -36,6 +36,9 @@
 
 @property(nonatomic,assign)NSString *isBoolmy;
 
+//头像
+@property(nonatomic,assign)NSString *fileUrl;
+
 
 
 //通过类方法，创建唯一的对象
