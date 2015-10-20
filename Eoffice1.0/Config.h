@@ -147,4 +147,10 @@
 //申请提现：phone/user!amount.action?userkey=?&rand=?&phone=?&id=?&amount=?
 //推荐返现：phone/user!getRecom.action?userkey=?
 //删除银行卡：phone/user!delBand.action?userkey=?&id=?
+
+//推荐返现
+#define RECOMMENBACKMONEY @"%@user!getRecom.action?userkey=%@"
+
+//上传头像
+#define UPLOADPHOTO @"%@userImg.action"
 #endif
