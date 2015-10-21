@@ -132,8 +132,8 @@
 }
 -(void)buttonPress{
     
-    LoginViewController *logincontroller = [[LoginViewController alloc]init];
-    [self.navigationController pushViewController:logincontroller animated:YES];
+//    LoginViewController *logincontroller = [[LoginViewController alloc]init];
+//    [self.navigationController pushViewController:logincontroller animated:YES];
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
