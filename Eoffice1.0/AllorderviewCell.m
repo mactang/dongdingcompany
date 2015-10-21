@@ -12,29 +12,36 @@
 #import "CalculateStringSpace.h"
 @interface AllorderviewCell(){
     NSString *stringmodel;
+    NSString *goodId;
 }
 @end
 @implementation AllorderviewCell
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        
+        self.detailButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 320, SCREEN_WIDTH*0.13+16)];
+        [self.detailButton addTarget:self action:@selector(detailButtonPress:) forControlEvents:UIControlEventTouchUpInside];
+        self.detailButton.userInteractionEnabled = YES;
+        [self.contentView addSubview:self.detailButton];
+        
         self.picimageview = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH*0.14, SCREEN_WIDTH*0.13)];
-        [self.contentView addSubview:self.picimageview];
+        [self.detailButton addSubview:self.picimageview];
         
         self.unitPrice = [[UILabel alloc]init];
-        [self.contentView addSubview:self.unitPrice];
+        [self.detailButton addSubview:self.unitPrice];
         
         self.productname = [[UILabel alloc]init];
-        [self.contentView addSubview:self.productname];
+        [self.detailButton addSubview:self.productname];
         
         self.totalPrice = [[UILabel alloc]init];
         [self.contentView addSubview:self.totalPrice];
         
         self.sizecolor = [[UILabel alloc]init];
-        [self.contentView addSubview:self.sizecolor];
+        [self.detailButton addSubview:self.sizecolor];
         
         self.productnumber = [[UILabel alloc]init];
-        [self.contentView addSubview:self.productnumber];
+        [self.detailButton addSubview:self.productnumber];
         
         self.lineview = [[UIView alloc]init];
         [self.contentView addSubview:self.lineview];
@@ -65,11 +72,30 @@
         
         self.repairbutton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.contentView addSubview:self.repairbutton];
+        
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 150, SCREEN_WIDTH, 10)];
+        view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
+        [self.contentView addSubview:view];
+        
+        
+        
     }
     return self;
 }
+
+-(void)detailButtonPress:(UIButton *)btn{
+
+    NSLog(@"mmmm");
+    if (_delegate&&[_delegate respondsToSelector:@selector(deatailGoodId:)]) {
+        [self.delegate deatailGoodId:goodId];
+    }
+
+
+}
 -(void)setModel:(OrderModel *)model{
     
+    
+    goodId = model.list[0][@"goodsId"];
     
     [self.picimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.list[0][@"imgurl"]]]];
     
@@ -87,15 +113,15 @@
     
     self.sizecolor.frame = CGRectMake(widgetFrameX(self.productname), CGRectGetMaxY(self.productname.frame)+2, SCREEN_WIDTH/2+20, 20);
     self.sizecolor.font = [UIFont systemFontOfSize:13];
-    self.sizecolor.text = @"颜色: 粉红色  尺寸:128G";
-    
+    //self.sizecolor.text = @"颜色: 粉红色  尺寸:128G";
+    self.sizecolor.text = [NSString stringWithFormat:@"颜色: %@  尺寸:128G",model.list[0][@"color"]];
     self.productnumber.frame = CGRectMake(SCREEN_WIDTH-70, CGRectGetMaxY(self.productname.frame)+10, 65, 20);
     self.productnumber.font = [UIFont systemFontOfSize:14];
     self.productnumber.textAlignment =NSTextAlignmentRight;
     self.productnumber.text = @"x1";
     
     self.lineview.frame = CGRectMake(5, CGRectGetMaxY(self.productnumber.frame)+2, SCREEN_WIDTH-10, 0.5);
-    self.lineview.backgroundColor = [UIColor lightGrayColor];
+    self.lineview.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     
     NSMutableAttributedString *totalstring = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"合计:￥%.2f",[model.totalFee floatValue]]];
     [totalstring addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204.0/255.0 green:0/255.0 blue:0/255.0 alpha:1] range:NSMakeRange(0, 3)];
@@ -113,7 +139,7 @@
     self.totalnumber.textAlignment = NSTextAlignmentRight;
     
     self.anotherview.frame = CGRectMake(5, CGRectGetMaxY(self.totalnumber.frame)+10, SCREEN_WIDTH-10, 0.5);
-    self.anotherview.backgroundColor = [UIColor lightGrayColor];
+    self.anotherview.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     
     self.orderbutton.frame = CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-70)/4-10, widgetFrameY(self.anotherview)+10, (SCREEN_WIDTH-70)/4, SCREEN_WIDTH/12);
     self.orderbutton.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
@@ -209,6 +235,8 @@
     self.delegatebutton.titleLabel.font = [UIFont systemFontOfSize:14];
     NSLog(@"%@",model.orderId);
     stringmodel = model.orderId;
+    
+   
     
 }
 -(void)delegateOrder{
