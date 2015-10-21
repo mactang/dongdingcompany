@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - DXYWeChatSDK (1.6)
   - IQKeyboardManager (3.3.2)
   - JBASIHTTPRequest (2.1):
     - Reachability (~> 3.2)
@@ -34,6 +35,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5.4)
+  - DXYWeChatSDK (~> 1.6)
   - IQKeyboardManager (~> 3.3.2)
   - JBASIHTTPRequest (~> 2.1)
   - JSONKit (~> 1.5pre)
@@ -44,6 +46,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  DXYWeChatSDK: 05f89c904691d58ab5e30a212cb22a4476420438
   IQKeyboardManager: d863eb0bca424d1f6dad6bdd1f856af52664add8
   JBASIHTTPRequest: bcb52c0c249fe21a236e16c2747d663d3d5d0007
   JSONKit: bae313ce6a6c444f40489a6c0b023f399888871f

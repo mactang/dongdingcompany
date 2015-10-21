@@ -280,9 +280,7 @@
             cell.clipsToBounds = YES;
             cell.textLabel.font = [UIFont systemFontOfSize:15];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:13];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
+        
         
             NSLog(@"%lu",(unsigned long)self.datas.count);
         
@@ -608,7 +606,13 @@
       }
 - (void)viewWillAppear:(BOOL)animated{
     
+    
     [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
+    
      self.navigationController.navigationBarHidden = NO;
     //  self.parentViewController.tabBarController.tabBar.hidden = YES;
     //   [(BottonTabBarController*)self.tabBarController hideTabBar:YES];

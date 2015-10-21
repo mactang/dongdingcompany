@@ -24,6 +24,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+## DXYWeChatSDK
+
+® 1998 - 2014 Tencent All Rights Reserved.
+
+
 ## IQKeyboardManager
 
 IQKeyboardManager license

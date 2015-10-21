@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F86EEAB1F6AAAB7CF1F185E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 791DCCBB2AD078D5D692C874 /* libPods.a */; };
+		3F86EEAB1F6AAAB7CF1F185E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 791DCCBB2AD078D5D692C874 /* libPods.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		61068A641B5C993A008BE40A /* butoumingyuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 61068A571B5C993A008BE40A /* butoumingyuan.png */; };
 		61068A6A1B5C993A008BE40A /* toumingyuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 61068A5D1B5C993A008BE40A /* toumingyuan.png */; };
 		61068A6D1B5C993A008BE40A /* xiaoxi.png in Resources */ = {isa = PBXBuildFile; fileRef = 61068A601B5C993A008BE40A /* xiaoxi.png */; };
@@ -301,6 +301,9 @@
 		61E971161B7367A1007F42B6 /* detailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E971141B7367A1007F42B6 /* detailsModel.m */; };
 		61EBC6CC1B68CEF5002D0373 /* ScreenMainTainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EBC6CB1B68CEF5002D0373 /* ScreenMainTainController.m */; };
 		61EBC6CF1B68E9D2002D0373 /* ExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EBC6CE1B68E9D2002D0373 /* ExchangeViewController.m */; };
+		61F312EE1BD6382300B8A92F /* getIPhoneIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F312ED1BD6382300B8A92F /* getIPhoneIP.m */; };
+		61F312F21BD6386200B8A92F /* DataMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F312F11BD6386200B8A92F /* DataMD5.m */; };
+		61F312F41BD63CEE00B8A92F /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F312F31BD63CEE00B8A92F /* libc++.dylib */; };
 		61FA8A7A1B9D80090090507E /* OrderAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FA8A791B9D80090090507E /* OrderAddressViewController.m */; };
 		61FA8A7D1B9D86FD0090507E /* OrederManagerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FA8A7C1B9D86FD0090507E /* OrederManagerCell.m */; };
 		9638F0BA1B900F4700882D8C /* AddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9638F0B91B900F4700882D8C /* AddressViewController.m */; };
@@ -806,6 +809,11 @@
 		61EBC6CB1B68CEF5002D0373 /* ScreenMainTainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenMainTainController.m; sourceTree = "<group>"; };
 		61EBC6CD1B68E9D2002D0373 /* ExchangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeViewController.h; sourceTree = "<group>"; };
 		61EBC6CE1B68E9D2002D0373 /* ExchangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeViewController.m; sourceTree = "<group>"; };
+		61F312EC1BD6382300B8A92F /* getIPhoneIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getIPhoneIP.h; sourceTree = "<group>"; };
+		61F312ED1BD6382300B8A92F /* getIPhoneIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = getIPhoneIP.m; sourceTree = "<group>"; };
+		61F312F01BD6386200B8A92F /* DataMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMD5.h; sourceTree = "<group>"; };
+		61F312F11BD6386200B8A92F /* DataMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMD5.m; sourceTree = "<group>"; };
+		61F312F31BD63CEE00B8A92F /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		61FA8A781B9D80090090507E /* OrderAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderAddressViewController.h; sourceTree = "<group>"; };
 		61FA8A791B9D80090090507E /* OrderAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderAddressViewController.m; sourceTree = "<group>"; };
 		61FA8A7B1B9D86FD0090507E /* OrederManagerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OrederManagerCell.h; path = manageAddress/OrederManagerCell.h; sourceTree = "<group>"; };
@@ -920,6 +928,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61F312F41BD63CEE00B8A92F /* libc++.dylib in Frameworks */,
 				96F47B251BC7B79A0063A975 /* CoreLocation.framework in Frameworks */,
 				612AA4001B9ECF21009A34EF /* CoreGraphics.framework in Frameworks */,
 				61AD6AE61BC8B5E700DA07D5 /* libWeChatSDK.a in Frameworks */,
@@ -975,6 +984,7 @@
 		197EE62F2AD919EF850DEE9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				61F312F31BD63CEE00B8A92F /* libc++.dylib */,
 				96F47B241BC7B79A0063A975 /* CoreLocation.framework */,
 				9691092C1BC63D8E00A54798 /* QuartzCore.framework */,
 				9691092A1BC63D8700A54798 /* MapKit.framework */,
@@ -1096,6 +1106,7 @@
 		615B296B1B4FAF50004E7546 /* MyFramework */ = {
 			isa = PBXGroup;
 			children = (
+				61F312EF1BD6384400B8A92F /* MD5 */,
 				61AD6A961BC8B5E600DA07D5 /* umeng_ios_social_sdk_4.2-3.5_arm64_custom */,
 				612C57BA1B8ABC3A0048FF28 /* addPhoto */,
 				618FD7511B8717E000090608 /* MXPullDownMenu */,
@@ -1235,6 +1246,7 @@
 		615B29931B4FB08A004E7546 /* CONTROLLER */ = {
 			isa = PBXGroup;
 			children = (
+				61F312EB1BD637C500B8A92F /* wechat */,
 				967FC3311BD0968500E06BD9 /* WithdrawalsMoney */,
 				9689F7D21BCE2FC30006954B /* MyMoneyback */,
 				615B296C1B4FAFBA004E7546 /* RES */,
@@ -1860,6 +1872,24 @@
 			name = GYZControl;
 			sourceTree = "<group>";
 		};
+		61F312EB1BD637C500B8A92F /* wechat */ = {
+			isa = PBXGroup;
+			children = (
+				61F312EC1BD6382300B8A92F /* getIPhoneIP.h */,
+				61F312ED1BD6382300B8A92F /* getIPhoneIP.m */,
+			);
+			name = wechat;
+			sourceTree = "<group>";
+		};
+		61F312EF1BD6384400B8A92F /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				61F312F01BD6386200B8A92F /* DataMD5.h */,
+				61F312F11BD6386200B8A92F /* DataMD5.m */,
+			);
+			name = MD5;
+			sourceTree = "<group>";
+		};
 		9638F0B71B900F4700882D8C /* manageAddress */ = {
 			isa = PBXGroup;
 			children = (
@@ -2418,6 +2448,7 @@
 				615B29A21B4FB22B004E7546 /* MainViewController.m in Sources */,
 				96A70D141B943FCD00C0F1F5 /* PhoneReviseViewController.m in Sources */,
 				61FA8A7A1B9D80090090507E /* OrderAddressViewController.m in Sources */,
+				61F312F21BD6386200B8A92F /* DataMD5.m in Sources */,
 				61793A691B54A7B000CFD83A /* BuyInfoCell.m in Sources */,
 				6184F1DC1B686E9600021F18 /* ScreenViewController.m in Sources */,
 				61E0FB161B53A7430080F41B /* Control.m in Sources */,
@@ -2480,6 +2511,7 @@
 				61FA8A7D1B9D86FD0090507E /* OrederManagerCell.m in Sources */,
 				61793A601B54A78B00CFD83A /* BigPhotoCell.m in Sources */,
 				619A7E011B69C2DE005F4DA4 /* ExchageSuccessController.m in Sources */,
+				61F312EE1BD6382300B8A92F /* getIPhoneIP.m in Sources */,
 				615B29BC1B4FB27A004E7546 /* PersonController.m in Sources */,
 				969E1EA41BC790D400CD9D02 /* NSDictionary_JSONExtensions.m in Sources */,
 				6173B7701B621BAE00E4F23A /* photoAlterView.m in Sources */,
