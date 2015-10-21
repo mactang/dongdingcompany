@@ -22,6 +22,7 @@
         self.bparterId = dic[@"bparterId"];
         self.name = dic[@"name"];
         self.data = dic[@"data"];
+        self.version = dic[@"version"];
     }
     
     return self;

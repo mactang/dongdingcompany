@@ -327,7 +327,9 @@
         NSDate *date=[NSDate dateWithTimeIntervalSinceNow:9000000];
         _pickview=[[DatePickView alloc] initDatePickWithDate:date datePickerMode:UIDatePickerModeDate isHaveNavControler:NO];
         [_pickview initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
-        [_pickview show];    }
+        [_pickview show];
+    
+    }
     
     
     

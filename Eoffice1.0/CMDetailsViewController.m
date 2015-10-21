@@ -355,7 +355,8 @@
     cell.clipsToBounds = YES;
     
     cell.textLabel.font = [UIFont systemFontOfSize:15];
-    
+    detailsModel *model = self.datas[0];
+    NSLog(@"%@",model.version[0][@"maValue"]);
     if (indexPath.row == 0 && indexPath.section == 0) {
         UIScrollView *scrollView = [[UIScrollView alloc] init];
         scrollView.frame = CGRectMake(0, 0, 320, 130);
@@ -422,7 +423,7 @@
         description.numberOfLines = 0;
         NSLog(@"%@",model.name);
         // description.text = model.name;
-        description.text = @"Mac";
+        description.text = [NSString stringWithFormat:@"%@",model.version[0][@"maValue"]];
         [cell addSubview:description];
         
         UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(description.frame)+5, 10, 20)];
@@ -525,6 +526,7 @@
         
         
         [self btnPress1];
+        NSLog(@"aaa");
         
     }
     if (segmentedControl.selectedSegmentIndex == 1) {
@@ -537,7 +539,7 @@
     if (segmentedControl.selectedSegmentIndex == 2) {
         
         
-        NSLog(@"bbb");
+        NSLog(@"ccc");
         
         
     }
