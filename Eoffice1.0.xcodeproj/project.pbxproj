@@ -357,6 +357,8 @@
 		96BA8F2C1B8EADDC0062C8D8 /* Mobliejudge.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BA8F2B1B8EADDC0062C8D8 /* Mobliejudge.m */; };
 		96BA8F2E1B8EBA650062C8D8 /* 蓝色确认40.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BA8F2D1B8EBA650062C8D8 /* 蓝色确认40.png */; };
 		96BA8F301B8EBAE70062C8D8 /* 确认40灰色.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */; };
+		96BDF24C1BD776A30095E660 /* MybankcardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BDF24B1BD776A30095E660 /* MybankcardViewController.m */; };
+		96BDF24E1BD7836E0095E660 /* bankcard.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BDF24D1BD7836E0095E660 /* bankcard.png */; };
 		96DFE78F1BD5EF6400329D53 /* 下箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DFE78E1BD5EF6400329D53 /* 下箭头.png */; };
 		96DFE7911BD5EF6900329D53 /* 上箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DFE7901BD5EF6900329D53 /* 上箭头.png */; };
 		96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E61B8C598700AB448B /* ChangeAddrssController.m */; };
@@ -906,6 +908,9 @@
 		96BA8F2B1B8EADDC0062C8D8 /* Mobliejudge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mobliejudge.m; sourceTree = "<group>"; };
 		96BA8F2D1B8EBA650062C8D8 /* 蓝色确认40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蓝色确认40.png"; sourceTree = "<group>"; };
 		96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "确认40灰色.png"; sourceTree = "<group>"; };
+		96BDF24A1BD776A30095E660 /* MybankcardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MybankcardViewController.h; sourceTree = "<group>"; };
+		96BDF24B1BD776A30095E660 /* MybankcardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MybankcardViewController.m; sourceTree = "<group>"; };
+		96BDF24D1BD7836E0095E660 /* bankcard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bankcard.png; sourceTree = "<group>"; };
 		96DFE78E1BD5EF6400329D53 /* 下箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "下箭头.png"; sourceTree = "<group>"; };
 		96DFE7901BD5EF6900329D53 /* 上箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上箭头.png"; sourceTree = "<group>"; };
 		96EC75E51B8C598700AB448B /* ChangeAddrssController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddrssController.h; sourceTree = "<group>"; };
@@ -1124,6 +1129,7 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				96BDF24D1BD7836E0095E660 /* bankcard.png */,
 				96DFE7901BD5EF6900329D53 /* 上箭头.png */,
 				96DFE78E1BD5EF6400329D53 /* 下箭头.png */,
 				615C50381BCE4F2900A6E204 /* 注册横线.png */,
@@ -1910,6 +1916,8 @@
 				96747BF11BD49A510060704C /* BanklistTableViewCell.m */,
 				967FC3351BD0E8E300E06BD9 /* AddBankcardController.h */,
 				967FC3361BD0E8E300E06BD9 /* AddBankcardController.m */,
+				96BDF24A1BD776A30095E660 /* MybankcardViewController.h */,
+				96BDF24B1BD776A30095E660 /* MybankcardViewController.m */,
 			);
 			path = WithdrawalsMoney;
 			sourceTree = "<group>";
@@ -2258,6 +2266,7 @@
 				61A1CBB11BAFDB7100903122 /* c.png in Resources */,
 				61AD6AD71BC8B5E600DA07D5 /* UMSCommentInputControlleriPad.xib in Resources */,
 				615B29831B4FB02C004E7546 /* textfield.png in Resources */,
+				96BDF24E1BD7836E0095E660 /* bankcard.png in Resources */,
 				617FE4D01B60D5B8007EBFB2 /* 椭圆-1-副本.png in Resources */,
 				617FE4DF1B60D5B8007EBFB2 /* easyicon_net_128.png in Resources */,
 				61C7CFF01B637629003F6629 /* qq.png in Resources */,
@@ -2538,6 +2547,7 @@
 				61A1CB981BAFA6FE00903122 /* classifyButton.m in Sources */,
 				9689F7DB1BCE5C500006954B /* PresentdetailsCell.m in Sources */,
 				61793A701B54A7F100CFD83A /* UIView+Shortcut.m in Sources */,
+				96BDF24C1BD776A30095E660 /* MybankcardViewController.m in Sources */,
 				61B0FF991B5F2DC1002CF349 /* DatePickView.m in Sources */,
 				6183424C1B5658720097E8A4 /* LewPopupBackgroundView.m in Sources */,
 				969E1EA81BC790D400CD9D02 /* CJSONScanner.m in Sources */,

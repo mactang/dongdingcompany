@@ -21,6 +21,7 @@
 #import "LoginViewController.h"
 #import "MyMoneybackViewController.h"
 #import "RecommendViewController.h"
+#import "MybankcardViewController.h"
 @interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate,persondelegate>{
     LoginViewController *login;
     BOOL refresh;
@@ -138,7 +139,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 8*self.datas.count;
+    return 9*self.datas.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -195,23 +196,26 @@
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"我的购物车"];
         [cell addSubview:imageView];
-        
-        
     }
     if (indexPath.row == 3) {
         cell.textLabel.text = @"       收货地址";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"收货地址"];
         [cell addSubview:imageView];
-        
     }
     if (indexPath.row == 4) {
-        cell.textLabel.text = @"       我的返现";
+        cell.textLabel.text = @"       我的银行卡";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"安全设置"];
         [cell addSubview:imageView];
     }
     if (indexPath.row == 5) {
+        cell.textLabel.text = @"       我的返现";
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
+        imageView.image = [UIImage imageNamed:@"安全设置"];
+        [cell addSubview:imageView];
+    }
+    if (indexPath.row == 6) {
         
         cell.textLabel.text = @"       推荐返现";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
@@ -219,13 +223,13 @@
         [cell addSubview:imageView];
         
     }
-    if (indexPath.row == 6) {
+    if (indexPath.row == 7) {
         cell.textLabel.text = @"       安全设置";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"安全设置"];
         [cell addSubview:imageView];
     }
-    if (indexPath.row == 7) {
+    if (indexPath.row == 8) {
         
         cell.textLabel.text = @"       帮助与反馈";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
@@ -256,19 +260,23 @@
 
     }
     if (indexPath.row == 4) {
+        MybankcardViewController *mybank = [[MybankcardViewController alloc]init];
+        [self.navigationController pushViewController:mybank animated:YES];
+    }
+    if (indexPath.row == 5) {
         MyMoneybackViewController *mymoney = [[MyMoneybackViewController alloc]init];
         [self.navigationController pushViewController:mymoney animated:YES];
     }
-    if (indexPath.row == 5) {
+    if (indexPath.row == 6) {
         RecommendViewController *recomm = [[RecommendViewController alloc]init];
         [self.navigationController pushViewController:recomm animated:YES];
     }
-    if (indexPath.row == 6) {
+    if (indexPath.row == 7) {
         SafeViewController *safe = [[SafeViewController alloc]init];
         
         [self.navigationController pushViewController:safe animated:YES];
     }
-    if (indexPath.row == 7) {
+    if (indexPath.row == 8) {
         HopleViewController *hope = [[HopleViewController alloc]init];
         [self.navigationController pushViewController:hope animated:YES];
     }
