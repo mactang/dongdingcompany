@@ -10,6 +10,9 @@
 @class OrderModel;
 @protocol deletgateOrder <NSObject>
 -(void)delegatemethds:(NSString *)orderid;
+
+-(void)deatailGoodId:(NSString *)goodId;
+
 @end
 @interface AllorderviewCell : UITableViewCell
 @property(nonatomic,strong)OrderModel *model;
@@ -29,5 +32,6 @@
 @property(nonatomic,strong)UIButton *resultbutton;
 @property(nonatomic,strong)UIButton *returnbutton;
 @property(nonatomic,strong)UIButton *repairbutton;
+@property(nonatomic,strong)UIButton *detailButton;
 @property(nonatomic,assign)id<deletgateOrder>delegate;
 @end

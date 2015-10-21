@@ -23,6 +23,7 @@
 #import "MJRefresh.h"
 #import "UIAlertView+AlerViewBlocks.h"
 #import "CommodityViewController.h"
+#import "CMDetailsViewController.h"
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate,deletgateOrder,UIAlertViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *classifyDatas;
@@ -90,10 +91,11 @@
     lb.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:lb];
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(dd1.frame), 320, SCREEN_HEIGHT-105-44) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(dd1.frame), SCREEN_WIDTH, SCREEN_HEIGHT-105-44) style:UITableViewStyleGrouped];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    //    _tableView.scrollEnabled = YES;
+    //self.edgesForExtendedLayout = UIRectEdgeNone;
+
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -173,7 +175,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey,self.moredata];
-
+    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -268,7 +270,7 @@
 //    else{
 //        return 40;
     
-    return 150;
+    return 160;
 //    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -279,6 +281,7 @@
 
     return 1;
 }
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *identity = @"cell";
@@ -289,12 +292,27 @@
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.clipsToBounds = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-   
+    
     cell.model = self.classifyDatas[indexPath.row];
     cell.delegate = self;
     
     return cell;
 }
+
+-(void)deatailGoodId:(NSString *)goodId{
+    
+    NSLog(@"%@",goodId);
+    SingleModel *singM = [SingleModel sharedSingleModel];
+    singM.goodsId = goodId;
+    singM.paraId = @"505";
+    singM.cPartnerId = @"1000";
+    CMDetailsViewController *cmd = [[CMDetailsViewController alloc]init];
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController pushViewController:cmd animated:YES];
+    
+    
+}
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if ([alertView.message isEqualToString:@"确定要删除该订单"]) {
         if (buttonIndex == 1) {

@@ -268,6 +268,7 @@
     }
 }
 -(void)data{
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
@@ -774,7 +775,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
     [super viewWillDisappear:animated];
 }
