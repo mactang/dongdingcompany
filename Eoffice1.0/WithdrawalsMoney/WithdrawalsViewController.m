@@ -291,7 +291,7 @@
         NSString *string;
         if ([dic[@"status"]integerValue]==1) {
             string = @"申请成功";
-                    }
+        }
         else{
             string = @"申请失败";
         }

@@ -45,6 +45,7 @@
     OrderModel *model1;
     LoginViewController *login;
     NSMutableArray *testarray;
+    BOOL  refresh;
 }
 -(NSMutableArray *)classifyDatas{
     if (_classifyDatas == nil) {
@@ -64,6 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     testarray = [NSMutableArray array];
+    refresh = YES;
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     self.navigationController.navigationBarHidden = YES;
     self.moredata = @"-1";
@@ -474,26 +476,15 @@
             [self.view addSubview:login.view];
             login.delegate = self;
         }
-        
-    }else{
-        if (login) {
-            [login.view removeFromSuperview];
-            
-        }
-        
     }
     if (model.userkey != nil) {
-//        self.navigationController.navigationBarHidden = NO;
-//        [self.navigationItem setTitle:@"我的订单"];
-        self.navigationController.navigationBarHidden = YES;
+        [login.view removeFromSuperview];
+        if (refresh) {
+            [self classifyData];
+            refresh = NO;
+        }
        
-        [self classifyData];
-        
     }
-    else{
-    self.navigationController.navigationBarHidden = YES;
-    }
-    
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
