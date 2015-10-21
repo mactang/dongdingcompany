@@ -103,7 +103,9 @@
     
 }
 -(void)loadMoreData{
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSInteger pageNumber = [self.classifyDatas count] / 6 + 1;
     self.moredata = [NSString stringWithFormat:@"%ld",pageNumber];
@@ -127,11 +129,12 @@
                     [self.classifyDatas addObject:model];
                 }
             }
-            
         }
+        [hud hide:YES];
         [_tableView reloadData];
         [self.tableView.footer endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
 }
@@ -161,6 +164,7 @@
         
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.classifyDatas removeAllObjects];
+                [testarray removeAllObjects];
                 [self classifyData];
 //              [self.tableView reloadData];
                 
@@ -172,8 +176,10 @@
 }
 -(void)classifyData{
     self.moredata = @"-1";
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey,self.moredata];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -193,13 +199,13 @@
         
         for(NSDictionary *subDict in array)
         {
-            [testarray addObject:subDict];
-            OrderModel *model = [OrderModel modelWithDic:subDict];
-            [self.classifyDatas addObject:model];
-            
+            if (![testarray containsObject:subDict]) {
+                [testarray addObject:subDict];
+                OrderModel *model = [OrderModel modelWithDic:subDict];
+                [self.classifyDatas addObject:model];
+            }
         }
-        
-        }
+    }
         else{
             self.tableView.footer.hidden = YES;
             if (!self.labelsign) {
@@ -224,9 +230,10 @@
             [self.strollbutton addTarget:self action:@selector(gotolookPressed) forControlEvents:UIControlEventTouchUpInside];
             [self.view addSubview:self.strollbutton];
         }
+        [hud hide:YES];
         [_tableView reloadData];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
 }

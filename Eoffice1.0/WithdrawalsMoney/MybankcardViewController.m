@@ -27,7 +27,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationController.navigationBarHidden = NO;
     datarray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -41,9 +40,7 @@
     UIBarButtonItem *releaseButon=[[UIBarButtonItem alloc] initWithTitle:@"➕" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked)];
     releaseButon.tintColor = [UIColor lightGrayColor];
     self.navigationItem.rightBarButtonItem = releaseButon;
-    [self banklistrequest];
-}
--(void)initerface{
+    
     _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)style:UITableViewStylePlain];
     _tableview.delegate = self;
     _tableview.dataSource = self;
@@ -59,7 +56,9 @@
     }
     [self.view addSubview:_tableview];
     _tableview.tableFooterView = [[UIView alloc]init];
+    [self banklistrequest];
 }
+
 -(void)banklistrequest{
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -79,9 +78,7 @@
             [datarray addObjectsFromArray:dic[@"data"]];
             NSLog(@"%@",dic);
         }
-        [self initerface];
         [hud hide:YES];
-        
         [_tableview reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -141,8 +138,6 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
-    self.navigationController.navigationBarHidden = YES;
     [super viewWillDisappear:animated];
 }
-
 @end

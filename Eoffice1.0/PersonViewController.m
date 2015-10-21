@@ -57,25 +57,25 @@
     NSString *string = @"my";
     model.isBoolmy = [NSString stringWithFormat:@"%@",string];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49) style:UITableViewStylePlain];
+     _tableView.tableFooterView = [[UIView alloc]init];
     _tableView.scrollEnabled = YES;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_tableView];
 
 }
 - (void)downData{
     
     [self.datas removeAllObjects];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.jsessionid,model.userkey];
-    
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
@@ -86,14 +86,14 @@
            [self.datas addObject: model];
         }
         NSLog(@"%@",self.datas);
+        [hud hide:YES];
         [_tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
-    
 }
-
 -(void)viewWillAppear:(BOOL)animated{
     
     SingleModel *model = [SingleModel sharedSingleModel];
