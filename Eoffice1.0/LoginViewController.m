@@ -29,6 +29,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     self.navigationController.navigationBarHidden = NO;
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -41,7 +42,7 @@
     
     
     isChecked = NO;
-    self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
+    
     float bl[4];
     if (IOS_7_VERSION)
     {
@@ -351,11 +352,10 @@
             NSDictionary *subDic = dic[@"data"];
             
             NSString *userkey = dic[@"data"][@"userkey"];
-            NSLog(@"userkey--%@",userkey);
+          
             NSString *jsessionid = subDic[@"jsessionId"];
-            NSString *telphone = dic[@"data"][@"telphone"];
-            NSLog(@"telphone--%@",telphone);
-            NSLog(@"jsessionid--%@",jsessionid);
+            NSString *telphone = dic[@"data"][@"memberInfo"][@"telphone"];
+            
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
             model.jsessionid = jsessionid;

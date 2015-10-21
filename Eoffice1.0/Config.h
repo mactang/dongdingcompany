@@ -140,11 +140,15 @@
 #define ADDBANKCARD  @"%@user!addBand.action?userkey=%@&name=%@&bankName=%@&bankNo=%@&bankAddress=%@"
 
 #define BANKCARDLIST @"%@user!getBand.action?userkey=%@"
+
+#define APPLYFOR @"%@user!amount.action?"
+
+//申请提现：phone/user!amount.action?userkey=?&rand=?&phone=?&id=?&amount=?
 //返现记录 phone/user!returnRecord.action?userkey=?
 //提现明细 phone/user!cashDetails.action?userkey=?
 //进入提现页面：phone/user!getBand.action?userkey=?
 //增加银行卡界面：phone/user!addBand.action?userkey=?&name=?&bankName=?&bankNo=?&bankAddress=?
-//申请提现：phone/user!amount.action?userkey=?&rand=?&phone=?&id=?&amount=?
+
 //推荐返现：phone/user!getRecom.action?userkey=?
 //删除银行卡：phone/user!delBand.action?userkey=?&id=?
 

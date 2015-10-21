@@ -43,6 +43,7 @@
     NSString *docstatus;
     OrderModel *model1;
     LoginViewController *login;
+    NSMutableArray *testarray;
 }
 -(NSMutableArray *)classifyDatas{
     if (_classifyDatas == nil) {
@@ -61,6 +62,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    testarray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
     self.navigationController.navigationBarHidden = YES;
     self.moredata = @"-1";
@@ -111,14 +113,13 @@
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+      
         if (dic[@"data"] !=[NSNull null]){
             NSArray *array = dic[@"data"];
-            
             for(NSDictionary *subDict in array)
             {
-                
                 OrderModel *model = [OrderModel modelWithDic:subDict];
-                if (![self.classifyDatas containsObject:model]) {
+                if (![testarray containsObject:subDict]) {
                     [self.classifyDatas addObject:model];
                 }
             }
@@ -129,9 +130,6 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-
-    
-    
 }
 - (void)dropDownControlView:(DropDown1 *)view didFinishWithSelection:(id)selection{
     if (selection) {
@@ -191,7 +189,7 @@
         
         for(NSDictionary *subDict in array)
         {
-           
+            [testarray addObject:subDict];
             OrderModel *model = [OrderModel modelWithDic:subDict];
             [self.classifyDatas addObject:model];
             

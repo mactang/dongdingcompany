@@ -117,7 +117,6 @@
 
     [self valiData];
 }
-
 -(void)valiData{
     
     UITextField *name_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
@@ -133,18 +132,11 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"%@",dic[@"data"]);
-        
-        
-        
-        
-        
+    
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-    
-    
 }
-
 - (void)backLogin{
 
     [self dismissViewControllerAnimated:NO completion:^{

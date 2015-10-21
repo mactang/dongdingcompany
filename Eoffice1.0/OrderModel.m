@@ -12,7 +12,6 @@
 +(OrderModel *)modelWithDic:(NSDictionary *)dic{
     return [[self alloc]initWithDic:dic];
 }
-
 -(id)initWithDic:(NSDictionary *)dic{
     if (self = [super init]) {
         self.Description = dic[@"description"];
