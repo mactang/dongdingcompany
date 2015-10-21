@@ -141,7 +141,8 @@
 
 #define BANKCARDLIST @"%@user!getBand.action?userkey=%@"
 
-#define APPLYFOR @""
+#define APPLYFOR @"%@user!amount.action?"
+
 //申请提现：phone/user!amount.action?userkey=?&rand=?&phone=?&id=?&amount=?
 //返现记录 phone/user!returnRecord.action?userkey=?
 //提现明细 phone/user!cashDetails.action?userkey=?

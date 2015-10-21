@@ -18,6 +18,8 @@
     UITableView *_tableview;
     NSMutableArray *datarray;
     BOOL sucess;
+    NSString *_amount;
+    NSString *_rand;
     
 }
 @end
@@ -32,12 +34,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-    sucess = YES;
-    [self banklistrequest];
-    datarray = [NSMutableArray array];
-    }
--(void)initerface{
-    
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
@@ -45,7 +41,11 @@
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
-    
+    sucess = YES;
+    [self banklistrequest];
+    datarray = [NSMutableArray array];
+    }
+-(void)initerface{
      [self cellmessage];
     _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 70 )style:UITableViewStyleGrouped];
     _tableview.delegate = self;
@@ -242,7 +242,7 @@
 }
 -(void)buttonPressed:(UIButton *)button{
     if ([button.titleLabel.text isEqualToString:@"确认"]) {
-        NSLog(@"+++++++");
+        [self confirmRequest];
     }
     else{
         [self sendcodeRequest];
@@ -269,10 +269,48 @@
         NSLog(@"%@",error);
     }];
 }
+
+-(void)confirmRequest{
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path= [NSString stringWithFormat:APPLYFOR,COMMON];
+    NSLog(@"%@",path);
+    //申请提现：phone/user!amount.action?userkey=?&rand=?&phone=?&id=?&amount=?
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//  @"%@user!addBand.action?userkey=%@&name=%@&bankName=%@&bankNo=%@&bankAddress=%@"
+  NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:model.userkey,@"userkey",_rand,@"rand",model.telphone,@"phone",@"1",@"id",_amount,@"amount", nil];
+    [manager POST:path parameters:dicdata success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic[@"info"]);
+        UIAlertView *alterview;
+        NSString *string;
+        if ([dic[@"status"]integerValue]==1) {
+            string = @"申请成功";
+                    }
+        else{
+            string = @"申请失败";
+        }
+        alterview  =[[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [hud hide:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+    }];
+}
+
 #pragma mark UITextFieldDelegate
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-   NSString *temp = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    
+    NSString *temp = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (textField.tag==51) {
+        _amount = temp;
+    }
+    if (textField.tag==52) {
+        _rand = temp;
+    }
     if ([kAlphaNum rangeOfString:string].location == NSNotFound && string.length !=0)
     {
         return NO;
