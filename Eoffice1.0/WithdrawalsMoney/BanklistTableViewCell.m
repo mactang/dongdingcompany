@@ -15,16 +15,14 @@
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        self.banklabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, SCREEN_WIDTH/2, 20)];
+        self.banklabel = [[UILabel alloc]initWithFrame:CGRectMake(60, 10, SCREEN_WIDTH/2-40, 20)];
         self.banklabel.font = [UIFont systemFontOfSize:13];
         [self.contentView addSubview:self.banklabel];
-        self.cellbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.cellbutton.frame = CGRectMake(SCREEN_WIDTH-30, 15, 20, 20);
-        [self.cellbutton setImage:IMAGE_MYSELF(@"下箭头.png") forState:UIControlStateNormal];
-        [self.cellbutton setImage:IMAGE_MYSELF(@"上箭头.png") forState:UIControlStateSelected];
-        self.cellbutton.selected = NO;
-        [self.cellbutton addTarget:self action:@selector(cellbuttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:self.cellbutton];
+        
+        self.picimageview = IMAGEVIEW_MYSELF(@"bankcard.png");
+        self.picimageview.frame = CGRectMake(10, 10, 40, 30);
+        [self.contentView addSubview:self.picimageview];
+        
     }
     return self;
 }
@@ -36,8 +34,6 @@
     }
     _cellNo = cellNo;
     self.cellbutton.tag = cellNo;
-    
-    
 }
 -(void)setDic:(NSMutableDictionary *)dic{
     

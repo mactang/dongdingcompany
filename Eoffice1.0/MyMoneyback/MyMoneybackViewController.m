@@ -55,6 +55,8 @@
 
     datadic = [NSMutableDictionary dictionary];
     sucess = YES;
+    
+    [self initerface];
     [self datarequest];
 }
 -(void)initerface{
@@ -131,7 +133,7 @@
             NSLog(@"%@",datadic);
         }
         [hud hide:YES];
-        [self initerface];
+
         [_tableview reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

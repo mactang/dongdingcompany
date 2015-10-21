@@ -21,6 +21,7 @@
 #import "LoginViewController.h"
 #import "MyMoneybackViewController.h"
 #import "RecommendViewController.h"
+#import "MybankcardViewController.h"
 @interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate,persondelegate>{
     LoginViewController *login;
     BOOL refresh;
@@ -56,25 +57,25 @@
     NSString *string = @"my";
     model.isBoolmy = [NSString stringWithFormat:@"%@",string];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49) style:UITableViewStylePlain];
+     _tableView.tableFooterView = [[UIView alloc]init];
     _tableView.scrollEnabled = YES;
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_tableView];
 
 }
 - (void)downData{
     
     [self.datas removeAllObjects];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.jsessionid,model.userkey];
-    
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
@@ -85,14 +86,14 @@
            [self.datas addObject: model];
         }
         NSLog(@"%@",self.datas);
+        [hud hide:YES];
         [_tableView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
-    
 }
-
 -(void)viewWillAppear:(BOOL)animated{
     
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -138,7 +139,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 8*self.datas.count;
+    return 9*self.datas.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -195,23 +196,26 @@
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"我的购物车"];
         [cell addSubview:imageView];
-        
-        
     }
     if (indexPath.row == 3) {
         cell.textLabel.text = @"       收货地址";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"收货地址"];
         [cell addSubview:imageView];
-        
     }
     if (indexPath.row == 4) {
-        cell.textLabel.text = @"       我的返现";
+        cell.textLabel.text = @"       我的银行卡";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"安全设置"];
         [cell addSubview:imageView];
     }
     if (indexPath.row == 5) {
+        cell.textLabel.text = @"       我的返现";
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
+        imageView.image = [UIImage imageNamed:@"安全设置"];
+        [cell addSubview:imageView];
+    }
+    if (indexPath.row == 6) {
         
         cell.textLabel.text = @"       推荐返现";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
@@ -219,13 +223,13 @@
         [cell addSubview:imageView];
         
     }
-    if (indexPath.row == 6) {
+    if (indexPath.row == 7) {
         cell.textLabel.text = @"       安全设置";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"安全设置"];
         [cell addSubview:imageView];
     }
-    if (indexPath.row == 7) {
+    if (indexPath.row == 8) {
         
         cell.textLabel.text = @"       帮助与反馈";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
@@ -256,19 +260,23 @@
 
     }
     if (indexPath.row == 4) {
+        MybankcardViewController *mybank = [[MybankcardViewController alloc]init];
+        [self.navigationController pushViewController:mybank animated:YES];
+    }
+    if (indexPath.row == 5) {
         MyMoneybackViewController *mymoney = [[MyMoneybackViewController alloc]init];
         [self.navigationController pushViewController:mymoney animated:YES];
     }
-    if (indexPath.row == 5) {
+    if (indexPath.row == 6) {
         RecommendViewController *recomm = [[RecommendViewController alloc]init];
         [self.navigationController pushViewController:recomm animated:YES];
     }
-    if (indexPath.row == 6) {
+    if (indexPath.row == 7) {
         SafeViewController *safe = [[SafeViewController alloc]init];
         
         [self.navigationController pushViewController:safe animated:YES];
     }
-    if (indexPath.row == 7) {
+    if (indexPath.row == 8) {
         HopleViewController *hope = [[HopleViewController alloc]init];
         [self.navigationController pushViewController:hope animated:YES];
     }
