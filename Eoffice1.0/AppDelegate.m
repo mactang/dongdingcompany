@@ -27,28 +27,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-    manager.enable = YES;
-    manager.shouldResignOnTouchOutside = YES;
-    manager.shouldToolbarUsesTextFieldTintColor = YES;
-    manager.enableAutoToolbar = YES;
-    //#import "IQKeyboardReturnKeyHandler.h"
-//    IQKeyboardReturnKeyHandler *heare;
-//    heare = [[IQKeyboardReturnKeyHandler alloc] initWithViewController:self];
-//    heare.lastTextFieldReturnKeyType = UIReturnKeyDone;
-//    heare.toolbarManageBehaviour = IQAutoToolbarBySubviews;
-//    - (void)dealloc
-//    {
-//        self.returnKeyHandler = nil;
-//    }
+ 
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-//    LoginViewController *login = [[LoginViewController alloc]init];
-//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:login];
-//    
-//    self.nav_controller = nav;
-    
     
     [self setupViewControllers];
     [self.window setRootViewController:self.viewController];
@@ -57,7 +37,14 @@
     // self.window.rootViewController = self.nav_controller;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = YES;
 
+    
     return YES;
 }
 #pragma mark - Methods

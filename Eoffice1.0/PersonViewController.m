@@ -23,6 +23,7 @@
 #import "RecommendViewController.h"
 @interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate,persondelegate>{
     LoginViewController *login;
+    BOOL refresh;
 }
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)NSMutableArray *datas;
@@ -46,6 +47,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    refresh = YES;
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     [self.navigationItem setTitle:@""];
@@ -53,21 +55,17 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *string = @"my";
     model.isBoolmy = [NSString stringWithFormat:@"%@",string];
-   // [self downData];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49) style:UITableViewStylePlain];
     _tableView.scrollEnabled = YES;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    //[self downData];
-    // Do any additional setup after loading the view.
-}
 
+}
 - (void)downData{
     
     [self.datas removeAllObjects];
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     
     NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.jsessionid,model.userkey];
     
@@ -107,10 +105,14 @@
         }
         
     }else{
-        if (login) {
+//        if (login) {
             [login.view removeFromSuperview];
-        }
-        [self downData];
+            if (refresh) {
+                [self downData];
+                refresh = NO;
+            }
+//        }
+
     }
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }

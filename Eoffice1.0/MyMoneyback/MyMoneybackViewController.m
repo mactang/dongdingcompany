@@ -213,6 +213,7 @@
             cell = [[CurrentrecordCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
         }
         cell.clipsToBounds = YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.dic = datadic[@"cashBackList"][indexPath.row];
         return cell;
     }
@@ -223,6 +224,7 @@
             cell = [[PresentdetailsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
         }
         cell.clipsToBounds = YES;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.dicnationary = datadic[@"cashDetailList"][indexPath.row];
         return cell;
     }

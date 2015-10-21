@@ -16,7 +16,6 @@
     NSString *banknumber;
     NSString *bankcard;
     NSString *bankaddress;
-    
 }
 @end
 

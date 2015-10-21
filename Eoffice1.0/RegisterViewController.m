@@ -21,6 +21,11 @@
 
     UITextField *text_field;
 }
+-(void)loadView
+{
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.view = scrollView;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
@@ -146,9 +151,6 @@
 }
 - (void)createTextField:(int)isPwd withView:(UIView *)text_view
 {
-    
-    
-    
     UIImageView *iconImageView = [[UIImageView alloc]init];
     iconImageView.frame = CGRectMake(10, 20, 34/2, 38/2);
     [text_view addSubview:iconImageView];
