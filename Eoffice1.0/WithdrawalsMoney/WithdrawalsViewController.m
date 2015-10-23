@@ -13,11 +13,10 @@
 #import "AddBankcardController.h"
 #import "BanklistTableViewCell.h"
 #define kAlphaNum  @"0123456789"
-@interface WithdrawalsViewController()<UITableViewDelegate,UITableViewDataSource,buttondelegate,addbankdelegate,UITextFieldDelegate>{
+#import "MybankcardViewController.h"
+@interface WithdrawalsViewController()<UITextFieldDelegate,bankcardelegate,addbankdelegate>{
     
-    UITableView *_tableview;
     NSMutableArray *datarray;
-    BOOL sucess;
     NSString *_amount;
     NSString *_rand;
     
@@ -33,6 +32,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    datarray = [NSMutableArray array];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -41,24 +41,10 @@
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
-    sucess = YES;
     [self banklistrequest];
-    datarray = [NSMutableArray array];
-    }
+}
 -(void)initerface{
      [self cellmessage];
-    _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 70 )style:UITableViewStyleGrouped];
-    _tableview.delegate = self;
-    _tableview.dataSource = self;
-    _tableview.sectionFooterHeight = 1;
-    _tableview.backgroundColor = [UIColor clearColor];
-    _tableview.userInteractionEnabled = YES;
-    _tableview.scrollEnabled = NO;
-//    //去掉分割线
-//    _tableview.separatorStyle = UITableViewCellSelectionStyleNone;
-    [self.view addSubview:_tableview];
-//   _tableview.tableFooterView = [[UIView alloc]init];
-    
 }
 -(void)banklistrequest{
     
@@ -75,110 +61,53 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [datarray removeAllObjects];
         if (dic[@"data"] !=[NSNull null]){
             [datarray addObjectsFromArray:dic[@"data"]];
             NSLog(@"%@",dic);
         }
         [self initerface];
         [hud hide:YES];
-       
-        [_tableview reloadData];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
     }];
-
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (sucess) {
-        return 1;
-    }
-    return datarray.count+1;
-
-}
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return 50;
-    
-}
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
- 
-    return 10;
-   
-}
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    return 0.5;
-}
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *headerview = [[UIView alloc]init];
-    headerview.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-    UIView *linview = [[UIView alloc]initWithFrame:CGRectMake(0, 9.5, SCREEN_WIDTH, 1)];
-    linview.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-    [headerview addSubview:linview];
-    return headerview;
-}
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (datarray.count!=0) {
-        static NSString *identity = @"cell";
-        BanklistTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
-        if (!cell) {
-            cell =  [[BanklistTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
-        }
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor whiteColor];
-        cell.cellNo =indexPath.row;
-        cell.delegate = self;
-        if (sucess) {
-            cell.dic = datarray[indexPath.row];
-        }
-        else{
-            if (indexPath.row!= datarray.count) {
-                cell.dic = datarray[indexPath.row];
-            }
-            else{
-                static NSString *identity = @"mycell";
-                UITableViewCell *cell =  [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
-                [self tableviewcell:cell];
-                return cell;
-            }
-        }
-        return cell;
-    }
-    if (datarray.count==0) {
-        static NSString *identity = @"mycell";
-        UITableViewCell *cell =  [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
-        [self tableviewcell:cell];
-        return cell;
-    }
-    else{
-        return nil;
-    }
-     
-}
--(void)tableviewcell:(UITableViewCell *)cell{
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(0, 2, SCREEN_WIDTH, 46);
-    [button setTitle:@"➕添加银行卡" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:14];
-    [button addTarget:self action:@selector(addbankcardPressed) forControlEvents:UIControlEventTouchUpInside];
-    [cell.contentView addSubview:button];
-
-}
--(void)addbankcardPressed{
-    
-    AddBankcardController *addbabnkcard = [[AddBankcardController alloc]init];
-    addbabnkcard.delegate = self;
-    [self.navigationController pushViewController:addbabnkcard animated:YES];
-    
 }
 -(void)cellmessage{
+    UIView *whiteview = [[UIView alloc]initWithFrame:CGRectMake(0, 74, SCREEN_WIDTH, 50)];
+    whiteview.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:whiteview];
+    if (datarray.count ==0) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(0, 2, SCREEN_WIDTH, 46);
+        [button setTitle:@"➕添加银行卡" forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:14];
+        [button addTarget:self action:@selector(addbankcardPressed) forControlEvents:UIControlEventTouchUpInside];
+        [whiteview addSubview:button];
+    }else{
+        UIImageView *bankimageview = IMAGEVIEW_MYSELF(@"bankcard.png");
+        bankimageview.frame = CGRectMake(10, 7, 40, 36);
+        [whiteview addSubview:bankimageview];
+        
+        UILabel *bankname = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(bankimageview.frame)+10, 5, SCREEN_WIDTH/2, 20)];
+        bankname.text = datarray[0][@"bankName"];
+        bankname.font = [UIFont systemFontOfSize:13];
+        bankname.tag = 60;
+        [whiteview addSubview:bankname];
+        
+        UILabel *bankNO = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(bankname), CGRectGetMaxY(bankname.frame), widgetBoundsWidth(bankname), widgetboundsHeight(bankname))];
+        bankNO.font = [UIFont systemFontOfSize:13];
+        bankNO.text = [NSString stringWithFormat:@"尾号: %@",@"5678"];
+        bankNO.tag = 61;
+        [whiteview addSubview:bankNO];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(SCREEN_WIDTH-30, 15, 20, 20);
+        [button setImage:IMAGE_MYSELF(@"youjiantou.png") forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(choosebankcardPressed) forControlEvents:UIControlEventTouchUpInside];
+        [whiteview addSubview:button];
+    }
     NSArray *array = @[@"到账时间",@"金额",@"验证码",];
     NSArray *anotherarray = @[@"预计3-5个工作日内",@"转出金额",@"请输入验证码",];
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 134, SCREEN_WIDTH, 115)];
@@ -240,6 +169,31 @@
         }
     }
 }
+#pragma mark bankcardelegate
+-(void)choosebankcard:(NSDictionary *)dic{
+    
+    UILabel *bankname = (UILabel *)[self.view viewWithTag:60];
+    UILabel *bankNo = (UILabel *)[self.view viewWithTag:61];
+    bankNo.text = [NSString stringWithFormat:@"尾号: %@",@"5678"];
+    bankname.text = dic[@"bankName"];
+    
+}
+-(void)choosebankcardPressed{
+    MybankcardViewController *mybankcardController = [[MybankcardViewController alloc]init];
+    mybankcardController.sucess = NO;
+    mybankcardController.delegate = self;
+    [self.navigationController pushViewController:mybankcardController animated:YES];
+}
+-(void)addbankcardPressed{
+    AddBankcardController *addbank = [[AddBankcardController alloc]init];
+    addbank.delegate = self;
+    addbank.sucess = YES;
+    [self.navigationController pushViewController:addbank animated:YES];
+}
+#pragma mark addbankdelegate
+-(void)reloadlist{
+    [self banklistrequest];
+}
 -(void)buttonPressed:(UIButton *)button{
     if ([button.titleLabel.text isEqualToString:@"确认"]) {
         [self confirmRequest];
@@ -296,6 +250,7 @@
             string = @"申请失败";
         }
         alterview  =[[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alterview show];
         [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
@@ -318,83 +273,51 @@
 
     return YES;
 }
-#pragma mark addbankdelegate
--(void)reloadlist{
-    [self relaodlistdata];
-}
--(void)relaodlistdata{
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = @"Loading";
-    SingleModel *model = [SingleModel sharedSingleModel];
-    
-    NSString *path= [NSString stringWithFormat:BANKCARDLIST,COMMON,model.userkey];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        [datarray removeAllObjects];
-        if (dic[@"data"] !=[NSNull null]){
-            [datarray addObjectsFromArray:dic[@"data"]];
-        }
-        [hud hide:YES];
-        [_tableview reloadData];
-    
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [hud hide:YES];
-        NSLog(@"%@",error);
-    }];
-    
-}
-#pragma mark  buttondelegate
--(void)cellbutton:(UIButton *)button{
-    sucess = !sucess;
-    if (!sucess) {
-        _tableview.frame = CGRectMake(0, 64, SCREEN_WIDTH, 70+datarray.count*50);
-        NSMutableArray *array = [NSMutableArray array];
-        for (NSInteger i=1; i<datarray.count+1; i++) {
-            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
-            [array addObject:indexpath];
-        }
-        [_tableview beginUpdates];
-        [_tableview insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationFade];
-        [_tableview endUpdates];
-    }
-    else{
-        NSMutableArray *array = [NSMutableArray array];
-        for (NSInteger i=1; i<datarray.count+1; i++) {
-            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
-            [array addObject:indexpath];
-        }
-        [_tableview beginUpdates];
-        [_tableview deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationFade];
-        [_tableview endUpdates];
-        [self performSelector:@selector(delayMethod) withObject:nil afterDelay:0.2f];
-    }
-    
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    if (indexPath.row!=0) {
-        sucess = !sucess;
-        NSMutableArray *array = [NSMutableArray array];
-        for (NSInteger i=1; i<datarray.count+1; i++) {
-            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
-            [array addObject:indexpath];
-        }
-        [_tableview beginUpdates];
-        [_tableview deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationFade];
-        [_tableview endUpdates];
-        [self performSelector:@selector(delayMethod) withObject:nil afterDelay:0.2f];
-    }
-}
--(void)delayMethod{
-     _tableview.frame = CGRectMake(0, 64, SCREEN_WIDTH, 70);
-}
+//#pragma mark  buttondelegate
+//-(void)cellbutton:(UIButton *)button{
+//    sucess = !sucess;
+//    if (!sucess) {
+//        _tableview.frame = CGRectMake(0, 64, SCREEN_WIDTH, 70+datarray.count*50);
+//        NSMutableArray *array = [NSMutableArray array];
+//        for (NSInteger i=1; i<datarray.count+1; i++) {
+//            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+//            [array addObject:indexpath];
+//        }
+//        [_tableview beginUpdates];
+//        [_tableview insertRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationFade];
+//        [_tableview endUpdates];
+//    }
+//    else{
+//        NSMutableArray *array = [NSMutableArray array];
+//        for (NSInteger i=1; i<datarray.count+1; i++) {
+//            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+//            [array addObject:indexpath];
+//        }
+//        [_tableview beginUpdates];
+//        [_tableview deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationFade];
+//        [_tableview endUpdates];
+//        [self performSelector:@selector(delayMethod) withObject:nil afterDelay:0.2f];
+//    }
+//    
+//}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    if (indexPath.row!=0) {
+//        sucess = !sucess;
+//        NSMutableArray *array = [NSMutableArray array];
+//        for (NSInteger i=1; i<datarray.count+1; i++) {
+//            NSIndexPath *indexpath = [NSIndexPath indexPathForRow:i inSection:0];
+//            [array addObject:indexpath];
+//        }
+//        [_tableview beginUpdates];
+//        [_tableview deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationFade];
+//        [_tableview endUpdates];
+//        [self performSelector:@selector(delayMethod) withObject:nil afterDelay:0.2f];
+//    }
+//}
+//-(void)delayMethod{
+//     _tableview.frame = CGRectMake(0, 64, SCREEN_WIDTH, 70);
+//}
 - (void)leftItemClicked{
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];

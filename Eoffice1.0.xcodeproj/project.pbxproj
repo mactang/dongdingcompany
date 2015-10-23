@@ -311,6 +311,7 @@
 		96747BF21BD49A510060704C /* BanklistTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96747BF11BD49A510060704C /* BanklistTableViewCell.m */; };
 		967FC3341BD0970E00E06BD9 /* WithdrawalsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 967FC3331BD0970E00E06BD9 /* WithdrawalsViewController.m */; };
 		967FC3371BD0E8E300E06BD9 /* AddBankcardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 967FC3361BD0E8E300E06BD9 /* AddBankcardController.m */; };
+		968196B01BD8D15600D68191 /* youjiantou.png in Resources */ = {isa = PBXBuildFile; fileRef = 968196AF1BD8D15600D68191 /* youjiantou.png */; };
 		96821FCA1B8AF5DC00EC7276 /* citychoose.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96821FC71B8AF5DC00EC7276 /* citychoose.plist */; };
 		96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96821FC91B8AF5DC00EC7276 /* CityChooseView.m */; };
 		9689A8391BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 9689A8381BB15C34003E99B0 /* UIAlertView+AlerViewBlocks.m */; };
@@ -359,8 +360,12 @@
 		96BA8F301B8EBAE70062C8D8 /* 确认40灰色.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BA8F2F1B8EBAE70062C8D8 /* 确认40灰色.png */; };
 		96BDF24C1BD776A30095E660 /* MybankcardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BDF24B1BD776A30095E660 /* MybankcardViewController.m */; };
 		96BDF24E1BD7836E0095E660 /* bankcard.png in Resources */ = {isa = PBXBuildFile; fileRef = 96BDF24D1BD7836E0095E660 /* bankcard.png */; };
+		96BDF2511BD7974E0095E660 /* BankdetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BDF2501BD7974E0095E660 /* BankdetailViewController.m */; };
 		96DFE78F1BD5EF6400329D53 /* 下箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DFE78E1BD5EF6400329D53 /* 下箭头.png */; };
 		96DFE7911BD5EF6900329D53 /* 上箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DFE7901BD5EF6900329D53 /* 上箭头.png */; };
+		96E4210F1BD9D54D00C582E7 /* 圆角矩形-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E4210E1BD9D54D00C582E7 /* 圆角矩形-1.png */; };
+		96E421121BD9D69C00C582E7 /* center_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E421101BD9D69C00C582E7 /* center_comment.png */; };
+		96E421131BD9D69C00C582E7 /* my_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E421111BD9D69C00C582E7 /* my_comment.png */; };
 		96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E61B8C598700AB448B /* ChangeAddrssController.m */; };
 		96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */; };
 		96F47B201BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96F47B181BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle */; };
@@ -831,6 +836,7 @@
 		967FC3331BD0970E00E06BD9 /* WithdrawalsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WithdrawalsViewController.m; sourceTree = "<group>"; };
 		967FC3351BD0E8E300E06BD9 /* AddBankcardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddBankcardController.h; sourceTree = "<group>"; };
 		967FC3361BD0E8E300E06BD9 /* AddBankcardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddBankcardController.m; sourceTree = "<group>"; };
+		968196AF1BD8D15600D68191 /* youjiantou.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = youjiantou.png; sourceTree = "<group>"; };
 		96821FC71B8AF5DC00EC7276 /* citychoose.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = citychoose.plist; sourceTree = "<group>"; };
 		96821FC81B8AF5DC00EC7276 /* CityChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityChooseView.h; sourceTree = "<group>"; };
 		96821FC91B8AF5DC00EC7276 /* CityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CityChooseView.m; sourceTree = "<group>"; usesTabs = 0; };
@@ -911,8 +917,13 @@
 		96BDF24A1BD776A30095E660 /* MybankcardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MybankcardViewController.h; sourceTree = "<group>"; };
 		96BDF24B1BD776A30095E660 /* MybankcardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MybankcardViewController.m; sourceTree = "<group>"; };
 		96BDF24D1BD7836E0095E660 /* bankcard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bankcard.png; sourceTree = "<group>"; };
+		96BDF24F1BD7974E0095E660 /* BankdetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BankdetailViewController.h; sourceTree = "<group>"; };
+		96BDF2501BD7974E0095E660 /* BankdetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankdetailViewController.m; sourceTree = "<group>"; };
 		96DFE78E1BD5EF6400329D53 /* 下箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "下箭头.png"; sourceTree = "<group>"; };
 		96DFE7901BD5EF6900329D53 /* 上箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上箭头.png"; sourceTree = "<group>"; };
+		96E4210E1BD9D54D00C582E7 /* 圆角矩形-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圆角矩形-1.png"; sourceTree = "<group>"; };
+		96E421101BD9D69C00C582E7 /* center_comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center_comment.png; sourceTree = "<group>"; };
+		96E421111BD9D69C00C582E7 /* my_comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_comment.png; sourceTree = "<group>"; };
 		96EC75E51B8C598700AB448B /* ChangeAddrssController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddrssController.h; sourceTree = "<group>"; };
 		96EC75E61B8C598700AB448B /* ChangeAddrssController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddrssController.m; sourceTree = "<group>"; };
 		96EC75E81B8C5AC500AB448B /* ChangeAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddressCell.h; sourceTree = "<group>"; };
@@ -1129,6 +1140,10 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				96E421101BD9D69C00C582E7 /* center_comment.png */,
+				96E421111BD9D69C00C582E7 /* my_comment.png */,
+				96E4210E1BD9D54D00C582E7 /* 圆角矩形-1.png */,
+				968196AF1BD8D15600D68191 /* youjiantou.png */,
 				96BDF24D1BD7836E0095E660 /* bankcard.png */,
 				96DFE7901BD5EF6900329D53 /* 上箭头.png */,
 				96DFE78E1BD5EF6400329D53 /* 下箭头.png */,
@@ -1918,6 +1933,8 @@
 				967FC3361BD0E8E300E06BD9 /* AddBankcardController.m */,
 				96BDF24A1BD776A30095E660 /* MybankcardViewController.h */,
 				96BDF24B1BD776A30095E660 /* MybankcardViewController.m */,
+				96BDF24F1BD7974E0095E660 /* BankdetailViewController.h */,
+				96BDF2501BD7974E0095E660 /* BankdetailViewController.m */,
 			);
 			path = WithdrawalsMoney;
 			sourceTree = "<group>";
@@ -2330,12 +2347,15 @@
 				61731B2A1B954D1F00B04D85 /* 二手商品.png in Resources */,
 				617FE4DE1B60D5B8007EBFB2 /* easyicon_net_40.png in Resources */,
 				61AD6AD81BC8B5E600DA07D5 /* UMShareEditViewController.xib in Resources */,
+				96E421121BD9D69C00C582E7 /* center_comment.png in Resources */,
 				96BA8F301B8EBAE70062C8D8 /* 确认40灰色.png in Resources */,
+				968196B01BD8D15600D68191 /* youjiantou.png in Resources */,
 				61DA8F521BA126BB00824499 /* logo.png in Resources */,
 				61A1CB911BAF9CCB00903122 /* above1.png in Resources */,
 				617FE4D91B60D5B8007EBFB2 /* chuanzhenji.png in Resources */,
 				617FE4F51B60D5EF007EBFB2 /* 帮助与反馈.png in Resources */,
 				615CF6251B6F50DC00B369E7 /* 图层-11.png in Resources */,
+				96E4210F1BD9D54D00C582E7 /* 圆角矩形-1.png in Resources */,
 				617FE4F81B60D5EF007EBFB2 /* 我的购物车.png in Resources */,
 				610D5A0C1B9FDC0700301F3A /* youzhixiang21.png in Resources */,
 				612C57C11B8AC7AD0048FF28 /* deleteButton.png in Resources */,
@@ -2383,6 +2403,7 @@
 				96DFE7911BD5EF6900329D53 /* 上箭头.png in Resources */,
 				61AF901B1BAE7AC3007BBDAF /* 保养维修11-2.png in Resources */,
 				6167FA4A1B7F0E02004A1BD0 /* check-NO.png in Resources */,
+				96E421131BD9D69C00C582E7 /* my_comment.png in Resources */,
 				61793A851B54AF3800CFD83A /* cell_03.png in Resources */,
 				61793A861B54AF3800CFD83A /* cell_04.png in Resources */,
 			);
@@ -2486,6 +2507,7 @@
 				9695ADEB1B957A9A004A7A1B /* MyAlertView.m in Sources */,
 				9695ADE91B957A9A004A7A1B /* CalculateStringSpace.m in Sources */,
 				9695ADEA1B957A9A004A7A1B /* ImageCarousel.m in Sources */,
+				96BDF2511BD7974E0095E660 /* BankdetailViewController.m in Sources */,
 				969E1EA11BC790D400CD9D02 /* CJSONSerializedData.m in Sources */,
 				6166AA2D1BA02D0F00D7FDD1 /* SDRefreshView.m in Sources */,
 				61068AAB1B5CF611008BE40A /* NewsViewController.m in Sources */,

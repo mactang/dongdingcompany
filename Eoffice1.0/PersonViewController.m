@@ -210,20 +210,20 @@
     if (indexPath.row == 4) {
         cell.textLabel.text = @"       我的银行卡";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
-        imageView.image = [UIImage imageNamed:@"安全设置"];
+        imageView.image = [UIImage imageNamed:@"圆角矩形-1"];
         [cell addSubview:imageView];
     }
     if (indexPath.row == 5) {
         cell.textLabel.text = @"       我的返现";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
-        imageView.image = [UIImage imageNamed:@"安全设置"];
+        imageView.image = [UIImage imageNamed:@"my_comment"];
         [cell addSubview:imageView];
     }
     if (indexPath.row == 6) {
         
         cell.textLabel.text = @"       推荐返现";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
-        imageView.image = [UIImage imageNamed:@"帮助与反馈"];
+        imageView.image = [UIImage imageNamed:@"center_comment"];
         [cell addSubview:imageView];
         
     }
@@ -265,6 +265,7 @@
     }
     if (indexPath.row == 4) {
         MybankcardViewController *mybank = [[MybankcardViewController alloc]init];
+        mybank.sucess = YES;
         [self.navigationController pushViewController:mybank animated:YES];
     }
     if (indexPath.row == 5) {

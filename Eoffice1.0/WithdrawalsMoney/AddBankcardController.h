@@ -14,4 +14,5 @@
 @end
 @interface AddBankcardController : UIViewController
 @property(nonatomic,assign)id<addbankdelegate>delegate;
+@property(nonatomic,assign)BOOL sucess;
 @end
