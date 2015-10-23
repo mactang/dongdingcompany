@@ -19,6 +19,7 @@
 #import "PersonInformationModel.h"
 #import "CalendarManager.h"
 #import "ASIFormDataRequest.h"
+#import "UIKit+AFNetworking.h"
 @interface PersonalInformationController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIApplicationDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,ASIHTTPRequestDelegate>
 @property(nonatomic, strong)UITableView *tableView;
 @property(nonatomic, strong)UIImage *imageName;
@@ -39,6 +40,7 @@
     CalendarManager *cm;
     UILabel *sexLb;
     NSString *sex;
+    NSString *fileURL;
     
 }
 -(NSMutableArray *)datas{
@@ -91,8 +93,8 @@
     [self.view addSubview:sureButton];
     
     _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(230, 5, 70, 70)];
-    _imageView.image = [UIImage imageNamed:@"link.jpg"];
-    _imageView.backgroundColor = [UIColor redColor];
+    
+   // _imageView.backgroundColor = [UIColor redColor];
     [_tableView addSubview:_imageView];
     
     // Do any additional setup after loading the view.
@@ -107,7 +109,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
-    NSString *path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey];
+    NSString *path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey,fileURL];
     NSLog(@"path--%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -116,6 +118,8 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        NSLog(@"status--%@",dic[@"status"]);
         UIAlertView *alterview;
         NSString *string;
         if ([dic[@"status"]integerValue]==1) {
@@ -200,6 +204,7 @@
     NSLog(@"%@",model.name);
     if (indexPath.row == 0) {
         cell.textLabel.text = @"头像";
+        [_imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.imgUrl]]];
         
     }
     if (indexPath.row == 1) {
@@ -272,10 +277,10 @@
     sexLb.text = sexText;
     
     if ([sexLb.text isEqual:@"男"]) {
-        sex = @"m";
+        sex = @"M";
     }
     if ([sexLb.text isEqual:@"女"]) {
-        sex = @"f";
+        sex = @"F";
     }
     if ([sexLb.text isEqual:@"保密"]) {
         sex = @"2b";
@@ -367,22 +372,7 @@
         
     }
 }
--(void)bs{
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSDictionary *parameters = @{@"foo": @"bar"};
-    UIImage *image = [UIImage imageNamed:@"xxxx"];
-    [manager POST:@"http://example.com/resources.json" parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        [formData appendPartWithFileData:UIImagePNGRepresentation(image)
-                                    name:@"avatar"
-                                fileName:@"avatar.png"
-                                mimeType:@"image/png"];
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Success: %@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-}
+
 /**
  *  选中照片
  *
@@ -449,12 +439,13 @@
     [request setCompletionBlock:^{
        //字符串解析成字典
         NSData *jsonData = [request.responseString dataUsingEncoding:NSUTF8StringEncoding];
+        NSLog(@"%@",request.responseString);
         NSDictionary *subDic =  [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:nil];
     
         NSString *string = [NSString stringWithFormat:@"%@",subDic[@"data"][@"fileUrl"]];
         
-        SingleModel *model = [SingleModel sharedSingleModel];
-        model.fileUrl = string;
+                fileURL = string;
+       
         
     }];
     [request setFailedBlock:^{

@@ -17,6 +17,7 @@
 #define widgetFrameY(widget) widget.frame.origin.y
 #define widgetBoundsWidth(widget) widget.bounds.size.width
 #define widgetboundsHeight(widget) widget.bounds.size.height
+
 //#define WEB_IMAGE_URL(suffFix) [NSString stringWithFormat:@"http://192.168.254.68/%@", suffFix]
 #define colorWithRGB(a,b,c,d) [UIColor colorWithRed:a/255.0 green:b/255.0 blue:c/255.0 alpha:d]
 
@@ -116,7 +117,7 @@
 
 //个人信息
 #define   PERSONCONME @"%@user!toUpdateMyMsg.action;jsessionid=%@?userkey=%@"
-#define   PERSONREVISE @"%@user!updateMyMsg.action?birthday=%@&sex=%@&nike=%@&userkey=%@"
+#define   PERSONREVISE @"%@user!updateMyMsg.action?birthday=%@&sex=%@&nike=%@&userkey=%@&icon=%@"
 //安全设置
 #define SAFEVALIDATE @"%@sms!getPhoneSms.action;jsessionid=%@?userkey=%@"
 #define SAFENEWPHONE @"%@user!updatePhone.action;jsessionid=%@?userkey=%@"

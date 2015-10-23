@@ -163,6 +163,7 @@
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
         
             dispatch_async(dispatch_get_main_queue(), ^{
+                
                 [self.classifyDatas removeAllObjects];
                 [testarray removeAllObjects];
                 [self classifyData];
@@ -363,6 +364,7 @@
         NSString *signstring;
         NSString *cancelsting;
         if ([dic[@"status"] integerValue]==1) {
+            
             messagestring = @"删除成功";
             signstring = @"确定";
             cancelsting = nil;
@@ -399,6 +401,7 @@
             
         }
         if (error.code==-1001) {
+            
             [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
                 [self deleteData];
             }];
@@ -434,6 +437,7 @@
     }
     //维修
     if (btn.tag == 1005) {
+        
         SingleModel *model = [SingleModel sharedSingleModel];
         model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
         ServiceViewController *ser = [[ServiceViewController alloc]init];
@@ -448,13 +452,10 @@
     SingleModel *model = [SingleModel sharedSingleModel];
    
     NSString *path= [NSString stringWithFormat:RETUNGOODSSTATE,COMMON,model.jsessionid,model.userkey,_returnId];
-   
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -504,14 +505,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

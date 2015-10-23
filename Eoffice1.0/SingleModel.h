@@ -36,8 +36,7 @@
 
 @property(nonatomic,assign)NSString *isBoolmy;
 
-//头像
-@property(nonatomic,assign)NSString *fileUrl;
+
 
 
 

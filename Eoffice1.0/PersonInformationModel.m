@@ -21,6 +21,7 @@
         self.gender = dic[@"gender"];
         self.birthday = dic[@"birthday"];
         self.username = dic[@"username"];
+        self.imgUrl = dic[@"imgUrl"];
         
         
     }

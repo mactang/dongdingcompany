@@ -18,13 +18,8 @@
 
 @implementation RegisterViewController
 {
-
+    
     UITextField *text_field;
-}
--(void)loadView
-{
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.view = scrollView;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,7 +32,7 @@
     logoimageView.image = [UIImage imageNamed:@"logo"];
     logoimageView.userInteractionEnabled = YES;
     [self.view addSubview:logoimageView];
-
+    
     
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 100, 280, 300)];
     imageView.clipsToBounds = YES;
@@ -53,7 +48,7 @@
     
     [self createTextField:1 withView:name_view];
     
-
+    
     
     UIView *getPassWord_view = [[UIView alloc] init];
     [getPassWord_view setFrame:CGRectMake(0, CGRectGetMaxY(name_view.frame)+5, 280, 40)];
@@ -113,15 +108,16 @@
     [loginButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [loginButton addTarget:self action:@selector(backLogin) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginButton];
-
+    
     
     // Do any additional setup after loading the view.
 }
 
 -(void)identifyingBtn{
-
+    
     [self valiData];
 }
+
 -(void)valiData{
     
     UITextField *name_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
@@ -137,13 +133,20 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"%@",dic[@"data"]);
-    
+        
+        
+        
+        
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
+    
+    
 }
-- (void)backLogin{
 
+- (void)backLogin{
+    
     [self dismissViewControllerAnimated:NO completion:^{
         
     }];
@@ -151,6 +154,9 @@
 }
 - (void)createTextField:(int)isPwd withView:(UIView *)text_view
 {
+    
+    
+    
     UIImageView *iconImageView = [[UIImageView alloc]init];
     iconImageView.frame = CGRectMake(10, 20, 34/2, 38/2);
     [text_view addSubview:iconImageView];
@@ -164,7 +170,7 @@
     // [text_field addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     text_field.textColor = [UIColor grayColor];
     text_field.delegate = self;
-   
+    
     text_field.returnKeyType = UIReturnKeyDone;
     [text_view addSubview:text_field];
     [text_field setAutocorrectionType:UITextAutocorrectionTypeNo];
@@ -180,7 +186,7 @@
         text_field.tag = 1001;
         text_field.placeholder = @"用户名";
         iconImageView.image = [UIImage imageNamed:@"图层-9"];
-       // iconImageView.highlightedImage = [UIImage imageNamed:@"userIcon_highlight.png"];
+        // iconImageView.highlightedImage = [UIImage imageNamed:@"userIcon_highlight.png"];
         //  iconImageView.tag = NAME_ICON;
     }
     if (isPwd == 2)
@@ -207,7 +213,7 @@
         text_field.clearButtonMode = UITextFieldViewModeNever;
         text_field.placeholder = @"请输入手机号码";
         iconImageView.image = [UIImage imageNamed:@"图层-11"];
-       
+        
     }
     if (isPwd == 5)
     {
@@ -215,9 +221,9 @@
         text_field.tag = 1004;
         text_field.placeholder = @"请输入验证码";
         iconImageView.image = [UIImage imageNamed:@"图层-12"];
-       
+        
     }
-
+    
     if (isPwd == 6)
     {
         text_field.text = @"";
@@ -234,18 +240,20 @@
     return YES;
 }
 - (void)surePress{
-  
+    
     UITextField *name_field = (UITextField *)[self.view viewWithTag:1001];
     UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
     UITextField *identifying_field = (UITextField *)[self.view viewWithTag:1004];
+    UITextField  *phoneNumber_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
     
     NSString *path = [NSString stringWithFormat:REGISTER,COMMON];
-    NSLog(@"%@",identifying_field.text);
+    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":@"18782931381"} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    
+    [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":phoneNumber_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -254,7 +262,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     
@@ -275,13 +283,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

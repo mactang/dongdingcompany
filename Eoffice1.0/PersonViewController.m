@@ -22,6 +22,7 @@
 #import "MyMoneybackViewController.h"
 #import "RecommendViewController.h"
 #import "MybankcardViewController.h"
+#import "UIKit+AFNetworking.h"
 @interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate,persondelegate>{
     LoginViewController *login;
     BOOL refresh;
@@ -133,8 +134,8 @@
 }
 -(void)buttonPress{
     
-    LoginViewController *logincontroller = [[LoginViewController alloc]init];
-    [self.navigationController pushViewController:logincontroller animated:YES];
+//    LoginViewController *logincontroller = [[LoginViewController alloc]init];
+//    [self.navigationController pushViewController:logincontroller animated:YES];
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -165,13 +166,16 @@
         UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 175)];
         detailImageView.userInteractionEnabled = YES;
         detailImageView.image = [UIImage imageNamed:@"求真像"];
+        
+        NSLog(@"%@",model.imgUrl);
         [cell addSubview:detailImageView];
         
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(105, 30, 110, 105)];
+        UIImageView *button = [[UIImageView alloc]initWithFrame:CGRectMake(105, 30, 110, 105)];
         // button.backgroundColor = [UIColor redColor];
         button.clipsToBounds = YES;
         button.layer.cornerRadius = 30;
-        [button addTarget:self action:@selector(buttonPress) forControlEvents:UIControlEventTouchUpInside];
+        [button setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.imgUrl]]];
+       // [button addTarget:self action:@selector(buttonPress) forControlEvents:UIControlEventTouchUpInside];
         [detailImageView addSubview:button];
         
         UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(115, CGRectGetMaxY(button.frame)+10, 100, 20)];
