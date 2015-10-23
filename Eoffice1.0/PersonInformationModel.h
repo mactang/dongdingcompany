@@ -37,6 +37,8 @@
 @property (copy,nonatomic) NSString *iscustomer;
 @property (copy,nonatomic) NSString *isvendor;
 
+@property (copy,nonatomic) NSString *imgUrl;
+
 
 
 

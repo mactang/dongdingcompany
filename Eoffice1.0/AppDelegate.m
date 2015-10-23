@@ -76,6 +76,7 @@
 }
 
 - (void)customizeTabBarForController:(RDVTabBarController *)tabBarController {
+    
     UIImage *finishedImage = [UIImage imageNamed:@"bg"];
     UIImage *unfinishedImage = [UIImage imageNamed:@"bg"];
     NSArray *tabBarItemImages = @[@"shouye", @"dingdan", @"wode"];
