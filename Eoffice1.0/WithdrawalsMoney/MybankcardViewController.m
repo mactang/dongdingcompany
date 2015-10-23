@@ -163,7 +163,7 @@
    
 }
 #pragma mark addbankdelegate
--(void)reloadlist:(NSDictionary *)dic{
+-(void)reloadlist{
     UIView *whiteview = (UIView *)[self.view viewWithTag:70];
     [whiteview removeFromSuperview];
     [self banklistrequest];
@@ -175,6 +175,7 @@
 -(void)rightItemClicked{
     AddBankcardController *addbank = [[AddBankcardController alloc]init];
     addbank.delegate = self;
+    addbank.sucess = NO;
     [self.navigationController pushViewController:addbank animated:YES];
 }
 - (void)leftItemClicked{

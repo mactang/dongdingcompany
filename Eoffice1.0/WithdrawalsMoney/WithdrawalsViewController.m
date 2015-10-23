@@ -14,7 +14,7 @@
 #import "BanklistTableViewCell.h"
 #define kAlphaNum  @"0123456789"
 #import "MybankcardViewController.h"
-@interface WithdrawalsViewController()<UITextFieldDelegate,bankcardelegate>{
+@interface WithdrawalsViewController()<UITextFieldDelegate,bankcardelegate,addbankdelegate>{
     
     NSMutableArray *datarray;
     NSString *_amount;
@@ -61,6 +61,7 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [datarray removeAllObjects];
         if (dic[@"data"] !=[NSNull null]){
             [datarray addObjectsFromArray:dic[@"data"]];
             NSLog(@"%@",dic);
@@ -71,9 +72,7 @@
         [hud hide:YES];
         NSLog(@"%@",error);
     }];
-
 }
-
 -(void)cellmessage{
     UIView *whiteview = [[UIView alloc]initWithFrame:CGRectMake(0, 74, SCREEN_WIDTH, 50)];
     whiteview.backgroundColor = [UIColor whiteColor];
@@ -190,6 +189,10 @@
     addbank.delegate = self;
     addbank.sucess = YES;
     [self.navigationController pushViewController:addbank animated:YES];
+}
+#pragma mark addbankdelegate
+-(void)reloadlist{
+    [self banklistrequest];
 }
 -(void)buttonPressed:(UIButton *)button{
     if ([button.titleLabel.text isEqualToString:@"确认"]) {

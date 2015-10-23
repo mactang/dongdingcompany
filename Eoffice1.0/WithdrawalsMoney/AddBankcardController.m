@@ -113,8 +113,8 @@
         if ([dic[@"status"]integerValue]==1) {
             string = @"添加成功";
             [self leftItemClicked];
-            if (_delegate && [_delegate respondsToSelector:@selector(reloadlist:)]) {
-                [self.delegate reloadlist:dic];
+            if (_delegate && [_delegate respondsToSelector:@selector(reloadlist)]) {
+                [self.delegate reloadlist];
             }
         }
         else{

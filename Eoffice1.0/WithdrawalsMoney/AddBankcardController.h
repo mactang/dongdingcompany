@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol addbankdelegate <NSObject>
 
--(void)reloadlist:(NSDictionary *)dic;
+-(void)reloadlist;
 
 @end
 @interface AddBankcardController : UIViewController

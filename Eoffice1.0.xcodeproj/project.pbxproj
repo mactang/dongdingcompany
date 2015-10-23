@@ -363,6 +363,9 @@
 		96BDF2511BD7974E0095E660 /* BankdetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BDF2501BD7974E0095E660 /* BankdetailViewController.m */; };
 		96DFE78F1BD5EF6400329D53 /* 下箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DFE78E1BD5EF6400329D53 /* 下箭头.png */; };
 		96DFE7911BD5EF6900329D53 /* 上箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = 96DFE7901BD5EF6900329D53 /* 上箭头.png */; };
+		96E4210F1BD9D54D00C582E7 /* 圆角矩形-1.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E4210E1BD9D54D00C582E7 /* 圆角矩形-1.png */; };
+		96E421121BD9D69C00C582E7 /* center_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E421101BD9D69C00C582E7 /* center_comment.png */; };
+		96E421131BD9D69C00C582E7 /* my_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E421111BD9D69C00C582E7 /* my_comment.png */; };
 		96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E61B8C598700AB448B /* ChangeAddrssController.m */; };
 		96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */; };
 		96F47B201BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96F47B181BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle */; };
@@ -918,6 +921,9 @@
 		96BDF2501BD7974E0095E660 /* BankdetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BankdetailViewController.m; sourceTree = "<group>"; };
 		96DFE78E1BD5EF6400329D53 /* 下箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "下箭头.png"; sourceTree = "<group>"; };
 		96DFE7901BD5EF6900329D53 /* 上箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上箭头.png"; sourceTree = "<group>"; };
+		96E4210E1BD9D54D00C582E7 /* 圆角矩形-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "圆角矩形-1.png"; sourceTree = "<group>"; };
+		96E421101BD9D69C00C582E7 /* center_comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = center_comment.png; sourceTree = "<group>"; };
+		96E421111BD9D69C00C582E7 /* my_comment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = my_comment.png; sourceTree = "<group>"; };
 		96EC75E51B8C598700AB448B /* ChangeAddrssController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddrssController.h; sourceTree = "<group>"; };
 		96EC75E61B8C598700AB448B /* ChangeAddrssController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddrssController.m; sourceTree = "<group>"; };
 		96EC75E81B8C5AC500AB448B /* ChangeAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddressCell.h; sourceTree = "<group>"; };
@@ -1134,6 +1140,9 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				96E421101BD9D69C00C582E7 /* center_comment.png */,
+				96E421111BD9D69C00C582E7 /* my_comment.png */,
+				96E4210E1BD9D54D00C582E7 /* 圆角矩形-1.png */,
 				968196AF1BD8D15600D68191 /* youjiantou.png */,
 				96BDF24D1BD7836E0095E660 /* bankcard.png */,
 				96DFE7901BD5EF6900329D53 /* 上箭头.png */,
@@ -2338,6 +2347,7 @@
 				61731B2A1B954D1F00B04D85 /* 二手商品.png in Resources */,
 				617FE4DE1B60D5B8007EBFB2 /* easyicon_net_40.png in Resources */,
 				61AD6AD81BC8B5E600DA07D5 /* UMShareEditViewController.xib in Resources */,
+				96E421121BD9D69C00C582E7 /* center_comment.png in Resources */,
 				96BA8F301B8EBAE70062C8D8 /* 确认40灰色.png in Resources */,
 				968196B01BD8D15600D68191 /* youjiantou.png in Resources */,
 				61DA8F521BA126BB00824499 /* logo.png in Resources */,
@@ -2345,6 +2355,7 @@
 				617FE4D91B60D5B8007EBFB2 /* chuanzhenji.png in Resources */,
 				617FE4F51B60D5EF007EBFB2 /* 帮助与反馈.png in Resources */,
 				615CF6251B6F50DC00B369E7 /* 图层-11.png in Resources */,
+				96E4210F1BD9D54D00C582E7 /* 圆角矩形-1.png in Resources */,
 				617FE4F81B60D5EF007EBFB2 /* 我的购物车.png in Resources */,
 				610D5A0C1B9FDC0700301F3A /* youzhixiang21.png in Resources */,
 				612C57C11B8AC7AD0048FF28 /* deleteButton.png in Resources */,
@@ -2392,6 +2403,7 @@
 				96DFE7911BD5EF6900329D53 /* 上箭头.png in Resources */,
 				61AF901B1BAE7AC3007BBDAF /* 保养维修11-2.png in Resources */,
 				6167FA4A1B7F0E02004A1BD0 /* check-NO.png in Resources */,
+				96E421131BD9D69C00C582E7 /* my_comment.png in Resources */,
 				61793A851B54AF3800CFD83A /* cell_03.png in Resources */,
 				61793A861B54AF3800CFD83A /* cell_04.png in Resources */,
 			);
