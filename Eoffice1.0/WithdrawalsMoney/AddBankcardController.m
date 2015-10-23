@@ -26,6 +26,9 @@
     }
     return self;
 }
+-(void)setSucess:(BOOL)sucess{
+    _sucess = sucess;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     name = @"唐韬";
@@ -96,28 +99,29 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:ADDBANKCARD,COMMON,model.userkey,name,bankcard,banknumber,bankaddress];
-    NSLog(@"%@",path);
+//    NSString *path= [NSString stringWithFormat:ADDBANKCARD,COMMON,model.userkey,name,bankcard,banknumber,bankaddress];
+//    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 //    @"%@user!addBand.action?userkey=%@&name=%@&bankName=%@&bankNo=%@&bankAddress=%@"
     NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:model.userkey,@"userkey",name,@"name",bankcard,@"bankName",banknumber,@"bankNo",bankaddress,@"bankAddress", nil];
     [manager POST:@"http://192.168.0.65:8080/phone/user!addBand.action?" parameters:dicdata success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic[@"info"]);
+        NSLog(@"%@",dic);
         UIAlertView *alterview;
         NSString *string;
         if ([dic[@"status"]integerValue]==1) {
             string = @"添加成功";
             [self leftItemClicked];
-            if (_delegate && [_delegate respondsToSelector:@selector(reloadlist)]) {
-                [self.delegate reloadlist];
+            if (_delegate && [_delegate respondsToSelector:@selector(reloadlist:)]) {
+                [self.delegate reloadlist:dic];
             }
         }
         else{
             string = @"添加失败";
         }
         alterview  =[[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alterview show];
         [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];

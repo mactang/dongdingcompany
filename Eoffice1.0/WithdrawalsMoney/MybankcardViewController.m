@@ -11,7 +11,9 @@
 #import "AFNetworking.h"
 #import "SingleModel.h"
 #import "BanklistTableViewCell.h"
-@interface MybankcardViewController()<UITableViewDataSource,UITableViewDelegate>{
+#import "AddBankcardController.h"
+#import "BankdetailViewController.h"
+@interface MybankcardViewController()<UITableViewDataSource,UITableViewDelegate,addbankdelegate,refreshdatadelegate>{
     UITableView *_tableview;
     NSMutableArray *datarray;
 }
@@ -25,6 +27,9 @@
     }
     return self;
 }
+-(void)setSucess:(BOOL)sucess{
+    _sucess = sucess;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     datarray = [NSMutableArray array];
@@ -36,11 +41,11 @@
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
-    
-    UIBarButtonItem *releaseButon=[[UIBarButtonItem alloc] initWithTitle:@"➕" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked)];
-    releaseButon.tintColor = [UIColor lightGrayColor];
-    self.navigationItem.rightBarButtonItem = releaseButon;
-    
+    if (_sucess) {
+        UIBarButtonItem *releaseButon=[[UIBarButtonItem alloc] initWithTitle:@"➕" style:UIBarButtonItemStylePlain target:self action:@selector(rightItemClicked)];
+        releaseButon.tintColor = [UIColor lightGrayColor];
+        self.navigationItem.rightBarButtonItem = releaseButon;
+    }
     _tableview = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)style:UITableViewStylePlain];
     _tableview.delegate = self;
     _tableview.dataSource = self;
@@ -60,7 +65,6 @@
 }
 
 -(void)banklistrequest{
-    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
@@ -74,17 +78,37 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [datarray removeAllObjects];
         if (dic[@"data"] !=[NSNull null]){
             [datarray addObjectsFromArray:dic[@"data"]];
             NSLog(@"%@",dic);
         }
         [hud hide:YES];
+        if (datarray.count==0) {
+            [self addbankcard];
+        }
         [_tableview reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
     }];
+}
+-(void)addbankcard{
+    UIView *whiteview = [[UIView alloc]initWithFrame:CGRectMake(0, 74, SCREEN_WIDTH, 50)];
+    whiteview.backgroundColor = [UIColor whiteColor];
+    whiteview.tag = 70;
+    [self.view addSubview:whiteview];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 2, SCREEN_WIDTH, 46);
+    [button setTitle:@"➕添加银行卡" forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:14];
+    [button addTarget:self action:@selector(addbankcardPressed) forControlEvents:UIControlEventTouchUpInside];
+    [whiteview addSubview:button];
+}
+-(void)addbankcardPressed{
+    [self rightItemClicked];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
    
@@ -121,11 +145,37 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         
         [cell setLayoutMargins:UIEdgeInsetsZero];
-        
     }
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_sucess) {
+        BankdetailViewController *bankdetail = [[BankdetailViewController alloc]init];
+        bankdetail.dic = datarray[indexPath.row];
+        bankdetail.delegate = self;
+        [self.navigationController pushViewController:bankdetail animated:YES];
+    }
+    else{
+        if (_delegate &&[_delegate respondsToSelector:@selector(choosebankcard:)]) {
+            [self.delegate choosebankcard:datarray[indexPath.row]];
+            [self leftItemClicked];
+        }
+    }
+   
+}
+#pragma mark addbankdelegate
+-(void)reloadlist:(NSDictionary *)dic{
+    UIView *whiteview = (UIView *)[self.view viewWithTag:70];
+    [whiteview removeFromSuperview];
+    [self banklistrequest];
+}
+#pragma mark refreshdatadelegate
+-(void)refreshdatalist{
+    [self banklistrequest];
+}
 -(void)rightItemClicked{
-    
+    AddBankcardController *addbank = [[AddBankcardController alloc]init];
+    addbank.delegate = self;
+    [self.navigationController pushViewController:addbank animated:YES];
 }
 - (void)leftItemClicked{
     self.navigationController.navigationBar.translucent = YES;

@@ -8,18 +8,11 @@
 
 #import <UIKit/UIKit.h>
 @protocol buttondelegate <NSObject>
-
--(void)cellbutton:(UIButton *)button;
-
 @end
 @interface BanklistTableViewCell : UITableViewCell
-@property(nonatomic,assign)NSInteger cellNo;
 @property(nonatomic,strong)NSMutableDictionary *dic;
-@property(nonatomic,strong)UILabel *addbankcrdlabel;
-@property(nonatomic,strong)UILabel *addbanklabel;
+@property(nonatomic,strong)UILabel *laterNo;
 @property(nonatomic,strong)UIImageView *picimageview;
 @property(nonatomic,strong)UILabel *banklabel;
-@property(nonatomic,strong)UILabel *bankNo;
-@property(nonatomic,strong)UIButton *cellbutton;
 @property(nonatomic,assign)id<buttondelegate>delegate;
 @end

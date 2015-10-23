@@ -143,6 +143,7 @@
 
 #define APPLYFOR @"%@user!amount.action?"
 
+#define DELEGATEBANKCARD @"%@user!delBand.action?userkey=%@&id=%@"
 //申请提现：phone/user!amount.action?userkey=?&rand=?&phone=?&id=?&amount=?
 //返现记录 phone/user!returnRecord.action?userkey=?
 //提现明细 phone/user!cashDetails.action?userkey=?

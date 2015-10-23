@@ -261,6 +261,7 @@
     }
     if (indexPath.row == 4) {
         MybankcardViewController *mybank = [[MybankcardViewController alloc]init];
+        mybank.sucess = YES;
         [self.navigationController pushViewController:mybank animated:YES];
     }
     if (indexPath.row == 5) {

@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 @protocol addbankdelegate <NSObject>
 
--(void)reloadlist;
+-(void)reloadlist:(NSDictionary *)dic;
 
 @end
 @interface AddBankcardController : UIViewController
 @property(nonatomic,assign)id<addbankdelegate>delegate;
+@property(nonatomic,assign)BOOL sucess;
 @end
