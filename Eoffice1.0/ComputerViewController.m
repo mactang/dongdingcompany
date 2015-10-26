@@ -77,6 +77,7 @@ static const CGFloat MJDuration = 2.0;
     
 }
 -(void)initappreance{
+    
     // 1.设置布局模式
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     // 1.1设置item的大小
@@ -260,7 +261,7 @@ static const CGFloat MJDuration = 2.0;
 -(void)footrefreshdata{
     SingleModel *single = [SingleModel sharedSingleModel];
     NSInteger pageNumber = [self.datas count] / 6 + 1;
-    self.string = [NSString stringWithFormat:@"%ld",pageNumber];
+    self.string = [NSString stringWithFormat:@"%ld",(long)pageNumber];
     NSLog(@"%@",self.string);
     NSString *path= [NSString stringWithFormat:COMPUTER,COMMON,single.ids,self.string];
     NSLog(@"%@",path);
@@ -430,14 +431,5 @@ static const CGFloat MJDuration = 2.0;
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

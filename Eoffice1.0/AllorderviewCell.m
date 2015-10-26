@@ -196,6 +196,7 @@
         self.returnbutton.frame = CGRectMake(widgetFrameX(self.logisticsbutton)-widgetBoundsWidth(self.logisticsbutton)-5, widgetFrameY(self.logisticsbutton), widgetBoundsWidth(self.logisticsbutton), widgetboundsHeight(self.logisticsbutton));
         [self.returnbutton setTitle:@"退换货" forState:UIControlStateNormal];
         [self.returnbutton setTitleColor:[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1] forState:UIControlStateNormal];
+        [self.returnbutton addTarget:self action:@selector(exchagePress) forControlEvents:UIControlEventTouchUpInside];
         self.returnbutton.layer.cornerRadius = 3;
         self.returnbutton.layer.borderWidth = 0.5;
         self.returnbutton.clipsToBounds = YES;
@@ -237,6 +238,12 @@
     stringmodel = model.orderId;
     
    
+    
+}
+-(void)exchagePress{
+    if (_delegate&&[_delegate respondsToSelector:@selector(exchangeDelete)]) {
+        [self.delegate exchangeDelete];
+    }
     
 }
 -(void)delegateOrder{

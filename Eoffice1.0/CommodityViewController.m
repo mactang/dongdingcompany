@@ -110,11 +110,12 @@
     [self.navigationController pushViewController:cm animated:YES];
 }
 -(void)openOrCloseLeftList{
+    
     LeftSortsViewController *leftVC = [[LeftSortsViewController alloc]init];
     
-    //    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"商品" style:UIBarButtonItemStylePlain target:nil action:nil];
-    //    self.navigationItem.backBarButtonItem = backItem;
-    [self.navigationController pushViewController:leftVC animated:YES];
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"商品" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    self.navigationItem.backBarButtonItem = backItem;
+    [self.navigationController pushViewController:leftVC animated:NO];
     
 }
 -(void)data{

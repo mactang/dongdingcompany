@@ -23,6 +23,8 @@
         self.name = dic[@"name"];
         self.data = dic[@"data"];
         self.version = dic[@"version"];
+        self.goodsImgUrl = dic[@"goodsImgUrl"];
+        self.detaiImgUrl = dic[@"detaiImgUrl"];
     }
     
     return self;

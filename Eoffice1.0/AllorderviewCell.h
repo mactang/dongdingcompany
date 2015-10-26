@@ -13,6 +13,8 @@
 
 -(void)deatailGoodId:(NSString *)goodId;
 
+-(void)exchangeDelete;
+
 @end
 @interface AllorderviewCell : UITableViewCell
 @property(nonatomic,strong)OrderModel *model;

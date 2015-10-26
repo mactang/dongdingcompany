@@ -349,6 +349,12 @@
     [alert show];
     
 }
+-(void)exchangeDelete{
+
+    ExchangeViewController *exchage = [[ExchangeViewController alloc]init];
+    [self.navigationController pushViewController:exchage animated:YES];
+}
+
 -(void)deleteData{
     
     NSString *path= [NSString stringWithFormat:DELETEORDER,COMMON,_orderId];

@@ -127,7 +127,7 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-  
+        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]){
             [datadic addEntriesFromDictionary:dic[@"data"]];
             NSLog(@"%@",datadic);

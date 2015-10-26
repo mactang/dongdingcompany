@@ -271,9 +271,7 @@
     
     NSString *sexText = notify.object;
     NSLog(@"%@",notify.object);
-    //    UITableViewCell *cell = (UITableViewCell*)[self.view viewWithTag:1000];
-    //    cell.detailTextLabel.text = reglarText;
-    // birthdayLb.text = reglarText;
+    
     sexLb.text = sexText;
     
     if ([sexLb.text isEqual:@"男"]) {

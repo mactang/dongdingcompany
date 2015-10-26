@@ -69,8 +69,8 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-    [self exchageData];
-    [self returnData];
+//    [self exchageData];
+//    [self returnData];
     
     self.isle = YES;
     
@@ -156,7 +156,7 @@
         {
             BackReasonModel *model = [BackReasonModel modelWithDic:subDict];
             [self.exchageDatas addObject: model];
-            NSLog(@"%@",self.datas);
+            NSLog(@"%@",self.exchageDatas);
             
         }
         }
@@ -373,7 +373,7 @@
 
 - (void)PullDownMenu:(MXPullDownMenu *)pullDownMenu didSelectRowAtColumn:(NSInteger)column row:(NSInteger)row
 {
-    NSLog(@"%d -- %d", column, row);
+    NSLog(@"%ld -- %ld", (long)column, (long)row);
 }
 
 
@@ -399,6 +399,7 @@
         [self.navigationController pushViewController:exs animated:YES];
     }
     else{
+        
         [self returnDatas];
         ReturnSuccessController *returnS = [[ReturnSuccessController alloc]init];
         [self.navigationController pushViewController:returnS animated:YES];
@@ -554,6 +555,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
 }
