@@ -104,39 +104,37 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
     imageView.image = [UIImage imageNamed:imageName[indexPath.row]];
     [cell addSubview:imageView];
-   
-    NSLog(@"MProductMedcategoryId--%@",model.MProductMedcategoryId);
-    
-    NSString *path1= [NSString stringWithFormat:MAINTAINSORTSSMART,COMMON,model.MProductMedcategoryId];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager GET:path1 parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (dic[@"data"] !=[NSNull null]){
-        NSArray *array = dic[@"data"];
-        
-        for(NSDictionary *subDict in array)
-        {
-            CategoryBig *model = [CategoryBig modelWithDic:subDict];
-            [self.detailDatas addObject:model];
-            
-        }
-    }
-        [self category];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
-
+  
+//    NSLog(@"MProductMedcategoryId--%@",model.MProductMedcategoryId);
+//    
+//    NSString *path1= [NSString stringWithFormat:MAINTAINSORTSSMART,COMMON,model.MProductMedcategoryId];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    
+//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//    [manager GET:path1 parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//        if (dic[@"data"] !=[NSNull null]){
+//        NSArray *array = dic[@"data"];
+//        
+//        for(NSDictionary *subDict in array)
+//        {
+//            CategoryBig *model = [CategoryBig modelWithDic:subDict];
+//            [self.detailDatas addObject:model];
+//        }
+//    }
+//        [self category];
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"%@",error);
+//    }];
+//
 //    //初始化选中行
 //    NSIndexPath *ind = [NSIndexPath indexPathForRow:0 inSection:0];
 //    [self.tableview scrollToRowAtIndexPath:ind atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 //    [self.tableview selectRowAtIndexPath:ind animated:YES scrollPosition:UITableViewScrollPositionMiddle];
        return cell;
 }
-
 -(void)data{
     
     NSString *path= [NSString stringWithFormat:MAINTAINSORTS,COMMON];
@@ -153,7 +151,7 @@
         for(NSDictionary *subDict in array)
         {
             CategoryBig *model = [CategoryBig modelWithDic:subDict];
-             [self.datas addObject:model];
+            [self.datas addObject:model];
             NSLog(@"model.name--%@",self.datas);
         }
         //刷新表
@@ -167,17 +165,12 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-    
-    
-    
-    
-    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //打开这个方法选择颜色就会消失
   //  [tableView deselectRowAtIndexPath:indexPath animated:YES];
-     CategoryBig *model = self.datas[indexPath.row];
+    CategoryBig *model = self.datas[indexPath.row];
     NSLog(@"MProductMedcategoryId--%@",model.MProductCategoryId);
     
     NSString *path1= [NSString stringWithFormat:MAINTAIN,COMMON,model.MProductCategoryId];
@@ -193,17 +186,11 @@
         {
             CategoryBig *model = [CategoryBig modelWithDic:subDict];
             [self.detailDatas addObject:model];
-         
         }
-
             [self category];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-
-    
-    
 }
 -(void)category{
     

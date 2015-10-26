@@ -44,25 +44,16 @@
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
-    
-    
     //[imageView addSubview: image];
     [self downData];
-    
-    
 }
 - (void)downData{
     
-    
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     NSString *path= [NSString stringWithFormat:RECOMMENBACKMONEY,COMMON,model.userkey];
     NSLog(@"%@",path);
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
@@ -71,16 +62,14 @@
             RcommendBackModel *model = [RcommendBackModel modelWithDic:array];
             [self.datas addObject: model];
         }
-        
         [self recommendBackView];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
     
 }
 -(void)recommendBackView{
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0,64,320, 70)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0,64,SCREEN_WIDTH, 70)];
     view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:view];
     
@@ -155,7 +144,7 @@
     UIButton *ruleButton = [[UIButton alloc]initWithFrame:CGRectMake(215, 30, 60, 20)];
     [ruleButton setTitle:@"(返现规则)" forState:UIControlStateNormal];
     [ruleButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    ruleButton.font = [UIFont systemFontOfSize:12];
+    ruleButton.titleLabel.font = [UIFont systemFontOfSize:12];
     [ruleButton addTarget:self action:@selector(rulePressBtn) forControlEvents:UIControlEventTouchUpInside];
     [recommendExplaiLb addSubview:ruleButton];
     

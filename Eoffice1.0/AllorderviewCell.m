@@ -125,7 +125,6 @@
     
     NSMutableAttributedString *totalstring = [[NSMutableAttributedString alloc]initWithString:[NSString stringWithFormat:@"合计:￥%.2f",[model.totalFee floatValue]]];
     [totalstring addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:204.0/255.0 green:0/255.0 blue:0/255.0 alpha:1] range:NSMakeRange(0, 3)];
-    
     CGSize totalprice = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"合计:￥%.2f",[model.totalFee floatValue]] font:[UIFont systemFontOfSize:13] constraintSize:CGSizeMake(SCREEN_WIDTH/2, 20)];
     self.totalPrice.frame = CGRectMake(SCREEN_WIDTH-totalprice.width-5, CGRectGetMaxY(self.lineview.frame)+10, totalprice.width, totalprice.height);
     self.totalPrice.font = [UIFont systemFontOfSize:13];
@@ -164,7 +163,6 @@
         self.orderbutton.backgroundColor = [UIColor whiteColor];
     }
     NSLog(@"%@",model.orderDescription);
-    
     
     self.logisticsbutton.frame = CGRectMake(widgetFrameX(self.orderbutton)-widgetBoundsWidth(self.orderbutton)-5, widgetFrameY(self.orderbutton), widgetBoundsWidth(self.orderbutton), widgetboundsHeight(self.orderbutton));
     [self.logisticsbutton setTitle:@"查看物流" forState:UIControlStateNormal];
