@@ -111,7 +111,7 @@
             [login.view removeFromSuperview];
             if (refresh) {
                 [self downData];
-                refresh = NO;
+//                refresh = NO;
             }
 //        }
 
@@ -153,11 +153,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     static NSString *identity = @"cell";
-    
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
-    
     cell.clipsToBounds = YES;
-    
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -166,7 +163,6 @@
         UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 175)];
         detailImageView.userInteractionEnabled = YES;
         detailImageView.image = [UIImage imageNamed:@"求真像"];
-        
         NSLog(@"%@",model.imgUrl);
         [cell addSubview:detailImageView];
         

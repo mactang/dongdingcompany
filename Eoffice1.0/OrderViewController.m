@@ -416,10 +416,7 @@
 
         NSLog(@"%@",error);
     }];
-
-
 }
-
 -(void)buttonPress:(UIButton *)btn{
     //查看物流
     if (btn.tag == 1001) {
@@ -495,7 +492,7 @@
         [login.view removeFromSuperview];
         if (refresh) {
             [self classifyData];
-            refresh = NO;
+//            refresh = NO;
         }
        
     }
