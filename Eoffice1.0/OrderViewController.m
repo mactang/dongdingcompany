@@ -524,6 +524,7 @@
     payMainManager.delegate = self;
     NSLog(@"%@",orderInfo);
     [payMainManager doPayWithOrderInfo:orderInfo params:nil delegate:self];
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
 }
 -(NSString*)buildOrderInfoTest
 {
@@ -537,8 +538,6 @@
     NSString *  locationString=[dateformatter stringFromDate:senddate];
     
     NSLog(@"locationString:%@",locationString);
-    
-    
     
     NSMutableString *str = [[NSMutableString alloc]init];
     
@@ -636,10 +635,8 @@
 
 - (void)logEventId:(NSString*)eventId eventDesc:(NSString*)eventDesc;
 {}
-
-
 - (void)viewWillDisappear:(BOOL)animated {
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
     [super viewWillDisappear:animated];
 }

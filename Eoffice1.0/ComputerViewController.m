@@ -352,7 +352,7 @@ static const CGFloat MJDuration = 2.0;
     [syntBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [syntBT setImage:[UIImage imageNamed:@"classify1"] forState:UIControlStateNormal];
     [syntBT setTitle:@"综合" forState:UIControlStateNormal];
-    syntBT.font = [UIFont systemFontOfSize:15];
+    syntBT.titleLabel.font = [UIFont systemFontOfSize:15];
     [view addSubview:syntBT];
     
     UIButton *button  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(syntBT.frame)-10, syntBT.frame.origin.y+12, 13, 13)];
@@ -369,7 +369,7 @@ static const CGFloat MJDuration = 2.0;
     // volumBT.backgroundColor = [UIColor brownColor];
     [volumBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [volumBT setTitle:@"销量" forState:UIControlStateNormal];
-    volumBT.font = [UIFont systemFontOfSize:15];;
+    volumBT.titleLabel.font = [UIFont systemFontOfSize:15];;
     [view addSubview:volumBT];
     
     UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(volumBT.frame)+8, syntBT.frame.origin.y+5, 0.5, 25)];
@@ -380,7 +380,7 @@ static const CGFloat MJDuration = 2.0;
     //priceBT.backgroundColor = [UIColor brownColor];
     [priceBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [priceBT setTitle:@"价格" forState:UIControlStateNormal];
-    priceBT.font = [UIFont systemFontOfSize:15];
+    priceBT.titleLabel.font = [UIFont systemFontOfSize:15];
     [view addSubview:priceBT];
     
     UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceBT.frame)+8, syntBT.frame.origin.y+5, 0.5, 25)];
@@ -392,14 +392,13 @@ static const CGFloat MJDuration = 2.0;
     [screenBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [screenBT addTarget:self action:@selector(screenPress) forControlEvents:UIControlEventTouchUpInside ];
     [screenBT setTitle:@"筛选" forState:UIControlStateNormal];
-    screenBT.font = [UIFont systemFontOfSize:15];
+    screenBT.titleLabel.font = [UIFont systemFontOfSize:15];
     [view addSubview:screenBT];
     
     UIButton *button1  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(screenBT.frame), screenBT.frame.origin.y+12, 13, 13)];
     [button1 setImage:[UIImage imageNamed:@"clBelow"] forState:UIControlStateNormal];
     [button1 setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
     [view addSubview:button1];
-    
     
     [self.view addSubview:view];
 }

@@ -94,10 +94,7 @@
     self.searchBar.clipsToBounds = YES;
     self.searchBar.layer.masksToBounds = YES;
     self.searchBar.layer.cornerRadius = 15;
-    
     [self data];
-    
-
 }
 -(void)leftItemClicked{
     
