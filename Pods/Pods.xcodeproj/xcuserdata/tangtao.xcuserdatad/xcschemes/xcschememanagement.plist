@@ -7,52 +7,52 @@
 		<key>AFNetworking.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<key>IQKeyboardManager.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>10</integer>
 		</dict>
 		<key>JBASIHTTPRequest.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>6</integer>
+			<integer>7</integer>
 		</dict>
 		<key>JSONKit.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>8</integer>
 		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>5</integer>
 		</dict>
 		<key>MJRefresh.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>4</integer>
 		</dict>
 		<key>Reachability.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>9</integer>
 		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>6</integer>
 		</dict>
 		<key>libqrencode.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>10</integer>
+			<integer>11</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -112,6 +112,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3C0AD42597685665519CF0E8BBE9D00F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3D8F9B3401F57591BED9F208BA4CF500</key>
 		<dict>
 			<key>primary</key>
@@ -128,6 +133,11 @@
 			<true/>
 		</dict>
 		<key>5352D432641F0656C90741034E32F31E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5434F1A981DDDDFBEDA306FB1D453EC6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -153,6 +163,11 @@
 			<true/>
 		</dict>
 		<key>6554520CF3805009117CF9F038E758C0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>74F20D21D69E2F95A89E8F8438CD6805</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -183,6 +198,11 @@
 			<true/>
 		</dict>
 		<key>A0142FBB84C67E873CA0C417F2440C2B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A3F57FC6CD4B781E003C26167A58D917</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -232,6 +252,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>E5243F441048083F945CC7AD53284E08</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E5633C4E8657832457E8A5451D4C9073</key>
 		<dict>
 			<key>primary</key>
@@ -248,6 +273,11 @@
 			<true/>
 		</dict>
 		<key>ED9519FAF86145BCC503C8904BA95FDA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F47885F0406666C7630E59CC2E9B132B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

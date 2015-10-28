@@ -133,9 +133,7 @@
             NSLog(@"%@",datadic);
         }
         [hud hide:YES];
-
         [_tableview reloadData];
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
@@ -174,7 +172,6 @@
         return 35;
     }
     return 50;
-    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (sucess) {
