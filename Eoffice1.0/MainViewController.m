@@ -271,12 +271,12 @@
     
     [super viewWillAppear:animated];
     
-  //  [(BottonTabBarController*)self.tabBarController hideTabBar:NO];
+ 
     
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
 }
 
 /*

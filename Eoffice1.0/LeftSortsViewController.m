@@ -14,13 +14,16 @@
 #import "RDVTabBarController.h"
 #import "ComputerViewController.h"
 #import "SingleModel.h"
-
+#import "CalculateStringSpace.h"
 @interface LeftSortsViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic, strong)NSMutableArray *datas;
 @property(nonatomic, strong)NSMutableArray *detailDatas;
 @end
 
 @implementation LeftSortsViewController
+{
+    NSInteger row;
+}
 //懒加载
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -50,17 +53,20 @@
     UIImageView *imageview = [[UIImageView alloc] initWithFrame:self.view.bounds];
     [self.view addSubview:imageview];
     
+    row = 0;
+    //[self categoryData];
+    
     [self data];
     
     NSLog(@"self.datas%@",self.datas);
-    UITableView *tableview = [[UITableView alloc] init];
-    self.tableview = tableview;
-    tableview.frame = CGRectMake(0, 60, 200, SCREEN_HEIGHT-60);
-    tableview.dataSource = self;
-    tableview.delegate  = self;
-    tableview.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-    tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:tableview];
+//    UITableView *tableview = [[UITableView alloc] init];
+//    self.tableview = tableview;
+//    tableview.frame = CGRectMake(0, 60, 120, SCREEN_HEIGHT-60);
+//    tableview.dataSource = self;
+//    tableview.delegate  = self;
+//    tableview.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+//    tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.view addSubview:tableview];
 }
 - (void)leftItemClicked{
     
@@ -98,43 +104,45 @@
     UIImage *imge = [UIImage imageNamed:@"sousou1"];
     UIImageView *imgV = [[UIImageView alloc]initWithImage:imge];
     cell.selectedBackgroundView = imgV;
-    NSArray *imageName = @[@"pos",@"zhizhang",@"diannao",@"dayingji",@"chuanzhenji"];
+    //NSArray *imageName = @[@"pos",@"zhizhang",@"diannao",@"dayingji",@"chuanzhenji"];
     CategoryBig *model = self.datas[indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"       %@",model.name];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@",model.name];
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
-    imageView.image = [UIImage imageNamed:imageName[indexPath.row]];
+   // imageView.image = [UIImage imageNamed:imageName[indexPath.row]];
     [cell addSubview:imageView];
-  
-//    NSLog(@"MProductMedcategoryId--%@",model.MProductMedcategoryId);
-//    
-//    NSString *path1= [NSString stringWithFormat:MAINTAINSORTSSMART,COMMON,model.MProductMedcategoryId];
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    [manager GET:path1 parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-//        if (dic[@"data"] !=[NSNull null]){
-//        NSArray *array = dic[@"data"];
-//        
-//        for(NSDictionary *subDict in array)
-//        {
-//            CategoryBig *model = [CategoryBig modelWithDic:subDict];
-//            [self.detailDatas addObject:model];
-//        }
-//    }
-//        [self category];
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"%@",error);
-//    }];
-//
+   
+    NSLog(@"MProductMedcategoryId--%@",model.MProductMedcategoryId);
+    
+    NSString *path1= [NSString stringWithFormat:MAINTAINSORTSSMART,COMMON,model.MProductMedcategoryId];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path1 parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+        NSArray *array = dic[@"data"];
+        
+        for(NSDictionary *subDict in array)
+        {
+            CategoryBig *model = [CategoryBig modelWithDic:subDict];
+            [self.detailDatas addObject:model];
+            
+        }
+    }
+        [self category];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+
 //    //初始化选中行
 //    NSIndexPath *ind = [NSIndexPath indexPathForRow:0 inSection:0];
 //    [self.tableview scrollToRowAtIndexPath:ind atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
 //    [self.tableview selectRowAtIndexPath:ind animated:YES scrollPosition:UITableViewScrollPositionMiddle];
        return cell;
 }
+
 -(void)data{
     
     NSString *path= [NSString stringWithFormat:MAINTAINSORTS,COMMON];
@@ -151,29 +159,52 @@
         for(NSDictionary *subDict in array)
         {
             CategoryBig *model = [CategoryBig modelWithDic:subDict];
-            [self.datas addObject:model];
+             [self.datas addObject:model];
             NSLog(@"model.name--%@",self.datas);
         }
         //刷新表
-        [_tableview reloadData];
+        UITableView *tableview = [[UITableView alloc] init];
+        self.tableview = tableview;
+        tableview.frame = CGRectMake(0, 60, 120, SCREEN_HEIGHT-60);
+        tableview.dataSource = self;
+        tableview.delegate  = self;
+        tableview.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+        tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self.view addSubview:tableview];
         //初始化选中行
         NSIndexPath *ind = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.tableview scrollToRowAtIndexPath:ind atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         [self.tableview selectRowAtIndexPath:ind animated:YES scrollPosition:UITableViewScrollPositionMiddle];
         
         [self category];
+        [self categoryData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
+    
+    
+    
+    
+    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //打开这个方法选择颜色就会消失
   //  [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    CategoryBig *model = self.datas[indexPath.row];
+     row = indexPath.row;
+    
+    [self categoryData];
+    
+   
+    
+    
+}
+-(void)categoryData{
+    CategoryBig *model = self.datas[row];
     NSLog(@"MProductMedcategoryId--%@",model.MProductCategoryId);
     
     NSString *path1= [NSString stringWithFormat:MAINTAIN,COMMON,model.MProductCategoryId];
+    NSLog(@"%@",path1);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -181,23 +212,30 @@
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSArray *array = dic[@"data"];
-      
+        
         for(NSDictionary *subDict in array)
         {
             CategoryBig *model = [CategoryBig modelWithDic:subDict];
             [self.detailDatas addObject:model];
+            
         }
-            [self category];
+        
+        [self category];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
+    
+
+    
 }
+
 -(void)category{
     
     UIView *printerView = [[UIView alloc]initWithFrame:CGRectMake(140, 63, 200, widgetboundsHeight(self.tableview))];
     printerView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:printerView];
-    int x = 10;
+    int x = 0;
     int y = 40;
     
     for (int i =0; i<self.detailDatas.count; i++) {
@@ -206,18 +244,16 @@
             NSLog(@"%@",model.name);
             NSLog(@"x--%d",x);
             NSLog(@"y--%d",y);
-//            UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(x, y, 80, 30)];
-//            LB1.text = [NSString stringWithFormat:@"%@",model.name];
-//            LB1.font = [UIFont systemFontOfSize:12];
-//            [printerView addSubview:LB1];
             
-            UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(x, y, 80, 30)];
+            CGSize totalprice = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"%@",model.name] font:[UIFont systemFontOfSize:13] constraintSize:CGSizeMake(printerView.frame.size.width/2, 30)];
+            
+            UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(x, y, totalprice.width, totalprice.height)];
             btn1.tag = i;
             [btn1 setTitle:[NSString stringWithFormat:@"%@",model.name] forState:UIControlStateNormal];
             [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(categoryBtnPress:) forControlEvents:UIControlEventTouchUpInside];
             btn1.titleLabel.font = [UIFont systemFontOfSize:12];
-     
+            btn1.titleLabel.textAlignment = NSTextAlignmentCenter;
             [printerView addSubview:btn1];
 
             x = x+10+80;
@@ -226,18 +262,16 @@
             CategoryBig *model = self.detailDatas[i];
             NSLog(@"%@",model.name);
             y = y+40+30;
-            x = 10;
-//            UILabel *LB1 = [[UILabel alloc]initWithFrame:CGRectMake(x, y, 80, 30)];
-//            LB1.text = [NSString stringWithFormat:@"%@",model.name];
-//            LB1.font = [UIFont systemFontOfSize:12];
-//            [printerView addSubview:LB1];
-            UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(x, y, 80, 30)];
+            x = 0;
+
+            CGSize totalprice = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"%@",model.name] font:[UIFont systemFontOfSize:13] constraintSize:CGSizeMake(printerView.frame.size.width/2, 30)];
+            UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(x, y, totalprice.width, totalprice.height)];
             [btn1 setTitle:[NSString stringWithFormat:@"%@",model.name] forState:UIControlStateNormal];
             [btn1 addTarget:self action:@selector(categoryBtnPress:) forControlEvents:UIControlEventTouchUpInside];
             [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             btn1.tag = i;
             btn1.titleLabel.font = [UIFont systemFontOfSize:12];
-            
+            btn1.titleLabel.textAlignment = NSTextAlignmentCenter;
             [printerView addSubview:btn1];
             
             x = x+10+80;

@@ -17,8 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setTitle:@"商家对比"];
-//    UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"＜" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBtn)];
-//    [self.navigationItem setLeftBarButtonItem:logoutItem];
+
     self.view.backgroundColor = [UIColor whiteColor];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
     

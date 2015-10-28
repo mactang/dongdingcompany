@@ -8,6 +8,7 @@
 
 #import "ServiceSuccessController.h"
 #import "RDVTabBarController.h"
+#import "MainViewController.h"
 @interface ServiceSuccessController ()
 
 @end
@@ -90,7 +91,7 @@
     contBtn.layer.borderColor = [[UIColor redColor]CGColor];
     [contBtn setTitle:@"继续购物" forState:UIControlStateNormal];
     [contBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [contBtn addTarget:self action:@selector(surePress) forControlEvents:UIControlEventTouchUpInside];
+    [contBtn addTarget:self action:@selector(continuePress) forControlEvents:UIControlEventTouchUpInside];
     contBtn.backgroundColor = [UIColor whiteColor];
     [view addSubview:contBtn];
     
@@ -115,6 +116,14 @@
     
     // Do any additional setup after loading the view.
 }
+-(void)continuePress{
+    
+    NSLog(@";;;");
+    MainViewController *main = [[MainViewController alloc]init];
+    [self.navigationController pushViewController:main animated:YES];
+    
+}
+
 -(void)backOrderPress{
     
     [self.navigationController popToRootViewControllerAnimated:YES];

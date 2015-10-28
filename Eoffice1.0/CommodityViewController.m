@@ -110,10 +110,12 @@
     [self.navigationController pushViewController:cm animated:YES];
 }
 -(void)openOrCloseLeftList{
+    
     LeftSortsViewController *leftVC = [[LeftSortsViewController alloc]init];
-    // UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"商品" style:UIBarButtonItemStylePlain target:nil action:nil];
-    // self.navigationItem.backBarButtonItem = backItem;
-    [self.navigationController pushViewController:leftVC animated:YES];
+    
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"商品" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    self.navigationItem.backBarButtonItem = backItem;
+    [self.navigationController pushViewController:leftVC animated:NO];
     
 }
 -(void)data{
@@ -121,19 +123,24 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
+
     NSString *path= [NSString stringWithFormat:COMMODITYMIDDLE,COMMON];
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
+
         NSArray *array = dic[@"data"];
         NSLog(@"array--%@",array);
         for(NSDictionary *subDict in array)
         {
             CategoryBig *model = [CategoryBig modelWithDic:subDict];
             [self.datas addObject:model];
+            NSLog(@"model.name--%@",self.datas);
         }
         //刷新表
         for (NSInteger i=0; i<self.datas.count; i++) {
@@ -167,12 +174,6 @@
         }
         if (error.code==-1001) {
             [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-                [self data];
-            }];
-        }
-        if (error.code==-1005) {
-            
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"网络连接失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
                 [self data];
             }];
         }
@@ -262,6 +263,8 @@
         }
         
     }
+    
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     

@@ -33,6 +33,7 @@
 #import "MenuPopover.h"
 #import "ContrastViewController.h"
 #import "AFNetworking.h"
+#import "UIKit+AFNetworking.h"
 #import "SingleModel.h"
 #import "detailsModel.h"
 #import "BBBadgeBarButtonItem.h"
@@ -359,10 +360,14 @@
     detailsModel *model = self.datas[0];
     NSLog(@"%@",model.version[0][@"maValue"]);
     if (indexPath.row == 0 && indexPath.section == 0) {
+        
+        NSString *nstring = [NSString stringWithFormat:@"%@",model.goodsImgUrl];
+        NSArray *array = [nstring componentsSeparatedByString:@","];
+        NSLog(@"%lu",(unsigned long)array.count);
         UIScrollView *scrollView = [[UIScrollView alloc] init];
-        scrollView.frame = CGRectMake(0, 0, 320, 130);
-        scrollView.contentSize = CGSizeMake(320*5, 130);
-        //scrollView.backgroundColor = [UIColor redColor];
+        scrollView.frame = CGRectMake(0, 0, 320, 150);
+        scrollView.contentSize = CGSizeMake(320*array.count, 150);
+        scrollView.backgroundColor = [UIColor grayColor];
         // 一页的大小应该是frame的大小
         scrollView.pagingEnabled = YES;
         scrollView.delegate = self;
@@ -370,42 +375,29 @@
         scrollView.showsVerticalScrollIndicator = NO;
         [cell addSubview:scrollView];
         scrollView.tag = 3001;
-        [scrollView setContentOffset:CGPointMake(320, 0)];
+        //[scrollView setContentOffset:CGPointMake(320, 0)];
         
         _currentIndex = 0;
         _imagesArray = [[NSMutableArray alloc] init];
         
         
-        
-        for(int i=0;i<5;i++)
-        {
+        for (int i = 0; i < [array count]; i++) {
+            NSLog(@"string:%@", [array objectAtIndex:i]);
             
-            //前置图
-            NSString *string = [NSString stringWithFormat:@"%d.jpg",i+1];
-            UIImage *forImage = [UIImage imageNamed:string];
             
-            UIImageView *forImageView = [[UIImageView alloc]initWithImage:forImage];
+            UIImageView *forImageView = [[UIImageView alloc]initWithFrame:CGRectMake(320*i, 0, 320, 150)];
+            [forImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[array objectAtIndex:i]]]];
             
-            forImageView.frame = CGRectMake(320*i, 0, 320, 130);
             
-            [scrollView addSubview:forImageView];
-            
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            
-            button.frame = CGRectMake(320*i, 0, 320, 130);
-            // button.backgroundColor = [UIColor redColor];
-            [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-            button.tag = i+10;
-            //添加到滚动视图
-            [scrollView addSubview:button];
-            
+             [scrollView addSubview:forImageView];
+
         }
         
         //分页控制控件
-        self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(110, 100, 120, 0)];
+        self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(110, 130, 120, 0)];
         self.pageControl.backgroundColor = [UIColor redColor];
         //分页的页数
-        self.pageControl.numberOfPages = 5;
+        self.pageControl.numberOfPages = array.count;
         //当前显示的分页
         self.pageControl.currentPage = 0;
         //将分页控制控件加在本视图上面

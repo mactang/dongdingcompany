@@ -280,12 +280,12 @@
 
 - (void)PullDownMenu:(MXPullDownMenu *)pullDownMenu didSelectRowAtColumn:(NSInteger)column row:(NSInteger)row
 {
-    NSLog(@"%d -- %d", column, row);
+    NSLog(@"%ld -- %ld", (long)column, (long)row);
 }
 
 
 -(void)addPhoto{
-    int i = rand()%4;
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"添 加 图 片"
                                   delegate:self
@@ -297,16 +297,14 @@
     
 }
 -(void)surePress{
+    
     [self serviceDatas];
     ServiceSuccessController *sers = [[ServiceSuccessController alloc]init];
     [self.navigationController pushViewController:sers animated:YES];
 }
 -(void)serviceDatas{
     
-    
-    
-    
-    
+   
     SingleModel *model = [SingleModel sharedSingleModel];
     int i = [(model.reasonId)intValue];
     
@@ -315,14 +313,14 @@
     
     NSLog(@"%@",backReason.reasonId);
     NSString *path= [NSString stringWithFormat:SERVICESUBMIT,COMMON,model.jsessionid,model.userkey,model.serviceOrderId];
-    NSLog(@"%@",path);
+    NSLog(@"model.wGoodsId--%@",model.goodsId);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:@{@"content":_explainTextView.text,@"reasonId":model.reasonId,@"name":_nameField.text,@"phone":_phoneField,@"address":_addressTextView} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:@{@"content":_explainTextView.text,@"reasonId":model.reasonId,@"name":_nameField.text,@"phone":_phoneField.text,@"address":_addressTextView.text,@"wgoodsId":model.goodsId,@"count":@"1"} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
@@ -427,6 +425,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    self.navigationController.navigationBarHidden = NO;
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
 }

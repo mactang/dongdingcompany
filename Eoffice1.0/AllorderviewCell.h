@@ -13,6 +13,12 @@
 -(void)deatailGoodId:(NSString *)goodId;
 -(void)baifubao:(NSInteger )buttonTag;
 
+-(void)exchangeDelete;
+
+-(void)serviceRepair;
+
+-(void)logistics;
+
 @end
 @interface AllorderviewCell : UITableViewCell
 @property(nonatomic,strong)OrderModel *model;
