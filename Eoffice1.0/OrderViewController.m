@@ -24,7 +24,10 @@
 #import "UIAlertView+AlerViewBlocks.h"
 #import "CommodityViewController.h"
 #import "CMDetailsViewController.h"
-@interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate,deletgateOrder,UIAlertViewDelegate>
+#import "BDWalletSDKMainManager.h"
+#import <CommonCrypto/CommonDigest.h>
+
+@interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate,deletgateOrder,BDWalletSDKMainManagerDelegate,UIAlertViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *classifyDatas;
 @property(nonatomic,copy)NSString  *orderId;
@@ -64,10 +67,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+//        self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
+//        self.edgesForExtendedLayout = UIRectEdgeNone;
+//    }
     testarray = [NSMutableArray array];
     refresh = YES;
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
-    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBarHidden = YES;
     self.moredata = @"-1";
     _docstatusign = @"-1";
     UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 80, 20)];
@@ -349,6 +356,14 @@
     [alert show];
     
 }
+#pragma mark  baifubao
+-(void)baifubao:(NSInteger)buttonTag{
+    BDWalletSDKMainManager* payMainManager = [BDWalletSDKMainManager getInstance];
+    NSString *orderInfo = [self buildOrderInfoTest];
+    payMainManager.delegate = self;
+    NSLog(@"%@",orderInfo);
+     [payMainManager doPayWithOrderInfo:orderInfo params:nil delegate:self];
+}
 -(void)deleteData{
     
     NSString *path= [NSString stringWithFormat:DELETEORDER,COMMON,_orderId];
@@ -411,6 +426,7 @@
         NSLog(@"%@",error);
     }];
 }
+
 -(void)buttonPress:(UIButton *)btn{
     //查看物流
     if (btn.tag == 1001) {
@@ -491,6 +507,118 @@
        
     }
 }
+-(NSString*)buildOrderInfoTest
+{
+    
+    NSDate *senddate=[NSDate date];
+    
+    NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+    
+    [dateformatter setDateFormat:@"YYYYMMDDHHMMSS"];
+    
+    NSString *  locationString=[dateformatter stringFromDate:senddate];
+    
+    NSLog(@"locationString:%@",locationString);
+    
+  
+    
+    NSMutableString *str = [[NSMutableString alloc]init];
+    
+    static NSString *spNo = @"1000242714";
+    static NSString *key = @"zfVWqNyuW3w4MS3UC3U3dZ8MgkwK4RWB";
+
+    NSString *orderId = [NSString stringWithFormat:@"%.0f", fabs(arc4random())];
+    [str appendString:@"currency=1&extra="];
+    [str appendString:@"&goods_desc="];
+    [str appendString:[self utf8toGbk:@"美丽的童话世界"]];
+    [str appendString:@"&goods_name="];
+    [str appendString:[self utf8toGbk:@"笔记本电脑"]]; // 中文处理1
+
+    [str appendString:@"&goods_url=http://item.jd.com/736610.html&input_charset=1&order_create_time=20130508131702&order_no="];
+    [str appendString:orderId];
+    [str appendString:@"&pay_type=2"];
+
+//    [str appendString:@"&version=2"];
+    [str appendString:@"&return_url=http://item.jd.com/736610.html&service_code=1&sign_method=1&sp_no="];
+    [str appendString:spNo];
+    [str appendString:@"&sp_request_type="];
+    [str appendString:@"1"];
+    [str appendString:@"&sp_uno="];
+    [str appendString:@"11"];
+    [str appendString:@"&total_amount="];
+    [str appendString:@"1"];
+   
+
+    
+    NSString *md5CapPwd = [self mD5GBK:[NSString stringWithFormat:@"%@&key=%@" , str, key]]; // 中文处理2
+    
+    NSMutableString *str1 = [[NSMutableString alloc]init];
+    
+    [str1 appendString:@"currency=1&extra="];
+    [str1 appendString:@"&goods_desc="];
+    [str1 appendString:[self encodeURL:[self utf8toGbk:@"美丽的童话世界"]]];
+    [str1 appendString:@"&goods_name="];
+    [str1 appendString:[self encodeURL:[self utf8toGbk:@"笔记本电脑"]]];// 中文处理3
+
+    [str1 appendString:@"&goods_url=http://item.jd.com/736610.html&input_charset=1&order_create_time=20130508131702&order_no="];
+    [str1 appendString:orderId];
+    [str1 appendString:@"&pay_type=2"];
+
+    [str1 appendString:@"&return_url=http://item.jd.com/736610.html&service_code=1&sign_method=1&sp_no="];
+    [str1 appendString:spNo];
+    [str1 appendString:@"&sp_request_type="];
+    [str1 appendString:@"1"];
+    [str1 appendString:@"&sp_uno="];
+    [str1 appendString:@"11"];
+    [str1 appendString:@"&total_amount="];
+    [str1 appendString:@"1"];
+
+    
+    return [NSString stringWithFormat:@"%@&sign=%@" , str1 , md5CapPwd];
+}
+
+- (NSString *)mD5GBK:(NSString *)src
+{
+    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    const char *cStr = [src cStringUsingEncoding:enc];
+    unsigned char result[16];
+    CC_MD5( cStr, strlen(cStr), result );
+    return [NSString stringWithFormat:
+            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+            result[0], result[1], result[2], result[3],
+            result[4], result[5], result[6], result[7],
+            result[8], result[9], result[10], result[11],
+            result[12], result[13], result[14], result[15]
+            ];
+}
+
+- (NSString*)encodeURL:(NSString *)string
+{
+    NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
+                                                                                                    NULL,
+                                                                                                    (CFStringRef)string,
+                                                                                                    NULL,
+                                                                                                    CFSTR(":/?#[]@!$ &'()*+,;=\"<>%{}|\\^~`"),
+                                                                                                    kCFStringEncodingGB_18030_2000));
+    if (escaped_value) {
+        return escaped_value;
+    }
+    return @"";
+}
+-(NSString*)utf8toGbk:(NSString*)str
+{
+    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    NSString* str1 = [str stringByReplacingPercentEscapesUsingEncoding:enc];
+    return str1;
+}
+-(void)BDWalletPayResultWithCode:(int)statusCode payDesc:(NSString*)payDesc;
+{
+    NSLog(@"支付结束 接口 code:%d desc:%@",statusCode,payDesc);
+}
+
+- (void)logEventId:(NSString*)eventId eventDesc:(NSString*)eventDesc;
+{}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     

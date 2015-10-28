@@ -350,6 +350,12 @@
 		969E1EA81BC790D400CD9D02 /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 969E1E961BC790D300CD9D02 /* CJSONScanner.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		969E1EA91BC790D400CD9D02 /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 969E1E981BC790D300CD9D02 /* CJSONSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		969E1EAA1BC790D400CD9D02 /* CSerializedJSONData.m in Sources */ = {isa = PBXBuildFile; fileRef = 969E1E9A1BC790D400CD9D02 /* CSerializedJSONData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		96A4858E1BDF2BD8007E5416 /* BaiduWalletSDKBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96A485861BDF2BD8007E5416 /* BaiduWalletSDKBundle.bundle */; };
+		96A4858F1BDF2BD8007E5416 /* libBaiduWalletSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96A485891BDF2BD8007E5416 /* libBaiduWalletSDK.a */; };
+		96A485971BDF657A007E5416 /* sapi-custom-style.css in Resources */ = {isa = PBXBuildFile; fileRef = 96A485931BDF657A007E5416 /* sapi-custom-style.css */; };
+		96A485981BDF657A007E5416 /* sapi-nav-back-btn-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A485941BDF657A007E5416 /* sapi-nav-back-btn-bg.png */; };
+		96A485991BDF657A007E5416 /* wappass.baidu.com_passport_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 96A485951BDF657A007E5416 /* wappass.baidu.com_passport_login.html */; };
+		96A4859A1BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 96A485961BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html */; };
 		96A70D0C1B943E9A00C0F1F5 /* PersonInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */; };
 		96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */; };
 		96A70D111B943F5A00C0F1F5 /* massegeNumber.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A70D101B943F5A00C0F1F5 /* massegeNumber.png */; };
@@ -368,10 +374,6 @@
 		96E421131BD9D69C00C582E7 /* my_comment.png in Resources */ = {isa = PBXBuildFile; fileRef = 96E421111BD9D69C00C582E7 /* my_comment.png */; };
 		96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E61B8C598700AB448B /* ChangeAddrssController.m */; };
 		96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */; };
-		96F47B201BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 96F47B181BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle */; };
-		96F47B211BC7B78C0063A975 /* libBaiduWalletSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F47B1B1BC7B78C0063A975 /* libBaiduWalletSDK.a */; };
-		96F47B221BC7B78C0063A975 /* libBaiduWalletSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F47B1D1BC7B78C0063A975 /* libBaiduWalletSDK.a */; };
-		96F47B231BC7B78C0063A975 /* libBaiduWalletSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F47B1F1BC7B78C0063A975 /* libBaiduWalletSDK.a */; };
 		96F47B251BC7B79A0063A975 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F47B241BC7B79A0063A975 /* CoreLocation.framework */; };
 		96FFEE831BB9259400A22D78 /* AllorderviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96FFEE821BB9259400A22D78 /* AllorderviewCell.m */; };
 /* End PBXBuildFile section */
@@ -901,6 +903,13 @@
 		969E1E991BC790D300CD9D02 /* CSerializedJSONData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSerializedJSONData.h; sourceTree = "<group>"; };
 		969E1E9A1BC790D400CD9D02 /* CSerializedJSONData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSerializedJSONData.m; sourceTree = "<group>"; };
 		969E1E9B1BC790D400CD9D02 /* JSONRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONRepresentation.h; sourceTree = "<group>"; };
+		96A485861BDF2BD8007E5416 /* BaiduWalletSDKBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BaiduWalletSDKBundle.bundle; sourceTree = "<group>"; };
+		96A485871BDF2BD8007E5416 /* BDWalletSDKMainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDWalletSDKMainManager.h; sourceTree = "<group>"; };
+		96A485891BDF2BD8007E5416 /* libBaiduWalletSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduWalletSDK.a; sourceTree = "<group>"; };
+		96A485931BDF657A007E5416 /* sapi-custom-style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "sapi-custom-style.css"; sourceTree = "<group>"; };
+		96A485941BDF657A007E5416 /* sapi-nav-back-btn-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sapi-nav-back-btn-bg.png"; sourceTree = "<group>"; };
+		96A485951BDF657A007E5416 /* wappass.baidu.com_passport_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = wappass.baidu.com_passport_login.html; sourceTree = "<group>"; };
+		96A485961BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = wappass.qatest.baidu.com_passport_login.html; sourceTree = "<group>"; };
 		96A70D0A1B943E9A00C0F1F5 /* PersonInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInformationModel.h; sourceTree = "<group>"; };
 		96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInformationModel.m; sourceTree = "<group>"; };
 		96A70D0D1B943F1500C0F1F5 /* OrderStateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderStateModel.h; sourceTree = "<group>"; };
@@ -928,11 +937,6 @@
 		96EC75E61B8C598700AB448B /* ChangeAddrssController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddrssController.m; sourceTree = "<group>"; };
 		96EC75E81B8C5AC500AB448B /* ChangeAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddressCell.h; sourceTree = "<group>"; };
 		96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddressCell.m; sourceTree = "<group>"; };
-		96F47B181BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BaiduWalletSDKBundle.bundle; sourceTree = "<group>"; };
-		96F47B191BC7B78C0063A975 /* BDWalletSDKMainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDWalletSDKMainManager.h; sourceTree = "<group>"; };
-		96F47B1B1BC7B78C0063A975 /* libBaiduWalletSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduWalletSDK.a; sourceTree = "<group>"; };
-		96F47B1D1BC7B78C0063A975 /* libBaiduWalletSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduWalletSDK.a; sourceTree = "<group>"; };
-		96F47B1F1BC7B78C0063A975 /* libBaiduWalletSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduWalletSDK.a; sourceTree = "<group>"; };
 		96F47B241BC7B79A0063A975 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		96FFEE811BB9259400A22D78 /* AllorderviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllorderviewCell.h; sourceTree = "<group>"; };
 		96FFEE821BB9259400A22D78 /* AllorderviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllorderviewCell.m; sourceTree = "<group>"; };
@@ -949,11 +953,9 @@
 				612AA4001B9ECF21009A34EF /* CoreGraphics.framework in Frameworks */,
 				61AD6AE61BC8B5E700DA07D5 /* libWeChatSDK.a in Frameworks */,
 				9691092D1BC63D8E00A54798 /* QuartzCore.framework in Frameworks */,
-				96F47B231BC7B78C0063A975 /* libBaiduWalletSDK.a in Frameworks */,
 				9691092B1BC63D8700A54798 /* MapKit.framework in Frameworks */,
 				969109291BC63D7000A54798 /* ImageIO.framework in Frameworks */,
 				61AD6AE51BC8B5E700DA07D5 /* libSocialWechat.a in Frameworks */,
-				96F47B211BC7B78C0063A975 /* libBaiduWalletSDK.a in Frameworks */,
 				969109271BC63D6600A54798 /* AudioToolbox.framework in Frameworks */,
 				969109251BC63D5B00A54798 /* CoreAudio.framework in Frameworks */,
 				61AD6AD41BC8B5E600DA07D5 /* libUMSocial_Sdk_4.2.5.a in Frameworks */,
@@ -977,11 +979,11 @@
 				61AD6AE91BC8B5E700DA07D5 /* libYixinSDK_V2.2.a in Frameworks */,
 				969109191BC63C5900A54798 /* libz.1.2.5.dylib in Frameworks */,
 				612AA4021B9ECF2D009A34EF /* UIKit.framework in Frameworks */,
+				96A4858F1BDF2BD8007E5416 /* libBaiduWalletSDK.a in Frameworks */,
 				612AA3FE1B9ECEFE009A34EF /* Foundation.framework in Frameworks */,
 				615C160E1B68B35F00EDDA69 /* libiconv.2.4.0.dylib in Frameworks */,
 				615C160C1B68B34B00EDDA69 /* libsqlite3.0.dylib in Frameworks */,
 				61AD6AE41BC8B5E700DA07D5 /* libSocialTumblr.a in Frameworks */,
-				96F47B221BC7B78C0063A975 /* libBaiduWalletSDK.a in Frameworks */,
 				61AD6AE01BC8B5E700DA07D5 /* libSocialLine.a in Frameworks */,
 				3F86EEAB1F6AAAB7CF1F185E /* libPods.a in Frameworks */,
 			);
@@ -1140,6 +1142,7 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				96A485921BDF657A007E5416 /* www */,
 				96E421101BD9D69C00C582E7 /* center_comment.png */,
 				96E421111BD9D69C00C582E7 /* my_comment.png */,
 				96E4210E1BD9D54D00C582E7 /* 圆角矩形-1.png */,
@@ -1974,7 +1977,7 @@
 		9695ADDF1B9579C0004A7A1B /* Classtype */ = {
 			isa = PBXGroup;
 			children = (
-				96F47B171BC7B78C0063A975 /* BDWalletSDK */,
+				96A485851BDF2BD8007E5416 /* BDWalletSDK */,
 				969E1E781BC790D300CD9D02 /* BaiduMobStat */,
 				6166AA141BA02D0F00D7FDD1 /* Lib */,
 				9695ADE01B957A9A004A7A1B /* ButtonImageWithTitle.h */,
@@ -2077,6 +2080,35 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
+		96A485851BDF2BD8007E5416 /* BDWalletSDK */ = {
+			isa = PBXGroup;
+			children = (
+				96A485861BDF2BD8007E5416 /* BaiduWalletSDKBundle.bundle */,
+				96A485871BDF2BD8007E5416 /* BDWalletSDKMainManager.h */,
+				96A485881BDF2BD8007E5416 /* Release-composeLib */,
+			);
+			path = BDWalletSDK;
+			sourceTree = "<group>";
+		};
+		96A485881BDF2BD8007E5416 /* Release-composeLib */ = {
+			isa = PBXGroup;
+			children = (
+				96A485891BDF2BD8007E5416 /* libBaiduWalletSDK.a */,
+			);
+			path = "Release-composeLib";
+			sourceTree = "<group>";
+		};
+		96A485921BDF657A007E5416 /* www */ = {
+			isa = PBXGroup;
+			children = (
+				96A485931BDF657A007E5416 /* sapi-custom-style.css */,
+				96A485941BDF657A007E5416 /* sapi-nav-back-btn-bg.png */,
+				96A485951BDF657A007E5416 /* wappass.baidu.com_passport_login.html */,
+				96A485961BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html */,
+			);
+			path = www;
+			sourceTree = "<group>";
+		};
 		96BA8F291B8EADDC0062C8D8 /* input limited */ = {
 			isa = PBXGroup;
 			children = (
@@ -2097,42 +2129,6 @@
 				9690D6011B8D85C000B47495 /* ChangeModel.m */,
 			);
 			path = ChangeAddress;
-			sourceTree = "<group>";
-		};
-		96F47B171BC7B78C0063A975 /* BDWalletSDK */ = {
-			isa = PBXGroup;
-			children = (
-				96F47B181BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle */,
-				96F47B191BC7B78C0063A975 /* BDWalletSDKMainManager.h */,
-				96F47B1A1BC7B78C0063A975 /* Release-composeLib */,
-				96F47B1C1BC7B78C0063A975 /* Release-iphoneos */,
-				96F47B1E1BC7B78C0063A975 /* Release-iphonesimulator */,
-			);
-			path = BDWalletSDK;
-			sourceTree = "<group>";
-		};
-		96F47B1A1BC7B78C0063A975 /* Release-composeLib */ = {
-			isa = PBXGroup;
-			children = (
-				96F47B1B1BC7B78C0063A975 /* libBaiduWalletSDK.a */,
-			);
-			path = "Release-composeLib";
-			sourceTree = "<group>";
-		};
-		96F47B1C1BC7B78C0063A975 /* Release-iphoneos */ = {
-			isa = PBXGroup;
-			children = (
-				96F47B1D1BC7B78C0063A975 /* libBaiduWalletSDK.a */,
-			);
-			path = "Release-iphoneos";
-			sourceTree = "<group>";
-		};
-		96F47B1E1BC7B78C0063A975 /* Release-iphonesimulator */ = {
-			isa = PBXGroup;
-			children = (
-				96F47B1F1BC7B78C0063A975 /* libBaiduWalletSDK.a */,
-			);
-			path = "Release-iphonesimulator";
 			sourceTree = "<group>";
 		};
 		E9B244D1F97F763A8E23705E /* Pods */ = {
@@ -2233,6 +2229,7 @@
 				615CF6231B6F50DC00B369E7 /* 图层-9.png in Resources */,
 				6199572A1B746501002F30B6 /* air.jpg in Resources */,
 				617FE46D1B60CF18007EBFB2 /* 求真像.png in Resources */,
+				96A4858E1BDF2BD8007E5416 /* BaiduWalletSDKBundle.bundle in Resources */,
 				617FE5031B60FD87007EBFB2 /* sousuobeijing.png in Resources */,
 				61AD6AD61BC8B5E600DA07D5 /* UMSCommentInputController.xib in Resources */,
 				61BBF8151B75CDFD0087D39F /* xiangji.png in Resources */,
@@ -2278,6 +2275,7 @@
 				61A1CBAF1BAFDB7100903122 /* a.png in Resources */,
 				61731B491B959FA700B04D85 /* zulin.png in Resources */,
 				615B29841B4FB02C004E7546 /* userIcon_highlight.png in Resources */,
+				96A485981BDF657A007E5416 /* sapi-nav-back-btn-bg.png in Resources */,
 				61068A941B5CABDA008BE40A /* tabbar_selected_background@2x.png in Resources */,
 				617FE4DC1B60D5B8007EBFB2 /* diannao.png in Resources */,
 				61A1CBB11BAFDB7100903122 /* c.png in Resources */,
@@ -2319,7 +2317,6 @@
 				617FE5051B60FE52007EBFB2 /* sousou1.png in Resources */,
 				61731B441B959FA700B04D85 /* wuye.png in Resources */,
 				61AD6AD31BC8B5E600DA07D5 /* UMSocialLocalizable.strings in Resources */,
-				96F47B201BC7B78C0063A975 /* BaiduWalletSDKBundle.bundle in Resources */,
 				61A1FFE91B67773C00AFC8C2 /* 形状-1.png in Resources */,
 				61068A8F1B5CA6BA008BE40A /* shouye.png in Resources */,
 				615B29851B4FB02C004E7546 /* userIcon.png in Resources */,
@@ -2351,6 +2348,7 @@
 				96BA8F301B8EBAE70062C8D8 /* 确认40灰色.png in Resources */,
 				968196B01BD8D15600D68191 /* youjiantou.png in Resources */,
 				61DA8F521BA126BB00824499 /* logo.png in Resources */,
+				96A485991BDF657A007E5416 /* wappass.baidu.com_passport_login.html in Resources */,
 				61A1CB911BAF9CCB00903122 /* above1.png in Resources */,
 				617FE4D91B60D5B8007EBFB2 /* chuanzhenji.png in Resources */,
 				617FE4F51B60D5EF007EBFB2 /* 帮助与反馈.png in Resources */,
@@ -2387,6 +2385,7 @@
 				617FE4DD1B60D5B8007EBFB2 /* diannao1.png in Resources */,
 				617FE4FF1B60D9A5007EBFB2 /* options_pointer@2x.png in Resources */,
 				61731B471B959FA700B04D85 /* shangpin.png in Resources */,
+				96A4859A1BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html in Resources */,
 				617FE4D41B60D5B8007EBFB2 /* bangongruanjian.png in Resources */,
 				617FE4D21B60D5B8007EBFB2 /* 椭圆-5.png in Resources */,
 				61AD6ADD1BC8B5E600DA07D5 /* UMSocialSDKResourcesNew.bundle in Resources */,
@@ -2394,6 +2393,7 @@
 				612C57BF1B8AC6A30048FF28 /* deletbutton.png in Resources */,
 				96A70D111B943F5A00C0F1F5 /* massegeNumber.png in Resources */,
 				61AD6ADB1BC8B5E600DA07D5 /* UMSnsAccountViewController.xib in Resources */,
+				96A485971BDF657A007E5416 /* sapi-custom-style.css in Resources */,
 				617FE4F91B60D5EF007EBFB2 /* 选中.png in Resources */,
 				617FE4DA1B60D5B8007EBFB2 /* dayingji.png in Resources */,
 				96BA8F2E1B8EBA650062C8D8 /* 蓝色确认40.png in Resources */,

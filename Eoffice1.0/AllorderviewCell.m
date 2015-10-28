@@ -146,6 +146,7 @@
     self.orderbutton.layer.borderWidth = 0.5;
     self.orderbutton.layer.borderColor = [[UIColor grayColor]CGColor];
     self.orderbutton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.orderbutton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     if ([model.orderDescription isEqualToString:@"待付款"]) {
         [self.orderbutton setTitle:@"马上付款" forState:UIControlStateNormal];
     }
@@ -233,9 +234,12 @@
     self.delegatebutton.titleLabel.font = [UIFont systemFontOfSize:14];
     NSLog(@"%@",model.orderId);
     stringmodel = model.orderId;
+}
+-(void)buttonPressed:(UIButton *)button{
     
-   
-    
+    if (_delegate&&[_delegate respondsToSelector:@selector(baifubao:)]) {
+        [self.delegate baifubao:10];
+    }
 }
 -(void)delegateOrder{
     

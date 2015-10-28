@@ -10,8 +10,8 @@
 @class OrderModel;
 @protocol deletgateOrder <NSObject>
 -(void)delegatemethds:(NSString *)orderid;
-
 -(void)deatailGoodId:(NSString *)goodId;
+-(void)baifubao:(NSInteger )buttonTag;
 
 @end
 @interface AllorderviewCell : UITableViewCell
