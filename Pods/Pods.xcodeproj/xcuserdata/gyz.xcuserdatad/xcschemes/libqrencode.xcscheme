@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A1AC2424EA2ECEA7AEAAF8F1"
+               BlueprintIdentifier = "5BD3BACDBC91BDC86EA4783B"
                BuildableName = "liblibqrencode.a"
                BlueprintName = "libqrencode"
                ReferencedContainer = "container:Pods.xcodeproj">

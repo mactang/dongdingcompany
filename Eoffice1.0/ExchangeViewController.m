@@ -69,8 +69,8 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-//    [self exchageData];
-//    [self returnData];
+    [self exchageData];
+    [self returnData];
     
     self.isle = YES;
     
@@ -113,15 +113,15 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
-        NSArray *array = dic[@"data"];
-        
-        for(NSDictionary *subDict in array)
-        {
-            BackReasonModel *model = [BackReasonModel modelWithDic:subDict];
-            [self.datas addObject: model];
-            NSLog(@"%@",self.datas);
+            NSArray *array = dic[@"data"];
             
-        }
+            for(NSDictionary *subDict in array)
+            {
+                BackReasonModel *model = [BackReasonModel modelWithDic:subDict];
+                [self.datas addObject: model];
+                NSLog(@"%@",self.datas);
+                
+            }
         }
         
         [_tableView reloadData];
@@ -150,15 +150,15 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
-        NSArray *array = dic[@"data"];
-        
-        for(NSDictionary *subDict in array)
-        {
-            BackReasonModel *model = [BackReasonModel modelWithDic:subDict];
-            [self.exchageDatas addObject: model];
-            NSLog(@"%@",self.exchageDatas);
+            NSArray *array = dic[@"data"];
             
-        }
+            for(NSDictionary *subDict in array)
+            {
+                BackReasonModel *model = [BackReasonModel modelWithDic:subDict];
+                [self.exchageDatas addObject: model];
+                NSLog(@"%@",self.datas);
+                
+            }
         }
         
         [_tableView reloadData];
@@ -183,7 +183,7 @@
         self.isle = NO;
         
     }
-     [_tableView reloadData];
+    [_tableView reloadData];
     
     
 }
@@ -202,7 +202,7 @@
         return self.datas.count-self.datas.count+1;
     }
     else{
-    
+        
         return self.exchageDatas.count-self.exchageDatas.count+1;
     }
     
@@ -240,32 +240,34 @@
         _validateLB.textColor = [UIColor blackColor];
         [cell addSubview:_validateLB];
         
-
+        
         if (self.isle == NO) {
-        
-        _validateLB.text = @"退货原因：";
-        NSMutableArray *testArray = [NSMutableArray array];
-        for (int i = 0; i<self.datas.count; i++) {
-            BackReasonModel *model = self.datas[i];
-            [testArray addObject:model.title];
-            NSLog(@"datas--%@",testArray[i]);
-        }
-        
-        NSLog(@"datas--%@",testArray);
-        menu = [[MXPullDownMenu alloc] initWithArray:testArray selectedColor:[UIColor grayColor]];
-        menu.delegate = self;
-        menu.clipsToBounds = YES;
-        menu.layer.cornerRadius = 3;
-        menu.layer.borderColor = [[UIColor blackColor]CGColor];
-        menu.layer.borderWidth = 1;
-        menu.frame = CGRectMake(CGRectGetMaxX(_validateLB.frame)-10,10, 240, 35);
-        [cell addSubview:menu];
+            
+            _validateLB.text = @"退货原因：";
+            NSMutableArray *testArray = [NSMutableArray array];
+            for (int i = 0; i<self.datas.count; i++) {
+                BackReasonModel *model = self.datas[i];
+                NSLog(@"%@",model);
+                [testArray addObject:model.title];
+                NSLog(@"datas--%@",testArray[i]);
+            }
+            
+            NSLog(@"datas--%@",testArray);
+            menu = [[MXPullDownMenu alloc] initWithArray:testArray selectedColor:[UIColor grayColor]];
+            menu.delegate = self;
+            menu.clipsToBounds = YES;
+            menu.layer.cornerRadius = 3;
+            menu.layer.borderColor = [[UIColor blackColor]CGColor];
+            menu.layer.borderWidth = 1;
+            menu.frame = CGRectMake(CGRectGetMaxX(_validateLB.frame)-10,10, 240, 35);
+            [cell addSubview:menu];
         }else{
             
-        _validateLB.text = @"换货原因";
+            _validateLB.text = @"换货原因";
             NSMutableArray *testArray = [NSMutableArray array];
             for (int i = 0; i<self.exchageDatas.count; i++) {
-                BackReasonModel *model = self.datas[i];
+                BackReasonModel *model = self.exchageDatas[i];
+                NSLog(@"%@",model.title);
                 [testArray addObject:model.title];
                 NSLog(@"datas--%@",testArray[i]);
             }
@@ -373,7 +375,7 @@
 
 - (void)PullDownMenu:(MXPullDownMenu *)pullDownMenu didSelectRowAtColumn:(NSInteger)column row:(NSInteger)row
 {
-    NSLog(@"%ld -- %ld", (long)column, (long)row);
+    NSLog(@"%d -- %d", column, row);
 }
 
 
@@ -399,7 +401,6 @@
         [self.navigationController pushViewController:exs animated:YES];
     }
     else{
-        
         [self returnDatas];
         ReturnSuccessController *returnS = [[ReturnSuccessController alloc]init];
         [self.navigationController pushViewController:returnS animated:YES];

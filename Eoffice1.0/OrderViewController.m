@@ -24,6 +24,8 @@
 #import "UIAlertView+AlerViewBlocks.h"
 #import "CommodityViewController.h"
 #import "CMDetailsViewController.h"
+#import "ServiceViewController.h"
+
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate,deletgateOrder,UIAlertViewDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *classifyDatas;
@@ -350,11 +352,28 @@
     
 }
 -(void)exchangeDelete{
-
+    SingleModel *model = [SingleModel sharedSingleModel];
+    model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
     ExchangeViewController *exchage = [[ExchangeViewController alloc]init];
     [self.navigationController pushViewController:exchage animated:YES];
 }
+-(void)serviceRepair{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
+    ServiceViewController *service = [[ServiceViewController alloc]init];
+    [self.navigationController pushViewController:service animated:YES];
+    
+}
 
+-(void)logistics{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
+    LogisticsDetailsController *lg = [[LogisticsDetailsController alloc]init];
+    [self.navigationController pushViewController:lg animated:YES];
+    
+}
 -(void)deleteData{
     
     NSString *path= [NSString stringWithFormat:DELETEORDER,COMMON,_orderId];

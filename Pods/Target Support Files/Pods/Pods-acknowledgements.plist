@@ -41,15 +41,6 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>&#174; 1998 - 2014 Tencent All Rights Reserved.
-</string>
-			<key>Title</key>
-			<string>DXYWeChatSDK</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>FooterText</key>
 			<string>IQKeyboardManager license
 =========================
 
@@ -211,6 +202,15 @@ THE SOFTWARE.
 </string>
 			<key>Title</key>
 			<string>SDWebImage</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>Copyright (c) 2012 Tencent. All rights reserved.
+</string>
+			<key>Title</key>
+			<string>libWeChatSDK</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

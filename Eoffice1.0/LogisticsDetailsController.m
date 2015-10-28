@@ -17,8 +17,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-//    UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"＜" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBtn)];
-//    [self.navigationItem setLeftBarButtonItem:logoutItem];
+    UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
+    [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    ligthButton.frame = CGRectMake(0, 0, 20, 20);
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
     self.navigationItem.title = @"物流详情";
     
     
@@ -33,6 +38,15 @@
 
     // Do any additional setup after loading the view.
 }
+-(void)leftItemClicked{
+    
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+}
+
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
 }
@@ -157,6 +171,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     
+    self.navigationController.navigationBarHidden = NO;
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     

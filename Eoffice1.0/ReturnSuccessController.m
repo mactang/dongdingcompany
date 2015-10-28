@@ -8,6 +8,8 @@
 
 #import "ReturnSuccessController.h"
 #import "RDVTabBarController.h"
+#import "MainViewController.h"
+
 @interface ReturnSuccessController ()
 
 @end
@@ -19,14 +21,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     self.navigationItem.title = @"申请成功";
-    UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    // UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang11(1)"];
-    // [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    ligthButton.frame = CGRectMake(0, 0, 0, 0);
-    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     
-    [self.navigationItem setLeftBarButtonItem:lightItem2];
     UIButton *view = [[UIButton alloc]initWithFrame:CGRectMake(10, 70, 300, 390)];
     view.backgroundColor = [UIColor whiteColor];
     view.clipsToBounds = YES;
@@ -86,7 +81,7 @@
     contBtn.layer.borderColor = [[UIColor redColor]CGColor];
     [contBtn setTitle:@"继续购物" forState:UIControlStateNormal];
     [contBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [contBtn addTarget:self action:@selector(surePress) forControlEvents:UIControlEventTouchUpInside];
+    [contBtn addTarget:self action:@selector(continuePress) forControlEvents:UIControlEventTouchUpInside];
     contBtn.backgroundColor = [UIColor whiteColor];
     [view addSubview:contBtn];
     
@@ -108,6 +103,12 @@
     photoLB1.text = @"400-88888888";
     photoLB1.textColor = [UIColor redColor];
     [view1 addSubview:photoLB1];
+}
+-(void)continuePress{
+    NSLog(@";;;");
+    MainViewController *main = [[MainViewController alloc]init];
+    [self.navigationController pushViewController:main animated:YES];
+    
 }
 -(void)backOrderPress{
     

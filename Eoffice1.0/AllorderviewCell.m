@@ -10,12 +10,18 @@
 #import "UIKit+AFNetworking.h"
 #import "OrderModel.h"
 #import "CalculateStringSpace.h"
+#import "SingleModel.h"
 @interface AllorderviewCell(){
     NSString *stringmodel;
     NSString *goodId;
 }
 @end
 @implementation AllorderviewCell
+
+{
+    
+    NSString *wgoodsId;
+}
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -94,9 +100,10 @@
 }
 -(void)setModel:(OrderModel *)model{
     
-    
+    NSLog(@"%@",model);
+    NSLog(@"%@",model.list[0][@"wgoodsId"]);
     goodId = model.list[0][@"goodsId"];
-    
+    wgoodsId = model.list[0][@"wgoodsId"];
     [self.picimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.list[0][@"imgurl"]]]];
     
     CGSize unitsize = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"￥%.2f",[model.list[0][@"price"]floatValue]] font:[UIFont systemFontOfSize:13] constraintSize:CGSizeMake(SCREEN_WIDTH-widgetBoundsWidth(self.picimageview)-25-100, 25)];
@@ -172,6 +179,7 @@
     self.logisticsbutton.clipsToBounds = YES;
     self.logisticsbutton.layer.borderColor = [[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1]CGColor];
     self.logisticsbutton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.logisticsbutton addTarget:self action:@selector(LogisticsPrss) forControlEvents:UIControlEventTouchUpInside];
     
     self.delegatebutton.frame  = CGRectMake(widgetFrameX(self.logisticsbutton)-widgetBoundsWidth(self.logisticsbutton)-5, widgetFrameY(self.logisticsbutton), widgetBoundsWidth(self.logisticsbutton), widgetboundsHeight(self.logisticsbutton));
     if ([model.orderDescription isEqualToString:@"待付款"]||[model.orderDescription isEqualToString:@"待发货"]) {
@@ -190,6 +198,7 @@
         self.repairbutton.clipsToBounds = YES;
         self.repairbutton.layer.borderColor = [[UIColor colorWithRed:96/255.0 green:97/255.0 blue:98/255.0 alpha:1]CGColor];
         self.repairbutton.titleLabel.font = [UIFont systemFontOfSize:14];
+        [self.repairbutton addTarget:self action:@selector(repairbuttonPress) forControlEvents:UIControlEventTouchUpInside];
         
         self.returnbutton.frame = CGRectMake(widgetFrameX(self.logisticsbutton)-widgetBoundsWidth(self.logisticsbutton)-5, widgetFrameY(self.logisticsbutton), widgetBoundsWidth(self.logisticsbutton), widgetboundsHeight(self.logisticsbutton));
         [self.returnbutton setTitle:@"退换货" forState:UIControlStateNormal];
@@ -238,11 +247,37 @@
    
     
 }
+-(void)LogisticsPrss{
+    SingleModel *model = [SingleModel sharedSingleModel];
+    model.goodsId = goodId;
+    
+    if (_delegate&&[_delegate respondsToSelector:@selector(logistics)]) {
+        [self.delegate logistics];
+    }
+    
+}
 -(void)exchagePress{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    model.goodsId = goodId;
+     
     if (_delegate&&[_delegate respondsToSelector:@selector(exchangeDelete)]) {
         [self.delegate exchangeDelete];
     }
     
+}
+-(void)repairbuttonPress{
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    model.goodsId = goodId;
+    NSLog(@"wGoodsId--%@",wgoodsId);
+
+    NSLog(@"%@",model.wGoodsId);
+
+
+    if (_delegate&&[_delegate respondsToSelector:@selector(serviceRepair)]) {
+        [self.delegate serviceRepair];
+    }
 }
 -(void)delegateOrder{
     
