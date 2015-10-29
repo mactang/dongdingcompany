@@ -176,14 +176,18 @@
 }
 -(void)backOrderPress{
 
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    self.navigationItem.backBarButtonItem = backItem;
     OrderViewController *order = [[OrderViewController alloc]init];
     
     [self.navigationController pushViewController:order animated:YES];
 }
 -(void)surePress{
+    
+    
     MainViewController *main = [[MainViewController alloc]init];
     [self.navigationController pushViewController:main animated:YES];
-
+    
     
 }
 -(void)leftItemClicked{

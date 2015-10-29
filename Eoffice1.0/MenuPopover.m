@@ -72,7 +72,7 @@
     menuItemsTableView.dataSource = self;
     menuItemsTableView.delegate = self;
     menuItemsTableView.scrollEnabled = NO;
-    menuItemsTableView.backgroundColor = [UIColor greenColor];
+   // menuItemsTableView.backgroundColor = [UIColor greenColor];
     menuItemsTableView.tag = MENU_TABLE_VIEW_TAG;
     if ([menuItemsTableView respondsToSelector:@selector(setSeparatorInset:)]) {
         [menuItemsTableView setSeparatorInset:UIEdgeInsetsZero];

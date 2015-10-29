@@ -482,10 +482,10 @@
     //            //友盟分享的appKey
     //        [UMSocialData setAppKey:@"5211818556240bc9ee01db2f"];
     //
-    //    //设置微信AppId，设置分享url，默认使用友盟的网址
+    //设置微信AppId，设置分享url，默认使用友盟的网址
     //    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
-    //
-    //    //设置手机QQ的AppId，指定你的分享url，若传nil，将使用友盟的网址
+    
+        //设置手机QQ的AppId，指定你的分享url，若传nil，将使用友盟的网址
         [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
     
     
@@ -501,7 +501,7 @@
     UIImage *shareImage = [UIImage imageNamed:@"UMS_social_demo"];
     
     [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"53290df956240b6b4a0084b3"
+                                         appKey:@"5631871667e58ebeff003677"
                                       shareText:shareText
                                      shareImage:shareImage
                                 shareToSnsNames:[NSArray arrayWithObjects: UMShareToWechatSession, UMShareToWechatTimeline, UMShareToQzone, UMShareToQQ, UMShareToSina, UMShareToTencent,UMShareToSms, nil]
@@ -573,6 +573,7 @@
 }
 
 -(void)parameterData{
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
@@ -614,15 +615,18 @@
     product = shopnumber;
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey !=nil&&!sucess) {
+        self.navigationController.navigationBarHidden = NO;
         [self addData:NO];
     }
     if (model.userkey!=nil&&sucess) {
+        
         [self addData:YES];
     }
     if (model.userkey==nil) {
         login = [[LoginViewController alloc]init];
         login.delegate = self;
         login.iflogin = NO;
+        self.navigationController.navigationBarHidden = YES;
         [self.navigationController pushViewController:login animated:YES];
         
     }
@@ -641,8 +645,8 @@
 }
 -(void)ordercpntroller:(NSNumber *)orderid{
     
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backItem;
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
+//    self.navigationItem.backBarButtonItem = backItem;
     OrderController *order = [[OrderController alloc]init];
     order.shopCartId = [NSString stringWithFormat:@"%@",orderid];
     [self.navigationController pushViewController:order animated:YES];
@@ -652,7 +656,7 @@
 -(void)addData:(BOOL)sucess{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",product]];
+    NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",(long)product]];
     NSString *path = [NSString stringWithFormat:ADDMAINTAIN,COMMON,model.userkey,model.goodsId,string];
     NSLog(@"path--%@",path);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

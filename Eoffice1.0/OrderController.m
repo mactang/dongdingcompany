@@ -65,6 +65,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
+    TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
+    [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    ligthButton.frame = CGRectMake(0, 0, 20, 20);
+    //    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
+    //    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+   // ligthButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    // ligthButton.backgroundColor = [UIColor redColor];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
+    self.navigationItem.title = @"确认订单";
+    
     [self footviewinterface];
     [self orderlistrequest];
 }
@@ -99,18 +112,7 @@
         dispatch = @"";
     }
     
-    TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
-    [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
-    [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
-    ligthButton.frame = CGRectMake(0, 0, 20, 20);
-    //    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
-    //    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    ligthButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    // ligthButton.backgroundColor = [UIColor redColor];
-    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
-    [self.navigationItem setLeftBarButtonItem:lightItem2];
-    self.navigationItem.title = @"确认订单";
+    
     
     _currentNumber = 1;
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,64, SCREEN_WIDTH, SCREEN_HEIGHT-70-64) style:UITableViewStyleGrouped];

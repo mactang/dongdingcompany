@@ -112,6 +112,8 @@
 }
 -(void)backOrderPress{
 
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backItem;
     [self.navigationController popToRootViewControllerAnimated:YES];
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
 
