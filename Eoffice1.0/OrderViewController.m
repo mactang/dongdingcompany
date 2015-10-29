@@ -108,12 +108,13 @@
     
 }
 -(void)loadMoreData{
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSInteger pageNumber = [self.classifyDatas count] / 6 + 1;
-    self.moredata = [NSString stringWithFormat:@"%ld",pageNumber];
+    self.moredata = [NSString stringWithFormat:@"%ld",(long)pageNumber];
     NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey,self.moredata];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -442,6 +443,7 @@
 -(void)buttonPress:(UIButton *)btn{
     //查看物流
     if (btn.tag == 1001) {
+        
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
 
@@ -469,6 +471,7 @@
         [self.navigationController pushViewController:ser animated:YES];
     }
     if (btn.tag == 1006) {
+        
         [self exchageStateDatas];
     }
 }

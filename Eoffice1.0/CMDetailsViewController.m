@@ -486,13 +486,13 @@
     //    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
     
         //设置手机QQ的AppId，指定你的分享url，若传nil，将使用友盟的网址
-        [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"c7394704798a158208a74ab60104f0ba" url:@"http://www.umeng.com/social"];
+        [UMSocialQQHandler setQQWithAppId:@"1104934732" appKey:@"3QLZa0n70Sfom2um" url:@"http://www.umeng.com/social"];
     
     
     //        注意：要想进行qq微信分享，下面的设置是必须的
     //       设置微信的appId url设置为空，默认使用友盟的网址
           //  [UMSocialWechatHandler setWXAppId:@"wxd9a39c7122aa6516" url:@""];
-    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:nil];
+    [UMSocialWechatHandler setWXAppId:@"wxd20a08d7a7efd6b4" appSecret:@"7ac03523b9ee4296d2adf49648702c62" url:nil];
     
 //            [UMSocialConfig setQQAppId:@"100424468" url:nil importClasses:@[[QQApiInterface class],[TencentOAuth class]]];
     
