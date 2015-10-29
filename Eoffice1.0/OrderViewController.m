@@ -70,8 +70,8 @@
     testarray = [NSMutableArray array];
     refresh = YES;
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
-    self.navigationController.navigationBarHidden = YES;
-    self.navigationItem.title = @"我的订单";
+    
+    
     self.moredata = @"-1";
     _docstatusign = @"-1";
     UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 80, 20)];
@@ -107,12 +107,13 @@
     
 }
 -(void)loadMoreData{
+    
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSInteger pageNumber = [self.classifyDatas count] / 6 + 1;
-    self.moredata = [NSString stringWithFormat:@"%ld",pageNumber];
+    self.moredata = [NSString stringWithFormat:@"%ld",(long)pageNumber];
     NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey,self.moredata];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -256,11 +257,11 @@
 -(void)reloadata{
 
     [self classifyData];
-    self.navigationController.navigationBarHidden = NO;
+    
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey != nil) {
         self.navigationController.navigationBarHidden = NO;
-//        [self.navigationItem setTitle:@"我的订单"];
+
     }
     else{
         
@@ -441,6 +442,7 @@
 -(void)buttonPress:(UIButton *)btn{
     //查看物流
     if (btn.tag == 1001) {
+        
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
 
@@ -468,6 +470,7 @@
         [self.navigationController pushViewController:ser animated:YES];
     }
     if (btn.tag == 1006) {
+        
         [self exchageStateDatas];
     }
 }
