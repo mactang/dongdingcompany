@@ -70,7 +70,8 @@
     testarray = [NSMutableArray array];
     refresh = YES;
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
-//    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = YES;
+    self.navigationItem.title = @"我的订单";
     self.moredata = @"-1";
     _docstatusign = @"-1";
     UILabel *myOrder = [[UILabel alloc]initWithFrame:CGRectMake(120, 35, 80, 20)];
@@ -255,7 +256,7 @@
 -(void)reloadata{
 
     [self classifyData];
-    
+    self.navigationController.navigationBarHidden = NO;
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey != nil) {
 //        self.navigationController.navigationBarHidden = NO;
