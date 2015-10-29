@@ -17,6 +17,7 @@
 #import "LoginViewController.h"
 #import "SingleModel.h"
 #import "IQKeyboardManager.h"
+#import "AFNetworking.h"
 @interface AppDelegate ()
 
 @end
@@ -32,9 +33,7 @@
     
     [self setupViewControllers];
     [self.window setRootViewController:self.viewController];
-    
     [self customizeInterface];
-    // self.window.rootViewController = self.nav_controller;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
@@ -43,9 +42,63 @@
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = YES;
+    
+    [self versionData];
+   
+
 
     
     return YES;
+}
+-(void)versionData{
+    
+    NSString *path= [NSString stringWithFormat:VERSION,COMMON];
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+            
+            SingleModel *model = [SingleModel sharedSingleModel];
+            NSDictionary *array = dic[@"data"];
+            model.version = array[@"versionFullName"];
+            
+            NSLog(@"version--%@",model.version);
+            NSString *versionString = [NSString stringWithFormat:@"%@",model.version];
+             NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+            if ([model.version compare:[infoDic objectForKey:@"CFBundleVersion"] options:NSNumericSearch] == NSOrderedDescending) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIAlertView *versionAlertView = [[UIAlertView alloc]initWithTitle:@"提示" message: [NSString stringWithFormat:@"当前应用版本:%@\n检测到新版本:%@\n是否立即升级至最新版?",[infoDic objectForKey:@"CFBundleVersion"],versionString] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消", nil];
+                    versionAlertView.tag = 2000;
+                    [versionAlertView show];
+                });
+        }
+        }
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"%@",error);
+    }];
+
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (alertView.tag == 2000) {
+        if (buttonIndex == 0) {
+            SingleModel *model = [SingleModel sharedSingleModel];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:model.url]];
+        }
+    }
+    else if (alertView.tag == 3000) {
+        exit(0);
+    }
+    
 }
 #pragma mark - Methods
 
@@ -96,6 +149,7 @@
 }
 
 - (void)customizeInterface {
+                          
     UINavigationBar *navigationBarAppearance = [UINavigationBar appearance];
     
     UIImage *backgroundImage = nil;
@@ -133,6 +187,8 @@
     [self.nav_controller pushViewController:btbc animated:NO];
     
     return YES;
+    
+    
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
