@@ -38,16 +38,13 @@
     [self.window makeKeyAndVisible];
     
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
-    manager.enable = NO;
+    manager.enable = YES;
     manager.shouldResignOnTouchOutside = YES;
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = YES;
     
     [self versionData];
    
-
-
-    
     return YES;
 }
 -(void)versionData{

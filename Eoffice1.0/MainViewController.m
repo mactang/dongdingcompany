@@ -88,7 +88,7 @@
     imagecarousel.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:imagecarousel];
     
-    [self button];
+    [self button:imagecarousel];
     
     // Do any additional setup after loading the view.
 }
@@ -96,8 +96,20 @@
     NewsViewController *news = [[NewsViewController alloc]init];
     [self.navigationController pushViewController:news animated:YES];
 }
--(void)button{
-    UIButton *ComodityBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 220, 300, 136)];
+-(void)button:(ImageCarousel *)image{
+    
+    
+    UIButton *MaintainBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 220, SCREEN_WIDTH-20, (SCREEN_HEIGHT-CGRectGetMaxY(image.frame)-30-49)/2)];
+    [MaintainBtn setTitle:@"保养维修" forState:UIControlStateNormal];
+    [MaintainBtn setImage:[UIImage imageNamed:@"保养维修1"] forState:UIControlStateNormal];
+    [MaintainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [MaintainBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
+    MaintainBtn.tag = 1002;
+    MaintainBtn.titleLabel.font = [UIFont systemFontOfSize:22];
+    MaintainBtn.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:MaintainBtn];
+    
+    UIButton *ComodityBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(MaintainBtn.frame)+10,SCREEN_WIDTH-20, widgetboundsHeight(MaintainBtn))];
 //    [ComodityBtn setTitle:@"商品" forState:UIControlStateNormal];
     [ComodityBtn setImage:[UIImage imageNamed:@"办公商品"] forState:UIControlStateNormal];
     [ComodityBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -107,21 +119,14 @@
     ComodityBtn.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:ComodityBtn];
     
+    
 //    UILabel *ComodityLb = [[UILabel alloc]initWithFrame:CGRectMake(15, 60, 130, 20)];
 //    ComodityLb.text = @"各种办公设备和周边器材";
 //    ComodityLb.font = [UIFont systemFontOfSize:10];
 //    ComodityLb.textColor = [UIColor grayColor];
 //    [ComodityBtn addSubview:ComodityLb];
     
-    UIButton *MaintainBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(ComodityBtn.frame)+10,300, 136)];
-    [MaintainBtn setTitle:@"保养维修" forState:UIControlStateNormal];
-    [MaintainBtn setImage:[UIImage imageNamed:@"保养维修1"] forState:UIControlStateNormal];
-    [MaintainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [MaintainBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
-    MaintainBtn.tag = 1002;
-    MaintainBtn.titleLabel.font = [UIFont systemFontOfSize:22];
-    MaintainBtn.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:MaintainBtn];
+    
     
 //    UILabel *MaintainLb = [[UILabel alloc]initWithFrame:CGRectMake(10, 60, 130, 20)];
 //    MaintainLb.text = @"自营上门服务，足不出户";
