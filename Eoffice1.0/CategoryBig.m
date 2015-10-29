@@ -18,6 +18,7 @@
         self.name = dic[@"name"];
 
         self.MProductCategoryId = dic[@"MProductCategoryId"];
+        self.MProductMedcategoryId = dic[@"MProductMedcategoryId"];
     }
     
     return self;

@@ -51,6 +51,7 @@
 #import "LoginViewController.h"
 #import "ShoppingCarController.h"
 #import "CalculateStringSpace.h"
+#import "UIKit+AFNetworking.h"
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
 @interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>
 
@@ -97,6 +98,8 @@
     NSInteger  product;
     NSMutableDictionary *dictionary;
     detailsModel *model1;
+    BOOL sucess;
+    NSArray *imageviewarray;
     
     
     
@@ -121,6 +124,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
 }
     number = 0;
+    sucess = YES;
     dictionary = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor grayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -134,9 +138,8 @@
     leftButton.titleLabel.font = [UIFont systemFontOfSize:14];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
-    
+    self.navigationItem.title = @"商品详情";
     [self data];
-
     // Do any additional setup after loading the view.
 }
 -(void)initaliAppreance{
@@ -292,7 +295,7 @@
         }
         [hud hide:YES];
         //[self parameterData];
-                 [self parameterData];
+        [self parameterData];
 //        [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
@@ -312,16 +315,19 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 3&&indexPath.row == 0) {
-        if ([model1.data allKeys].count==1||[model1.data allKeys].count==2) {
-            return 50.5+55;
-        }
-        if (([model1.data allKeys].count)%2==0) {
-            return (([model1.data allKeys] .count)/2)*45+60;
-        }
-        else{
-            return (([model1.data allKeys].count)/2)*45+50+55;
-        }
+        if (sucess) {
+            if ([model1.data allKeys].count==1||[model1.data allKeys].count==2) {
+                return 50.5+55;
+            }
+            if (([model1.data allKeys].count)%2==0) {
+                return (([model1.data allKeys] .count)/2)*45+60;
+            }
+            else{
+                return (([model1.data allKeys].count)/2)*45+50+55;
+            }
 
+        }
+        return imageviewarray.count*(SCREEN_WIDTH/2)+imageviewarray.count*10+45;
     }
     else if(indexPath.section == 0&&indexPath.row == 0){
         return 170;
@@ -351,133 +357,124 @@
     
     
     static NSString *identity = @"cell";
-    
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
     cell.clipsToBounds = YES;
-    
     cell.textLabel.font = [UIFont systemFontOfSize:15];
+    
     detailsModel *model = self.datas[0];
-    NSLog(@"%@",model.version[0][@"maValue"]);
-    if (indexPath.row == 0 && indexPath.section == 0) {
-        
-        NSString *nstring = [NSString stringWithFormat:@"%@",model.goodsImgUrl];
-        NSArray *array = [nstring componentsSeparatedByString:@","];
-        NSLog(@"%lu",(unsigned long)array.count);
-        UIScrollView *scrollView = [[UIScrollView alloc] init];
-        scrollView.frame = CGRectMake(0, 0, 320, 150);
-        scrollView.contentSize = CGSizeMake(320*array.count, 150);
-        scrollView.backgroundColor = [UIColor grayColor];
-        // 一页的大小应该是frame的大小
-        scrollView.pagingEnabled = YES;
-        scrollView.delegate = self;
-        scrollView.showsHorizontalScrollIndicator = NO;
-        scrollView.showsVerticalScrollIndicator = NO;
-        [cell addSubview:scrollView];
-        scrollView.tag = 3001;
-        //[scrollView setContentOffset:CGPointMake(320, 0)];
-        
-        _currentIndex = 0;
-        _imagesArray = [[NSMutableArray alloc] init];
-        
-        
-        for (int i = 0; i < [array count]; i++) {
-            NSLog(@"string:%@", [array objectAtIndex:i]);
+    if (!cell) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row == 0 && indexPath.section == 0) {
             
+            NSString *nstring = [NSString stringWithFormat:@"%@",model.goodsImgUrl];
+            NSArray *array = [nstring componentsSeparatedByString:@","];
+            NSLog(@"%lu",(unsigned long)array.count);
+            UIScrollView *scrollView = [[UIScrollView alloc] init];
+            scrollView.frame = CGRectMake(0, 0, 320, 150);
+            scrollView.contentSize = CGSizeMake(320*array.count, 150);
+            scrollView.backgroundColor = [UIColor grayColor];
+            // 一页的大小应该是frame的大小
+            scrollView.pagingEnabled = YES;
+            scrollView.delegate = self;
+            scrollView.showsHorizontalScrollIndicator = NO;
+            scrollView.showsVerticalScrollIndicator = NO;
+            [cell addSubview:scrollView];
+            scrollView.tag = 3001;
+            //[scrollView setContentOffset:CGPointMake(320, 0)];
+            _currentIndex = 0;
+            _imagesArray = [[NSMutableArray alloc] init];
+            for (int i = 0; i < [array count]; i++) {
+                NSLog(@"string:%@", [array objectAtIndex:i]);
+                UIImageView *forImageView = [[UIImageView alloc]initWithFrame:CGRectMake(320*i, 0, 320, 150)];
+                [forImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[array objectAtIndex:i]]]];
+                [scrollView addSubview:forImageView];
+            }
+            //分页控制控件
+            self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(110, 130, 120, 0)];
+            self.pageControl.backgroundColor = [UIColor redColor];
+            //分页的页数
+            self.pageControl.numberOfPages = array.count;
+            //当前显示的分页
+            self.pageControl.currentPage = 0;
+            //将分页控制控件加在本视图上面
+            [cell addSubview:self.pageControl];
             
-            UIImageView *forImageView = [[UIImageView alloc]initWithFrame:CGRectMake(320*i, 0, 320, 150)];
-            [forImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[array objectAtIndex:i]]]];
-            
-            
-             [scrollView addSubview:forImageView];
-
         }
-        
-        //分页控制控件
-        self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(110, 130, 120, 0)];
-        self.pageControl.backgroundColor = [UIColor redColor];
-        //分页的页数
-        self.pageControl.numberOfPages = array.count;
-        //当前显示的分页
-        self.pageControl.currentPage = 0;
-        //将分页控制控件加在本视图上面
-        [cell addSubview:self.pageControl];
-        
+        if (indexPath.row == 1 &&indexPath.section == 0) {
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            detailsModel *model = self.datas[indexPath.section];
+            // cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            UILabel *description = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 100, 40)];
+            description.font = [UIFont systemFontOfSize:12];
+            //lb3.backgroundColor = [UIColor redColor];
+            description.lineBreakMode = NSLineBreakByWordWrapping;
+            description.numberOfLines = 0;
+            NSLog(@"%@",model.name);
+            // description.text = model.name;
+            description.text = [NSString stringWithFormat:@"%@",model.version[0][@"maValue"]];
+            [cell addSubview:description];
+            
+            UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(description.frame)+5, 10, 20)];
+            priceFLb.font = [UIFont systemFontOfSize:15];
+            priceFLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
+            priceFLb.text = @"￥";
+            [cell addSubview:priceFLb];
+            
+            SingleModel *single = [SingleModel sharedSingleModel];
+            UILabel *priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame)+2, priceFLb.frame.origin.y, 80, 20)];
+            priceLb.font = [UIFont systemFontOfSize:15];
+            priceLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
+            NSLog(@"%@",single.price);
+            priceLb.text = [NSString stringWithFormat:@"%@",model.price];
+            
+            [cell addSubview:priceLb];
+            
+            ButtonImageWithTitle  *fenxBtb = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(250, 30, 50, 50)];
+            
+            [fenxBtb setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+            [fenxBtb addTarget:self action:@selector(fenxClicked) forControlEvents:UIControlEventTouchUpInside];
+            [fenxBtb setTitle:@"分享" forState:UIControlStateNormal];
+            [fenxBtb setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            fenxBtb.titleLabel.font = [UIFont systemFontOfSize:12];
+            fenxBtb.titleLabel.textAlignment = NSTextAlignmentCenter;
+            [cell addSubview:fenxBtb];
+        }
+        else if (indexPath.row == 0 && indexPath.section == 1) {
+            cell.textLabel.text = @"商家对比";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if (indexPath.row == 0 &&indexPath.section == 2) {
+            
+            self.menuItems = [NSArray arrayWithObjects:@"Menu Item 1", @"Menu Item 2", nil];
+            cell.textLabel.text = @"购买信息";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 10, 320, 60)];
+            //[btn setTitle:@"图文详情" forState:UIControlStateNormal];
+            
+            // btn.backgroundColor = [UIColor redColor];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [btn addTarget:self action:@selector(showMenuPopOver:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:btn];
+        }
+
+       else  if (indexPath.row == 0 &&indexPath.section == 3) {
+            
+            HMSegmentedControl *segmentedControl2 = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"图文详情", @"产品参数",@"推荐产品"]];
+            segmentedControl2.frame = CGRectMake(0, 10, self.view.frame.size.width, 40);
+            segmentedControl2.selectionIndicatorHeight = 4.0f;
+            segmentedControl2.backgroundColor = [UIColor whiteColor];
+            segmentedControl2.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+            segmentedControl2.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+            [segmentedControl2 addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+            [cell addSubview:segmentedControl2];
+            
+        }
+
     }
-    if (indexPath.row == 1 &&indexPath.section == 0) {
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        detailsModel *model = self.datas[indexPath.section];
-        // cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        UILabel *description = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 100, 40)];
-        description.font = [UIFont systemFontOfSize:12];
-        //lb3.backgroundColor = [UIColor redColor];
-        description.lineBreakMode = NSLineBreakByWordWrapping;
-        description.numberOfLines = 0;
-        NSLog(@"%@",model.name);
-        // description.text = model.name;
-        description.text = [NSString stringWithFormat:@"%@",model.version[0][@"maValue"]];
-        [cell addSubview:description];
-        
-        UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(description.frame)+5, 10, 20)];
-        priceFLb.font = [UIFont systemFontOfSize:15];
-        priceFLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-        priceFLb.text = @"￥";
-        [cell addSubview:priceFLb];
-        
-        SingleModel *single = [SingleModel sharedSingleModel];
-        UILabel *priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame)+2, priceFLb.frame.origin.y, 80, 20)];
-        priceLb.font = [UIFont systemFontOfSize:15];
-        priceLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-        NSLog(@"%@",single.price);
-        priceLb.text = [NSString stringWithFormat:@"%@",model.price];
-        
-        [cell addSubview:priceLb];
-        
-        ButtonImageWithTitle  *fenxBtb = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(250, 30, 50, 50)];
-        
-        [fenxBtb setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
-        [fenxBtb addTarget:self action:@selector(fenxClicked) forControlEvents:UIControlEventTouchUpInside];
-        [fenxBtb setTitle:@"分享" forState:UIControlStateNormal];
-        [fenxBtb setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-        fenxBtb.titleLabel.font = [UIFont systemFontOfSize:12];
-        fenxBtb.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [cell addSubview:fenxBtb];
-        
-        
-        
-    }
-    else if (indexPath.row == 0 && indexPath.section == 1) {
-        cell.textLabel.text = @"商家对比";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    else if (indexPath.row == 0 &&indexPath.section == 2) {
-        
-        self.menuItems = [NSArray arrayWithObjects:@"Menu Item 1", @"Menu Item 2", nil];
-        cell.textLabel.text = @"购买信息";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 10, 320, 60)];
-        //[btn setTitle:@"图文详情" forState:UIControlStateNormal];
-        
-        // btn.backgroundColor = [UIColor redColor];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        [btn addTarget:self action:@selector(showMenuPopOver:) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:btn];
-        
-        
-    }
-    else if (indexPath.row == 0 &&indexPath.section == 3) {
-        HMSegmentedControl *segmentedControl2 = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"图文详情", @"产品参数",@"推荐产品"]];
-        segmentedControl2.frame = CGRectMake(0, 10, self.view.frame.size.width, 40);
-        segmentedControl2.selectionIndicatorHeight = 4.0f;
-        segmentedControl2.backgroundColor = [UIColor whiteColor];
-        segmentedControl2.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-        segmentedControl2.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
-        [segmentedControl2 addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
-        [cell addSubview:segmentedControl2];
-    }
-    return cell;
+   
+   return cell;
 }
 -(void)fenxClicked{
     
@@ -514,12 +511,10 @@
     
 }
 - (void)segmentedControlChangedValue:(HMSegmentedControl*)segmentedControl{
-    
-    
-    
+    [_detailView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     if (segmentedControl.selectedSegmentIndex == 0) {
         
-        
+        sucess = YES;
         [self btnPress1];
         NSLog(@"aaa");
         
@@ -528,6 +523,8 @@
         
         
         NSLog(@"bbb");
+        sucess = NO;
+        [self productdetail];
         
         
     }
@@ -538,9 +535,19 @@
         
         
     }
-    // [_tableView reloadData];
-    
-    
+    [_tableView reloadData];
+}
+-(void)productdetail{
+    detailsModel *model = self.datas[0];
+    imageviewarray = [model.detaiImgUrl componentsSeparatedByString:@","];
+    for (NSInteger i=0; i<imageviewarray.count; i++) {
+        UIImageView *detailmageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0+i*(SCREEN_WIDTH/2)+i*10, SCREEN_WIDTH, SCREEN_WIDTH/2)];
+        [detailmageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imageviewarray[i]]]];
+        [_detailView addSubview:detailmageview];
+    }
+     _detailView.frame = CGRectMake(0, SCREEN_HEIGHT-100, SCREEN_WIDTH, imageviewarray.count*(SCREEN_WIDTH/2)+imageviewarray.count*10);
+    NSLog(@"%@",imageviewarray);
+ 
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     

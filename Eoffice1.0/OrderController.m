@@ -634,12 +634,7 @@
         }
         
     }
-    
-    
-    
 }
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
