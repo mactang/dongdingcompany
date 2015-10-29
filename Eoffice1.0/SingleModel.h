@@ -36,7 +36,9 @@
 
 @property(nonatomic,assign)NSString *isBoolmy;
 
-
+//版本号
+@property(nonatomic,assign)NSString *version;
+@property(nonatomic,assign)NSString *url;
 
 
 

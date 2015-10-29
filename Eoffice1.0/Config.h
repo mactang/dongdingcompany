@@ -159,4 +159,8 @@
 
 //上传头像
 #define UPLOADPHOTO @"%@userImg.action"
+
+#define VERSION @"%@product!getAppVersions.action"
+
+
 #endif
