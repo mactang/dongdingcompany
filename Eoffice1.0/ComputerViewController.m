@@ -210,10 +210,10 @@ static const CGFloat MJDuration = 2.0;
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
         [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
-        NSLog(@"array--%@",array);
         for(NSDictionary *subDict in array)
         {
             detailsModel *model = [detailsModel modelWithDic:subDict];
@@ -381,6 +381,8 @@ static const CGFloat MJDuration = 2.0;
     [priceBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [priceBT setTitle:@"价格" forState:UIControlStateNormal];
     priceBT.titleLabel.font = [UIFont systemFontOfSize:15];
+    priceBT.tag = 30;
+    [priceBT addTarget:self action:@selector(screenPress:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:priceBT];
     
     UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceBT.frame)+8, syntBT.frame.origin.y+5, 0.5, 25)];
@@ -390,8 +392,9 @@ static const CGFloat MJDuration = 2.0;
     UIButton *screenBT = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceBT.frame)+20, priceBT.frame.origin.y, 50, 30)];
     //  screenBT.backgroundColor = [UIColor brownColor];
     [screenBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [screenBT addTarget:self action:@selector(screenPress) forControlEvents:UIControlEventTouchUpInside ];
+    [screenBT addTarget:self action:@selector(screenPress:) forControlEvents:UIControlEventTouchUpInside ];
     [screenBT setTitle:@"筛选" forState:UIControlStateNormal];
+    screenBT.tag = 31;
     screenBT.titleLabel.font = [UIFont systemFontOfSize:15];
     [view addSubview:screenBT];
     
@@ -402,14 +405,47 @@ static const CGFloat MJDuration = 2.0;
     
     [self.view addSubview:view];
 }
--(void)screenPress{
-    
-    ScreenViewController *scr = [[ScreenViewController alloc]init];
-    
-    [self.navigationController pushViewController:scr animated:YES];
+-(void)screenPress:(UIButton *)button{
+    if (button.tag==30) {
+        [self pricerelodata];
+    }
+    if (button.tag==31) {
+        ScreenViewController *scr = [[ScreenViewController alloc]init];
+        
+        [self.navigationController pushViewController:scr animated:YES];
+    }
 }
+-(void)pricerelodata{
+    
+    SingleModel *single = [SingleModel sharedSingleModel];
+    
+    NSString *path= [NSString stringWithFormat:COMPUTER,COMMON,single.ids,@"0"];
 
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self.datas removeAllObjects];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [self.datas removeAllObjects];
+        if (dic[@"data"] !=[NSNull null]){
+            NSArray *array = dic[@"data"];
+       
+            for(NSDictionary *subDict in array)
+            {
+                detailsModel *model = [detailsModel modelWithDic:subDict];
+                [self.datas addObject:model];
 
+            }
+        }
+     
+        [_collectionView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];

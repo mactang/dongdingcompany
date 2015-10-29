@@ -58,7 +58,6 @@
     
     [self data];
     
-    NSLog(@"self.datas%@",self.datas);
 //    UITableView *tableview = [[UITableView alloc] init];
 //    self.tableview = tableview;
 //    tableview.frame = CGRectMake(0, 60, 120, SCREEN_HEIGHT-60);
@@ -110,32 +109,33 @@
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
    // imageView.image = [UIImage imageNamed:imageName[indexPath.row]];
     [cell addSubview:imageView];
-   
-    NSLog(@"MProductMedcategoryId--%@",model.MProductMedcategoryId);
+//    if (indexPath.row==0) {
+//        
+//        NSString *path1= [NSString stringWithFormat:MAINTAINSORTSSMART,COMMON,model.MProductMedcategoryId];
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//        
+//        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+//        [manager GET:path1 parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            
+//            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+//            if (dic[@"data"] !=[NSNull null]){
+//                NSArray *array = dic[@"data"];
+//                
+//                for(NSDictionary *subDict in array)
+//                {
+//                    CategoryBig *model = [CategoryBig modelWithDic:subDict];
+//                    [self.detailDatas addObject:model];
+//                    
+//                }
+//            }
+//            [self category];
+//            
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            NSLog(@"%@",error);
+//        }];
+//        
+//    }
     
-    NSString *path1= [NSString stringWithFormat:MAINTAINSORTSSMART,COMMON,model.MProductMedcategoryId];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager GET:path1 parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (dic[@"data"] !=[NSNull null]){
-        NSArray *array = dic[@"data"];
-        
-        for(NSDictionary *subDict in array)
-        {
-            CategoryBig *model = [CategoryBig modelWithDic:subDict];
-            [self.detailDatas addObject:model];
-            
-        }
-    }
-        [self category];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
-
 //    //初始化选中行
 //    NSIndexPath *ind = [NSIndexPath indexPathForRow:0 inSection:0];
 //    [self.tableview scrollToRowAtIndexPath:ind atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
@@ -209,8 +209,9 @@
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path1 parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        [self.detailDatas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
         NSArray *array = dic[@"data"];
         
         for(NSDictionary *subDict in array)
@@ -278,18 +279,18 @@
         }
         
     }
-    [self.detailDatas removeAllObjects];
+//    [self.detailDatas removeAllObjects];
 
     
 }
 -(void)categoryBtnPress:(UIButton *)btn{
+
     SingleModel *single = [SingleModel sharedSingleModel];
     
-    CategoryBig *model = self.datas[btn.tag];
+    CategoryBig *model = self.detailDatas[btn.tag];
     
-    NSLog(@"%@",model.MProductMedcategoryId);
     //将值存储到单例对象里面
-    single.ids = model.MProductMedcategoryId;
+    single.ids = model.MProductCategoryId;
     
     ComputerViewController *com = [[ComputerViewController alloc]init];
     [self.navigationController pushViewController:com animated:YES];
