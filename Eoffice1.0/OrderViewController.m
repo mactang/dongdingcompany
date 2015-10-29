@@ -67,6 +67,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"我的订单";
     testarray = [NSMutableArray array];
     refresh = YES;
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
@@ -79,7 +80,7 @@
     myOrder.textColor = [UIColor blackColor];
     myOrder.textAlignment = NSTextAlignmentCenter;
     myOrder.font = [UIFont systemFontOfSize:14];
-    [self.view addSubview:myOrder];
+   // [self.view addSubview:myOrder];
     
     dropDownMenuList = [[NSArray alloc]initWithObjects:@"全部",@"待付款",@"待发货",@"待收货",@"已完成",nil];
     
@@ -259,7 +260,7 @@
     self.navigationController.navigationBarHidden = NO;
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey != nil) {
-//        self.navigationController.navigationBarHidden = NO;
+        self.navigationController.navigationBarHidden = NO;
 //        [self.navigationItem setTitle:@"我的订单"];
     }
     else{
@@ -500,10 +501,12 @@
     
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    [self.navigationItem setHidesBackButton:YES];
     SingleModel *model = [SingleModel sharedSingleModel];
   
     if (model.userkey == nil) {
         if (!login) {
+            self.navigationController.navigationBarHidden = YES;
             login = [[LoginViewController alloc]init];
             [self.view addSubview:login.view];
             login.delegate = self;
@@ -511,6 +514,8 @@
     }
     if (model.userkey != nil) {
         [login.view removeFromSuperview];
+        self.navigationController.navigationBarHidden = NO;
+        
         if (refresh) {
             [self classifyData];
 //            refresh = NO;
