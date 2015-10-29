@@ -38,7 +38,9 @@
     }
     return _datas;
 }
-
+-(void)setIdstring:(NSString *)idstring{
+    _idstring = idstring;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -121,7 +123,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
 
-    NSString *path= [NSString stringWithFormat:COMMODITYMIDDLE,COMMON];
+    NSString *path= [NSString stringWithFormat:COMMODITYMIDDLE,COMMON,_idstring];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     

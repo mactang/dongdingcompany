@@ -569,7 +569,6 @@
     }];
     [self.view addSubview:self.menuPopover];
 }
-
 -(void)parameterData{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
