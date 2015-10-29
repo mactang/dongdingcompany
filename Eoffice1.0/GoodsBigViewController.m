@@ -41,7 +41,7 @@
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(10, m, 300, 98)];
         [button setImage:[UIImage imageNamed:arrayImage[i]] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(GoodsBigBtn:) forControlEvents:UIControlEventTouchUpInside];
-        
+        button.tag = 40+i;
         [self.view addSubview:button];
         
         m = CGRectGetMaxY(button.frame)+10;
@@ -60,9 +60,9 @@
     
 }
 -(void)GoodsBigBtn:(UIButton *)btn{
-
+    NSArray *array = @[@"1",@"2",@"3",@"4",];
     CommodityViewController *cmd = [[CommodityViewController alloc]init];
-    
+    cmd.idstring = array[btn.tag-40];
     [self.navigationController pushViewController:cmd animated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated{

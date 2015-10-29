@@ -11,5 +11,5 @@
 @interface CommodityViewController : UIViewController<UISearchBarDelegate
 >
 @property (strong, nonatomic) LeftSlideViewController *LeftSlideVC;
-
+@property(copy,nonatomic)NSString *idstring;
 @end

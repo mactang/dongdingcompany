@@ -123,7 +123,7 @@ static const CGFloat MJDuration = 2.0;
         });
     };
     
-    //    normal状态执行的操作
+    //normal状态执行的操作
     refreshHeader.normalStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
         refreshView.hidden = NO;
         if (progress == 0) {
@@ -137,7 +137,7 @@ static const CGFloat MJDuration = 2.0;
         self.boxView.transform = CGAffineTransformMakeTranslation(- progress * 85, progress * 35);
     };
     
-    //    willRefresh状态执行的操作
+    //willRefresh状态执行的操作
     refreshHeader.willRefreshStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
         _boxView.hidden = YES;
         _label.text = @"放手刷新数据";
@@ -151,28 +151,25 @@ static const CGFloat MJDuration = 2.0;
         [_animationView startAnimating];
     };
     
-    //    refreshing状态执行的操作
+    //refreshing状态执行的操作
     refreshHeader.refreshingStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
         _label.text = @"正在加载数据";
         [UIView animateWithDuration:1.5 animations:^{
             self.animationView.transform = CGAffineTransformMakeTranslation(200, -20);
         }];
     };
-    
     // 动画view
     UIImageView *animationView = [[UIImageView alloc] init];
     animationView.frame = CGRectMake(30, 45, 40, 40);
     animationView.image = [UIImage imageNamed:@"staticDeliveryStaff"];
     [refreshHeader addSubview:animationView];
     _animationView = animationView;
-    
     NSArray *images = @[[UIImage imageNamed:@"deliveryStaff0"],
                         [UIImage imageNamed:@"deliveryStaff1"],
                         [UIImage imageNamed:@"deliveryStaff2"],
                         [UIImage imageNamed:@"deliveryStaff3"]
                         ];
     _animationView.animationImages = images;
-
     UIImageView *boxView = [[UIImageView alloc] init];
     boxView.frame = CGRectMake(150, 10, 15, 8);
     boxView.image = [UIImage imageNamed:@"box"];
@@ -198,9 +195,11 @@ static const CGFloat MJDuration = 2.0;
 }
 -(void)data{
     
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     SingleModel *single = [SingleModel sharedSingleModel];
     NSLog(@"single.name--%@",single.ids);
-    
     NSString *path= [NSString stringWithFormat:COMPUTER,COMMON,single.ids,@"0"];
     NSLog(@"path--%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -223,8 +222,9 @@ static const CGFloat MJDuration = 2.0;
         }
         [self initappreance];
         [_collectionView reloadData];
-        
+        [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
     }];
     
@@ -252,8 +252,6 @@ static const CGFloat MJDuration = 2.0;
             //刷新表
             [_collectionView reloadData];
         }
-       
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
@@ -311,7 +309,6 @@ static const CGFloat MJDuration = 2.0;
 {
     return 1;
 }
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellName = @"cell";
@@ -320,7 +317,6 @@ static const CGFloat MJDuration = 2.0;
     cell.model = self.datas[indexPath.row];
     return cell;
 }
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"%ld - %ld",(long)indexPath.section,(long)indexPath.row);
@@ -340,9 +336,7 @@ static const CGFloat MJDuration = 2.0;
     
     [self.navigationController pushViewController:detail animated:YES];
     //  [(BottonTabBarController*)self.tabBarController hideTabBar:YES];
-    
 }
-
 -(void)character{
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, 60)];
     view.backgroundColor = [UIColor whiteColor];
