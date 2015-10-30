@@ -52,8 +52,12 @@
 #import "ShoppingCarController.h"
 #import "CalculateStringSpace.h"
 #import "UIKit+AFNetworking.h"
+
+#import "OneSectionTableViewCell.h"
+#import "CMDetailsTableviewCell.h"
+#import "CMDimageTableViewCell.h"
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
-@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate>
+@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate,sharedelegate>
 
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)UIImageView *immgeView;
@@ -63,8 +67,6 @@
 @property (nonatomic, strong)UIButton *detailButton;
 
 @property(nonatomic, strong)UIPageControl *pageControl;
-
-@property(nonatomic, strong)UIView *detailView;
 
 @property(nonatomic,strong) MenuPopover *menuPopover;
 @property(nonatomic,strong) NSArray *menuItems;
@@ -98,11 +100,9 @@
     NSInteger  product;
     NSMutableDictionary *dictionary;
     detailsModel *model1;
-    BOOL sucess;
+    BOOL reloadsucess;
     NSArray *imageviewarray;
-    
-    
-    
+    UITableViewHeaderFooterView  *headerviewrelaod;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -124,7 +124,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
 }
     number = 0;
-    sucess = YES;
+    reloadsucess = YES;
     dictionary = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor grayColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -152,10 +152,6 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    
-    _detailView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-114, SCREEN_WIDTH, 480)];
-    _detailView.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
-    [_tableView addSubview:_detailView];
     
     _carView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-114, SCREEN_HEIGHT, 50)];
     _carView.backgroundColor = [UIColor whiteColor];
@@ -294,9 +290,7 @@
             [self.datas addObject:model];
         }
         [hud hide:YES];
-        //[self parameterData];
         [self parameterData];
-//        [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
@@ -315,33 +309,58 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 3&&indexPath.row == 0) {
-        if (sucess) {
+        if (reloadsucess) {
             if ([model1.data allKeys].count==1||[model1.data allKeys].count==2) {
-                return 50.5+55;
+                return 50.5+5;
             }
             if (([model1.data allKeys].count)%2==0) {
-                return (([model1.data allKeys] .count)/2)*45+60;
+                return (([model1.data allKeys] .count)/2)*45+5;
             }
             else{
-                return (([model1.data allKeys].count)/2)*45+50+55;
+                return (([model1.data allKeys].count)/2)*45+50+5;
             }
 
         }
-        return imageviewarray.count*(SCREEN_WIDTH/2)+imageviewarray.count*10+45;
+        return imageviewarray.count*(SCREEN_WIDTH/2)+imageviewarray.count*10;
     }
     else if(indexPath.section == 0&&indexPath.row == 0){
         return 170;
     }
     else if(indexPath.section == 0&&indexPath.row == 1){
-        return 90;
+        return 70;
     }
     
     else{
         return 60;
     }
 }
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (section==3) {
+        NSString *headerIndentifier = @"MyHeader";
+        UITableViewHeaderFooterView *headerview = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerIndentifier];
+        if (!headerviewrelaod) {
+            headerview = [[UITableViewHeaderFooterView alloc]initWithReuseIdentifier:headerIndentifier];
+            headerview.backgroundColor =[UIColor orangeColor];
+            HMSegmentedControl *segmentedControl2 = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"图文详情", @"产品参数",@"推荐产品"]];
+            segmentedControl2.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
+            segmentedControl2.selectionIndicatorHeight = 2.0f;
+            segmentedControl2.backgroundColor = [UIColor whiteColor];
+            segmentedControl2.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+            segmentedControl2.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
+            [segmentedControl2 addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
+            [headerview addSubview:segmentedControl2];
+             headerviewrelaod = headerview;
+        }
+        return headerviewrelaod;
+
+    }
+    return nil;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
+    if (section==3) {
+        return 60;
+    }
     return 1;
 }
 
@@ -351,130 +370,55 @@
     }
     
     return 10;
-   
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-    static NSString *identity = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identity];
-    cell.clipsToBounds = YES;
-    cell.textLabel.font = [UIFont systemFontOfSize:15];
-    
-    detailsModel *model = self.datas[0];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identity];
+    if (indexPath.section==0) {
+        OneSectionTableViewCell *cell = [OneSectionTableViewCell cellWithTableView:tableView cellnumber:indexPath.row];
+        cell.model = self.datas[indexPath.section];
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.row == 0 && indexPath.section == 0) {
-            
-            NSString *nstring = [NSString stringWithFormat:@"%@",model.goodsImgUrl];
-            NSArray *array = [nstring componentsSeparatedByString:@","];
-            NSLog(@"%lu",(unsigned long)array.count);
-            UIScrollView *scrollView = [[UIScrollView alloc] init];
-            scrollView.frame = CGRectMake(0, 0, 320, 150);
-            scrollView.contentSize = CGSizeMake(320*array.count, 150);
-            scrollView.backgroundColor = [UIColor grayColor];
-            // 一页的大小应该是frame的大小
-            scrollView.pagingEnabled = YES;
-            scrollView.delegate = self;
-            scrollView.showsHorizontalScrollIndicator = NO;
-            scrollView.showsVerticalScrollIndicator = NO;
-            [cell addSubview:scrollView];
-            scrollView.tag = 3001;
-            //[scrollView setContentOffset:CGPointMake(320, 0)];
-            _currentIndex = 0;
-            _imagesArray = [[NSMutableArray alloc] init];
-            for (int i = 0; i < [array count]; i++) {
-                NSLog(@"string:%@", [array objectAtIndex:i]);
-                UIImageView *forImageView = [[UIImageView alloc]initWithFrame:CGRectMake(320*i, 0, 320, 150)];
-                [forImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[array objectAtIndex:i]]]];
-                [scrollView addSubview:forImageView];
-            }
-            //分页控制控件
-            self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(110, 130, 120, 0)];
-            self.pageControl.backgroundColor = [UIColor redColor];
-            //分页的页数
-            self.pageControl.numberOfPages = array.count;
-            //当前显示的分页
-            self.pageControl.currentPage = 0;
-            //将分页控制控件加在本视图上面
-            [cell addSubview:self.pageControl];
-            
-        }
-        if (indexPath.row == 1 &&indexPath.section == 0) {
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            detailsModel *model = self.datas[indexPath.section];
-            // cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            UILabel *description = [[UILabel alloc]initWithFrame:CGRectMake(15, 5, 100, 40)];
-            description.font = [UIFont systemFontOfSize:12];
-            //lb3.backgroundColor = [UIColor redColor];
-            description.lineBreakMode = NSLineBreakByWordWrapping;
-            description.numberOfLines = 0;
-            NSLog(@"%@",model.name);
-            // description.text = model.name;
-            description.text = [NSString stringWithFormat:@"%@",model.version[0][@"maValue"]];
-            [cell addSubview:description];
-            
-            UILabel *priceFLb = [[UILabel alloc]initWithFrame:CGRectMake(15, CGRectGetMaxY(description.frame)+5, 10, 20)];
-            priceFLb.font = [UIFont systemFontOfSize:15];
-            priceFLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-            priceFLb.text = @"￥";
-            [cell addSubview:priceFLb];
-            
-            SingleModel *single = [SingleModel sharedSingleModel];
-            UILabel *priceLb = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(priceFLb.frame)+2, priceFLb.frame.origin.y, 80, 20)];
-            priceLb.font = [UIFont systemFontOfSize:15];
-            priceLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
-            NSLog(@"%@",single.price);
-            priceLb.text = [NSString stringWithFormat:@"%@",model.price];
-            
-            [cell addSubview:priceLb];
-            
-            ButtonImageWithTitle  *fenxBtb = [[ButtonImageWithTitle alloc]initWithFrame:CGRectMake(250, 30, 50, 50)];
-            
-            [fenxBtb setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
-            [fenxBtb addTarget:self action:@selector(fenxClicked) forControlEvents:UIControlEventTouchUpInside];
-            [fenxBtb setTitle:@"分享" forState:UIControlStateNormal];
-            [fenxBtb setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            fenxBtb.titleLabel.font = [UIFont systemFontOfSize:12];
-            fenxBtb.titleLabel.textAlignment = NSTextAlignmentCenter;
-            [cell addSubview:fenxBtb];
-        }
-        else if (indexPath.row == 0 && indexPath.section == 1) {
-            cell.textLabel.text = @"商家对比";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        else if (indexPath.row == 0 &&indexPath.section == 2) {
-            
-            self.menuItems = [NSArray arrayWithObjects:@"Menu Item 1", @"Menu Item 2", nil];
-            cell.textLabel.text = @"购买信息";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
-            UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, 10, 320, 60)];
-            //[btn setTitle:@"图文详情" forState:UIControlStateNormal];
-            
-            // btn.backgroundColor = [UIColor redColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [btn addTarget:self action:@selector(showMenuPopOver:) forControlEvents:UIControlEventTouchUpInside];
-            [cell addSubview:btn];
-        }
-
-       else  if (indexPath.row == 0 &&indexPath.section == 3) {
-            
-            HMSegmentedControl *segmentedControl2 = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"图文详情", @"产品参数",@"推荐产品"]];
-            segmentedControl2.frame = CGRectMake(0, 10, self.view.frame.size.width, 40);
-            segmentedControl2.selectionIndicatorHeight = 4.0f;
-            segmentedControl2.backgroundColor = [UIColor whiteColor];
-            segmentedControl2.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-            segmentedControl2.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
-            [segmentedControl2 addTarget:self action:@selector(segmentedControlChangedValue:) forControlEvents:UIControlEventValueChanged];
-            [cell addSubview:segmentedControl2];
-            
-        }
-
+        return cell;
+        
     }
-   
-   return cell;
+    else{
+        if (reloadsucess) {
+            CMDetailsTableviewCell *cell = [CMDetailsTableviewCell cellWithTableView:tableView cellnumber:indexPath.section];
+            cell.model = model1;
+            if (indexPath.section==1||indexPath.section==2) {
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+            else{
+                cell.indexpathsection = indexPath.section;
+                
+            }
+            return cell;
+        }
+
+        else{
+            if (indexPath.section==1||indexPath.section==2) {
+                CMDetailsTableviewCell *cell = [CMDetailsTableviewCell cellWithTableView:tableView cellnumber:indexPath.section];
+                cell.model = model1;
+                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                return cell;
+            }
+            else{
+                 CMDimageTableViewCell *cell = [CMDimageTableViewCell cellWithTableView:tableView];
+                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                 cell.model = self.datas[0];
+                 return cell;
+                
+            }
+        }
+        
+    }
+    
+}
+#pragma mark sharedelegate methads
+-(void)sharedelegate{
+    [self fenxClicked];
 }
 -(void)fenxClicked{
     
@@ -511,21 +455,20 @@
     
 }
 - (void)segmentedControlChangedValue:(HMSegmentedControl*)segmentedControl{
-    [_detailView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
     if (segmentedControl.selectedSegmentIndex == 0) {
         
-        sucess = YES;
-        [self btnPress1];
+        reloadsucess = YES;
+
         NSLog(@"aaa");
         
     }
     if (segmentedControl.selectedSegmentIndex == 1) {
         
-        
+        detailsModel *model = self.datas[0];
+        imageviewarray = [model.detaiImgUrl componentsSeparatedByString:@","];
         NSLog(@"bbb");
-        sucess = NO;
-        [self productdetail];
-        
+        reloadsucess = NO;
         
     }
     if (segmentedControl.selectedSegmentIndex == 2) {
@@ -537,18 +480,6 @@
     }
     [_tableView reloadData];
 }
--(void)productdetail{
-    detailsModel *model = self.datas[0];
-    imageviewarray = [model.detaiImgUrl componentsSeparatedByString:@","];
-    for (NSInteger i=0; i<imageviewarray.count; i++) {
-        UIImageView *detailmageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0+i*(SCREEN_WIDTH/2)+i*10, SCREEN_WIDTH, SCREEN_WIDTH/2)];
-        [detailmageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",imageviewarray[i]]]];
-        [_detailView addSubview:detailmageview];
-    }
-     _detailView.frame = CGRectMake(0, SCREEN_HEIGHT-100, SCREEN_WIDTH, imageviewarray.count*(SCREEN_WIDTH/2)+imageviewarray.count*10);
-    NSLog(@"%@",imageviewarray);
- 
-}
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.row == 0 && indexPath.section == 1) {
@@ -559,8 +490,11 @@
         
         [self.navigationController pushViewController:contrast animated:NO];
     }
+    if (indexPath.section==2) {
+        [self showMenuPopOver];
+    }
 }
-- (void)showMenuPopOver:(id)sender
+- (void)showMenuPopOver
 {
     self.menuPopover = [[MenuPopover alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-64) menuItems:self.menuItems];
     self.menuPopover.intcart = NO;
@@ -589,7 +523,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
+        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]){
             
             detailsModel *model = [detailsModel modelWithDic:dic];
@@ -601,8 +535,7 @@
         [hud hide:YES];
         [self initaliAppreance];
         [_tableView reloadData];
-        //默认选中图文详情
-        [self btnPress1];
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
@@ -714,69 +647,29 @@
     
     
 }
--(void)btnPress1{
-    
-    NSArray *keysArray = [NSArray array];
-    NSArray *AllvalueArray = [NSArray array];
-    
-    NSLog(@"%@",model1.data[@"转速"]);
-    keysArray = [model1.data allKeys];
-    AllvalueArray = [model1.data allValues];
-    NSLog(@"%@",keysArray);
-//    editionbutton.frame = CGRectMake(15+(i%2)*((SCREEN_WIDTH-40)/2)+(i%2)*10, CGRectGetMaxY(versionLb.frame)+5+(i/2)*35, (SCREEN_WIDTH-40)/2, 30);
-
-    for (NSInteger i=0; i<keysArray.count; i++) {
-        
-        CGSize size = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"%@:%@",keysArray[i],AllvalueArray[i]] font:[UIFont systemFontOfSize:12] constraintSize:CGSizeMake((SCREEN_WIDTH-15)/2, 40)];
-        
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5+(i%2)*((SCREEN_WIDTH-15)/2)+(i%2)*5, 15+(i/2)*45, size.width, size.height)];
-        label.font = [UIFont systemFontOfSize:12];
-        label.numberOfLines = 2;
-        label.text = [NSString stringWithFormat:@"%@:%@",keysArray[i],AllvalueArray[i]];
-        [_detailView addSubview:label];
-        
-        if (i!=1+(i/2)*2) {
-            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(3, 50+(i/2)*45, SCREEN_WIDTH-6, 0.5)];
-            view.backgroundColor = [UIColor whiteColor];
-            [_detailView addSubview:view];
-            _detailView.frame = CGRectMake(0, SCREEN_HEIGHT-100, SCREEN_WIDTH, 50+(i/2)*45);
-        }
-        
-    }
-    
-}
--(void)btnPress:(UIButton *)btn{
-    
-    if (btn.tag == 1001) {
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell_03"]];
-        imageView.backgroundColor = [UIColor clearColor];
-        imageView.frame = CGRectMake(0, -140, 320, 300);
-        
-        [_detailView addSubview:imageView];
-    }
-    
-    else if (btn.tag == 1002) {
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell_04"]];
-        imageView.frame = CGRectMake(0, -140, 320, 300);
-        imageView.backgroundColor = [UIColor clearColor];
-        [_detailView addSubview:imageView];
-    }
-    
-}
+//-(void)btnPress:(UIButton *)btn{
+//    
+//    if (btn.tag == 1001) {
+//        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell_03"]];
+//        imageView.backgroundColor = [UIColor clearColor];
+//        imageView.frame = CGRectMake(0, -140, 320, 300);
+//        
+//        [_detailView addSubview:imageView];
+//    }
+//    
+//    else if (btn.tag == 1002) {
+//        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell_04"]];
+//        imageView.frame = CGRectMake(0, -140, 320, 300);
+//        imageView.backgroundColor = [UIColor clearColor];
+//        [_detailView addSubview:imageView];
+//    }
+//    
+//}
 - (void)viewWillAppear:(BOOL)animated{
-    
-    
-    
     
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
-    
-    
-    
-    
 }
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
