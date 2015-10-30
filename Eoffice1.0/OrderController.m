@@ -111,9 +111,6 @@
         
         dispatch = @"";
     }
-    
-    
-    
     _currentNumber = 1;
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,64, SCREEN_WIDTH, SCREEN_HEIGHT-70-64) style:UITableViewStyleGrouped];
 //   self.automaticallyAdjustsScrollViewInsets = NO;
@@ -304,17 +301,17 @@
             _textField.delegate = self;
             _textField.backgroundColor = [UIColor whiteColor];
             [cell addSubview:_textField];
-            //7数字键盘回收
-            //创建一个view作为inputAcceStoryView
-            UIView *view = [[UIView alloc]init];
-            view.frame = CGRectMake(0, 0, 0, 40);
-            view.backgroundColor = [UIColor grayColor];
-            _textField.inputAccessoryView = view;
-            UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
-            backButton.frame = CGRectMake(10, 0, 100, 40);
-            [backButton setTitle:@"收回键盘" forState:UIControlStateNormal];
-            [backButton addTarget:self action:@selector(keyboardReturn:) forControlEvents:UIControlEventTouchUpInside];
-            [view addSubview:backButton];
+//            //7数字键盘回收
+//            //创建一个view作为inputAcceStoryView
+//            UIView *view = [[UIView alloc]init];
+//            view.frame = CGRectMake(0, 0, 0, 40);
+//            view.backgroundColor = [UIColor grayColor];
+//            _textField.inputAccessoryView = view;
+//            UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//            backButton.frame = CGRectMake(10, 0, 100, 40);
+//            [backButton setTitle:@"收回键盘" forState:UIControlStateNormal];
+//            [backButton addTarget:self action:@selector(keyboardReturn:) forControlEvents:UIControlEventTouchUpInside];
+//            [view addSubview:backButton];
         }
         if (indexPath.row==3){
            cell.textLabel.text = @"邀请码";
@@ -583,30 +580,30 @@
 //    }
 //    
 //}
--(void)keyboardReturn:(UIButton *)button{
-   
-    [_textField resignFirstResponder];
-    [self.view resignFirstResponder];
-}
-
-//键盘上移
--(void)textFieldDidEndEditing:(UITextField *)textField{
-    //输入框编辑完成以后，当键盘即将消失时，将视图恢复到原始状态
-    self.view.frame = CGRectMake(0, 60, self.view.frame.size.width , self.view.frame.size.height);
-    
-}
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-          NSTimeInterval animationDuration=0.30f;
-          [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-          [UIView setAnimationDuration:animationDuration];
-          float width = self.view.frame.size.width;
-          float height = self.view.frame.size.height;
-          //上移n个单位，按实际情况设置
-          CGRect rect=CGRectMake(0.0f,-130,width,height);
-          self.view.frame=rect;
-      [UIView commitAnimations];
-          return YES;
-      }
+//-(void)keyboardReturn:(UIButton *)button{
+//   
+//    [_textField resignFirstResponder];
+//    [self.view resignFirstResponder];
+//}
+//
+////键盘上移
+//-(void)textFieldDidEndEditing:(UITextField *)textField{
+//    //输入框编辑完成以后，当键盘即将消失时，将视图恢复到原始状态
+//    self.view.frame = CGRectMake(0, 60, self.view.frame.size.width , self.view.frame.size.height);
+//    
+//}
+//-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+//          NSTimeInterval animationDuration=0.30f;
+//          [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
+//          [UIView setAnimationDuration:animationDuration];
+//          float width = self.view.frame.size.width;
+//          float height = self.view.frame.size.height;
+//          //上移n个单位，按实际情况设置
+//          CGRect rect=CGRectMake(0.0f,-130,width,height);
+//          self.view.frame=rect;
+//      [UIView commitAnimations];
+//          return YES;
+//      }
 - (void)viewWillAppear:(BOOL)animated{
     
     
@@ -645,11 +642,11 @@
     
 }
 
-#pragma mark UITextFieldDelegate方法
--(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [textField resignFirstResponder];
-    return YES;
-}
+//#pragma mark UITextFieldDelegate方法
+//-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+//    [textField resignFirstResponder];
+//    return YES;
+//}
 
 
 - (void)didReceiveMemoryWarning {

@@ -56,8 +56,6 @@
     self.navigationController.navigationBarHidden = YES;
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
-
-    
 }
 -(void)GoodsBigBtn:(UIButton *)btn{
     NSArray *array = @[@"1",@"2",@"3",@"4",];

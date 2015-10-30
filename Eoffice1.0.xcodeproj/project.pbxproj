@@ -355,6 +355,9 @@
 		96A485981BDF657A007E5416 /* sapi-nav-back-btn-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A485941BDF657A007E5416 /* sapi-nav-back-btn-bg.png */; };
 		96A485991BDF657A007E5416 /* wappass.baidu.com_passport_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 96A485951BDF657A007E5416 /* wappass.baidu.com_passport_login.html */; };
 		96A4859A1BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html in Resources */ = {isa = PBXBuildFile; fileRef = 96A485961BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html */; };
+		96A61C6A1BE313CB0000DDA6 /* CMDetailsTableviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A61C691BE313CB0000DDA6 /* CMDetailsTableviewCell.m */; };
+		96A61C6D1BE314B70000DDA6 /* OneSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A61C6C1BE314B70000DDA6 /* OneSectionTableViewCell.m */; };
+		96A61C701BE35BDC0000DDA6 /* CMDimageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A61C6F1BE35BDC0000DDA6 /* CMDimageTableViewCell.m */; };
 		96A70D0C1B943E9A00C0F1F5 /* PersonInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */; };
 		96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */; };
 		96A70D111B943F5A00C0F1F5 /* massegeNumber.png in Resources */ = {isa = PBXBuildFile; fileRef = 96A70D101B943F5A00C0F1F5 /* massegeNumber.png */; };
@@ -907,6 +910,12 @@
 		96A485941BDF657A007E5416 /* sapi-nav-back-btn-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sapi-nav-back-btn-bg.png"; sourceTree = "<group>"; };
 		96A485951BDF657A007E5416 /* wappass.baidu.com_passport_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = wappass.baidu.com_passport_login.html; sourceTree = "<group>"; };
 		96A485961BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = wappass.qatest.baidu.com_passport_login.html; sourceTree = "<group>"; };
+		96A61C681BE313CB0000DDA6 /* CMDetailsTableviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMDetailsTableviewCell.h; sourceTree = "<group>"; };
+		96A61C691BE313CB0000DDA6 /* CMDetailsTableviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMDetailsTableviewCell.m; sourceTree = "<group>"; };
+		96A61C6B1BE314B70000DDA6 /* OneSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneSectionTableViewCell.h; sourceTree = "<group>"; };
+		96A61C6C1BE314B70000DDA6 /* OneSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneSectionTableViewCell.m; sourceTree = "<group>"; };
+		96A61C6E1BE35BDC0000DDA6 /* CMDimageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMDimageTableViewCell.h; sourceTree = "<group>"; };
+		96A61C6F1BE35BDC0000DDA6 /* CMDimageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMDimageTableViewCell.m; sourceTree = "<group>"; };
 		96A70D0A1B943E9A00C0F1F5 /* PersonInformationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInformationModel.h; sourceTree = "<group>"; };
 		96A70D0B1B943E9A00C0F1F5 /* PersonInformationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInformationModel.m; sourceTree = "<group>"; };
 		96A70D0D1B943F1500C0F1F5 /* OrderStateModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderStateModel.h; sourceTree = "<group>"; };
@@ -1345,6 +1354,12 @@
 				615B29C11B4FB29F004E7546 /* ComputerViewController.m */,
 				6165C31E1B535CD000FF71FB /* CMDetailsViewController.h */,
 				6165C31F1B535CD000FF71FB /* CMDetailsViewController.m */,
+				96A61C6B1BE314B70000DDA6 /* OneSectionTableViewCell.h */,
+				96A61C6C1BE314B70000DDA6 /* OneSectionTableViewCell.m */,
+				96A61C681BE313CB0000DDA6 /* CMDetailsTableviewCell.h */,
+				96A61C691BE313CB0000DDA6 /* CMDetailsTableviewCell.m */,
+				96A61C6E1BE35BDC0000DDA6 /* CMDimageTableViewCell.h */,
+				96A61C6F1BE35BDC0000DDA6 /* CMDimageTableViewCell.m */,
 				61B0FF9D1B5F6739002CF349 /* ContrastViewController.h */,
 				61B0FF9E1B5F6739002CF349 /* ContrastViewController.m */,
 				61793A7C1B54AB2700CFD83A /* GeneralDetailViewController.h */,
@@ -2463,6 +2478,7 @@
 				61A1FFE71B6757B800AFC8C2 /* RegisterViewController.m in Sources */,
 				617FE45A1B60888F007EBFB2 /* LogisticsDetailsController.m in Sources */,
 				61A8AE571B5A0BB3001F2339 /* GYZAlterview.m in Sources */,
+				96A61C6A1BE313CB0000DDA6 /* CMDetailsTableviewCell.m in Sources */,
 				612C57B91B8AB3200048FF28 /* ReturnSuccessController.m in Sources */,
 				6166AA2B1BA02D0F00D7FDD1 /* SDRefreshFooterView.m in Sources */,
 				61AF90221BAE7CE2007BBDAF /* OrderSuccessController.m in Sources */,
@@ -2490,6 +2506,7 @@
 				615B29CA1B4FB3B5004E7546 /* UIView_extra.m in Sources */,
 				615B29C21B4FB29F004E7546 /* ComputerCell.m in Sources */,
 				615B29A41B4FB22B004E7546 /* OrderViewController.m in Sources */,
+				96A61C701BE35BDC0000DDA6 /* CMDimageTableViewCell.m in Sources */,
 				61793A6C1B54A7B000CFD83A /* AdvanceCommentCell.m in Sources */,
 				61793A761B54A81600CFD83A /* Comment.m in Sources */,
 				96A70D171B94400000C0F1F5 /* BBBadgeBarButtonItem.m in Sources */,
@@ -2508,6 +2525,7 @@
 				61068AAB1B5CF611008BE40A /* NewsViewController.m in Sources */,
 				615B29C91B4FB3B5004E7546 /* LeftSlideViewController.m in Sources */,
 				6183424F1B5658720097E8A4 /* LewPopupViewAnimationSlide.m in Sources */,
+				96A61C6D1BE314B70000DDA6 /* OneSectionTableViewCell.m in Sources */,
 				61A7D1A71B6203D4009AADFC /* HopleViewController.m in Sources */,
 				61793A771B54A81600CFD83A /* Model.m in Sources */,
 				618FD7571B8747B200090608 /* BackReasonModel.m in Sources */,
