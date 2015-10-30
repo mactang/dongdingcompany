@@ -22,7 +22,7 @@
     self.view.backgroundColor = [UIColor grayColor];
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
-    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang21"];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
     leftButton.frame = CGRectMake(0, 0, 20, 20);
     leftButton.font = [UIFont systemFontOfSize:14];
@@ -154,7 +154,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     
     self.navigationController.navigationBarHidden = NO;
-    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
     
 }

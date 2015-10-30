@@ -95,6 +95,7 @@
     newPhoneField.layer.cornerRadius = 3;
     newPhoneField.layer.borderWidth = 1;
     newPhoneField.layer.borderColor = [[UIColor grayColor]CGColor];
+    newPhoneField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:newPhoneField];
     
     UIButton *newNalidateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newPhoneField.frame)+5,newPhoneField.frame.origin.y, 70, 30)];
@@ -156,8 +157,33 @@
 }
 
 -(void)newValidatePress{
-
-    [self newNaliData];
+    NSLog(@"text%@",newPhoneField.text);
+    NSString  *string = [NSString stringWithFormat:@"%@",newPhoneField.text];
+    NSLog(@"length--%lu",(unsigned long)[string length]);
+    NSUInteger number = [string length];
+    
+    //手机号以13， 15，18开头，八个 \d 数字字符
+    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+    //    NSLog(@"phoneTest is %@",phoneTest);
+    BOOL isPhtoneNumber =[phoneTest evaluateWithObject:string];
+    
+    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+    NSLog(@"bool--%lu",(unsigned long)[string length]);
+    
+    
+    
+    if (number == 11 && [string length] == 0 && isPhtoneNumber == YES) {
+        [self newNaliData];
+    }else{
+    
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"请输入正确的电话号码" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        //设置提示框样式（可以输入账号密码）
+        alert.alertViewStyle = UIAlertViewStyleDefault;
+        
+        [alert show];
+    }
+    
 }
 
 -(void)newNaliData{

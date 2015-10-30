@@ -287,6 +287,7 @@
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
+        
         if (dic[@"data"] !=[NSNull null]){
             [dictionary setDictionary:dic[@"data"]];
             NSDictionary *array = dic[@"data"];

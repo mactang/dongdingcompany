@@ -71,7 +71,7 @@
     [activityIndicatorView startAnimating];
     imageArray = [NSMutableArray array];
 
-    for(int i=0;i<5;i++)
+    for(int i=0;i<1;i++)
     {
        
         [imageArray addObject:[NSString stringWithFormat:@"%d.jpg",i+1]];

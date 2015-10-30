@@ -162,5 +162,7 @@
 
 #define VERSION @"%@product!getAppVersions.action"
 
+#define HOMECAROUSEL @"%@product!adBanner.action"
+
 
 #endif
