@@ -10,6 +10,7 @@
 #import "RDVTabBarController.h"
 #import "AFNetworking.h"
 #import "SingleModel.h"
+#import "Mobliejudge.h"
 @interface AddBankcardController ()<UITextFieldDelegate>{
     
     NSString *name;
@@ -75,6 +76,7 @@
     }
 }
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSLog(@"%@",string);
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (textField.tag==40) {
         name = text;
@@ -89,6 +91,15 @@
         bankaddress = text;
     }
     return YES;
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    if (textField.tag==40) {
+        if (! [Mobliejudge checkChinese:textField.text]) {
+            NSLog(@"%@",@"姓名格式错误");
+        }
+        
+    }
+//    return YES;
 }
 -(void)addbankcardPressed{
     [self datarequest];
