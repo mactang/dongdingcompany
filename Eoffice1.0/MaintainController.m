@@ -8,6 +8,7 @@
 
 #import "MaintainController.h"
 #import "TarBarButton.h"
+#import "RDVTabBarController.h"
 @interface MaintainController ()
 
 @end
@@ -15,6 +16,7 @@
 @implementation MaintainController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
@@ -30,13 +32,28 @@
     
     
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
-    // Do any additional setup after loading the view.
+   
+
 }
 -(void)leftItemClicked{
-    
+    self.navigationController.navigationBarHidden = YES;
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
     
+}
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    
+    
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -240,10 +240,11 @@
                 addressLb.text = [NSString stringWithFormat:@"地址:%@",model.address];
                 view.frame = CGRectMake(0, 0, SCREEN_WIDTH, size.height+50);
                 [view addSubview:addressLb];
+                
             }else{
             
                 view.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
-                
+        
                 UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(12, 15, 100, 20)];
                 lb1.text = @"请添加收获地址";
                 lb1.font = [UIFont systemFontOfSize:13];

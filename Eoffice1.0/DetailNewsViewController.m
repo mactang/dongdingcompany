@@ -7,7 +7,8 @@
 //
 
 #import "DetailNewsViewController.h"
-
+#import "TarBarButton.h"
+#import "RDVTabBarController.h"
 @interface DetailNewsViewController ()
 
 @end
@@ -18,9 +19,15 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    UIBarButtonItem *logoutItem = [[UIBarButtonItem alloc] initWithTitle:@"＜" style:UIBarButtonItemStyleBordered target:self action:@selector(leftBtn)];
-    [self.navigationItem setTitle:@"消息详情"];
-    [self.navigationItem setLeftBarButtonItem:logoutItem];
+    TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
+    [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
+    UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
+    [leftButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
+    leftButton.frame = CGRectMake(0, 0, 20, 20);
+    leftButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    // ligthButton.backgroundColor = [UIColor redColor];
+    UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    [self.navigationItem setLeftBarButtonItem:lightItem2];
     
     UILabel *titleLB = [[UILabel alloc]initWithFrame:CGRectMake(10, 80, 320, 20)];
     titleLB.font = [UIFont systemFontOfSize:15];
@@ -72,13 +79,36 @@
     
     // Do any additional setup after loading the view.
 }
+
+- (void)leftItemClicked{
+    
+    
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+}
+
 -(void)detailPress{
 }
 - (void)leftBtn{
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    
+    self.navigationController.navigationBarHidden = NO;
+    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    
+    
+}
 
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = YES;
+    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+    [super viewWillDisappear:animated];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
