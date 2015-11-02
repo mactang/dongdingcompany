@@ -80,6 +80,7 @@
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
     
+    
     UIButton *sureButton = [[UIButton alloc]initWithFrame:CGRectMake(10,CGRectGetMaxY(_tableView.frame)+20, 300, 40)];
     sureButton.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     sureButton.clipsToBounds = YES;
@@ -123,10 +124,14 @@
         UIAlertView *alterview;
         NSString *string;
         if ([dic[@"status"]integerValue]==1) {
+            
             string = @"信息修改成功";
+            
         }
         else{
+            
             string = @"信息修改失败";
+            
         }
         alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alterview show];
@@ -238,6 +243,18 @@
         sexLb.textAlignment = NSTextAlignmentCenter;
         sexLb.textColor = [UIColor blackColor];
         [cell addSubview:sexLb];
+        
+        if ([sexLb.text isEqual:@"男"]) {
+            sex = @"M";
+        }
+        if ([sexLb.text isEqual:@"女"]) {
+            sex = @"F";
+        }
+        if ([sexLb.text isEqual:@"保密"]) {
+            sex = @"2b";
+            
+        }
+        
     }
     if (indexPath.row == 4) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedBirthday:) name:@"birthday" object:nil];

@@ -43,7 +43,7 @@
 //#define COMMON @"http://120.26.124.171/phone/"
 #define COMMON @"http://192.168.0.65:8080/phone/"
 
-//#define OFFICE @"http://121.43.193.193"
+#define OFFICE @"http://121.43.193.193"
 
 //用户登录接口
 #define LOGIN @"%@user!Login.action?username=%@&password=%@"

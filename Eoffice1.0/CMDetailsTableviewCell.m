@@ -105,36 +105,5 @@
 
 }
 @end
-//-(void)btnPress1{
-//
-//    NSArray *keysArray = [NSArray array];
-//    NSArray *AllvalueArray = [NSArray array];
-//
-//    keysArray = [model1.data allKeys];
-//    AllvalueArray = [model1.data allValues];
-//    
-//    NSLog(@"%@",keysArray);
-//    //    editionbutton.frame = CGRectMake(15+(i%2)*((SCREEN_WIDTH-40)/2)+(i%2)*10, CGRectGetMaxY(versionLb.frame)+5+(i/2)*35, (SCREEN_WIDTH-40)/2, 30);
-//    
-//    for (NSInteger i=0; i<keysArray.count; i++) {
-//        
-//        CGSize size = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"%@:%@",keysArray[i],AllvalueArray[i]] font:[UIFont systemFontOfSize:12] constraintSize:CGSizeMake((SCREEN_WIDTH-15)/2, 40)];
-//        
-//        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(5+(i%2)*((SCREEN_WIDTH-15)/2)+(i%2)*5, 15+(i/2)*45, size.width, size.height)];
-//        label.font = [UIFont systemFontOfSize:12];
-//        label.numberOfLines = 2;
-//        label.text = [NSString stringWithFormat:@"%@:%@",keysArray[i],AllvalueArray[i]];
-//        [_detailView addSubview:label];
-//        
-//        if (i!=1+(i/2)*2) {
-//            UIView *view = [[UIView alloc]initWithFrame:CGRectMake(3, 50+(i/2)*45, SCREEN_WIDTH-6, 0.5)];
-//            view.backgroundColor = [UIColor whiteColor];
-//            [_detailView addSubview:view];
-//            _detailView.frame = CGRectMake(0, SCREEN_HEIGHT-100, SCREEN_WIDTH, 50+(i/2)*45);
-//        }
-//        
-//    }
-//    
-//}
 
 
