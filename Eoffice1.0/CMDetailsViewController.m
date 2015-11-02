@@ -274,7 +274,6 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,COMMON,model.paraId,model.goodsId,model.cPartnerId];
-    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -282,7 +281,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
+
         if (dic[@"data"] !=[NSNull null]){
             [dictionary setDictionary:dic[@"data"]];
             NSDictionary *array = dic[@"data"];
@@ -295,7 +294,6 @@
         [hud hide:YES];
         NSLog(@"%@",error);
     }];
-    
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 4;
@@ -450,9 +448,6 @@
                                      shareImage:shareImage
                                 shareToSnsNames:[NSArray arrayWithObjects: UMShareToWechatSession, UMShareToWechatTimeline, UMShareToQzone, UMShareToQQ, UMShareToSina, UMShareToTencent,UMShareToSms, nil]
                                        delegate:self];
-     
-    
-    
 }
 - (void)segmentedControlChangedValue:(HMSegmentedControl*)segmentedControl{
 
@@ -513,8 +508,6 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path = [NSString stringWithFormat:PARAMETER,COMMON,model.paraId];
-    NSLog(@"path--%@",path);
-    NSLog(@"wGoodsId--%@",_numberbutton.titleLabel.text);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -523,15 +516,12 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]){
             
             detailsModel *model = [detailsModel modelWithDic:dic];
             [self.parameterDatas addObject:model];
-            NSLog(@"%@",model.data[@"转速"]);
         }
         model1 = self.parameterDatas[0];
-        NSLog(@"%@",model1);
         [hud hide:YES];
         [self initaliAppreance];
         [_tableView reloadData];
@@ -590,7 +580,6 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"%ld",(long)product]];
     NSString *path = [NSString stringWithFormat:ADDMAINTAIN,COMMON,model.userkey,model.goodsId,string];
-    NSLog(@"path--%@",path);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";

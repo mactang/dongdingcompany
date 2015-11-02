@@ -119,7 +119,6 @@
     self.pageControl.numberOfPages = array.count;
     
     for (int i = 0; i < [array count]; i++) {
-        NSLog(@"string:%@", [array objectAtIndex:i]);
         UIImageView *forImageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH*i, 0, SCREEN_WIDTH, 150)];
         [forImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",[array objectAtIndex:i]]]];
         [scrollView addSubview:forImageView];
