@@ -10,7 +10,7 @@
 #import "UIKit+AFNetworking.h"
 #import "detailsModel.h"
 #import "ButtonImageWithTitle.h"
-@interface OneSectionTableViewCell(){
+@interface OneSectionTableViewCell()<UIScrollViewDelegate>{
     UIScrollView *scrollView;
     UILabel *description;
     UILabel *priceLb;
@@ -63,16 +63,17 @@
                 scrollView.backgroundColor = [UIColor grayColor];
                 // 一页的大小应该是frame的大小
                 scrollView.pagingEnabled = YES;
-                
+                scrollView.delegate = self;
                 scrollView.showsHorizontalScrollIndicator = NO;
                 scrollView.showsVerticalScrollIndicator = NO;
                 [self.contentView addSubview:scrollView];
                 scrollView.tag = 3001;
                 //[scrollView setContentOffset:CGPointMake(320, 0)];
                 //分页控制控件
-                self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(110, 130, 120, 0)];
-                self.pageControl.backgroundColor = [UIColor redColor];
-                
+                self.pageControl = [[UIPageControl alloc]initWithFrame:CGRectMake(110, 145, 120, 0)];
+               // self.pageControl.backgroundColor = [UIColor redColor];
+                self.pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:64/255.0 green:114/255.0 blue:185/255.0 alpha:1];
+                self.pageControl.pageIndicatorTintColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
                 //当前显示的分页
                 self.pageControl.currentPage = 0;
                 //将分页控制控件加在本视图上面
@@ -128,6 +129,12 @@
     priceLb.text = [NSString stringWithFormat:@"￥%@",model.price];
     
 }
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    int gap = scrollView.contentOffset.x/320.0;
+    
+    self.pageControl.currentPage = gap;
+}
+
 -(void)fenxClicked{
     if (_delegate &&[_delegate respondsToSelector:@selector(sharedelegate)]) {
         [self.delegate sharedelegate];

@@ -19,11 +19,17 @@
 #import "GoodsBigViewController.h"
 #import "NewButton.h"
 #import "ImageCarousel.h"
-@interface MainViewController ()
+#import "SDCycleScrollView.h"
+#import "AFNetworking.h"
+#import "UIKit+AFNetworking.h"
+#import "MainBanner.h"
+@interface MainViewController ()<SDCycleScrollViewDelegate>
 @property(nonatomic, strong)UIPageControl *pageControl;
+@property(nonatomic, strong)NSMutableArray *datas;
 @end
 
 @implementation MainViewController
+
 {
     // 记录当前是第几页
     int _currentIndex;
@@ -31,6 +37,13 @@
     NSMutableArray *_imagesArray;
     
     
+}
+-(NSMutableArray *)datas{
+    
+    if (_datas == nil) {
+        _datas = [NSMutableArray array];
+    }
+    return _datas;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -81,22 +94,100 @@
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    NSDictionary *parameter = [NSDictionary dictionaryWithObjectsAndKeys: nil];
-    NSDictionary *url = [NSDictionary dictionaryWithObjectsAndKeys:@"轮播接口",@"URL", nil];
-    NSArray *arrayParameter = [NSArray arrayWithObjects:parameter,url, nil];
-    ImageCarousel *imagecarousel = [[ImageCarousel alloc] initWithFrame:CGRectMake(12, 80,SCREEN_WIDTH-24, SCREEN_WIDTH/2-30) andDataSource:arrayParameter];
-    imagecarousel.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:imagecarousel];
+//    NSDictionary *parameter = [NSDictionary dictionaryWithObjectsAndKeys: nil];
+//    NSDictionary *url = [NSDictionary dictionaryWithObjectsAndKeys:@"轮播接口",@"URL", nil];
+//    NSArray *arrayParameter = [NSArray arrayWithObjects:parameter,url, nil];
+//    ImageCarousel *imagecarousel = [[ImageCarousel alloc] initWithFrame:CGRectMake(12, 80,SCREEN_WIDTH-24, SCREEN_WIDTH/2-30) andDataSource:arrayParameter];
+//    imagecarousel.backgroundColor = [UIColor whiteColor];
+  //  [self.view addSubview:imagecarousel];
     
-    [self button:imagecarousel];
+    [self bannerData];
+    
+    
     
     // Do any additional setup after loading the view.
+}
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index
+{
+    NSLog(@"---点击了第%ld张图片", index);
+}
+-(void)bannerData{
+
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    
+    NSString *path= [NSString stringWithFormat:HOMECAROUSEL,COMMON];
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+            
+            NSArray *array = dic[@"data"];
+            NSLog(@"%lu",(unsigned long)array.count);
+            for (int i = 0; i<array.count; i++) {
+                
+                MainBanner *banner = [MainBanner modelWithDic:dic[@"data"][i]];
+                [self.datas addObject:banner];
+            }
+            
+            
+            
+            
+        }
+        [self banner];
+        NSLog(@"%lu",(unsigned long)self.datas.count);
+        [hud hide:YES];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"%@",error);
+    }];
+
+}
+-(void)banner{
+
+    NSMutableArray *imagesURLStrings = [NSMutableArray array];
+    
+    NSLog(@"%@",self.datas);
+    for (int i= 0; i<self.datas.count; i++) {
+        MainBanner *model = self.datas[i];
+        [imagesURLStrings addObject:model.imgurl];
+    }
+    NSLog(@"%@",imagesURLStrings);
+    // 情景二：采用网络图片实现
+//     imagesURLStrings = @[
+//                                  @"https://ss2.baidu.com/-vo3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a4b3d7085dee3d6d2293d48b252b5910/0e2442a7d933c89524cd5cd4d51373f0830200ea.jpg",
+//                                  @"https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a41eb338dd33c895a62bcb3bb72e47c2/5fdf8db1cb134954a2192ccb524e9258d1094a1e.jpg",
+//                                  @"http://c.hiphotos.baidu.com/image/w%3D400/sign=c2318ff84334970a4773112fa5c8d1c0/b7fd5266d0160924c1fae5ccd60735fae7cd340d.jpg"
+//                                  ];
+    
+    //网络加载 --- 创建带标题的图片轮播器
+    SDCycleScrollView *cycleScrollView2 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(12, 80, SCREEN_WIDTH-24,SCREEN_WIDTH/2-30) imageURLStringsGroup:nil]; // 模拟网络延时情景
+    cycleScrollView2.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+    cycleScrollView2.delegate = self;
+    //cycleScrollView2.titlesGroup = titles;
+    cycleScrollView2.dotColor = [UIColor yellowColor]; // 自定义分页控件小圆标颜色
+    cycleScrollView2.autoScrollTimeInterval = 4.0;
+    //cycleScrollView2.placeholderImage = [UIImage imageNamed:@"placeholder"];
+    [self.view addSubview:cycleScrollView2];
+    
+    //             --- 模拟加载延迟
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        cycleScrollView2.imageURLStringsGroup = imagesURLStrings;
+    });
+    
+    [self button:cycleScrollView2];
+    
+    
 }
 -(void)rightItemClicked:(UIBarButtonItem *)item{
     NewsViewController *news = [[NewsViewController alloc]init];
     [self.navigationController pushViewController:news animated:YES];
 }
--(void)button:(ImageCarousel *)image{
+-(void)button:(SDCycleScrollView *)image{
     
     
     UIButton *MaintainBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 220, SCREEN_WIDTH-20, (SCREEN_HEIGHT-CGRectGetMaxY(image.frame)-30-49)/2)];
