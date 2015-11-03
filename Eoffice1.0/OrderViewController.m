@@ -27,6 +27,9 @@
 #import "ServiceViewController.h"
 #import "BDWalletSDKMainManager.h"
 #import <CommonCrypto/CommonDigest.h>
+
+#import "PayViewController.h"
+
 @interface OrderViewController ()<UITableViewDelegate,UITableViewDataSource,DropDown1Delegate,logindelegate,deletgateOrder,UIAlertViewDelegate,BDWalletSDKMainManagerDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *classifyDatas;
@@ -260,6 +263,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey != nil) {
+        
         self.navigationController.navigationBarHidden = NO;
 
     }
@@ -315,6 +319,7 @@
 -(void)deatailGoodId:(NSString *)goodId{
     
     NSLog(@"%@",goodId);
+    
     SingleModel *singM = [SingleModel sharedSingleModel];
     singM.goodsId = goodId;
     singM.paraId = @"505";
@@ -526,14 +531,19 @@
     }
 }
 #pragma mark  baifubao
--(void)baifubao:(NSInteger)buttonTag{
+-(void)baifubao:(NSInteger)buttonTag totalPrice:(NSString *)price{
     
-    BDWalletSDKMainManager* payMainManager = [BDWalletSDKMainManager getInstance];
-    NSString *orderInfo = [self buildOrderInfoTest];
-    payMainManager.delegate = self;
-    NSLog(@"%@",orderInfo);
-    [payMainManager doPayWithOrderInfo:orderInfo params:nil delegate:self];
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+//    BDWalletSDKMainManager* payMainManager = [BDWalletSDKMainManager getInstance];
+//    NSString *orderInfo = [self buildOrderInfoTest];
+//    payMainManager.delegate = self;
+//    NSLog(@"%@",orderInfo);
+//    [payMainManager doPayWithOrderInfo:orderInfo params:nil delegate:self];
+//    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    NSLog(@"price--%@",price);
+    PayViewController *pay = [[PayViewController alloc]init];
+    pay.totalPrice = price;
+    [self.navigationController pushViewController:pay animated:YES];
+    
 }
 -(NSString*)buildOrderInfoTest
 {

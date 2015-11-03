@@ -124,7 +124,10 @@
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     if (indexPath.section == 0) {
         cell.textLabel.text = @"订单金额";
-        UILabel *price = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-[self.totalPrice length]-65, 20, [self.totalPrice length]+65, 20)];
+         NSLog(@"price**%@",self.totalPrice);
+        NSString *string =[NSString stringWithFormat:@"%@",self.totalPrice];
+        NSLog(@"length**%lu",(unsigned long)[string length]);
+        UILabel *price = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-[string length]-65, 20, [string length]+65, 20)];
         price.text = [NSString stringWithFormat:@"%.2f元",[self.totalPrice floatValue] ];
         price.font = [UIFont systemFontOfSize:13];
         [cell addSubview:price];
