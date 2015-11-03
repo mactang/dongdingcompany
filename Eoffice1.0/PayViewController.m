@@ -238,12 +238,14 @@
     if (payWayMark == 0) {
         [self sendPay_demo];
     }
+    //微信支付
     if (payWayMark == 100) {
-        
+       [self sendPay_demo];
     }
     if (payWayMark == 101) {
         
     }
+    //百度钱包支付
     if (payWayMark == 102) {
         [self baifubao];
     }
