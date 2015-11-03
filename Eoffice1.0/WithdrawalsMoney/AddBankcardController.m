@@ -32,10 +32,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    name = @"唐韬";
-    banknumber = @"6221886510032263451";
-    bankcard = @"中国工商银行";
-    bankaddress =  @"成都武侯支行";
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -102,7 +98,31 @@
 //    return YES;
 }
 -(void)addbankcardPressed{
-    [self datarequest];
+    UIAlertView *alertview;
+    NSString *messagestring;
+    if (name==nil) {
+        messagestring = @"姓名不能为空";
+    }
+   else if (banknumber==nil) {
+        messagestring = @"卡号不能为空";
+    }
+   else if (messagestring==nil) {
+        messagestring = @"请填写银行卡类型";
+    }
+   else if (bankaddress==nil) {
+        bankaddress = @"请输入开户行";
+    }
+    else{
+         [self datarequest];
+        return;
+    }
+    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:messagestring delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertview show];
+    UIWebView  *payWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH/7.8, SCREEN_WIDTH, SCREEN_HEIGHT-SCREEN_WIDTH/7.8)];
+    payWebView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+    [payWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
+    [payWebView setScalesPageToFit:YES];
+    [self.view addSubview:payWebView];
 }
 -(void)datarequest{
     
@@ -110,11 +130,11 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-//    NSString *path= [NSString stringWithFormat:ADDBANKCARD,COMMON,model.userkey,name,bankcard,banknumber,bankaddress];
-//    NSLog(@"%@",path);
+//  NSString *path= [NSString stringWithFormat:ADDBANKCARD,COMMON,model.userkey,name,bankcard,banknumber,bankaddress];
+//  NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    @"%@user!addBand.action?userkey=%@&name=%@&bankName=%@&bankNo=%@&bankAddress=%@"
+//  @"%@user!addBand.action?userkey=%@&name=%@&bankName=%@&bankNo=%@&bankAddress=%@"
     NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:model.userkey,@"userkey",name,@"name",bankcard,@"bankName",banknumber,@"bankNo",bankaddress,@"bankAddress", nil];
     [manager POST:@"http://192.168.0.65:8080/phone/user!addBand.action?" parameters:dicdata success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];

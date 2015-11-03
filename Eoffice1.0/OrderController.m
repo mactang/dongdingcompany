@@ -70,14 +70,14 @@
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
-    //    [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
-    //    [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    // [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
+    // [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
    // ligthButton.titleLabel.font = [UIFont systemFontOfSize:14];
     // ligthButton.backgroundColor = [UIColor redColor];
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     self.navigationItem.title = @"确认订单";
-    
+
     [self footviewinterface];
     [self orderlistrequest];
 }
@@ -85,9 +85,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
     //payWay = @"";
-    
     invoice = @"fdsdsf";
-    
     dispatch = @"dsfdsf";
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *value = [ud objectForKey:@"payWay"];

@@ -527,6 +527,7 @@
 }
 #pragma mark  baifubao
 -(void)baifubao:(NSInteger)buttonTag{
+    
     BDWalletSDKMainManager* payMainManager = [BDWalletSDKMainManager getInstance];
     NSString *orderInfo = [self buildOrderInfoTest];
     payMainManager.delegate = self;
@@ -597,8 +598,6 @@
     [str1 appendString:@"11"];
     [str1 appendString:@"&total_amount="];
     [str1 appendString:@"1"];
-    
-    
     return [NSString stringWithFormat:@"%@&sign=%@" , str1 , md5CapPwd];
 }
 
@@ -616,7 +615,6 @@
             result[12], result[13], result[14], result[15]
             ];
 }
-
 - (NSString*)encodeURL:(NSString *)string
 {
     NSString* escaped_value = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(
