@@ -27,6 +27,10 @@
 #import "OrderSuccessController.h"
 #import "OrderTableViewCell.h"
 #import "CalculateStringSpace.h"
+
+
+
+
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
@@ -48,6 +52,7 @@
     NSString *paywayCount ;
     NSString *addressH;
     NSInteger signsection;
+    
     
 }
 -(NSMutableArray *)datas{
@@ -355,6 +360,7 @@
             self.totalprice = [NSString stringWithFormat:@"%@",dic[@"data"][@"total"]];
             totalPice.text = [NSString stringWithFormat:@"合计:￥%@",self.totalprice];
             [self.orderlist addObjectsFromArray:dic[@"data"][@"list"]];
+            
         }
         [hud hide:YES];
         [self defaultAddress];
@@ -511,14 +517,18 @@
     
     if (btn.tag == 1000) {
         [self sureOrder];
-//        PayViewController *pay = [[PayViewController alloc]init];
-//        [self.navigationController pushViewController:pay animated:YES];
-        
-        OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
-        [self.navigationController pushViewController:orderSucc animated:YES];
+        PayViewController *pay = [[PayViewController alloc]init];
+        [self.navigationController pushViewController:pay animated:YES];
+        pay.totalPrice = self.totalprice;
+        NSLog(@"%@",pay.totalPrice);
+//        OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
+//        [self.navigationController pushViewController:orderSucc animated:YES];
         
     }
 }
+
+
+
 - (void)sureOrder{
     
     SingleModel *sing = [SingleModel sharedSingleModel];

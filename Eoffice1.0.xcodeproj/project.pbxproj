@@ -202,6 +202,9 @@
 		6181600A1BE70BC600E8C594 /* TAAnimatedDotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 618160041BE70BC600E8C594 /* TAAnimatedDotView.m */; };
 		6181600B1BE70BC600E8C594 /* TADotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 618160061BE70BC600E8C594 /* TADotView.m */; };
 		6181600C1BE70BC600E8C594 /* TAPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 618160081BE70BC600E8C594 /* TAPageControl.m */; };
+		618160131BE7679300E8C594 /* ApiXml.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6181600E1BE7679300E8C594 /* ApiXml.mm */; };
+		618160141BE7679300E8C594 /* payRequsestHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 618160101BE7679300E8C594 /* payRequsestHandler.mm */; };
+		618160151BE7679300E8C594 /* WXUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 618160121BE7679300E8C594 /* WXUtil.mm */; };
 		61822EC31B66327500E1B155 /* 消息.png in Resources */ = {isa = PBXBuildFile; fileRef = 61822EC11B66327500E1B155 /* 消息.png */; };
 		6183424C1B5658720097E8A4 /* LewPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 618342411B5658720097E8A4 /* LewPopupBackgroundView.m */; };
 		6183424D1B5658720097E8A4 /* LewPopupViewAnimationDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 618342431B5658720097E8A4 /* LewPopupViewAnimationDrop.m */; };
@@ -298,6 +301,13 @@
 		61B0FFA81B5FA2BA002CF349 /* down_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 61B0FFA41B5FA2BA002CF349 /* down_dark.png */; };
 		61B854631BE6F4590018FE25 /* MainBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 61B854621BE6F4590018FE25 /* MainBanner.m */; };
 		61BBF8151B75CDFD0087D39F /* xiangji.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BBF8141B75CDFD0087D39F /* xiangji.png */; };
+		61BC227F1BE84F0B009DC90B /* weixinpay.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BC227B1BE84F0B009DC90B /* weixinpay.png */; };
+		61BC22801BE84F0B009DC90B /* alipay.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BC227C1BE84F0B009DC90B /* alipay.png */; };
+		61BC22811BE84F0B009DC90B /* bank.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BC227D1BE84F0B009DC90B /* bank.png */; };
+		61BC22821BE84F0B009DC90B /* noSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BC227E1BE84F0B009DC90B /* noSelected.png */; };
+		61BC22841BE84F6C009DC90B /* baiduqianbao.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BC22831BE84F6C009DC90B /* baiduqianbao.png */; };
+		61BC22861BE84F95009DC90B /* selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 61BC22851BE84F95009DC90B /* selected.png */; };
+		61BC22891BE85268009DC90B /* PayWayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC22881BE85268009DC90B /* PayWayButton.m */; };
 		61C7CFF01B637629003F6629 /* qq.png in Resources */ = {isa = PBXBuildFile; fileRef = 61C7CFED1B637629003F6629 /* qq.png */; };
 		61D54ABE1B7D7DB1002DE544 /* LTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61D54ABD1B7D7DB1002DE544 /* LTableViewCell.m */; };
 		61DA8F4E1BA1210900824499 /* NewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61DA8F4D1BA1210900824499 /* NewButton.m */; };
@@ -666,6 +676,12 @@
 		618160061BE70BC600E8C594 /* TADotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TADotView.m; sourceTree = "<group>"; };
 		618160071BE70BC600E8C594 /* TAPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TAPageControl.h; sourceTree = "<group>"; };
 		618160081BE70BC600E8C594 /* TAPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TAPageControl.m; sourceTree = "<group>"; };
+		6181600D1BE7679300E8C594 /* ApiXml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiXml.h; sourceTree = "<group>"; };
+		6181600E1BE7679300E8C594 /* ApiXml.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ApiXml.mm; sourceTree = "<group>"; };
+		6181600F1BE7679300E8C594 /* payRequsestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = payRequsestHandler.h; sourceTree = "<group>"; };
+		618160101BE7679300E8C594 /* payRequsestHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = payRequsestHandler.mm; sourceTree = "<group>"; };
+		618160111BE7679300E8C594 /* WXUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXUtil.h; sourceTree = "<group>"; };
+		618160121BE7679300E8C594 /* WXUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = WXUtil.mm; sourceTree = "<group>"; };
 		61822EC11B66327500E1B155 /* 消息.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "消息.png"; sourceTree = "<group>"; };
 		618342401B5658720097E8A4 /* LewPopupBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LewPopupBackgroundView.h; sourceTree = "<group>"; };
 		618342411B5658720097E8A4 /* LewPopupBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LewPopupBackgroundView.m; sourceTree = "<group>"; };
@@ -826,6 +842,14 @@
 		61B854611BE6F4590018FE25 /* MainBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainBanner.h; sourceTree = "<group>"; };
 		61B854621BE6F4590018FE25 /* MainBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainBanner.m; sourceTree = "<group>"; };
 		61BBF8141B75CDFD0087D39F /* xiangji.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiangji.png; sourceTree = "<group>"; };
+		61BC227B1BE84F0B009DC90B /* weixinpay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = weixinpay.png; sourceTree = "<group>"; };
+		61BC227C1BE84F0B009DC90B /* alipay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alipay.png; sourceTree = "<group>"; };
+		61BC227D1BE84F0B009DC90B /* bank.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bank.png; sourceTree = "<group>"; };
+		61BC227E1BE84F0B009DC90B /* noSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noSelected.png; sourceTree = "<group>"; };
+		61BC22831BE84F6C009DC90B /* baiduqianbao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = baiduqianbao.png; sourceTree = "<group>"; };
+		61BC22851BE84F95009DC90B /* selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected.png; sourceTree = "<group>"; };
+		61BC22871BE85268009DC90B /* PayWayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayWayButton.h; sourceTree = "<group>"; };
+		61BC22881BE85268009DC90B /* PayWayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayWayButton.m; sourceTree = "<group>"; };
 		61C7CFED1B637629003F6629 /* qq.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qq.png; sourceTree = "<group>"; };
 		61D54ABC1B7D7DB1002DE544 /* LTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTableViewCell.h; sourceTree = "<group>"; };
 		61D54ABD1B7D7DB1002DE544 /* LTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTableViewCell.m; sourceTree = "<group>"; };
@@ -1176,6 +1200,7 @@
 		615B296C1B4FAFBA004E7546 /* RES */ = {
 			isa = PBXGroup;
 			children = (
+				61BC227A1BE84EF7009DC90B /* Pay */,
 				96A485921BDF657A007E5416 /* www */,
 				96E421101BD9D69C00C582E7 /* center_comment.png */,
 				96E421111BD9D69C00C582E7 /* my_comment.png */,
@@ -1928,6 +1953,19 @@
 			name = DropDown;
 			sourceTree = "<group>";
 		};
+		61BC227A1BE84EF7009DC90B /* Pay */ = {
+			isa = PBXGroup;
+			children = (
+				61BC22851BE84F95009DC90B /* selected.png */,
+				61BC22831BE84F6C009DC90B /* baiduqianbao.png */,
+				61BC227B1BE84F0B009DC90B /* weixinpay.png */,
+				61BC227C1BE84F0B009DC90B /* alipay.png */,
+				61BC227D1BE84F0B009DC90B /* bank.png */,
+				61BC227E1BE84F0B009DC90B /* noSelected.png */,
+			);
+			name = Pay;
+			sourceTree = "<group>";
+		};
 		61D54ABB1B7D7D8D002DE544 /* Allselect */ = {
 			isa = PBXGroup;
 			children = (
@@ -1972,6 +2010,12 @@
 		61F312EB1BD637C500B8A92F /* wechat */ = {
 			isa = PBXGroup;
 			children = (
+				6181600D1BE7679300E8C594 /* ApiXml.h */,
+				6181600E1BE7679300E8C594 /* ApiXml.mm */,
+				6181600F1BE7679300E8C594 /* payRequsestHandler.h */,
+				618160101BE7679300E8C594 /* payRequsestHandler.mm */,
+				618160111BE7679300E8C594 /* WXUtil.h */,
+				618160121BE7679300E8C594 /* WXUtil.mm */,
 			);
 			name = wechat;
 			sourceTree = "<group>";
@@ -2062,6 +2106,8 @@
 				61DA8F4D1BA1210900824499 /* NewButton.m */,
 				61A1CB961BAFA6FE00903122 /* classifyButton.h */,
 				61A1CB971BAFA6FE00903122 /* classifyButton.m */,
+				61BC22871BE85268009DC90B /* PayWayButton.h */,
+				61BC22881BE85268009DC90B /* PayWayButton.m */,
 				61A1CBB71BB0246800903122 /* classifyDetailaModel.h */,
 				61A1CBB81BB0246800903122 /* classifyDetailaModel.m */,
 				9695ADE21B957A9A004A7A1B /* CalculateStringSpace.h */,
@@ -2341,6 +2387,7 @@
 				61731B291B954D1F00B04D85 /* 办公设备.png in Resources */,
 				617FE4F71B60D5EF007EBFB2 /* 未选.png in Resources */,
 				617FE4D31B60D5B8007EBFB2 /* 小沟.png in Resources */,
+				61BC227F1BE84F0B009DC90B /* weixinpay.png in Resources */,
 				61DA8F561BA12CC500824499 /* youzhixiang.png in Resources */,
 				61A1CB8D1BAF99AE00903122 /* above.png in Resources */,
 				61A1CBAF1BAFDB7100903122 /* a.png in Resources */,
@@ -2379,6 +2426,7 @@
 				6166AA261BA02D0F00D7FDD1 /* deliveryStaff0@2x.png in Resources */,
 				617FE4ED1B60D5B8007EBFB2 /* zuojiantou.png in Resources */,
 				617FE4E51B60D5B8007EBFB2 /* pos.png in Resources */,
+				61BC22801BE84F0B009DC90B /* alipay.png in Resources */,
 				617FE4E21B60D5B8007EBFB2 /* gouwuche.png in Resources */,
 				61068A6D1B5C993A008BE40A /* xiaoxi.png in Resources */,
 				61AD6AD91BC8B5E600DA07D5 /* UMShareEditViewControlleriPad.xib in Resources */,
@@ -2439,6 +2487,7 @@
 				615B29811B4FB02C004E7546 /* option_icon.png in Resources */,
 				617FE4EC1B60D5B8007EBFB2 /* zhizhang1.png in Resources */,
 				61AD52EA1B57A2D40037FED8 /* options_pointer@2x.png in Resources */,
+				61BC22811BE84F0B009DC90B /* bank.png in Resources */,
 				615B297D1B4FB02C004E7546 /* lockIcon_highlight.png in Resources */,
 				61B0FFA81B5FA2BA002CF349 /* down_dark.png in Resources */,
 				615B297E1B4FB02C004E7546 /* lockIcon.png in Resources */,
@@ -2458,6 +2507,7 @@
 				61731B471B959FA700B04D85 /* shangpin.png in Resources */,
 				96A4859A1BDF657A007E5416 /* wappass.qatest.baidu.com_passport_login.html in Resources */,
 				617FE4D41B60D5B8007EBFB2 /* bangongruanjian.png in Resources */,
+				61BC22841BE84F6C009DC90B /* baiduqianbao.png in Resources */,
 				617FE4D21B60D5B8007EBFB2 /* 椭圆-5.png in Resources */,
 				61AD6ADD1BC8B5E600DA07D5 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				617FE4D11B60D5B8007EBFB2 /* 椭圆-1.png in Resources */,
@@ -2468,8 +2518,10 @@
 				617FE4F91B60D5EF007EBFB2 /* 选中.png in Resources */,
 				617FE4DA1B60D5B8007EBFB2 /* dayingji.png in Resources */,
 				96BA8F2E1B8EBA650062C8D8 /* 蓝色确认40.png in Resources */,
+				61BC22821BE84F0B009DC90B /* noSelected.png in Resources */,
 				615C50391BCE4F2900A6E204 /* 注册横线.png in Resources */,
 				615B298C1B4FB048004E7546 /* 1.jpg in Resources */,
+				61BC22861BE84F95009DC90B /* selected.png in Resources */,
 				61A1CBA01BAFB40000903122 /* classify1.png in Resources */,
 				96DFE7911BD5EF6900329D53 /* 上箭头.png in Resources */,
 				61AF901B1BAE7AC3007BBDAF /* 保养维修11-2.png in Resources */,
@@ -2545,6 +2597,7 @@
 				61AF90221BAE7CE2007BBDAF /* OrderSuccessController.m in Sources */,
 				969E1E9E1BC790D400CD9D02 /* CFilteringJSONSerializer.m in Sources */,
 				6183424D1B5658720097E8A4 /* LewPopupViewAnimationDrop.m in Sources */,
+				618160151BE7679300E8C594 /* WXUtil.mm in Sources */,
 				61A1FFE01B67179300AFC8C2 /* SafeViewController.m in Sources */,
 				615B29B81B4FB27A004E7546 /* FixController.m in Sources */,
 				615B29A21B4FB22B004E7546 /* MainViewController.m in Sources */,
@@ -2559,6 +2612,7 @@
 				61815FFE1BE70BA500E8C594 /* SDCycleScrollView.m in Sources */,
 				610D5A0A1B9FCCFD00301F3A /* TarBarButton.m in Sources */,
 				6181600B1BE70BC600E8C594 /* TADotView.m in Sources */,
+				61BC22891BE85268009DC90B /* PayWayButton.m in Sources */,
 				614EC0951BD4E4290001015B /* RcommendBackModel.m in Sources */,
 				61793A6B1B54A7B000CFD83A /* SellerInfoCell.m in Sources */,
 				615B29C31B4FB29F004E7546 /* ComputerViewController.m in Sources */,
@@ -2615,6 +2669,7 @@
 				618149231B5DEC4600E39900 /* DetailNewsViewController.m in Sources */,
 				6181492F1B5E0EFC00E39900 /* PersonalInformationController.m in Sources */,
 				618160091BE70BC600E8C594 /* TAAbstractDotView.m in Sources */,
+				618160141BE7679300E8C594 /* payRequsestHandler.mm in Sources */,
 				969E1EA31BC790D400CD9D02 /* NSCharacterSet_Extensions.m in Sources */,
 				615B29B91B4FB27A004E7546 /* LeaseController.m in Sources */,
 				61A1FFE41B6722EA00AFC8C2 /* PassWordViewController.m in Sources */,
@@ -2651,6 +2706,7 @@
 				9689F7DB1BCE5C500006954B /* PresentdetailsCell.m in Sources */,
 				61793A701B54A7F100CFD83A /* UIView+Shortcut.m in Sources */,
 				96BDF24C1BD776A30095E660 /* MybankcardViewController.m in Sources */,
+				618160131BE7679300E8C594 /* ApiXml.mm in Sources */,
 				61B0FF991B5F2DC1002CF349 /* DatePickView.m in Sources */,
 				6183424C1B5658720097E8A4 /* LewPopupBackgroundView.m in Sources */,
 				969E1EA81BC790D400CD9D02 /* CJSONScanner.m in Sources */,
