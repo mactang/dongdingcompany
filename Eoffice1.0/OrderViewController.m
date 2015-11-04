@@ -549,7 +549,7 @@
     NSLog(@"locationString:%@",locationString);
     
     NSMutableString *str = [[NSMutableString alloc]init];
-    
+    4
     static NSString *spNo = @"1000242714";
     static NSString *key = @"zfVWqNyuW3w4MS3UC3U3dZ8MgkwK4RWB";
     

@@ -132,10 +132,6 @@
                 MainBanner *banner = [MainBanner modelWithDic:dic[@"data"][i]];
                 [self.datas addObject:banner];
             }
-            
-            
-            
-            
         }
         [self banner];
         NSLog(@"%lu",(unsigned long)self.datas.count);

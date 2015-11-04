@@ -232,7 +232,6 @@
     NSString *path= [NSString stringWithFormat:APPLYFOR,COMMON];
     NSLog(@"%@",path);
     //申请提现：phone/user!amount.action?userkey=?&rand=?&phone=?&id=?&amount=?
-
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 //  @"%@user!addBand.action?userkey=%@&name=%@&bankName=%@&bankNo=%@&bankAddress=%@"
@@ -255,7 +254,6 @@
         [hud hide:YES];
     }];
 }
-
 #pragma mark UITextFieldDelegate
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSString *temp = [textField.text stringByReplacingCharactersInRange:range withString:string];
