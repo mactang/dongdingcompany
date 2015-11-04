@@ -354,12 +354,12 @@
             
             NSString *userkey = dic[@"data"][@"userkey"];
           
-            NSString *jsessionid = subDic[@"jsessionId"];
+           
             NSString *telphone = dic[@"data"][@"memberInfo"][@"telphone"];
             
             SingleModel *model = [SingleModel sharedSingleModel];
             model.userkey = userkey;
-            model.jsessionid = jsessionid;
+           
             model.telphone = telphone;
             
             if (self.iflogin) {

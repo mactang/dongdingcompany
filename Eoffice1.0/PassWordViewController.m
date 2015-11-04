@@ -140,7 +140,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.userkey];
     NSLog(@"%@",path);
     
     
@@ -164,7 +164,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:SAFERIVESE,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:SAFERIVESE,COMMON,model.userkey];
     NSLog(@"%@",path);
     
     

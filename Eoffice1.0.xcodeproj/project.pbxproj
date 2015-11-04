@@ -2794,8 +2794,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2817,6 +2817,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "a2c3a9ae-4e04-4564-836c-b659aaca9d00";
 				SDKROOT = iphoneos8.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
@@ -2841,8 +2842,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2858,6 +2859,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
+				PROVISIONING_PROFILE = "a2c3a9ae-4e04-4564-836c-b659aaca9d00";
 				SDKROOT = iphoneos8.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
@@ -2873,8 +2875,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -2937,7 +2939,7 @@
 					"\"SystemConfiguration\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a2c3a9ae-4e04-4564-836c-b659aaca9d00";
 				SDKROOT = iphoneos8.3;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -2951,9 +2953,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Beijing Hyetec Technology Co.,Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -2994,7 +2996,7 @@
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Whatsapp",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/YiXin",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -3016,7 +3018,7 @@
 					"\"SystemConfiguration\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a2c3a9ae-4e04-4564-836c-b659aaca9d00";
 				SDKROOT = iphoneos8.3;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};

@@ -12,7 +12,7 @@
 
 @property(nonatomic,strong)NSString *ids;
 @property(nonatomic,strong)NSString *userkey;
-@property(nonatomic,strong)NSString *jsessionid;
+
 @property(nonatomic,strong)NSString *wGoodsId;
 @property(nonatomic,strong)NSString *telphone;
 

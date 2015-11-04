@@ -190,7 +190,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
-    NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.userkey];
     NSLog(@"%@",_phoneField.text);
     
     
@@ -216,7 +216,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
-    NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.userkey];
     NSLog(@"%@",_phoneField.text);
     
     
@@ -246,7 +246,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:SAFENEWPHONE,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:SAFENEWPHONE,COMMON,model.userkey];
     NSLog(@"%@",validateField.text);
     
     

@@ -71,7 +71,7 @@
 #define COMPUTER @"%@product!getMidGoodsList.action?cartId=%@&page=%@"
 
 //购物车接口
-#define SHOPCAR @"%@order!getBasket.action;jsessionid=%@?userkey=%@"
+#define SHOPCAR @"%@order!getBasket.action?userkey=%@"
 #define SHOPCARTID @"%@order!referBasket.action?userkey=%@&cartIds=%@"
 #define EDITORVERSION @"%@order!changeVersion.action?cartId=%@&goodsId=%@&count=%@"
 
@@ -86,7 +86,7 @@
 #define SUREORDER @"%@order!goodsCommit.action?userkey=%@&goodsId=%@&count=%@&payway=%@&id=%@"
 
 //收货地址
-#define ADDRESS @"%@order!addressList.action;jsessionid=%@?userkey=%@"
+#define ADDRESS @"%@order!addressList.action?userkey=%@"
 #define ADDRESSDELTE @"%@order!delAddress.action?id=%@"
 
 #define ADDRESSDETAIL @"%@order!getAddressDetail.action?id=%@"
@@ -100,8 +100,8 @@
 #define  SELECTALL @"%@order!selectAll.action"
 
 //退货原因
-#define  RETUNGOODSEXPLAIN @"%@return!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
-#define  BACKBEASON @"%@return!getReasonList.action;jsessionid=%@?userkey=%@"
+#define  RETUNGOODSEXPLAIN @"%@return!apply.action?userkey=%@&orderId=%@"
+#define  BACKBEASON @"%@return!getReasonList.action?userkey=%@"
 //默认地址设置
 #define DEFAULTADDREDD  @"%@order!setDefalutAdress.action?id=%@&userkey=%@"
 
@@ -119,16 +119,16 @@
 #define   PERSONCONME @"%@user!toUpdateMyMsg.action?userkey=%@"
 #define   PERSONREVISE @"%@user!updateMyMsg.action?birthday=%@&sex=%@&nike=%@&userkey=%@&icon=%@"
 //安全设置
-#define SAFEVALIDATE @"%@sms!getPhoneSms.action;jsessionid=%@?userkey=%@"
-#define SAFENEWPHONE @"%@user!updatePhone.action;jsessionid=%@?userkey=%@"
-#define SAFERIVESE @"%@user!updatePassword.action;jsessionid=%@?userkey=%@"
+#define SAFEVALIDATE @"%@sms!getPhoneSms.action?userkey=%@"
+#define SAFENEWPHONE @"%@user!updatePhone.action?userkey=%@"
+#define SAFERIVESE @"%@user!updatePassword.action?userkey=%@"
 
 //换货
-#define  REPLACEEXPLAIN @"%@replace!getReasonList.action;jsessionid=%@?userkey=%@"
-#define  EXPLACE @"%@replace!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
+#define  REPLACEEXPLAIN @"%@replace!getReasonList.action?userkey=%@"
+#define  EXPLACE @"%@replace!apply.action?userkey=%@&orderId=%@"
 //维修
-#define  SERVICEREASON @"%@repair!getReasonList.action;jsessionid=%@?userkey=%@"
-#define  SERVICESUBMIT @"%@repair!apply.action;jsessionid=%@?userkey=%@&orderId=%@"
+#define  SERVICEREASON @"%@repair!getReasonList.action?userkey=%@"
+#define  SERVICESUBMIT @"%@repair!apply.action?userkey=%@&orderId=%@"
 //版本信息
 #define PRODUCTMESSAGE @"%@product!selectedByVersion.action?goodsId=%@"
 //提交商品生成订单

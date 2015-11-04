@@ -374,6 +374,7 @@
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
+        
     }
     else{
         if (reloadsucess) {
@@ -389,11 +390,12 @@
             }
             return cell;
         }
+
         else{
             if (indexPath.section==1||indexPath.section==2) {
                 CMDetailsTableviewCell *cell = [CMDetailsTableviewCell cellWithTableView:tableView cellnumber:indexPath.section];
                 cell.model = model1;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 return cell;
             }
@@ -402,9 +404,12 @@
                  cell.selectionStyle = UITableViewCellSelectionStyleNone;
                  cell.model = self.datas[0];
                  return cell;
+                
             }
-         }
+        }
+        
     }
+    
 }
 #pragma mark sharedelegate methads
 -(void)sharedelegate{

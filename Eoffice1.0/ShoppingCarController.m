@@ -411,7 +411,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:SHOPCAR,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:SHOPCAR,COMMON,model.userkey];
     NSLog(@"%@",path);
    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
