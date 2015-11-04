@@ -101,7 +101,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:BACKBEASON,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:BACKBEASON,model.userkey];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -138,7 +138,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     
-    NSString *path= [NSString stringWithFormat:REPLACEEXPLAIN,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:REPLACEEXPLAIN,COMMON,model.userkey];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -416,7 +416,7 @@
     BackReasonModel *backReason = self.exchageDatas[i];
     
     NSLog(@"%@",backReason.reasonId);
-    NSString *path= [NSString stringWithFormat:EXPLACE,COMMON,model.jsessionid,model.userkey,model.serviceOrderId];
+    NSString *path= [NSString stringWithFormat:EXPLACE,model.userkey,model.serviceOrderId];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -445,7 +445,7 @@
     BackReasonModel *backReason = self.datas[i];
     
     NSLog(@"%@",backReason.reasonId);
-    NSString *path= [NSString stringWithFormat:RETUNGOODSEXPLAIN,COMMON,model.jsessionid,model.userkey,model.serviceOrderId];
+    NSString *path= [NSString stringWithFormat:RETUNGOODSEXPLAIN,model.userkey,model.serviceOrderId];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

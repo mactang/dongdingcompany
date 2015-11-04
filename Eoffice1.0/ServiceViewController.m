@@ -79,7 +79,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:SERVICEREASON,COMMON,model.jsessionid,model.userkey];
+    NSString *path= [NSString stringWithFormat:SERVICEREASON,COMMON,model.userkey];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -312,7 +312,7 @@
     BackReasonModel *backReason = self.datas[i];
     
     NSLog(@"%@",backReason.reasonId);
-    NSString *path= [NSString stringWithFormat:SERVICESUBMIT,COMMON,model.jsessionid,model.userkey,model.serviceOrderId];
+    NSString *path= [NSString stringWithFormat:SERVICESUBMIT,COMMON,model.userkey,model.serviceOrderId];
     NSLog(@"model.wGoodsId--%@",model.goodsId);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

@@ -117,7 +117,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     NSInteger pageNumber = [self.classifyDatas count] / 6 + 1;
     self.moredata = [NSString stringWithFormat:@"%ld",(long)pageNumber];
-    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey,self.moredata];
+    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.userkey,self.moredata];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -189,7 +189,7 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.jsessionid,model.userkey,self.moredata];
+    NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.userkey,self.moredata];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -483,7 +483,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
    
-    NSString *path= [NSString stringWithFormat:RETUNGOODSSTATE,COMMON,model.jsessionid,model.userkey,_returnId];
+    NSString *path= [NSString stringWithFormat:RETUNGOODSSTATE,COMMON,model.userkey,_returnId];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
