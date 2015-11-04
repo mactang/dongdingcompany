@@ -145,7 +145,7 @@
     self.textfield.tag = 10+_indexnumber;
 }
 -(void)setDetailstring:(NSString *)detailstring{
-    self.detaillabel.text = detailstring;
+    self.detaillabel.text = [NSString stringWithFormat:@"%@",detailstring];
     if ([detailstring isEqualToString:@"Y"]||[detailstring isEqualToString:@"N"]) {
         self.detaillabel.hidden = YES;
         if ([detailstring isEqualToString:@"Y"]) {
