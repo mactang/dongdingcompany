@@ -44,10 +44,8 @@
             cell = [[CMDetailsTableviewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
         }
         return cell;
-
     }
 }
-
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     if ([reuseIdentifier isEqualToString:@"cell"]) {
@@ -82,7 +80,6 @@
     MerchantMessage.text = @"购买信息";
     keysArray = [model.data allKeys];
     AllvalueArray = [model.data allValues];
-    
 }
 -(void)setIndexpathsection:(NSInteger)indexpathsection{
     [self.contentView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -97,7 +94,7 @@
         
         if (i!=1+(i/2)*2) {
             UIView *view = [[UIView alloc]initWithFrame:CGRectMake(3, 50+(i/2)*45, SCREEN_WIDTH-6, 0.5)];
-            view.backgroundColor = [UIColor whiteColor];
+            view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
             [self.contentView  addSubview:view];
         }
         

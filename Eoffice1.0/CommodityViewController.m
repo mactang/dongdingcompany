@@ -189,7 +189,7 @@
 -(void)imageviewdata:(UIButton *)buttonframe{
     
     UIImageView *imageview = [[UIImageView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(buttonframe.frame)+20, 320, 80)];
-    imageview.image = [UIImage imageNamed:@"heibaiyitiji"];
+    imageview.image = [UIImage imageNamed:@"heibaiyitiji.png"];
     imageview.userInteractionEnabled = YES;
     [self.myscrollview addSubview:imageview];
     

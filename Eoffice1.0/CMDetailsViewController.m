@@ -126,7 +126,7 @@
     number = 0;
     reloadsucess = YES;
     dictionary = [NSMutableDictionary dictionary];
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.hidesBottomBarWhenPushed = YES;
     
@@ -155,7 +155,6 @@
     
     _carView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-114, SCREEN_HEIGHT, 50)];
     _carView.backgroundColor = [UIColor whiteColor];
-    
     [self.view addSubview:_carView];
     [self shopTabBar];
 
@@ -338,7 +337,7 @@
         UITableViewHeaderFooterView *headerview = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerIndentifier];
         if (!headerviewrelaod) {
             headerview = [[UITableViewHeaderFooterView alloc]initWithReuseIdentifier:headerIndentifier];
-            headerview.backgroundColor =[UIColor orangeColor];
+            headerview.contentView.backgroundColor =[UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
             HMSegmentedControl *segmentedControl2 = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"图文详情", @"产品参数",@"推荐产品"]];
             segmentedControl2.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
             segmentedControl2.selectionIndicatorHeight = 2.0f;
@@ -357,16 +356,14 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
     if (section==3) {
-        return 60;
+        return 52;
     }
     return 1;
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     if (section==3) {
         return 0.5;
     }
-    
     return 10;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -377,14 +374,13 @@
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-        
     }
     else{
         if (reloadsucess) {
             CMDetailsTableviewCell *cell = [CMDetailsTableviewCell cellWithTableView:tableView cellnumber:indexPath.section];
             cell.model = model1;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             if (indexPath.section==1||indexPath.section==2) {
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
             else{
@@ -393,12 +389,11 @@
             }
             return cell;
         }
-
         else{
             if (indexPath.section==1||indexPath.section==2) {
                 CMDetailsTableviewCell *cell = [CMDetailsTableviewCell cellWithTableView:tableView cellnumber:indexPath.section];
                 cell.model = model1;
-                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 return cell;
             }
@@ -407,12 +402,9 @@
                  cell.selectionStyle = UITableViewCellSelectionStyleNone;
                  cell.model = self.datas[0];
                  return cell;
-                
             }
-        }
-        
+         }
     }
-    
 }
 #pragma mark sharedelegate methads
 -(void)sharedelegate{
