@@ -108,15 +108,15 @@
 
 #define REGISTERVERIF @"%@sms!getPhoneSms.action"
 
-#define ORDERCLASSIFY @"%@order!getList.action?userkey=%@&page=%@"
+#define ORDERCLASSIFY @"%@order!getList.action;jsessionid=%@?userkey=%@&page=%@"
 
 //信息反馈
 #define FEEDBACK @"%@feedback!add.action;userkey=%@&content=%@"
 
-#define  RETUNGOODSSTATE @"%@replace!returnStatus.action?userkey=%@&returnId=%@"
+#define  RETUNGOODSSTATE @"%@replace!returnStatus.action;jsessionid=%@?userkey=%@&returnId=%@"
 
 //个人信息
-#define   PERSONCONME @"%@user!toUpdateMyMsg.action?userkey=%@"
+#define   PERSONCONME @"%@user!toUpdateMyMsg.action;jsessionid=%@?userkey=%@"
 #define   PERSONREVISE @"%@user!updateMyMsg.action?birthday=%@&sex=%@&nike=%@&userkey=%@&icon=%@"
 //安全设置
 #define SAFEVALIDATE @"%@sms!getPhoneSms.action;jsessionid=%@?userkey=%@"
