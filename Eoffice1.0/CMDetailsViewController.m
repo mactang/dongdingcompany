@@ -459,11 +459,10 @@
         
     }
     if (segmentedControl.selectedSegmentIndex == 1) {
-        
+        reloadsucess = NO;
         detailsModel *model = self.datas[0];
         imageviewarray = [model.detaiImgUrl componentsSeparatedByString:@","];
         NSLog(@"bbb");
-        reloadsucess = NO;
         
     }
     if (segmentedControl.selectedSegmentIndex == 2) {

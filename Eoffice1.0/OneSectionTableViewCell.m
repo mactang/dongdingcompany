@@ -36,7 +36,7 @@
         return cell;
     }
     else{
-        static NSString *ID = @"Mycell";
+        static NSString *ID = @"anotherMycell";
         OneSectionTableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:ID];
         if (cell == nil) {
             cell = [[OneSectionTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
