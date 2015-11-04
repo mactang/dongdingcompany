@@ -11,7 +11,7 @@
 @protocol deletgateOrder <NSObject>
 -(void)delegatemethds:(NSString *)orderid;
 -(void)deatailGoodId:(NSString *)goodId;
--(void)baifubao:(NSInteger )buttonTag;
+-(void)baifubao:(NSInteger )buttonTag totalPrice:(NSString *)price;
 
 -(void)exchangeDelete;
 

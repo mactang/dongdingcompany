@@ -14,6 +14,7 @@
 @interface AllorderviewCell(){
     NSString *stringmodel;
     NSString *goodId;
+    NSString *price;
 }
 @end
 @implementation AllorderviewCell
@@ -104,6 +105,7 @@
     NSLog(@"%@",model.list[0][@"wgoodsId"]);
     goodId = model.list[0][@"goodsId"];
     wgoodsId = model.list[0][@"wgoodsId"];
+    price = model.totalFee;
     [self.picimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.list[0][@"imgurl"]]]];
     
     CGSize unitsize = [CalculateStringSpace sizeWithString:[NSString stringWithFormat:@"￥%.2f",[model.list[0][@"price"]floatValue]] font:[UIFont systemFontOfSize:13] constraintSize:CGSizeMake(SCREEN_WIDTH-widgetBoundsWidth(self.picimageview)-25-100, 25)];
@@ -246,10 +248,14 @@
     stringmodel = model.orderId;
 }
 -(void)buttonPressed:(UIButton *)button{
-    
-    if (_delegate&&[_delegate respondsToSelector:@selector(baifubao:)]) {
-        [self.delegate baifubao:10];
+    if ([button.titleLabel.text isEqual: @"马上付款"]) {
+      
+        if (_delegate&&[_delegate respondsToSelector:@selector(baifubao:totalPrice:)]) {
+            [self.delegate baifubao:10 totalPrice:price];
+        }
+        
     }
+    
 }
 -(void)LogisticsPrss{
     SingleModel *model = [SingleModel sharedSingleModel];

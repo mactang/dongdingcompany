@@ -292,7 +292,7 @@
              NSArray *thewhyarray = @[dispatch,payWay,invoice];
         if (indexPath.row==0||indexPath.row==1||indexPath.row==2) {
             
-             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
+            
             cell.textLabel.text = message[indexPath.row];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             cell.detailTextLabel.text = thewhyarray[indexPath.row];
@@ -626,6 +626,7 @@
     //   [(BottonTabBarController*)self.tabBarController hideTabBar:YES];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
+    
     
     SingleModel *model = [SingleModel sharedSingleModel];
  
