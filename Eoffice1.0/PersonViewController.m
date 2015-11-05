@@ -162,21 +162,21 @@
     
     if (indexPath.row == 0) {
         PersonInformationModel *model = self.datas[indexPath.row];
-        UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 175)];
+        UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 175)];
         detailImageView.userInteractionEnabled = YES;
         detailImageView.image = [UIImage imageNamed:@"求真像"];
         NSLog(@"%@",model.imgUrl);
         [cell addSubview:detailImageView];
         
-        UIImageView *button = [[UIImageView alloc]initWithFrame:CGRectMake(105, 30, 110, 105)];
+        UIImageView *button = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-120)/2, 20, 120, 120)];
         // button.backgroundColor = [UIColor redColor];
         button.clipsToBounds = YES;
-        button.layer.cornerRadius = 30;
+        button.layer.cornerRadius = 60;
         [button setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.imgUrl]]];
        // [button addTarget:self action:@selector(buttonPress) forControlEvents:UIControlEventTouchUpInside];
         [detailImageView addSubview:button];
         
-        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(115, CGRectGetMaxY(button.frame)+10, 100, 20)];
+        UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-100)/2, CGRectGetMaxY(button.frame)+5, 100, 20)];
         lb1.font = [UIFont systemFontOfSize:15];
         lb1.text = [NSString stringWithFormat:@"%@",model.name];
         lb1.textColor = [UIColor whiteColor];
