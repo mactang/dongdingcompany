@@ -16,6 +16,7 @@
 #import "ShopCartId.h"
 #import "CMDetailsViewController.h"
 #import "ShopCarCell.h"
+#import "CommodityViewController.h"
 @interface ShoppingCarController ()<UITableViewDataSource,UITableViewDelegate,celldelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
@@ -24,6 +25,9 @@
 @property (strong,nonatomic)UIButton * tmpBtn;
 @property(nonatomic,assign)NSString *cartId;
 @property (strong,nonatomic)UIButton *selectButton;
+
+@property(nonatomic,strong)UILabel *labelsign;
+@property(nonatomic,strong)UIButton *strollbutton;
 @end
 
 @implementation ShoppingCarController
@@ -133,6 +137,7 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
+    
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     // _tableView.showsVerticalScrollIndicator = YES;
@@ -144,10 +149,23 @@
     _tableView.tag = 1000;
     [self.view addSubview:_tableView];
     
-   totView = [[UIView alloc]initWithFrame:CGRectMake(0, 440, 320, 80)];
+    totView = [[UIView alloc]initWithFrame:CGRectMake(0, 440, 320, 80)];
     totView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:totView];
     
+    allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    allBtn.frame = CGRectMake(10, 20, 20, 20);
+    allBtn.selected = YES;
+    if (allBtn.selected == YES) {
+        isAllDelete = YES;
+    }else{
+        
+        isAllDelete = NO;
+    }
+    [allBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
+    [allBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
+    [allBtn addTarget:self action:@selector(allSelect:) forControlEvents:UIControlEventTouchUpInside];
+    [totView addSubview:allBtn];
     
     
     // Do any additional setup after loading the view.
@@ -222,12 +240,13 @@
         NSLog(@"....");
     }else{
         if (isAllDelete == NO) {
+            NSLog(@"numberIndex--%@",numberIndex);
             for (int i = 0; i<numberIndex.count; i++) {
                 
                 NSLog(@"%@",numberIndex[i]);
                 NSLog(@"count-%lu",(unsigned long)numberIndex.count);
                 NSLog(@"%ld",[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2);
-                [self.datas removeObjectAtIndex:[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2];
+                //[self.datas removeObjectAtIndex:[[NSString stringWithFormat:@"%@",numberIndex[i]] integerValue]/2];
                 
                 NSLog(@"number--%d",number);
                 
@@ -235,13 +254,16 @@
                 number = i;
         }
             [self deleteData];
-            // [self downData];
+            [self.datas removeAllObjects];
+             [self downData];
             [numberIndex removeAllObjects];
         }
         if(isAllDelete == YES){
             
             [self AllDeleteData];
+            
             [self.datas removeAllObjects];
+            [self noData];
             // [self downData];
            
             
@@ -424,7 +446,8 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
-        
+        [self.labelsign removeFromSuperview];
+            [self.strollbutton removeFromSuperview];
         for(NSDictionary *subDict in array)
         {
             ShopCarModel *model = [ShopCarModel modelWithDic:subDict];
@@ -449,15 +472,7 @@
                 
                 
             }
-            
-            
-            allBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            allBtn.frame = CGRectMake(10, 20, 20, 20);
-            allBtn.selected = YES;
-            [allBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
-            [allBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
-            [allBtn addTarget:self action:@selector(allSelect:) forControlEvents:UIControlEventTouchUpInside];
-            [totView addSubview:allBtn];
+           
             
             UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(allBtn.frame)+10, allBtn.frame.origin.y, 40, 20)];
             LB.font = [UIFont systemFontOfSize:17];
@@ -502,6 +517,8 @@
             [totView addSubview:sure];
             
         }else {
+            
+            [self noData];
         
         }
         [_tableView reloadData];
@@ -510,6 +527,38 @@
         NSLog(@"%@",error);
     }];
     
+}
+
+-(void)noData{
+
+    [_tableView removeFromSuperview];
+    [totView removeFromSuperview];
+    if (!self.labelsign) {
+        self.labelsign = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2, SCREEN_WIDTH, 40)];
+    }
+    self.labelsign.text = @"抱歉,你的购物车空空如也";
+    self.labelsign.textAlignment = NSTextAlignmentCenter;
+    self.labelsign.font = [UIFont systemFontOfSize:17];
+    [self.view addSubview:self.labelsign];
+    
+    if (!self.strollbutton) {
+        self.strollbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+    }
+    self.strollbutton.frame = CGRectMake((SCREEN_WIDTH-SCREEN_WIDTH/3.5)/2, CGRectGetMaxY(self.labelsign.frame)+10, SCREEN_WIDTH/3.5, SCREEN_WIDTH/10.5);
+    self.strollbutton.layer.borderColor = [[UIColor lightGrayColor]CGColor];
+    self.strollbutton.layer.borderWidth = 1;
+    self.strollbutton.layer.cornerRadius = 2;
+    self.strollbutton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.strollbutton setTitle:@"随便逛逛" forState:UIControlStateNormal];
+    [self.strollbutton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    [self.strollbutton addTarget:self action:@selector(gotolookPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.strollbutton];
+}
+-(void)gotolookPressed{
+    CommodityViewController *cmd = [[CommodityViewController alloc]init];
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController pushViewController:cmd animated:YES];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
@@ -711,6 +760,7 @@
 
 -(void)noChooseCount:(NSString *)chooseCountLB{
     allBtn.selected = NO;
+    isAllChoose = NO;
     int m = [[NSString stringWithFormat:@"%@",chooseCountLB]intValue];
     
     if (selectedAll == YES&&(allBtn.selected == NO&&totalEvery!=0)) {

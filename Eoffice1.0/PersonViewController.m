@@ -107,13 +107,13 @@
         }
         
     }else{
-//        if (login) {
+        if (login) {
             [login.view removeFromSuperview];
             if (refresh) {
                 [self downData];
-//                refresh = NO;
+                refresh = NO;
             }
-//        }
+        }
 
     }
     [self.navigationController setNavigationBarHidden:YES animated:YES];
