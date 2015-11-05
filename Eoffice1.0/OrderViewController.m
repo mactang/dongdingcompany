@@ -524,12 +524,12 @@
 #pragma mark  baifubao
 -(void)baifubao:(NSInteger)buttonTag totalPrice:(NSString *)price{
     
-//    BDWalletSDKMainManager* payMainManager = [BDWalletSDKMainManager getInstance];
-//    NSString *orderInfo = [self buildOrderInfoTest];
-//    payMainManager.delegate = self;
-//    NSLog(@"%@",orderInfo);
-//    [payMainManager doPayWithOrderInfo:orderInfo params:nil delegate:self];
-//    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+//  BDWalletSDKMainManager* payMainManager = [BDWalletSDKMainManager getInstance];
+//  NSString *orderInfo = [self buildOrderInfoTest];
+//  payMainManager.delegate = self;
+//  NSLog(@"%@",orderInfo);
+//  [payMainManager doPayWithOrderInfo:orderInfo params:nil delegate:self];
+//  [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     NSLog(@"price--%@",price);
     PayViewController *pay = [[PayViewController alloc]init];
     pay.totalPrice = price;
@@ -538,19 +538,12 @@
 }
 -(NSString*)buildOrderInfoTest
 {
-    
     NSDate *senddate=[NSDate date];
-    
     NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
-    
     [dateformatter setDateFormat:@"YYYYMMDDHHMMSS"];
-    
     NSString *  locationString=[dateformatter stringFromDate:senddate];
-    
     NSLog(@"locationString:%@",locationString);
-    
     NSMutableString *str = [[NSMutableString alloc]init];
-    
     static NSString *spNo = @"1000242714";
     static NSString *key = @"zfVWqNyuW3w4MS3UC3U3dZ8MgkwK4RWB";
     
@@ -565,7 +558,7 @@
     [str appendString:orderId];
     [str appendString:@"&pay_type=2"];
     
-    //    [str appendString:@"&version=2"];
+    //[str appendString:@"&version=2"];
     [str appendString:@"&return_url=http://item.jd.com/736610.html&service_code=1&sign_method=1&sp_no="];
     [str appendString:spNo];
     [str appendString:@"&sp_request_type="];
@@ -575,10 +568,7 @@
     [str appendString:@"&total_amount="];
     [str appendString:@"1"];
     
-    
-    
     NSString *md5CapPwd = [self mD5GBK:[NSString stringWithFormat:@"%@&key=%@" , str, key]]; // 中文处理2
-    
     NSMutableString *str1 = [[NSMutableString alloc]init];
     
     [str1 appendString:@"currency=1&extra="];
@@ -635,12 +625,12 @@
     NSString* str1 = [str stringByReplacingPercentEscapesUsingEncoding:enc];
     return str1;
 }
--(void)BDWalletPayResultWithCode:(int)statusCode payDesc:(NSString*)payDesc;
+-(void)BDWalletPayResultWithCode:(int)statusCode payDesc:(NSString*)payDesc
 {
     NSLog(@"支付结束 接口 code:%d desc:%@",statusCode,payDesc);
 }
 
-- (void)logEventId:(NSString*)eventId eventDesc:(NSString*)eventDesc;
+- (void)logEventId:(NSString*)eventId eventDesc:(NSString*)eventDesc
 {}
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
