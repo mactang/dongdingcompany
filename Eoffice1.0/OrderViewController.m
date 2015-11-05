@@ -190,7 +190,6 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:ORDERCLASSIFY,COMMON,model.userkey,self.moredata];
-    NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -199,7 +198,8 @@
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
+        [self.classifyDatas removeAllObjects];
+        [testarray removeAllObjects];
         if (dic[@"data"] !=[NSNull null]){
             self.tableView.footer.hidden = NO;
             [self.labelsign removeFromSuperview];
@@ -212,8 +212,10 @@
                 [testarray addObject:subDict];
                 OrderModel *model = [OrderModel modelWithDic:subDict];
                 [self.classifyDatas addObject:model];
+                
             }
         }
+            
     }
         else{
             self.tableView.footer.hidden = YES;
@@ -276,19 +278,8 @@
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-//    if (indexPath.row == 0) {
-//        return 60;
-//    }
-//    else if (indexPath.row == 2){
-//        return 50;
-//    }
-//    
-//    else{
-//        return 40;
-    
+
     return 160;
-//    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
 
