@@ -558,6 +558,7 @@
         [self addData:YES];
     }
     else{
+        
         [login.navigationController popViewControllerAnimated:NO];
         [self addData:NO];
         
@@ -614,6 +615,7 @@
 }
 #pragma mark  购物车点击事件以及代理
 -(void)clickshopcratbutton{
+    
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey==nil) {
         login = [[LoginViewController alloc]init];
@@ -628,6 +630,7 @@
     }
 }
 -(void)reloadshopcart{
+    
     [login.navigationController popViewControllerAnimated:NO];
     ShoppingCarController *shopcart = [[ShoppingCarController alloc]init];
     [self.navigationController pushViewController:shopcart animated:YES];
