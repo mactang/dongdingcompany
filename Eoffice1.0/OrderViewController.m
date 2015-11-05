@@ -525,7 +525,7 @@
         
         if (refresh) {
             [self classifyData];
-//            refresh = NO;
+            refresh = NO;
         }
        
     }

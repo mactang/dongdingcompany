@@ -420,7 +420,7 @@
     NSLog(@",,");
     //            //友盟分享的appKey
     //        [UMSocialData setAppKey:@"5211818556240bc9ee01db2f"];
-    //
+    
     //设置微信AppId，设置分享url，默认使用友盟的网址
     //    [UMSocialWechatHandler setWXAppId:@"wxd930ea5d5a258f4f" appSecret:@"db426a9829e4b49a0dcac7b4162da6b6" url:@"http://www.umeng.com/social"];
     
@@ -529,6 +529,7 @@
 }
 #pragma mark MLKMenuPopoverDelegate
 -(void)pushlogincontroller:(BOOL)sucess shopnumber:(NSInteger)shopnumber{
+    
     loginsucess = sucess;
     product = shopnumber;
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -552,6 +553,7 @@
 #pragma mark logindelegate mathds
 -(void)reloadata{
     if (loginsucess) {
+        
         [login.navigationController popViewControllerAnimated:NO];
         [self addData:YES];
     }
