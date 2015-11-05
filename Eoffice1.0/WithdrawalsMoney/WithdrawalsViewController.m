@@ -195,8 +195,24 @@
     [self banklistrequest];
 }
 -(void)buttonPressed:(UIButton *)button{
+    UIAlertView *alterview;
+    NSString *alterstring;
     if ([button.titleLabel.text isEqualToString:@"确认"]) {
-        [self confirmRequest];
+        if (datarray.count==0) {
+            alterstring = @"请添加银行卡";
+        }
+        else if (_amount==nil) {
+            alterstring = @"转出金额不能为空";
+        }
+        else if (_rand==nil) {
+            alterstring = @"请输入验证码";
+        }
+        else{
+           [self confirmRequest];
+            return;
+        }
+        alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:alterstring delegate:self cancelButtonTitle:@"确认" otherButtonTitles: nil];
+        [alterview show];
     }
     else{
         [self sendcodeRequest];
