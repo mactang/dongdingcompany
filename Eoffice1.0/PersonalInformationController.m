@@ -109,8 +109,15 @@
 -(void)reviseData{
     
     SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path;
+    if (fileURL == nil) {
     
-    NSString *path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey,fileURL];
+        path= [NSString stringWithFormat:PERSONREVISENO,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey];
+    }else{
+    
+        path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey,fileURL];
+    }
+    
     NSLog(@"path--%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
