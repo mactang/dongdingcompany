@@ -141,7 +141,6 @@
 }
 - (void)downData{
     
-    
     SingleModel *model = [SingleModel sharedSingleModel];
     
     NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.userkey];
@@ -158,7 +157,6 @@
             NSDictionary *array = dic[@"data"];
             PersonInformationModel *model = [PersonInformationModel modelWithDic:array];
             [self.datas addObject: model];
-            
             NSLog(@"%@",self.datas);
         }
         [_tableView reloadData];
@@ -170,8 +168,8 @@
 }
 -(void)backPress{
     
-    //  self.tabBarController.selectedIndex = 2;
-    //    [self.view removeFromSuperview];
+    //self.tabBarController.selectedIndex = 2;
+    //[self.view removeFromSuperview];
     SingleModel *model = [SingleModel sharedSingleModel];
     model.userkey = nil;
     self.navigationController.navigationBarHidden = YES;
@@ -301,11 +299,7 @@
         sex = @"2b";
         
     }
-    
-    
-    
 }
-
 //点击return键执行的方法
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];

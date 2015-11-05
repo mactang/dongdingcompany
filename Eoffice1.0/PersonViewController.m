@@ -53,12 +53,12 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     [self.navigationItem setTitle:@""];
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
+//  self.edgesForExtendedLayout = UIRectEdgeNone;
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *string = @"my";
     model.isBoolmy = [NSString stringWithFormat:@"%@",string];
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49) style:UITableViewStylePlain];
-     _tableView.tableFooterView = [[UIView alloc]init];
+    _tableView.tableFooterView = [[UIView alloc]init];
     _tableView.scrollEnabled = YES;
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -147,8 +147,7 @@
     if (indexPath.row == 0) {
         return 175;
     }
-            return 50;
-    
+        return 50;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -242,22 +241,18 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
-    
     if (indexPath.row == 1) {
         PersonalInformationController *perIn = [[PersonalInformationController alloc]init];
         perIn.delegate = self;
         [self.navigationController pushViewController:perIn animated:YES];
     }
     if (indexPath.row == 2) {
-        
         ShoppingCarController *shop = [[ShoppingCarController alloc]init];
         [self.navigationController pushViewController:shop animated:YES];
-        
     }
     if (indexPath.row == 3) {
         AddressViewController *add = [[AddressViewController alloc]init];
         [self.navigationController pushViewController:add animated:YES];
-
     }
     if (indexPath.row == 4) {
         MybankcardViewController *mybank = [[MybankcardViewController alloc]init];
