@@ -118,6 +118,7 @@
 //个人信息
 #define   PERSONCONME @"%@user!toUpdateMyMsg.action?userkey=%@"
 #define   PERSONREVISE @"%@user!updateMyMsg.action?birthday=%@&sex=%@&nike=%@&userkey=%@&icon=%@"
+#define   PERSONREVISENO @"%@user!updateMyMsg.action?birthday=%@&sex=%@&nike=%@&userkey=%@"
 //安全设置
 #define SAFEVALIDATE @"%@sms!getPhoneSms.action?userkey=%@"
 #define SAFENEWPHONE @"%@user!updatePhone.action?userkey=%@"

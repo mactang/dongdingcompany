@@ -92,9 +92,12 @@
     [sureButton setTitle:@"退出当前账号" forState:UIControlStateNormal];
     [sureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:sureButton];
+    
     _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(230, 5, 70, 70)];
+    
    // _imageView.backgroundColor = [UIColor redColor];
     [_tableView addSubview:_imageView];
+    
     // Do any additional setup after loading the view.
 }
 -(void)rightItemClicked{
@@ -102,13 +105,25 @@
     [self reviseData];
     
 }
+
 -(void)reviseData{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey,fileURL];
+    NSString *path;
+    if (fileURL == nil) {
+    
+        path= [NSString stringWithFormat:PERSONREVISENO,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey];
+    }else{
+    
+        path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey,fileURL];
+    }
+    
     NSLog(@"path--%@",path);
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
