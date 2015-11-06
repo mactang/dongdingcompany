@@ -89,7 +89,9 @@
     return YES;
 }
 -(void)textFieldDidEndEditing:(UITextField *)textField{
-    if (textField.tag==40) {
+    UIAlertView *alterview;
+    NSString *messagestring;
+    if (textField.tag!=41) {
         if (! [Mobliejudge checkChinese:textField.text]) {
             NSLog(@"%@",@"姓名格式错误");
         }
