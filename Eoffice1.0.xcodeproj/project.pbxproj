@@ -2794,8 +2794,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2814,11 +2814,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "01c7289c-aaf6-40f8-9b24-3222de2759f2";
-				SDKROOT = iphoneos;
+				PROVISIONING_PROFILE = "fea99f53-7dd6-42a6-b141-74d3cb30f6c5";
+				SDKROOT = iphoneos8.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
@@ -2842,8 +2842,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2856,11 +2856,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "01c7289c-aaf6-40f8-9b24-3222de2759f2";
-				SDKROOT = iphoneos;
+				PROVISIONING_PROFILE = "fea99f53-7dd6-42a6-b141-74d3cb30f6c5";
+				SDKROOT = iphoneos8.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 				VALIDATE_PRODUCT = YES;
@@ -2875,8 +2875,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CODE_SIGN_IDENTITY = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -2894,7 +2894,7 @@
 					"\"$(SRCROOT)/Headers/Public/umeng_ios_social_sdk_3.3.6_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI\"",
 				);
 				INFOPLIST_FILE = Eoffice1.0/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2939,7 +2939,7 @@
 					"\"SystemConfiguration\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "01c7289c-aaf6-40f8-9b24-3222de2759f2";
+				PROVISIONING_PROFILE = "fea99f53-7dd6-42a6-b141-74d3cb30f6c5";
 				SDKROOT = iphoneos8.3;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -2953,9 +2953,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chengdu Dong Ding Tai Xing Network Science And Technology Co., Ltd. (378J4V484L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -2973,7 +2973,7 @@
 					"\"$(SRCROOT)/Headers/Public/umeng_ios_social_sdk_3.3.6_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI\"",
 				);
 				INFOPLIST_FILE = Eoffice1.0/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3018,7 +3018,7 @@
 					"\"SystemConfiguration\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "01c7289c-aaf6-40f8-9b24-3222de2759f2";
+				PROVISIONING_PROFILE = "fea99f53-7dd6-42a6-b141-74d3cb30f6c5";
 				SDKROOT = iphoneos8.3;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
