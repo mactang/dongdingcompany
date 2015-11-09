@@ -151,7 +151,7 @@
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
     
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 480) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 440) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     // _tableView.showsVerticalScrollIndicator = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -175,8 +175,8 @@
         
         isAllDelete = NO;
     }
-    [allBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
-    [allBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
+    [allBtn setImage:[UIImage imageNamed:@"check-NO"] forState:UIControlStateNormal];
+    [allBtn setImage:[UIImage imageNamed:@"check-YES"] forState:UIControlStateSelected];
     [allBtn addTarget:self action:@selector(allSelect:) forControlEvents:UIControlEventTouchUpInside];
     [totView addSubview:allBtn];
     

@@ -10,6 +10,7 @@
 @protocol persondelegate <NSObject>
 
 -(void)repeatlogin;
+-(void)rePersonInfor;
 
 @end
 @interface PersonalInformationController : UIViewController

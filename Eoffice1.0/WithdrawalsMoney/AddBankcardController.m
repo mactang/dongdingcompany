@@ -120,11 +120,7 @@
     }
     alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:messagestring delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [alertview show];
-    UIWebView  *payWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH/7.8, SCREEN_WIDTH, SCREEN_HEIGHT-SCREEN_WIDTH/7.8)];
-    payWebView.layer.anchorPoint = CGPointMake(0.5, 0.5);
-    [payWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.baidu.com"]]];
-    [payWebView setScalesPageToFit:YES];
-    [self.view addSubview:payWebView];
+    
 }
 -(void)datarequest{
     
