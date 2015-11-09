@@ -152,8 +152,8 @@
     
     int addCount = [[NSString stringWithFormat:@"%@",self.number.text]intValue];
     
-    int price = [[NSString stringWithFormat:@"%@",self.priceLB.text]intValue];
-    addTotal = [NSString stringWithFormat:@"%d",price];
+    float price = [[NSString stringWithFormat:@"%@",self.priceLB.text]floatValue];
+    addTotal = [NSString stringWithFormat:@"%f",price];
     
     if (addCount>1) {
         addCount--;
@@ -183,7 +183,7 @@
     
     int addCount = [[NSString stringWithFormat:@"%@",self.number.text]intValue];
     
-    int price = [[NSString stringWithFormat:@"%@",self.priceLB.text]intValue];
+    float price = [[NSString stringWithFormat:@"%@",self.priceLB.text]floatValue];
     
     addCount++;
     
@@ -193,7 +193,7 @@
     
     self.countBL.text = string;
     
-    addTotal = [NSString stringWithFormat:@"%d",price];
+    addTotal = [NSString stringWithFormat:@"%f",price];
     if (self.chooseBtn.selected == YES) {
         
             if (_delegate &&[_delegate respondsToSelector:@selector(addCount:)]) {
@@ -220,18 +220,18 @@
     }
     
     
-    int addCount = [[NSString stringWithFormat:@"%@",self.countBL.text]intValue];
+    float addCount = [[NSString stringWithFormat:@"%@",self.countBL.text]floatValue];
     
-    int price = [[NSString stringWithFormat:@"%@",self.priceLB.text]intValue];
+    float price = [[NSString stringWithFormat:@"%@",self.priceLB.text]floatValue];
     
-    int choosePrice = addCount*price;
+    NSLog(@"%f",price);
+    float choosePrice = addCount*price;
+    NSLog(@"choosePrice--%f",choosePrice);
     
-    NSString *string = [NSString stringWithFormat:@"%d",choosePrice];
     
     
-    
-    addTotal = [NSString stringWithFormat:@"%@",string];
-    
+    addTotal = [NSString stringWithFormat:@"%.2f",choosePrice];
+    NSLog(@"%@",addTotal);
     if (btn.selected == YES) {
         
                 if (_delegate &&[_delegate respondsToSelector:@selector(chooseCount:)]) {

@@ -132,10 +132,14 @@
                 MainBanner *banner = [MainBanner modelWithDic:dic[@"data"][i]];
                 [self.datas addObject:banner];
             }
+            [self banner];
+            NSLog(@"%lu",(unsigned long)self.datas.count);
+            [hud hide:YES];
+        }else{
+        
+        NSLog(@"...");
         }
-        [self banner];
-        NSLog(@"%lu",(unsigned long)self.datas.count);
-        [hud hide:YES];
+        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
