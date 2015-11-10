@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CountDownButton.h"
 @interface PassWordViewController : UIViewController
-
+{
+   CountDownButton *_countDownCode;
+}
 @end

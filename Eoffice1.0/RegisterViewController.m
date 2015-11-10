@@ -71,16 +71,47 @@
     [phoneNumber_view setFrame:CGRectMake(0, CGRectGetMaxY(AgePassWord_view.frame)+5, 280, 40)];
     [imageView addSubview:phoneNumber_view];
     [self createTextField:4 withView:phoneNumber_view];
-    UIButton *validateBtn = [[UIButton alloc]initWithFrame:CGRectMake(200, 15, 70, 30)];
-    validateBtn.clipsToBounds = YES;
-    validateBtn.layer.cornerRadius = 3;
-    validateBtn.layer.borderWidth = 1;
-    validateBtn.layer.borderColor = [[UIColor grayColor]CGColor];
-    validateBtn.titleLabel.font = [UIFont systemFontOfSize:11];
-    [validateBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
-    [validateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [validateBtn addTarget:self action:@selector(identifyingBtn) forControlEvents:UIControlEventTouchUpInside];
-    [phoneNumber_view addSubview:validateBtn];
+//    UIButton *validateBtn = [[UIButton alloc]initWithFrame:CGRectMake(200, 15, 70, 30)];
+//    validateBtn.clipsToBounds = YES;
+//    validateBtn.layer.cornerRadius = 3;
+//    validateBtn.layer.borderWidth = 1;
+//    validateBtn.layer.borderColor = [[UIColor grayColor]CGColor];
+//    validateBtn.titleLabel.font = [UIFont systemFontOfSize:11];
+//    [validateBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
+//    [validateBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+//    [validateBtn addTarget:self action:@selector(identifyingBtn) forControlEvents:UIControlEventTouchUpInside];
+//    [phoneNumber_view addSubview:validateBtn];
+    
+    _countDownCode = [CountDownButton buttonWithType:UIButtonTypeCustom];
+    _countDownCode.frame = CGRectMake(SCREEN_WIDTH-120,17, 70, 30);
+    [_countDownCode setTitle:@"发送验证码" forState:UIControlStateNormal];
+    [_countDownCode setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _countDownCode.backgroundColor = [UIColor whiteColor];
+    _countDownCode.clipsToBounds = YES;
+    _countDownCode.layer.cornerRadius = 3;
+    _countDownCode.layer.borderColor = [[UIColor grayColor]CGColor];
+    _countDownCode.layer.borderWidth = 1;
+    _countDownCode.font = [UIFont systemFontOfSize:10];
+    [phoneNumber_view addSubview:_countDownCode];
+    
+    [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
+        sender.enabled = NO;
+        [self valiData];
+        [sender startWithSecond:10];
+        
+        [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
+            NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+            
+            return title;
+        }];
+        [sender didFinished:^NSString *(CountDownButton *countDownButton, int second) {
+            countDownButton.enabled = YES;
+            return @"点击重新获取";
+            
+        }];
+        
+    }];
+
     
     UIView *number_view = [[UIView alloc] init];
     [number_view setFrame:CGRectMake(0, CGRectGetMaxY(phoneNumber_view.frame)+9, 280, 40)];

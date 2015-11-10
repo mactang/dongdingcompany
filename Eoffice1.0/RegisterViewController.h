@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CountDownButton.h"
 @protocol registerdelegate <NSObject>
 
 -(void)LoginReloadata;
 
 @end
 @interface RegisterViewController : UIViewController
+{
+
+    CountDownButton *_countDownCode;
+    
+}
 @property(nonatomic,assign)id<registerdelegate>delegate;
 
 @end
