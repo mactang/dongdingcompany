@@ -23,6 +23,8 @@
 #import "RecommendViewController.h"
 #import "MybankcardViewController.h"
 #import "UIKit+AFNetworking.h"
+#import "RegisterViewController.h"
+
 @interface PersonViewController ()<UITableViewDataSource,UITableViewDelegate,logindelegate,persondelegate>{
     LoginViewController *login;
     BOOL refresh;
@@ -66,6 +68,10 @@
     _tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_tableView];
 
+}
+-(void)rePersonInfor{
+
+    [self downData];
 }
 - (void)downData{
     
@@ -280,15 +286,19 @@
         [self.navigationController pushViewController:hope animated:YES];
     }
 }
+-(void)toRegister{
 
+     RegisterViewController *registerview = [[RegisterViewController alloc]init];
+    [self.navigationController pushViewController:registerview animated:YES];
+}
 - (void)viewWillDisappear:(BOOL)animated {
     
     
-    [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
+  //  [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     
     [super viewWillDisappear:animated];
     
-    self.navigationController.navigationBarHidden = YES;
+   // self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {

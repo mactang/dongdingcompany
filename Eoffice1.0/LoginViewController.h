@@ -11,6 +11,8 @@
 
 -(void)reloadata;
 -(void)reloadshopcart;
+-(void)toRegister;
+
 @end
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 @property(nonatomic,assign)id<logindelegate>delegate;

@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol registerdelegate <NSObject>
 
+-(void)LoginReloadata;
+
+@end
 @interface RegisterViewController : UIViewController
+@property(nonatomic,assign)id<registerdelegate>delegate;
 
 @end

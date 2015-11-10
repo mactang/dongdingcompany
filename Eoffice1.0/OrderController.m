@@ -79,6 +79,7 @@
     // [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
    // ligthButton.titleLabel.font = [UIFont systemFontOfSize:14];
     // ligthButton.backgroundColor = [UIColor redColor];
+    
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     self.navigationItem.title = @"确认订单";

@@ -419,11 +419,12 @@
 //Code=-1001连接超时
 - (void)registerLogin{
 
-    RegisterViewController *registerview = [[RegisterViewController alloc]init];
-    
-    [self presentViewController:registerview animated:YES completion:^{
-        
-    }];
+    [_delegate toRegister];
+//    RegisterViewController *registerview = [[RegisterViewController alloc]init];
+//    
+//    [self presentViewController:registerview animated:YES completion:^{
+//        
+//    }];
 }
 - (void)viewWillAppear:(BOOL)animated{
     

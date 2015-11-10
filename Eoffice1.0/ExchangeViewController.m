@@ -101,7 +101,7 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:BACKBEASON,model.userkey];
+    NSString *path= [NSString stringWithFormat:BACKBEASON,COMMON,model.userkey];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

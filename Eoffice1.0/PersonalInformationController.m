@@ -41,6 +41,7 @@
     UILabel *sexLb;
     NSString *sex;
     NSString *fileURL;
+    NSString *changeSucess;
     
 }
 -(NSMutableArray *)datas{
@@ -129,18 +130,18 @@
         NSLog(@"%@",dic);
         NSLog(@"status--%@",dic[@"status"]);
         UIAlertView *alterview;
-        NSString *string;
+       
         if ([dic[@"status"]integerValue]==1) {
             
-            string = @"信息修改成功";
+            changeSucess = @"信息修改成功";
             
         }
         else{
             
-            string = @"信息修改失败";
+            changeSucess = @"信息修改失败";
             
         }
-        alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:changeSucess delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alterview show];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
@@ -498,6 +499,9 @@
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:string forKey:@"myKey"];
     [ud setObject:sexSt forKey:@"mySex"];
+    if ([changeSucess isEqual:@"信息修改成功"]) {
+       [_delegate rePersonInfor];
+    }
     
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];

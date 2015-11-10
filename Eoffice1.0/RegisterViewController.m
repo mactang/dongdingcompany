@@ -20,6 +20,7 @@
 {
     
     UITextField *text_field;
+    NSString *phoneSure;
 }
 -(void)loadView
 {
@@ -136,7 +137,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
+        NSLog(@"dic--%@",dic);
         NSLog(@"%@",dic[@"data"]);
         
         
@@ -152,9 +153,10 @@
 
 - (void)backLogin{
     
-    [self dismissViewControllerAnimated:NO completion:^{
-        
-    }];
+//    [self dismissViewControllerAnimated:NO completion:^{
+//       
+//    }];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 - (void)createTextField:(int)isPwd withView:(UIView *)text_view
@@ -244,12 +246,53 @@
     [textField resignFirstResponder];
     return YES;
 }
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+
+    NSLog(@"%ld",(long)textField.tag);
+    
+    UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
+    if (textField.tag == 1003) {
+        if (![pwd_field.text isEqualToString:textField.text]) {
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+   
+    
+    
+}
 - (void)surePress{
     
+    
+    UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
+    UITextField *replace_field = (UITextField *)[self.view viewWithTag:1003];
+    
+        if (![pwd_field.text isEqualToString:replace_field.text]) {
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
+        
+            [self sureRgister];
+        }
+    
+
+    
+}
+-(void)sureRgister{
+
     UITextField *name_field = (UITextField *)[self.view viewWithTag:1001];
     UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
     UITextField *identifying_field = (UITextField *)[self.view viewWithTag:1004];
     UITextField  *phoneNumber_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
+    UITextField *replace_field = (UITextField *)[self.view viewWithTag:1003];
+    
+    if (![pwd_field.text isEqualToString:replace_field.text]) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }
     
     NSString *path = [NSString stringWithFormat:REGISTER,COMMON];
     NSLog(@"%@",path);
@@ -261,17 +304,31 @@
     [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":phoneNumber_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",string);
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        UIAlertView *alterview;
+        
+        if ([dic[@"status"]integerValue]==1) {
+            
+            phoneSure = dic[@"info"];
+            
+        }
+        else{
+            
+            phoneSure = dic[@"info"];
+            
+        }
+        alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:phoneSure delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alterview show];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-    
 }
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    
     
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     
