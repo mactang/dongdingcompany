@@ -203,7 +203,8 @@
         else{
             stirng  = @"新增失败";
         }
-        alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:stirng delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:stirng delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        
         if ([stirng isEqualToString:@"新增地址成功"]) {
             alertview.tag = 20;
             self.navigationController.navigationBar.translucent = YES;
