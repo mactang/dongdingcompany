@@ -72,33 +72,41 @@
 
 }
 -(void)releaseInfo:(UIBarButtonItem *)button{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = @"Loading";
-    SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,COMMON,self.dataarray[self.signbutton][@"addressId"],model.userkey];
-
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-        [hud hide:YES];
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if ([dic[@"status"] integerValue]==1) {
-            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            alterview.tag=90;
-            [alterview show];
-        }
-        else{
-            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"点击重试" otherButtonTitles:@"取消",nil];
-            alterview.tag = 80;
-            alterview.delegate = self;
-            [alterview show];
-        }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [hud hide:YES];
-        NSLog(@"%@",error);
-    }];
-
+    if (self.datas.count==0) {
+        UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"收货地址为空,请添加" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alterview show];
+    }
+    else{
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.labelText = @"Loading";
+        SingleModel *model = [SingleModel sharedSingleModel];
+        NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,COMMON,self.dataarray[self.signbutton][@"addressId"],model.userkey];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+            [hud hide:YES];
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            if ([dic[@"status"] integerValue]==1) {
+                UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                alterview.tag=90;
+                [alterview show];
+            }
+            else{
+                UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"点击重试" otherButtonTitles:@"取消",nil];
+                alterview.tag = 80;
+                alterview.delegate = self;
+                [alterview show];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [hud hide:YES];
+            NSLog(@"%@",error);
+        }];
+        
+    }
+    
 }
 - (void)downData{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -111,9 +119,8 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         [hud hide:YES];
-        [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-
+        NSLog(@"%@",dic[@"info"]);
         [self.dataarray removeAllObjects];
         [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]) {

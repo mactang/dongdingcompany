@@ -14,4 +14,5 @@
 + (BOOL)isChinese:(NSString *)value;
 + (BOOL)checkChinese:(NSString *)chinese;
 +(BOOL)isValidateEmail:(NSString *)email;
++ (BOOL) isValidZipcode:(NSString*)value;
 @end
