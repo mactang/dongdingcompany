@@ -66,7 +66,7 @@
     return self;
 }
 -(void)setModel:(AddressModel *)model{
-    
+    _model = model;
 //   if (![model.defaultsign isKindOfClass:[NSNull class]]) {
 //            self.clickbutton.selected = YES;
 //    }
@@ -94,7 +94,7 @@
 }
 -(void)delegatePressed{
     if (_delegate &&[_delegate respondsToSelector:@selector(delegatedata:)]) {
-        [_delegate delegatedata:self.buttontag];
+        [_delegate delegatedata:_model];
     }
 }
 @end

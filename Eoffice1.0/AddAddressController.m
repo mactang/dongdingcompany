@@ -162,7 +162,7 @@
     else if ([Mobliejudge valiMobile:_phoneLB.text]){
         string = [Mobliejudge valiMobile:_phoneLB.text];
     }
-    else if (![Mobliejudge isValidateEmail:_emailLB.text]){
+    else if (![Mobliejudge isValidZipcode:_emailLB.text]){
         string = @"请输入正确的邮编";
     }
     else{
@@ -216,8 +216,6 @@
             alertview.tag = 21;
         }
         [alertview show];
-        //  NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        //  NSLog(@"%@",string);
         [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];

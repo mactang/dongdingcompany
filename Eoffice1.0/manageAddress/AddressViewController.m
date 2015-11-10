@@ -19,15 +19,11 @@
      UIButton *anotherButton;
 }
 @property(nonatomic,strong)UITableView *tableView;
-@property(nonatomic, strong)NSMutableArray *nameDatas;
-@property(nonatomic, strong)NSMutableArray *phoneDatas;
-@property(nonatomic, strong)NSMutableArray *addressDatas;
-@property(nonatomic, strong)NSMutableArray *selectedCellIndexes;
-@property(nonatomic,assign)NSInteger btnNumber;
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic, strong)NSString *addressId;
 @property(nonatomic,assign)NSInteger signbutton;
 @property(nonatomic,strong)NSMutableArray *dataarray;
+@property(nonatomic,strong)AddressModel *modeladdressed;
 @end
 
 @implementation AddressViewController
@@ -72,45 +68,45 @@
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(addPress) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
-    
-    _nameDatas = [NSMutableArray arrayWithObjects:@"东鼎泰和",@"泰和",@"科技", nil];
-    
-    _phoneDatas = [NSMutableArray arrayWithObjects:@"12345678901",@"23456789876",@"45678906543", nil];
-    
-    _addressDatas = [NSMutableArray arrayWithObjects:@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼",@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼",@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼", nil];
-    
-    _selectedCellIndexes = [NSMutableArray array];
     [self downData];
-    // Do any additional setup after loading the view.
+
 }
 -(void)releaseInfo:(UIBarButtonItem *)button{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = @"Loading";
-    SingleModel *model = [SingleModel sharedSingleModel];
-    NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,COMMON,self.dataarray[self.signbutton][@"addressId"],model.userkey];
-
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-        [hud hide:YES];
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if ([dic[@"status"] integerValue]==1) {
-            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            alterview.tag=90;
-            [alterview show];
-        }
-        else{
-            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"点击重试" otherButtonTitles:@"取消",nil];
-            alterview.tag = 80;
-            alterview.delegate = self;
-            [alterview show];
-        }
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [hud hide:YES];
-        NSLog(@"%@",error);
-    }];
-
+    if (self.datas.count==0) {
+        UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"收货地址为空,请添加" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alterview show];
+    }
+    else{
+        
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeIndeterminate;
+        hud.labelText = @"Loading";
+        SingleModel *model = [SingleModel sharedSingleModel];
+        NSString *path= [NSString stringWithFormat:DEFAULTADDREDD,COMMON,self.dataarray[self.signbutton][@"addressId"],model.userkey];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+            [hud hide:YES];
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            if ([dic[@"status"] integerValue]==1) {
+                UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                alterview.tag=90;
+                [alterview show];
+            }
+            else{
+                UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"设置默认地址成功" delegate:self cancelButtonTitle:@"点击重试" otherButtonTitles:@"取消",nil];
+                alterview.tag = 80;
+                alterview.delegate = self;
+                [alterview show];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [hud hide:YES];
+            NSLog(@"%@",error);
+        }];
+        
+    }
+    
 }
 - (void)downData{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -123,9 +119,7 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         [hud hide:YES];
-        [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-
         [self.dataarray removeAllObjects];
         [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]) {
@@ -235,8 +229,8 @@
     button.selected = YES;
     anotherButton = button;
 }
--(void)delegatedata:(NSInteger)buttontag{
-    _btnNumber = buttontag;
+-(void)delegatedata:(AddressModel *)addresseid{
+    self.modeladdressed = addresseid;
     UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"你确定要删除该地址吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
     alertview.alertViewStyle = UIAlertViewStyleDefault;
     alertview.delegate = self;
@@ -279,13 +273,6 @@
         if (buttonIndex == 1) {
             NSLog(@"....");
         }else{
-            
-            NSIndexPath *path = [NSIndexPath indexPathForRow:_btnNumber inSection:0];
-            [self.datas removeObjectAtIndex:_btnNumber];
-            [self.dataarray removeObjectAtIndex:_btnNumber];
-            [_tableView beginUpdates];
-            [_tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
-            [_tableView endUpdates];
             [self deleteData];
         }
 
@@ -293,13 +280,11 @@
     
 }
 -(void)deleteData{
-    
-    NSLog(@"row--%@",_addressId);
-//    http://192.168.0.170:8080/eoffice/phone/order!delAddress.action?id=?
+  
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
-    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,COMMON,self.dataarray[_btnNumber][@"addressId"]];
+    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,COMMON,self.modeladdressed.addressId];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -309,15 +294,25 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         [hud hide:YES];
-        NSLog(@"%@",dic);
         NSArray *array = dic[@"status"];
         NSString *string = [NSString stringWithFormat:@"%@",array];
-//        NSLog(@"array--%@",string);
         if ([string isEqualToString:@"1"]) {
-            
-            
+            NSIndexPath *path;
+            for (NSInteger i=0; i<self.dataarray.count; i++) {
+                AddressModel *model = self.datas[i];
+                if ([[NSString stringWithFormat:@"%@",model.addressId] isEqualToString:[NSString stringWithFormat:@"%@",self.modeladdressed.addressId]]) {
+                     path = [NSIndexPath indexPathForRow:i inSection:0];
+                    [self.datas removeObjectAtIndex:i];
+                    [self.dataarray removeObjectAtIndex:i];
+                }
+            }
+            [_tableView beginUpdates];
+            [_tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
+            [_tableView endUpdates];
         }
         else{
+            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"删除失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alterview show];
             
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -402,8 +397,6 @@
     self.navigationController.navigationBarHidden = NO;
     
 }
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     self.navigationController.navigationBarHidden = NO;
@@ -414,15 +407,4 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

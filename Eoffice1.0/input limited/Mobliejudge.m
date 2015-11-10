@@ -95,4 +95,20 @@
     NSPredicate *Test = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex];
     return [Test evaluateWithObject:chinese];
 }
++ (BOOL) isValidZipcode:(NSString*)value
+{
+    const char *cvalue = [value UTF8String];
+    NSInteger len = strlen(cvalue);
+    if (len != 6) {
+        return FALSE;
+    }
+    for (int i = 0; i < len; i++)
+    {
+        if (!(cvalue[i] >= '0' && cvalue[i] <= '9'))
+        {
+            return FALSE;
+        }
+    }
+    return TRUE;
+}
 @end
