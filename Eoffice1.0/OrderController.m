@@ -394,9 +394,12 @@
             }
             for (NSInteger i=0; i<self.datas.count; i++) {
                 AddressModel *model = self.datas[i];
-                if ([model.defaultsign isEqualToString:@"Y"]) {
-                    signsection = i;
+                if (![model.defaultsign isKindOfClass:[NSNull class]]) {
+                    if ([model.defaultsign isEqualToString:@"Y"]) {
+                        signsection = i;
+                    }
                 }
+                
             }
 
         }

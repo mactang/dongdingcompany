@@ -122,6 +122,7 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         [self.dataarray removeAllObjects];
         [self.datas removeAllObjects];
+        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]) {
             for (NSInteger i=0; i<[dic[@"data"]count]; i++) {
                 if (![dic[@"data"][i][@"defaultAD"] isKindOfClass:[NSNull class]] ) {
