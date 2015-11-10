@@ -127,7 +127,6 @@
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
         if (dic[@"data"] !=[NSNull null]){
             [datadic addEntriesFromDictionary:dic[@"data"]];
             NSLog(@"%@",datadic);
@@ -163,9 +162,9 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (sucess) {
-         return [datadic[@"cashBackList"] count];
+        return datadic[@"cashBackList"] == [NSNull null] ? 0: [datadic[@"cashBackList"] count];
     }
-    return [datadic[@"cashDetailList"] count];
+    return datadic[@"cashDetailList"]==[NSNull null] ?0: [datadic[@"cashDetailList"] count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (sucess) {

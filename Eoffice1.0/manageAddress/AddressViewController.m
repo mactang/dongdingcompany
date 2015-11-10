@@ -19,10 +19,6 @@
      UIButton *anotherButton;
 }
 @property(nonatomic,strong)UITableView *tableView;
-@property(nonatomic, strong)NSMutableArray *nameDatas;
-@property(nonatomic, strong)NSMutableArray *phoneDatas;
-@property(nonatomic, strong)NSMutableArray *addressDatas;
-@property(nonatomic, strong)NSMutableArray *selectedCellIndexes;
 @property(nonatomic,assign)NSInteger btnNumber;
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic, strong)NSString *addressId;
@@ -72,16 +68,8 @@
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addBtn addTarget:self action:@selector(addPress) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addBtn];
-    
-    _nameDatas = [NSMutableArray arrayWithObjects:@"东鼎泰和",@"泰和",@"科技", nil];
-    
-    _phoneDatas = [NSMutableArray arrayWithObjects:@"12345678901",@"23456789876",@"45678906543", nil];
-    
-    _addressDatas = [NSMutableArray arrayWithObjects:@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼",@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼",@"四川省成都市武侯区桐梓林地铁站旁丰德国际广场B1座12楼", nil];
-    
-    _selectedCellIndexes = [NSMutableArray array];
     [self downData];
-    // Do any additional setup after loading the view.
+
 }
 -(void)releaseInfo:(UIBarButtonItem *)button{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -293,9 +281,7 @@
     
 }
 -(void)deleteData{
-    
-    NSLog(@"row--%@",_addressId);
-//    http://192.168.0.170:8080/eoffice/phone/order!delAddress.action?id=?
+
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
@@ -312,9 +298,7 @@
         NSLog(@"%@",dic);
         NSArray *array = dic[@"status"];
         NSString *string = [NSString stringWithFormat:@"%@",array];
-//        NSLog(@"array--%@",string);
         if ([string isEqualToString:@"1"]) {
-            
             
         }
         else{
@@ -402,8 +386,6 @@
     self.navigationController.navigationBarHidden = NO;
     
 }
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     self.navigationController.navigationBarHidden = NO;
@@ -414,15 +396,4 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
