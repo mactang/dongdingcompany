@@ -674,12 +674,15 @@
     
      static NSString * identifier = @"Cell";
     ShopCarCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    
     if (cell == nil) {
         cell = [[ShopCarCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
     cell.numbercell = indexPath.row;
     cell.myModel = self.datas[indexPath.row];
     cell.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSUInteger row = [indexPath row];
     NSMutableDictionary *dic = [contacts objectAtIndex:row];
     
@@ -1026,13 +1029,27 @@
     }];
     
 }
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-    _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-    
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    ShopCarModel *model = self.datas[indexPath.row/2];
+//-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
+//    
+//}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    
+//    ShopCarModel *model = self.datas[indexPath.row];
+//    SingleModel *sing = [SingleModel sharedSingleModel];
+//    sing.goodsId = model.goodsId;
+//    NSLog(@"%@",model.goodsId);
+//    sing.paraId = @"123";
+//    sing.cPartnerId = @"443";
+//    
+//    CMDetailsViewController *cmd = [[CMDetailsViewController alloc]init];
+//    [self.navigationController pushViewController:cmd animated:YES];
+//    
+//    
+//}
+-(void)goodDetailButton:(NSInteger)goodDetail{
+
+    ShopCarModel *model = self.datas[goodDetail];
     SingleModel *sing = [SingleModel sharedSingleModel];
     sing.goodsId = model.goodsId;
     NSLog(@"%@",model.goodsId);
@@ -1041,8 +1058,6 @@
     
     CMDetailsViewController *cmd = [[CMDetailsViewController alloc]init];
     [self.navigationController pushViewController:cmd animated:YES];
-    
-    
 }
 
 - (void)isPublicBtnPress:(UIButton*)btn{

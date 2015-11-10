@@ -47,12 +47,17 @@
             NSLog(@"kk");
         }
         self.ImageView = [[UIImageView alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.chooseBtn.frame)+10, 10, 60, 60)];
+        self.ImageView.userInteractionEnabled =YES;
         [self.contentView addSubview:self.ImageView];
         self.nameLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.ImageView.frame)+5, self.ImageView.frame.origin.y, 120, 30)];
         self.nameLB.font = [UIFont systemFontOfSize:12];
         self.nameLB.lineBreakMode = NSLineBreakByTruncatingTail;
         self.nameLB.numberOfLines = 2;
         [self.contentView addSubview:self.nameLB];
+        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, 60)];
+        
+        [button addTarget:self action:@selector(pessbtn) forControlEvents:UIControlEventTouchUpInside];
+        [self.ImageView addSubview:button];
         
         UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(235, 10, 13, 20)];
         LB.font = [UIFont systemFontOfSize:15];
@@ -66,7 +71,7 @@
         [self.contentView addSubview:self.priceLB];
         
         
-        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(275, 30, 11, 20)];
+        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(270, 30, 11, 20)];
         bl.font = [UIFont systemFontOfSize:15];
         bl.text = @"x";
         [bl setTextColor:[UIColor grayColor]];
@@ -147,7 +152,15 @@
     
     return self;
 }
+-(void)pessbtn{
 
+    NSLog(@"numbercell--%ld",(long)self.numbercell);
+    
+    if (_delegate &&[_delegate respondsToSelector:@selector(goodDetailButton:)]) {
+        [self.delegate goodDetailButton:self.numbercell];
+    }
+    
+}
 -(void)NumBtnPress:(UIButton *)btn{
     
     int addCount = [[NSString stringWithFormat:@"%@",self.number.text]intValue];

@@ -589,7 +589,8 @@
         UIAlertView *alertview;
         if ([dic[@"status"] integerValue]==1) {
             if (sucess) {
-                alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:@"去购物车" otherButtonTitles:@"继续逛逛", nil];
+                alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                [self.menuPopover removeFromSuperview];
             }
             else{
                 [self.menuPopover removeFromSuperview];
