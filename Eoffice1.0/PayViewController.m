@@ -372,6 +372,7 @@
 #pragma mark  baifubao
 -(void)baifubao{
     BDWalletSDKMainManager* payMainManager = [BDWalletSDKMainManager getInstance];
+    [[BDWalletSDKMainManager getInstance] setBdWalletNavTitleColor:[UIColor blackColor]];
     NSString *orderInfo = [self buildOrderInfoTest];
     payMainManager.delegate = self;
     NSLog(@"%@",orderInfo);

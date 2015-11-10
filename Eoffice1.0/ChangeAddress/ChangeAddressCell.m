@@ -34,7 +34,7 @@
         }
         return cell;
     }
-    else if(number == 6){
+    else if(number == 4){
         static NSString *ID =@"DefaultCell";
         ChangeAddressCell *cell = [tableview dequeueReusableCellWithIdentifier:ID];
         if (cell == nil) {
@@ -146,11 +146,17 @@
 }
 -(void)setDetailstring:(NSString *)detailstring{
     self.detaillabel.text = [NSString stringWithFormat:@"%@",detailstring];
-    if ([detailstring isEqualToString:@"Y"]||[detailstring isEqualToString:@"N"]) {
-        self.detaillabel.hidden = YES;
-        if ([detailstring isEqualToString:@"Y"]) {
-            self.cellbutton.selected = YES;
+    if (![detailstring isKindOfClass:[NSNull class]]) {
+        if ([detailstring isEqualToString:@"Y"]||[detailstring isEqualToString:@"N"]) {
+            self.detaillabel.hidden = YES;
+            if ([detailstring isEqualToString:@"Y"]) {
+                self.cellbutton.selected = YES;
+            }
         }
+
+    }
+    else{
+        self.detaillabel.hidden = YES;
     }
 }
 -(void)setIndexnumber:(NSInteger)indexnumber{

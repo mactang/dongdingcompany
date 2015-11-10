@@ -31,6 +31,8 @@
 -(instancetype)initwithtitle:(NSDictionary *)dicdata{
     self.dictionary = dicdata;
     self.defaultsign = dicdata[@"defaultAD"];
+    self.cityid = self.dictionary[@"cityId"];
+    NSLog(@"%@",self.dictionary);
     return self;
 }
 -(NSMutableArray *)datas{
@@ -42,13 +44,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArray = [NSMutableArray array];
-    self.datarray = @[@"四川省成都市金牛区",@"回龙观",self.dictionary[@"fullAddress"],self.dictionary[@"receiver"],self.dictionary[@"telphone"],self.dictionary[@"post"],@"设为默认地址",];
+    self.datarray = @[@"四川省成都市金牛区",self.dictionary[@"fullAddress"],self.dictionary[@"receiver"],self.dictionary[@"telphone"],@"设为默认地址",];
     for (NSInteger i=0; i<self.datarray.count; i++) {
         [self.dataArray addObject:self.datarray[i]];
     }
 //    [self.datarray initWithObjects:@"四川省成都市金牛区",@"回龙观",@"北京市昌平区回龙观田园风光雅苑",@"龙大爷",@"15448454465",@"464484",@"设为默认地址", nil];
     NSLog(@"%@",self.datarray);
-    self.detailarray = @[@"所在地区",@"街道",@"详细地址",@"收货人姓名",@"手机号码",@"邮编",self.dictionary[@"defaultAD"],];
+    self.detailarray = @[@"所在地区",@"详细地址",@"收货人姓名",@"手机号码",self.dictionary[@"defaultAD"],];
     self.navigationItem.title = @"修改收货地址";
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -100,9 +102,6 @@
     if ([self.dataArray[0]isEqualToString:@""]) {
         signstring = @"请选择区域";
     }
-    else if ([self.dataArray[1]isEqualToString:@""]) {
-        signstring = @"请输入街道";
-    }
     else if ([self.dataArray[2]isEqualToString:@""]) {
         signstring = @"请输入详细地址";
     }
@@ -112,21 +111,14 @@
     else if ([self.dataArray[4]isEqualToString:@""]) {
         signstring = @"请输入手机号";
     }
-    else if ([Mobliejudge valiMobile:self.dataArray[4]]){
+    else if ([Mobliejudge valiMobile:self.dataArray[3]]){
         signstring = [Mobliejudge valiMobile:self.dataArray[4]];
     }
-    else if ([self.dataArray[5]isEqualToString:@""]) {
-        signstring = @"请输入邮箱";
-    }
-       else if (![Mobliejudge isValidateEmail:self.dataArray[5]]){
-        signstring = @"请输入正确的邮箱";
-    }
-
     else{
        [self downData];
         return;
     }
-    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:signstring delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:signstring delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alertview show];
 }
 - (void)downData{
@@ -135,15 +127,17 @@
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:CHANGEADDRESS,COMMON,model.userkey];
-    NSLog(@"%@",path);
-    NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:self.dataArray[2],@"address",self.dataArray[4],@"telPhone",self.dataArray[3],@"receiver",self.dataArray[5],@"post",self.dictionary[@"addressId"],@"id",self.cityid,@"city",self.defaultsign,@"isDefault",nil];
+    if ([self.defaultsign isKindOfClass:[NSNull class]]) {
+        self.defaultsign = @"N";
+    }
+    NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:self.dataArray[0],@"address",self.datarray[1],@"fullAddress",self.dataArray[3],@"telPhone",self.dataArray[2],@"receiver",self.dictionary[@"addressId"],@"id",self.cityid,@"city",self.defaultsign,@"isDefault",nil];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
+    NSLog(@"%@",dicdata);
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
   
     [manager POST:path parameters:dicdata success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-    NSLog(@"-----------%@",dic);
+    NSLog(@"-----------%@",dic[@"info"]);
         
         UIAlertView *alertview;
         NSString *stirng;
@@ -153,7 +147,7 @@
         else{
             stirng  = @"修改地址失败";
         }
-        alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:stirng delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:stirng delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         if ([stirng isEqualToString:@"修改地址成功"]) {
             self.navigationController.navigationBar.translucent = YES;
             [self.navigationController popViewControllerAnimated:YES];
@@ -169,6 +163,27 @@
         NSLog(@"%@",error);
     }];
 }
+-(void)data{
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
+    SingleModel *model = [SingleModel sharedSingleModel];
+    NSString *path = [NSString stringWithFormat:MAINTAINDETAIL,COMMON,model.paraId,model.goodsId,model.cPartnerId];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
+        NSLog(@"%@",error);
+    }];
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
@@ -176,7 +191,7 @@
     return self.datarray.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row==6) {
+    if (indexPath.row==4) {
         return 40;
     }
     return 60;
