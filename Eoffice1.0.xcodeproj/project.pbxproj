@@ -320,6 +320,7 @@
 		61E971161B7367A1007F42B6 /* detailsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 61E971141B7367A1007F42B6 /* detailsModel.m */; };
 		61EBC6CC1B68CEF5002D0373 /* ScreenMainTainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EBC6CB1B68CEF5002D0373 /* ScreenMainTainController.m */; };
 		61EBC6CF1B68E9D2002D0373 /* ExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61EBC6CE1B68E9D2002D0373 /* ExchangeViewController.m */; };
+		61F24D1D1BF196610072F58B /* CountDownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F24D1C1BF196610072F58B /* CountDownButton.m */; };
 		61F312F21BD6386200B8A92F /* DataMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F312F11BD6386200B8A92F /* DataMD5.m */; };
 		61F312F41BD63CEE00B8A92F /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61F312F31BD63CEE00B8A92F /* libc++.dylib */; };
 		61FA8A7A1B9D80090090507E /* OrderAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FA8A791B9D80090090507E /* OrderAddressViewController.m */; };
@@ -871,6 +872,8 @@
 		61EBC6CB1B68CEF5002D0373 /* ScreenMainTainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenMainTainController.m; sourceTree = "<group>"; };
 		61EBC6CD1B68E9D2002D0373 /* ExchangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExchangeViewController.h; sourceTree = "<group>"; };
 		61EBC6CE1B68E9D2002D0373 /* ExchangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExchangeViewController.m; sourceTree = "<group>"; };
+		61F24D1B1BF196610072F58B /* CountDownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountDownButton.h; sourceTree = "<group>"; };
+		61F24D1C1BF196610072F58B /* CountDownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountDownButton.m; sourceTree = "<group>"; };
 		61F312F01BD6386200B8A92F /* DataMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataMD5.h; sourceTree = "<group>"; };
 		61F312F11BD6386200B8A92F /* DataMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataMD5.m; sourceTree = "<group>"; };
 		61F312F31BD63CEE00B8A92F /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -1390,8 +1393,6 @@
 				615B29B41B4FB27A004E7546 /* MaintainController.m */,
 				615B29B51B4FB27A004E7546 /* PersonController.h */,
 				615B29B61B4FB27A004E7546 /* PersonController.m */,
-				96A70D121B943FCD00C0F1F5 /* PhoneReviseViewController.h */,
-				96A70D131B943FCD00C0F1F5 /* PhoneReviseViewController.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -1649,6 +1650,9 @@
 				61A1FFDF1B67179300AFC8C2 /* SafeViewController.m */,
 				61A1FFE21B6722EA00AFC8C2 /* PassWordViewController.h */,
 				61A1FFE31B6722EA00AFC8C2 /* PassWordViewController.m */,
+				96A70D121B943FCD00C0F1F5 /* PhoneReviseViewController.h */,
+				96A70D131B943FCD00C0F1F5 /* PhoneReviseViewController.m */,
+				61F24D1A1BF196250072F58B /* countDown */,
 				9638F0B71B900F4700882D8C /* manageAddress */,
 				6172F5411B6C6ADB007BDBD2 /* AddAddressController.h */,
 				6172F5421B6C6ADB007BDBD2 /* AddAddressController.m */,
@@ -2005,6 +2009,15 @@
 				61E0FB151B53A7430080F41B /* Control.m */,
 			);
 			name = GYZControl;
+			sourceTree = "<group>";
+		};
+		61F24D1A1BF196250072F58B /* countDown */ = {
+			isa = PBXGroup;
+			children = (
+				61F24D1B1BF196610072F58B /* CountDownButton.h */,
+				61F24D1C1BF196610072F58B /* CountDownButton.m */,
+			);
+			name = countDown;
 			sourceTree = "<group>";
 		};
 		61F312EB1BD637C500B8A92F /* wechat */ = {
@@ -2736,6 +2749,7 @@
 				6166AA2F1BA02D0F00D7FDD1 /* UIView+SDExtension.m in Sources */,
 				96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */,
 				96BA8F2C1B8EADDC0062C8D8 /* Mobliejudge.m in Sources */,
+				61F24D1D1BF196610072F58B /* CountDownButton.m in Sources */,
 				96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */,
 				614EC0921BD4E3E50001015B /* ComRuleController.m in Sources */,
 				61B0FF9F1B5F6739002CF349 /* ContrastViewController.m in Sources */,

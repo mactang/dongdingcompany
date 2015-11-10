@@ -38,23 +38,55 @@
     SingleModel *sing = [SingleModel sharedSingleModel];
     UILabel *photoLB = [[UILabel alloc]initWithFrame:CGRectMake(20, 80, 150, 20)];
     photoLB.font = [UIFont systemFontOfSize:14];
-    photoLB.text = [NSString stringWithFormat:@"%@",sing.telphone];
+    photoLB.text = [NSString stringWithFormat:@"手机号：%@",sing.telphone];
     photoLB.textAlignment = NSTextAlignmentCenter;
     photoLB.textColor = [UIColor blackColor];
     [self.view addSubview:photoLB];
     
-    UIButton *validateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoLB.frame)+10,photoLB.frame.origin.y-5, 100, 35)];
-    validateButton.backgroundColor = [UIColor whiteColor];
-    validateButton.clipsToBounds = YES;
-    validateButton.layer.cornerRadius = 3;
-    validateButton.layer.borderColor = [[UIColor grayColor]CGColor];
-    validateButton.layer.borderWidth = 1;
-    validateButton.font = [UIFont systemFontOfSize:14];
+//    UIButton *validateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoLB.frame)+10,photoLB.frame.origin.y-5, 100, 35)];
+//    validateButton.backgroundColor = [UIColor whiteColor];
+//    validateButton.clipsToBounds = YES;
+//    validateButton.layer.cornerRadius = 3;
+//    validateButton.layer.borderColor = [[UIColor grayColor]CGColor];
+//    validateButton.layer.borderWidth = 1;
+//    validateButton.font = [UIFont systemFontOfSize:14];
+//    
+//    [validateButton addTarget:self action:@selector(validatePress:) forControlEvents:UIControlEventTouchUpInside];
+//    [validateButton setTitle:@"发送验证码" forState:UIControlStateNormal];
+//    [validateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    [self.view addSubview:validateButton];
     
-    [validateButton addTarget:self action:@selector(validatePress) forControlEvents:UIControlEventTouchUpInside];
-    [validateButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-    [validateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:validateButton];
+    _countDownCode = [CountDownButton buttonWithType:UIButtonTypeCustom];
+    _countDownCode.frame = CGRectMake(SCREEN_WIDTH-120,photoLB.frame.origin.y-5, 100, 30);
+    [_countDownCode setTitle:@"发送验证码" forState:UIControlStateNormal];
+    [_countDownCode setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _countDownCode.backgroundColor = [UIColor whiteColor];
+    _countDownCode.clipsToBounds = YES;
+    _countDownCode.layer.cornerRadius = 3;
+    _countDownCode.layer.borderColor = [[UIColor grayColor]CGColor];
+    _countDownCode.layer.borderWidth = 1;
+    _countDownCode.font = [UIFont systemFontOfSize:13];
+    [self.view addSubview:_countDownCode];
+    
+    
+    [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
+        sender.enabled = NO;
+        [self valiData];
+        [sender startWithSecond:10];
+        
+        [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
+            NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+            
+            return title;
+        }];
+        [sender didFinished:^NSString *(CountDownButton *countDownButton, int second) {
+            countDownButton.enabled = YES;
+            return @"点击重新获取";
+            
+        }];
+        
+    }];
+    
     
     UILabel *validateLB = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(photoLB.frame)+30, 60, 20)];
     validateLB.font = [UIFont systemFontOfSize:14];
@@ -130,8 +162,7 @@
     [textField resignFirstResponder];
     return YES;
 }
--(void)validatePress{
-
+-(void)validatePress:(UIButton *)btn{
     [self valiData];
 }
 
@@ -149,7 +180,7 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:@{@"phoneNo":@"13618090081"} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:@{@"phoneNo":model.telphone} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];

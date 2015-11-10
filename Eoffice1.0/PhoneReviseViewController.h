@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CountDownButton.h"
 @interface PhoneReviseViewController : UIViewController
-
+{
+    CountDownButton *_countDownCode;
+    CountDownButton *_newCountDownCode;
+}
 @end

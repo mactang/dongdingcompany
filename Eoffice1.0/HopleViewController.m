@@ -19,6 +19,7 @@
 {
     UITextView *TextView;
     UILabel *LB;
+    NSString *phoneSure;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -127,20 +128,42 @@
     SingleModel *model = [SingleModel sharedSingleModel];
     
     
-    NSString *path= [NSString stringWithFormat:FEEDBACK,COMMON,model.userkey,TextView.text];
+   
+    
+    
+    NSString *string = [NSString stringWithFormat:@"%@",TextView.text];
+    
+//     NSString *transString = [NSString stringWithString:[string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//    NSString *utfString = [string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+  //  const char* utfString = [string UTF8String];
+    NSString *path= [NSString stringWithFormat:FEEDBACK,COMMON,model.userkey,string];
     NSLog(@"%@",path);
-    
-    
+  //  [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *escapedPath = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:escapedPath parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",string);
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        UIAlertView *alterview;
+        
+        if ([dic[@"status"]integerValue]==1) {
+            
+            phoneSure = dic[@"info"];
+            
+        }
+        else{
+            
+            phoneSure = dic[@"info"];
+            
+        }
+        alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:phoneSure delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alterview show];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);

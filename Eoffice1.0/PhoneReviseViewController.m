@@ -51,20 +51,36 @@
     [_phoneField setText:[NSString stringWithFormat:@"%@",sing.telphone]];
     _phoneField.textAlignment =NSTextAlignmentCenter;
     [self.view addSubview:_phoneField];
+
+    _countDownCode = [CountDownButton buttonWithType:UIButtonTypeCustom];
+    _countDownCode.frame = CGRectMake(SCREEN_WIDTH-80,photoLB.frame.origin.y-5, 70, 30);
+    [_countDownCode setTitle:@"发送验证码" forState:UIControlStateNormal];
+    [_countDownCode setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _countDownCode.backgroundColor = [UIColor whiteColor];
+    _countDownCode.clipsToBounds = YES;
+    _countDownCode.layer.cornerRadius = 3;
+    _countDownCode.layer.borderColor = [[UIColor grayColor]CGColor];
+    _countDownCode.layer.borderWidth = 1;
+    _countDownCode.font = [UIFont systemFontOfSize:10];
+    [self.view addSubview:_countDownCode];
     
-    
-    UIButton *validateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_phoneField.frame)+5,photoLB.frame.origin.y-5, 70, 30)];
-    validateButton.backgroundColor = [UIColor whiteColor];
-    validateButton.clipsToBounds =YES;
-    validateButton.layer.cornerRadius = 3;
-    validateButton.layer.borderColor = [[UIColor grayColor]CGColor];
-    validateButton.layer.borderWidth = 1;
-    validateButton.font = [UIFont systemFontOfSize:12];
-    [validateButton addTarget:self action:@selector(validatePress) forControlEvents:UIControlEventTouchUpInside];
-    [validateButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-    [validateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:validateButton];
-    
+    [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
+        sender.enabled = NO;
+       [self valiData];
+        [sender startWithSecond:10];
+        
+        [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
+            NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+            
+            return title;
+        }];
+        [sender didFinished:^NSString *(CountDownButton *countDownButton, int second) {
+            countDownButton.enabled = YES;
+            return @"点击重新获取";
+            
+        }];
+        
+    }];
     
     UILabel *validateLB = [[UILabel alloc]initWithFrame:CGRectMake(30, CGRectGetMaxY(photoLB.frame)+30, 50, 20)];
     validateLB.font = [UIFont systemFontOfSize:12];
@@ -98,17 +114,38 @@
     newPhoneField.keyboardType = UIKeyboardTypeNumberPad;
     [self.view addSubview:newPhoneField];
     
-    UIButton *newNalidateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newPhoneField.frame)+5,newPhoneField.frame.origin.y, 70, 30)];
-    newNalidateButton.backgroundColor = [UIColor whiteColor];
-    newNalidateButton.clipsToBounds =YES;
-    newNalidateButton.layer.cornerRadius = 3;
-    newNalidateButton.layer.borderColor = [[UIColor grayColor]CGColor];
-    newNalidateButton.layer.borderWidth = 1;
-    newNalidateButton.font = [UIFont systemFontOfSize:12];
-    [newNalidateButton addTarget:self action:@selector(newValidatePress) forControlEvents:UIControlEventTouchUpInside];
-    [newNalidateButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-    [newNalidateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:newNalidateButton];
+
+    
+    _newCountDownCode = [CountDownButton buttonWithType:UIButtonTypeCustom];
+    _newCountDownCode.frame = CGRectMake(SCREEN_WIDTH-80,newPhoneField.frame.origin.y, 70, 30);
+    [_newCountDownCode setTitle:@"发送验证码" forState:UIControlStateNormal];
+    [_newCountDownCode setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _newCountDownCode.backgroundColor = [UIColor whiteColor];
+    _newCountDownCode.clipsToBounds = YES;
+    _newCountDownCode.layer.cornerRadius = 3;
+    _newCountDownCode.layer.borderColor = [[UIColor grayColor]CGColor];
+    _newCountDownCode.layer.borderWidth = 1;
+    _newCountDownCode.font = [UIFont systemFontOfSize:10];
+    [self.view addSubview:_newCountDownCode];
+    
+    [_newCountDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
+        sender.enabled = NO;
+         [self newNaliData];
+        [sender startWithSecond:10];
+        
+        [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
+            NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+            
+            return title;
+        }];
+        [sender didFinished:^NSString *(CountDownButton *countDownButton, int second) {
+            countDownButton.enabled = YES;
+            return @"点击重新获取";
+            
+        }];
+        
+    }];
+
     
     UILabel *newNalidateLB = [[UILabel alloc]initWithFrame:CGRectMake(30, CGRectGetMaxY(newValidateLB.frame)+30, 50, 20)];
     newNalidateLB.font = [UIFont systemFontOfSize:12];
