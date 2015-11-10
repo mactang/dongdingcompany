@@ -11,7 +11,7 @@
 @protocol buttondelegate <NSObject>
 
 -(void)buttondelegate:(UIButton *)button;
--(void)delegatedata:(NSInteger )buttontag;
+-(void)delegatedata:(AddressModel *)addresseid;
 
 @end
 @interface ManageAddressCell : UITableViewCell

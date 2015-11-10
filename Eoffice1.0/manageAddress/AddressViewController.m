@@ -19,11 +19,11 @@
      UIButton *anotherButton;
 }
 @property(nonatomic,strong)UITableView *tableView;
-@property(nonatomic,assign)NSInteger btnNumber;
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic, strong)NSString *addressId;
 @property(nonatomic,assign)NSInteger signbutton;
 @property(nonatomic,strong)NSMutableArray *dataarray;
+@property(nonatomic,strong)AddressModel *modeladdressed;
 @end
 
 @implementation AddressViewController
@@ -120,7 +120,6 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         [hud hide:YES];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic[@"info"]);
         [self.dataarray removeAllObjects];
         [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]) {
@@ -230,8 +229,8 @@
     button.selected = YES;
     anotherButton = button;
 }
--(void)delegatedata:(NSInteger)buttontag{
-    _btnNumber = buttontag;
+-(void)delegatedata:(AddressModel *)addresseid{
+    self.modeladdressed = addresseid;
     UIAlertView *alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"你确定要删除该地址吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
     alertview.alertViewStyle = UIAlertViewStyleDefault;
     alertview.delegate = self;
@@ -274,13 +273,6 @@
         if (buttonIndex == 1) {
             NSLog(@"....");
         }else{
-            
-            NSIndexPath *path = [NSIndexPath indexPathForRow:_btnNumber inSection:0];
-            [self.datas removeObjectAtIndex:_btnNumber];
-            [self.dataarray removeObjectAtIndex:_btnNumber];
-            [_tableView beginUpdates];
-            [_tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
-            [_tableView endUpdates];
             [self deleteData];
         }
 
@@ -288,11 +280,11 @@
     
 }
 -(void)deleteData{
-
+  
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
-    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,COMMON,self.dataarray[_btnNumber][@"addressId"]];
+    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,COMMON,self.modeladdressed.addressId];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -302,13 +294,25 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         [hud hide:YES];
-        NSLog(@"%@",dic);
         NSArray *array = dic[@"status"];
         NSString *string = [NSString stringWithFormat:@"%@",array];
         if ([string isEqualToString:@"1"]) {
-            
+            NSIndexPath *path;
+            for (NSInteger i=0; i<self.dataarray.count; i++) {
+                AddressModel *model = self.datas[i];
+                if ([[NSString stringWithFormat:@"%@",model.addressId] isEqualToString:[NSString stringWithFormat:@"%@",self.modeladdressed.addressId]]) {
+                     path = [NSIndexPath indexPathForRow:i inSection:0];
+                    [self.datas removeObjectAtIndex:i];
+                    [self.dataarray removeObjectAtIndex:i];
+                }
+            }
+            [_tableView beginUpdates];
+            [_tableView deleteRowsAtIndexPaths:@[path]  withRowAnimation:UITableViewRowAnimationFade];
+            [_tableView endUpdates];
         }
         else{
+            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"删除失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alterview show];
             
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
