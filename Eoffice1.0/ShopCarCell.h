@@ -22,6 +22,8 @@
 -(void)noChooseAddCount:(NSString *)noChooseAddCount;
 -(void)noChooseSubCount:(NSString *)noChooseSubCount;
 
+-(void)goodDetailButton:(NSInteger)goodDetail;
+
 
 @end
 @interface ShopCarCell : UITableViewCell

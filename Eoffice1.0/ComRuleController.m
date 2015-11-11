@@ -33,6 +33,7 @@
     [self.view addSubview:view];
     
     NSString *labelText = @"1、将自己的优惠码推荐给好友进行注册，好友首次下单成功购买商品后，即可获得1%返现，购买第二次及以后，可获得0.5%返现；\n2、可提现金额累计到10元及以上，即可提取现金；\n3、	返现活动在推广期间有效，推广期暂定三年；\n4、	如果提现金额没有及时到账，请联系客服。	";
+    
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:labelText];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     

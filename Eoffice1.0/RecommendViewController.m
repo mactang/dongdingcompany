@@ -172,7 +172,7 @@
     
     [UMSocialWechatHandler setWXAppId:@"wxd20a08d7a7efd6b4" appSecret:@"7ac03523b9ee4296d2adf49648702c62" url:nil];
     
-    NSString *shareText = @"友盟社会化组件可以让移动应用快速具备社会化分享、登录、评论、喜欢等功能，并提供实时、全面的社会化数据统计分析服务。 http://www.umeng.com/social";             //分享内嵌文字
+    NSString *shareText = @"http://www.ebangon.com";             //分享内嵌文字
     UIImage *shareImage = [UIImage imageNamed:@"UMS_social_demo"];
     
     [UMSocialSnsService presentSnsIconSheetView:self
@@ -180,11 +180,14 @@
                                       shareText:shareText
                                      shareImage:shareImage
                                 shareToSnsNames:[NSArray arrayWithObjects: UMShareToWechatSession, UMShareToWechatTimeline, UMShareToQzone, UMShareToQQ, UMShareToSina, UMShareToTencent,UMShareToSms, nil]
-                                       delegate:self];}
+                                       delegate:self];
+}
 - (void)leftItemClicked{
+    
     
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
+    
     
 }
 - (void)viewWillAppear:(BOOL)animated{
