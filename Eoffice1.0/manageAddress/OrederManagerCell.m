@@ -57,7 +57,6 @@
         phonelabel.text = model.telphone;
     }
     detailaddresslabel.text = model.address;
-    NSLog(@"%@",model.fullAddress);
   
 }
 @end

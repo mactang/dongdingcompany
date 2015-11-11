@@ -523,6 +523,7 @@
         [self.navigationController pushViewController:pay animated:YES];
         pay.totalPrice = self.totalprice;
         NSLog(@"%@",pay.totalPrice);
+        
 //        OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
 //        [self.navigationController pushViewController:orderSucc animated:YES];
         
