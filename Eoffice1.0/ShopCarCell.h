@@ -24,6 +24,9 @@
 
 -(void)goodDetailButton:(NSInteger)goodDetail;
 
+-(void)changeCountAdd:(NSString *)addCount cartIdData:(NSInteger)cartId;
+
+-(void)changeCountRevise:(NSString *)reviseCount cartIdData:(NSInteger)cartId;
 
 @end
 @interface ShopCarCell : UITableViewCell
