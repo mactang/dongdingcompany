@@ -77,7 +77,6 @@
         [alterview show];
     }
     else{
-        
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeIndeterminate;
         hud.labelText = @"Loading";
@@ -193,6 +192,11 @@
     NSLog(@"++++++++");
 }
 - (void)leftItemClicked{
+    
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(refreshDefault)]) {
+        [self.delegate refreshDefault];
+    }
+
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
     

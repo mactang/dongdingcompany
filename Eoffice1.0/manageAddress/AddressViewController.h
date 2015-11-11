@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol refreshaddress <NSObject>
 
+-(void)refreshDefault;
+
+@end
 @interface AddressViewController : UIViewController
-
+@property(nonatomic,assign)id<refreshaddress>delegate;
 @end

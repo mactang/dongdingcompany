@@ -503,12 +503,12 @@
     SingleModel *model = [SingleModel sharedSingleModel];
   
     if (model.userkey == nil) {
-        if (!login) {
+       
             self.navigationController.navigationBarHidden = YES;
             login = [[LoginViewController alloc]init];
             [self.view addSubview:login.view];
             login.delegate = self;
-        }
+        
     }
     if (model.userkey != nil) {
         [login.view removeFromSuperview];

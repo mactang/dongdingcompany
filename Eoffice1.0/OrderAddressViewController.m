@@ -17,7 +17,7 @@
 #import "OrederManagerCell.h"
 #import "AddressViewController.h"
 
-@interface OrderAddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,reloaddelegate,reloadAddressdelegate>
+@interface OrderAddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,reloaddelegate,reloadAddressdelegate,refreshaddress>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)NSMutableArray *nameDatas;
 @property(nonatomic, strong)NSMutableArray *phoneDatas;
@@ -95,7 +95,6 @@
         [hud hide:YES];
         [self.datas removeAllObjects];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
         [self.dataarray removeAllObjects];
         [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]) {
@@ -123,11 +122,14 @@
 
 -(void)addPress{
     AddressViewController *add = [[AddressViewController alloc]init];
-    
+    add.delegate = self;
     [self.navigationController pushViewController:add animated:YES];
 }
 #pragma mark reloadata
 -(void)reloaddata{
+    [self downData];
+}
+-(void)refreshDefault{
     [self downData];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -157,6 +159,9 @@
     cell.model = self.datas[indexPath.row];
     if (indexPath.row == self.signbutton) {
        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+    else{
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     return cell;
 }
