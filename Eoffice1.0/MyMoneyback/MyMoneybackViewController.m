@@ -71,12 +71,11 @@
     
     totalPrice = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, (SCREEN_WIDTH-20)/2, widgetboundsHeight(whiteview)-10)];
     totalPrice.font = [UIFont systemFontOfSize:14];
-    totalPrice.text = [NSString stringWithFormat:@"总金额: %.2f",[datadic[@"totalAmount"] floatValue]];
+    
     [whiteview addSubview:totalPrice];
 
     balancePrice = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(totalPrice.frame), 5, (SCREEN_WIDTH-20)/2, widgetboundsHeight(whiteview)-10)];
     balancePrice.font = [UIFont systemFontOfSize:14];
-    balancePrice.text = [NSString stringWithFormat:@"余额:%.2f",[datadic[@"balance"] floatValue]];
     [whiteview addSubview:balancePrice];
     
     NSArray *array = @[@"返现记录",@"提现明细",];
@@ -131,6 +130,8 @@
             [datadic addEntriesFromDictionary:dic[@"data"]];
             NSLog(@"%@",datadic);
         }
+        totalPrice.text = [NSString stringWithFormat:@"总金额: %.2f",[datadic[@"totalAmount"] floatValue]];
+        balancePrice.text = [NSString stringWithFormat:@"余额:%.2f",[datadic[@"balance"] floatValue]];
         [hud hide:YES];
         [_tableview reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

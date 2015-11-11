@@ -11,6 +11,7 @@
 #import "MainViewController.h"
 #import "AFNetworking.h"
 #import "SingleModel.h"
+#define kAlphaNum  @"0123456789"
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)UITextField *userNameField;
 @property(nonatomic,strong)UITextField *passWordField;
@@ -91,7 +92,7 @@
     _countDownCode.layer.cornerRadius = 3;
     _countDownCode.layer.borderColor = [[UIColor grayColor]CGColor];
     _countDownCode.layer.borderWidth = 1;
-    _countDownCode.font = [UIFont systemFontOfSize:10];
+    _countDownCode.titleLabel.font = [UIFont systemFontOfSize:10];
     [phoneNumber_view addSubview:_countDownCode];
     
     [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
@@ -289,12 +290,8 @@
             [alert show];
         }
     }
-   
-    
-    
 }
 - (void)surePress{
-    
     
     UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
     UITextField *replace_field = (UITextField *)[self.view viewWithTag:1003];
@@ -307,9 +304,6 @@
         
             [self sureRgister];
         }
-    
-
-    
 }
 -(void)sureRgister{
 
@@ -328,10 +322,7 @@
     NSString *path = [NSString stringWithFormat:REGISTER,COMMON];
     NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
     [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":phoneNumber_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -356,6 +347,29 @@
         NSLog(@"%@",error);
     }];
 }
+//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+//    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+//    if (string.length == 0) {
+//        return YES;
+//    }
+//    if (textField.tag == 40) {
+//        if ([@"1234567890" rangeOfString:string].location == NSNotFound) {
+//            return NO;
+//        }
+//    }
+//    if(textField.tag == 41){
+//        if (toBeString.length >16 && range.length!=1) {
+//            textField.text = [toBeString substringToIndex:16];
+//            [self allempty:@"密码长度不能超过16位"];
+//            return NO;
+//        }
+//        else if ([kAlphaNum rangeOfString:string].location == NSNotFound) {
+//            return NO;
+//        }
+//    }
+//    return YES;
+//}
+
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
@@ -370,19 +384,4 @@
     
     [super viewWillDisappear:animated];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
 @end
