@@ -285,7 +285,6 @@
 		61AD6AE31BC8B5E700DA07D5 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 61AD6ABF1BC8B5E600DA07D5 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		61AD6AE41BC8B5E700DA07D5 /* libSocialTumblr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61AD6AC21BC8B5E600DA07D5 /* libSocialTumblr.a */; };
 		61AD6AE51BC8B5E700DA07D5 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61AD6AC51BC8B5E600DA07D5 /* libSocialWechat.a */; };
-		61AD6AE61BC8B5E700DA07D5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61AD6AC61BC8B5E600DA07D5 /* libWeChatSDK.a */; };
 		61AD6AE71BC8B5E700DA07D5 /* libSocialWhatsapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61AD6ACB1BC8B5E600DA07D5 /* libSocialWhatsapp.a */; };
 		61AD6AE81BC8B5E700DA07D5 /* libSocialYiXin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61AD6ACE1BC8B5E600DA07D5 /* libSocialYiXin.a */; };
 		61AD6AE91BC8B5E700DA07D5 /* libYixinSDK_V2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61AD6ACF1BC8B5E600DA07D5 /* libYixinSDK_V2.2.a */; };
@@ -814,10 +813,7 @@
 		61AD6AC21BC8B5E600DA07D5 /* libSocialTumblr.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialTumblr.a; sourceTree = "<group>"; };
 		61AD6AC31BC8B5E600DA07D5 /* UMSocialTumblrHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialTumblrHandler.h; sourceTree = "<group>"; };
 		61AD6AC51BC8B5E600DA07D5 /* libSocialWechat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialWechat.a; sourceTree = "<group>"; };
-		61AD6AC61BC8B5E600DA07D5 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		61AD6AC71BC8B5E600DA07D5 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
-		61AD6AC81BC8B5E600DA07D5 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		61AD6AC91BC8B5E600DA07D5 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		61AD6ACB1BC8B5E600DA07D5 /* libSocialWhatsapp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialWhatsapp.a; sourceTree = "<group>"; };
 		61AD6ACC1BC8B5E600DA07D5 /* UMSocialWhatsappHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWhatsappHandler.h; sourceTree = "<group>"; };
 		61AD6ACE1BC8B5E600DA07D5 /* libSocialYiXin.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialYiXin.a; sourceTree = "<group>"; };
@@ -1011,7 +1007,6 @@
 				61F312F41BD63CEE00B8A92F /* libc++.dylib in Frameworks */,
 				96F47B251BC7B79A0063A975 /* CoreLocation.framework in Frameworks */,
 				612AA4001B9ECF21009A34EF /* CoreGraphics.framework in Frameworks */,
-				61AD6AE61BC8B5E700DA07D5 /* libWeChatSDK.a in Frameworks */,
 				9691092D1BC63D8E00A54798 /* QuartzCore.framework in Frameworks */,
 				9691092B1BC63D8700A54798 /* MapKit.framework in Frameworks */,
 				969109291BC63D7000A54798 /* ImageIO.framework in Frameworks */,
@@ -1918,10 +1913,7 @@
 			isa = PBXGroup;
 			children = (
 				61AD6AC51BC8B5E600DA07D5 /* libSocialWechat.a */,
-				61AD6AC61BC8B5E600DA07D5 /* libWeChatSDK.a */,
 				61AD6AC71BC8B5E600DA07D5 /* UMSocialWechatHandler.h */,
-				61AD6AC81BC8B5E600DA07D5 /* WXApi.h */,
-				61AD6AC91BC8B5E600DA07D5 /* WXApiObject.h */,
 			);
 			path = Wechat;
 			sourceTree = "<group>";

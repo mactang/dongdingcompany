@@ -10,6 +10,7 @@
 #import "UIKit+AFNetworking.h"
 #import "ShopCarModel.h"
 #import "ShoppingCarController.h"
+
 @interface ShopCarCell ()<ShoppingCarControllerDeledate>
 
 @end
@@ -169,7 +170,12 @@
     addTotal = [NSString stringWithFormat:@"%f",price];
     
     if (addCount>1) {
+        
         addCount--;
+        NSString *reviseCountString = [NSString stringWithFormat:@"%d",addCount];
+        if (_delegate &&[_delegate respondsToSelector:@selector(changeCountRevise:cartIdData:)]) {
+            [self.delegate changeCountRevise:reviseCountString cartIdData:self.numbercell];
+        }
         NSString *string = [NSString stringWithFormat:@"%d",addCount];
         [self.number setText:string];
         self.countBL.text = string;
@@ -205,6 +211,12 @@
     [self.number setText:string];
     
     self.countBL.text = string;
+    
+    NSString *addCountString = [NSString stringWithFormat:@"%d",addCount];
+    
+    if (_delegate &&[_delegate respondsToSelector:@selector(changeCountAdd:cartIdData:)]) {
+        [self.delegate changeCountAdd:addCountString cartIdData:self.numbercell];
+    }
     
     addTotal = [NSString stringWithFormat:@"%f",price];
     if (self.chooseBtn.selected == YES) {
@@ -250,7 +262,7 @@
                 if (_delegate &&[_delegate respondsToSelector:@selector(chooseCount:)]) {
                     
                     [self.delegate chooseCount:addTotal];
-
+                    
         }
  
     }else{

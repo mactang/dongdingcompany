@@ -60,6 +60,7 @@
     NSMutableArray *numberIndex;
    
      NSMutableArray *DeleteRow;
+     NSMutableArray *remainRow;
     int number;
     BOOL isAllDelete;
     UIButton *editorBtn;
@@ -132,6 +133,8 @@
     versionCartId = [NSMutableArray array];
     
     versionCount = [NSMutableArray array];
+    
+    remainRow = [NSMutableArray array];
     
     invoiceSelector = 0;
     isAllDelete = NO;
@@ -303,7 +306,7 @@
         if (isAllDelete == NO) {
             
             isDeleteText = YES;
-            NSLog(@"choosePriceAll--%d",choosePriceAll);
+            NSLog(@"choosePriceAll--%f",choosePriceAll);
             NSLog(@"totalEvery--%f",totalEvery);
             otherAllTotal = 0;
             totoalBL.text = @"";
@@ -355,11 +358,40 @@
             [numberIndex removeAllObjects];
         }
         if(isAllDelete == YES){
+            if (allBtn.selected == YES) {
+              [self AllDeleteData];
+                [self.datas removeAllObjects];
+                [self noData];
+            }else{
+                
+                for (int i = 0; i<remainRow.count; i++) {
+                    
+                    UIButton *button = remainRow[i];
+                    
+                NSIndexPath *path = [NSIndexPath indexPathForRow:button.tag inSection:0];
+                
+                ShopCarCell *cell = (ShopCarCell*)[_tableView cellForRowAtIndexPath:path];
+                
+                NSUInteger row = [path row];
+                NSMutableDictionary *dic = [contacts objectAtIndex:row];
+                if ([[dic objectForKey:@"checked"] isEqualToString:@"NO"]) {
+                    [dic setObject:@"YES" forKey:@"checked"];
+                    [cell setChecked:YES];
+                }else {
+                    [dic setObject:@"YES" forKey:@"checked"];
+                    [cell setChecked:YES];
+                }
+                }
+                NSLog(@"noallchoose");
+                [self remainDeleteData];
+                [self.datas removeAllObjects];
+                allBtn.selected = YES;
+                [self downData];
+                
+            }
             
-            [self AllDeleteData];
             
-            [self.datas removeAllObjects];
-            [self noData];
+            
             // [self downData];
            
             
@@ -370,6 +402,71 @@
         
         //[self deleteData];
         
+    }
+}
+-(void)remainDeleteData{
+//    UIButton *button = remainRow[0];
+//    NSLog(@"%ld",(long)button.tag);
+    NSLog(@"%lu",(unsigned long)self.datas.count);
+    
+    NSMutableArray *discardedItems = [NSMutableArray array];
+    for (int i = 0; i<remainRow.count; i++) {
+        
+        UIButton *button = remainRow[i];
+        NSLog(@"%lu",(unsigned long)self.datas.count);
+        NSLog(@"%ld",(long)button.tag);
+        ShopCarModel *model = self.datas[button.tag];
+        
+       
+        [discardedItems addObject:model];
+       
+//        [self.datas removeObjectAtIndex:button.tag];
+    
+    }
+    [remainRow removeAllObjects];
+     NSLog(@"%@",discardedItems);
+    NSLog(@"%@",self.datas);
+    if (self.datas.count == discardedItems.count) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"未选择删除商品" message:@"请选择删除商品" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+    }else{
+    
+    [self.datas removeObjectsInArray:discardedItems];
+    NSLog(@"%@",self.datas);
+    for (int i = 0; i<self.datas.count; i++) {
+        NSLog(@"%d",number);
+        
+        ShopCarModel *model = self.datas[i];
+        
+        NSString *path= [NSString stringWithFormat:DELETESHOPCAR,COMMON,model.cartId];
+        NSLog(@"%@",path);
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        
+        
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        
+        [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            if (dic[@"data"] !=[NSNull null]){
+                NSArray *array = dic[@"status"];
+                NSString *string = [NSString stringWithFormat:@"%@",array];
+                NSLog(@"array--%@",string);
+                if ([string isEqualToString:@"1"]) {
+                    
+                    
+                }
+                else{
+                }
+                
+                
+            }
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@",error);
+        }];
+    }
     }
 }
 -(void)deleteData{
@@ -411,7 +508,8 @@
 
 -(void)AllDeleteData{
     
-    NSLog(@"%@",DeleteRow);
+    
+    
     for (int i = 0; i<self.datas.count; i++) {
         NSLog(@"%d",number);
         
@@ -746,9 +844,16 @@
     [numberIndex addObject:string];
     
     if (btn.selected == YES) {
+        
         ShopCarModel *model = self.datas[btn.tag];
         _cartId = model.cartId;
         [DeleteRow addObject:_cartId];
+        
+        [remainRow removeObject:btn];
+    }else{
+        
+        
+        [remainRow addObject:btn];
     }
     
     
@@ -838,7 +943,7 @@
     if (selectedAll == YES &&(allBtn.selected == NO&&totalEvery!=0)) {
     
         
-        totoalBL.text = [NSString stringWithFormat:@"%f",m+totalEvery];
+        totoalBL.text = [NSString stringWithFormat:@"%.2f",m+totalEvery];
         
         totalEvery = totalEvery+m;
         
@@ -1029,24 +1134,7 @@
     }];
     
 }
-//-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    _tableView.frame = CGRectMake(_tableView.frame.origin.x, _tableView.frame.origin.y, _tableView.frame.size.width, _tableView.frame.size.height);
-//    
-//}
-//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    
-//    ShopCarModel *model = self.datas[indexPath.row];
-//    SingleModel *sing = [SingleModel sharedSingleModel];
-//    sing.goodsId = model.goodsId;
-//    NSLog(@"%@",model.goodsId);
-//    sing.paraId = @"123";
-//    sing.cPartnerId = @"443";
-//    
-//    CMDetailsViewController *cmd = [[CMDetailsViewController alloc]init];
-//    [self.navigationController pushViewController:cmd animated:YES];
-//    
-//    
-//}
+
 -(void)goodDetailButton:(NSInteger)goodDetail{
 
     ShopCarModel *model = self.datas[goodDetail];
@@ -1058,6 +1146,53 @@
     
     CMDetailsViewController *cmd = [[CMDetailsViewController alloc]init];
     [self.navigationController pushViewController:cmd animated:YES];
+}
+
+-(void)changeCountAdd:(NSString *)addCount cartIdData:(NSInteger)cartId{
+  
+    ShopCarModel *model = self.datas[cartId];
+    
+    NSString *path= [NSString stringWithFormat:CHANGECOUNT,COMMON,model.cartId,addCount];
+    
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"%@",dic);
+                    
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+
+    
+}
+-(void)changeCountRevise:(NSString *)reviseCount cartIdData:(NSInteger)cartId{
+
+    ShopCarModel *model = self.datas[cartId];
+    
+    NSString *path= [NSString stringWithFormat:CHANGECOUNT,COMMON,model.cartId,reviseCount];
+    
+    NSLog(@"%@",path);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"%@",dic);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
 }
 
 - (void)isPublicBtnPress:(UIButton*)btn{

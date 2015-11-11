@@ -75,6 +75,7 @@
 #define SHOPCARTID @"%@order!referBasket.action?userkey=%@&cartIds=%@"
 #define EDITORVERSION @"%@order!changeVersion.action?cartId=%@&goodsId=%@&count=%@"
 
+#define CHANGECOUNT @"%@order!changeCount.action?cartId=%@&quantity=%@"
 
 #define DELETESHOPCAR  @"%@order!removeBasket.action?cartId=%@"
 
