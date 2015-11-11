@@ -81,7 +81,6 @@
     if (self = [super init]) {
         self.layer.cornerRadius = 5.0;
         self.backgroundColor = [UIColor whiteColor];
-        
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -5, 300, 240) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -91,14 +90,14 @@
         CGRect rightbtnFrame;
 
         if (!leftTitle) {
-            rightbtnFrame = CGRectMake((Alertwidth - GYZSinglebuttonWidth) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-70, GYZSinglebuttonWidth, GYZbuttonHeigth);
+            rightbtnFrame = CGRectMake((Alertwidth - GYZSinglebuttonWidth) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-30, GYZSinglebuttonWidth, GYZbuttonHeigth);
             self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightbtn.frame = rightbtnFrame;
             
         }else {
-            leftbtnFrame = CGRectMake((Alertwidth - 2 * GYZdoublebuttonWidth - GYZbuttonbttomgap) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-70, GYZdoublebuttonWidth, GYZbuttonHeigth);
+            leftbtnFrame = CGRectMake((Alertwidth - 2 * GYZdoublebuttonWidth - GYZbuttonbttomgap) * 0.5, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-30, GYZdoublebuttonWidth, GYZbuttonHeigth);
             
-            rightbtnFrame = CGRectMake(CGRectGetMaxX(leftbtnFrame) + GYZbuttonbttomgap, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-70, GYZdoublebuttonWidth, GYZbuttonHeigth);
+            rightbtnFrame = CGRectMake(CGRectGetMaxX(leftbtnFrame) + GYZbuttonbttomgap, Alertheigth - GYZbuttonbttomgap - GYZbuttonHeigth-30, GYZdoublebuttonWidth, GYZbuttonHeigth);
             self.leftbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.rightbtn = [UIButton buttonWithType:UIButtonTypeCustom];
             self.leftbtn.frame = leftbtnFrame;
@@ -184,6 +183,7 @@
         [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
         [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
         [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+        payBtn.tag = indexPath.row;
         cell.accessoryView = payBtn;
     }
 //    if (indexPath.row == 2) {
@@ -201,7 +201,7 @@
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     
-    NSArray *array = @[@"货到付款",@"公司转账"];
+    NSArray *array = @[@"货到付款",@"在线支付"];
     
     NSString *string = [NSString stringWithFormat:@"%@",array[btn.tag-1]];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"payway" object:string];
@@ -288,7 +288,7 @@
     }
     //    加载背景背景图,防止重复点击
     [topVC.view addSubview:self.backimageView];
-    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5+30, Alertwidth, Alertheigth-60);
+    CGRect afterFrame = CGRectMake((CGRectGetWidth(topVC.view.bounds) - Alertwidth) * 0.5, (CGRectGetHeight(topVC.view.bounds) - Alertheigth) * 0.5+30, Alertwidth, Alertheigth-20);
     [UIView animateWithDuration:0.3f delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         //视图位置
         self.frame = afterFrame;
@@ -297,7 +297,7 @@
     }];
     [super willMoveToSuperview:newSuperview];
 }
-
+//
 @end
 
 

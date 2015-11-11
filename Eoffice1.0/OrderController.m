@@ -89,10 +89,7 @@
 }
 -(void)initerfacedata{
     self.view.backgroundColor = [UIColor whiteColor];
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
-    //payWay = @"";
-    invoice = @"fdsdsf";
-    dispatch = @"dsfdsf";
+//  self.edgesForExtendedLayout = UIRectEdgeNone;
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSString *value = [ud objectForKey:@"payWay"];
     NSString *value1 = [ud objectForKey:@"invoice"];
@@ -476,6 +473,7 @@
         if (indexPath.row==1) {
     
         GYZAlterview *alter=[[GYZAlterview alloc]initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+            alter.frame = self.view.bounds;
         alter.rightBlock=^()
         {
             NSLog(@"右边按钮被点击");
@@ -516,31 +514,39 @@
 //    payway是支付方式，0，1
 //    invoice是是否开发票，Y,N
 //    id是地址ID
+    UIAlertView *alterview;
     NSString *string;
-    if (btn.tag == 1000) {
+    if (btn.tag==1000) {
         if (self.datas.count==0) {
             string = @"请添加收货地址";
         }
-        if ([payWay isEqualToString:@""]) {
-            string = @"请选择支付方式";
-        }
-        if ([dispatch isEqualToString:@""]) {
+        else if ([dispatch isEqualToString:@""]) {
             
             string = @"请选择配送方式";
         }
-        if ([invoice isEqualToString:@""]) {
+       else if ([payWay isEqualToString:@""]) {
+            string = @"请选择支付方式";
+        }
+              else if ([invoice isEqualToString:@""]) {
             string =@"请选择是否开发票";
         }
-        [self sureOrder];
-        PayViewController *pay = [[PayViewController alloc]init];
-        [self.navigationController pushViewController:pay animated:YES];
-        pay.totalPrice = self.totalprice;
-        NSLog(@"%@",pay.totalPrice);
-        
-//      OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
-//      [self.navigationController pushViewController:orderSucc animated:YES];
-        
+       else{
+           if ([payWay isEqualToString:@"在线支付"]) {
+               [self sureOrder];
+               PayViewController *pay = [[PayViewController alloc]init];
+               [self.navigationController pushViewController:pay animated:YES];
+               pay.totalPrice = self.totalprice;
+           }
+           else{
+               OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
+               [self.navigationController pushViewController:orderSucc animated:YES];
+           }
+           return;
+       }
+        alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:string delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alterview show];
     }
+
 }
 - (void)sureOrder{
     
