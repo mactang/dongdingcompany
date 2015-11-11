@@ -74,9 +74,6 @@
     };
     return alert;
 }
-
-
-
 - (id)initWithTitle:(NSString *)title
     leftButtonTitle:(NSString *)leftTitle
    rightButtonTitle:(NSString *)rigthTitle
@@ -85,7 +82,7 @@
         self.layer.cornerRadius = 5.0;
         self.backgroundColor = [UIColor whiteColor];
         
-        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -5, 300, 130) style:UITableViewStyleGrouped];
+        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -5, 300, 240) style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.scrollEnabled = NO;
@@ -135,7 +132,7 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
-    return 2;
+    return 3;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -180,15 +177,15 @@
         payBtn.tag = indexPath.row;
         cell.accessoryView = payBtn;
     }
-//    if (indexPath.row == 2) {
-//        cell.textLabel.text = @"在线支付";
-//        payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        payBtn.frame = CGRectMake(0, 0, 20, 20);
-//        [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
-//        [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
-//        [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
-//        cell.accessoryView = payBtn;
-//    }
+    if (indexPath.row == 2) {
+        cell.textLabel.text = @"在线支付";
+        payBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        payBtn.frame = CGRectMake(0, 0, 20, 20);
+        [payBtn setImage:[UIImage imageNamed:@"checkNO"] forState:UIControlStateNormal];
+        [payBtn setImage:[UIImage imageNamed:@"checkYES"] forState:UIControlStateSelected];
+        [payBtn addTarget:self action:@selector(isPublicBtnPress:) forControlEvents:UIControlEventTouchUpInside];
+        cell.accessoryView = payBtn;
+    }
 //    if (indexPath.row == 2) {
 //        cell.textLabel.text = @"公司转账";
 //        payBtn = [UIButton buttonWithType:UIButtonTypeCustom];

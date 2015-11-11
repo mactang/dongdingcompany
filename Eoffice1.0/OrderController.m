@@ -516,22 +516,32 @@
 //    payway是支付方式，0，1
 //    invoice是是否开发票，Y,N
 //    id是地址ID
-    
+    NSString *string;
     if (btn.tag == 1000) {
+        if (self.datas.count==0) {
+            string = @"请添加收货地址";
+        }
+        if ([payWay isEqualToString:@""]) {
+            string = @"请选择支付方式";
+        }
+        if ([dispatch isEqualToString:@""]) {
+            
+            string = @"请选择配送方式";
+        }
+        if ([invoice isEqualToString:@""]) {
+            string =@"请选择是否开发票";
+        }
         [self sureOrder];
         PayViewController *pay = [[PayViewController alloc]init];
         [self.navigationController pushViewController:pay animated:YES];
         pay.totalPrice = self.totalprice;
         NSLog(@"%@",pay.totalPrice);
         
-//        OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
-//        [self.navigationController pushViewController:orderSucc animated:YES];
+//      OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
+//      [self.navigationController pushViewController:orderSucc animated:YES];
         
     }
 }
-
-
-
 - (void)sureOrder{
     
     SingleModel *sing = [SingleModel sharedSingleModel];
@@ -564,59 +574,6 @@
     }];
     
 }
-//-(void)numBtnPress:(UIButton *)btn{
-//    
-//    
-//    if (btn.tag ==1) {
-//        if (_currentNumber>1) {
-//            _currentNumber--;
-//            NSLog(@"%@",_price);
-//            NSLog(@"priceLb-%d",[(priceLb.text)intValue]);
-//            
-//            NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
-//            [_numberLb1 setText:string];
-//            
-//            int price = ([(totalPice.text)intValue])-([(_price)intValue]);
-//            
-//            totalPice.text = [NSString stringWithFormat:@"%d",price];
-//            
-//        }
-//    }
-//    if (btn.tag == 2) {
-//        _currentNumber++;
-//        NSString *string = [[NSString alloc]initWithString:[NSString stringWithFormat:@"    %d",_currentNumber]];
-//        [_numberLb1 setText:string];
-//        
-//        int price = [(priceLb.text)intValue]*_currentNumber;
-//        
-//        totalPice.text = [NSString stringWithFormat:@"%d",price];
-//    }
-//    
-//}
-//-(void)keyboardReturn:(UIButton *)button{
-//   
-//    [_textField resignFirstResponder];
-//    [self.view resignFirstResponder];
-//}
-//
-////键盘上移
-//-(void)textFieldDidEndEditing:(UITextField *)textField{
-//    //输入框编辑完成以后，当键盘即将消失时，将视图恢复到原始状态
-//    self.view.frame = CGRectMake(0, 60, self.view.frame.size.width , self.view.frame.size.height);
-//    
-//}
-//-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-//          NSTimeInterval animationDuration=0.30f;
-//          [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-//          [UIView setAnimationDuration:animationDuration];
-//          float width = self.view.frame.size.width;
-//          float height = self.view.frame.size.height;
-//          //上移n个单位，按实际情况设置
-//          CGRect rect=CGRectMake(0.0f,-130,width,height);
-//          self.view.frame=rect;
-//      [UIView commitAnimations];
-//          return YES;
-//      }
 - (void)viewWillAppear:(BOOL)animated{
     
     
@@ -651,31 +608,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
-    
     [super viewWillDisappear:animated];
     
 }
-
-//#pragma mark UITextFieldDelegate方法
-//-(BOOL)textFieldShouldReturn:(UITextField *)textField{
-//    [textField resignFirstResponder];
-//    return YES;
-//}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
