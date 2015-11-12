@@ -56,6 +56,7 @@
 
 //商品
 #define COMMODITYMIDDLE @"%@product!getMidCategory.action?kind=%@"
+#define MYGOTOSEE @"%@product!getMidCategory.action?"
 //商品详情
 #define MAINTAINDETAIL @"%@product!getGoodsDetail.action?paraId=%@&goodsId=%@&cPartnerId=%@"
 #define ADDMAINTAIN @"%@order!addBasket.action?userkey=%@&goodsId=%@&count=%@"

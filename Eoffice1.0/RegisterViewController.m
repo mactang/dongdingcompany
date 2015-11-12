@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "SingleModel.h"
 #define kAlphaNum  @"0123456789"
+#import "Mobliejudge.h"
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)UITextField *userNameField;
 @property(nonatomic,strong)UITextField *passWordField;
@@ -312,63 +313,70 @@
     UITextField *identifying_field = (UITextField *)[self.view viewWithTag:1004];
     UITextField  *phoneNumber_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
     UITextField *replace_field = (UITextField *)[self.view viewWithTag:1003];
-    
-    if (![pwd_field.text isEqualToString:replace_field.text]) {
-        
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alert show];
+    UIAlertView *alert;
+    NSString *messageString;
+    if ([name_field.text isEqualToString:@""]) {
+        messageString = @"姓名不能为空";
     }
-    
-    NSString *path = [NSString stringWithFormat:REGISTER,COMMON];
-    NSLog(@"%@",path);
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":phoneNumber_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
-        UIAlertView *alterview;
-        
-        if ([dic[@"status"]integerValue]==1) {
+    else if ([pwd_field.text isEqualToString:@""]){
+        messageString = @"密码不能为空";
+    }
+    else if ([replace_field.text isEqualToString:@""]){
+        messageString = @"请确认密码";
+    }
+    else if (![pwd_field.text isEqualToString:replace_field.text]){
+        messageString = @"两次密码不一致,请重新输入";
+    }
+    else if ([phoneNumber_field.text isEqualToString:@""]){
+        messageString = @"电话号码不能为空";
+    }
+    else if ([Mobliejudge valiMobile:phoneNumber_field.text]){
+        messageString = [Mobliejudge valiMobile:phoneNumber_field.text];
+    }
+    else{
+        NSString *path = [NSString stringWithFormat:REGISTER,COMMON];
+        NSLog(@"%@",path);
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":phoneNumber_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
-            phoneSure = dic[@"info"];
+        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"%@",dic);
+            UIAlertView *alterview;
+            if ([dic[@"status"]integerValue]==1) {
+                phoneSure = dic[@"info"];
+            }
+            else{
+                phoneSure = dic[@"info"];
+            }
+            alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:phoneSure delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alterview show];
             
-        }
-        else{
-            
-            phoneSure = dic[@"info"];
-            
-        }
-        alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:phoneSure delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alterview show];
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@",error);
+        }];
+        return;
+    }
+    alert = [[UIAlertView alloc]initWithTitle:@"提示" message:messageString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
 }
-//-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-//    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-//    if (string.length == 0) {
-//        return YES;
-//    }
-//    if (textField.tag == 40) {
-//        if ([@"1234567890" rangeOfString:string].location == NSNotFound) {
-//            return NO;
-//        }
-//    }
-//    if(textField.tag == 41){
-//        if (toBeString.length >16 && range.length!=1) {
-//            textField.text = [toBeString substringToIndex:16];
-//            [self allempty:@"密码长度不能超过16位"];
-//            return NO;
-//        }
-//        else if ([kAlphaNum rangeOfString:string].location == NSNotFound) {
-//            return NO;
-//        }
-//    }
-//    return YES;
-//}
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (string.length == 0) {
+        return YES;
+    }
+    if(textField.tag == 1004){
+        if (toBeString.length >16 && range.length!=1) {
+            textField.text = [toBeString substringToIndex:16];
+            return NO;
+        }
+        else if ([kAlphaNum rangeOfString:string].location == NSNotFound) {
+            return NO;
+        }
+    }
+    return YES;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     

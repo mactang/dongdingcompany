@@ -112,7 +112,7 @@
         signstring = @"请输入手机号";
     }
     else if ([Mobliejudge valiMobile:self.dataArray[3]]){
-        signstring = [Mobliejudge valiMobile:self.dataArray[4]];
+        signstring = [Mobliejudge valiMobile:self.dataArray[3]];
     }
     else{
        [self downData];

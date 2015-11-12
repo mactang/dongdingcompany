@@ -250,6 +250,7 @@
 -(void)gotolookPressed{
     CommodityViewController *cmd = [[CommodityViewController alloc]init];
     self.navigationController.navigationBarHidden = NO;
+    cmd.idstring = @"5";
     [self.navigationController pushViewController:cmd animated:YES];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

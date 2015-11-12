@@ -43,7 +43,7 @@
     manager.shouldToolbarUsesTextFieldTintColor = YES;
     manager.enableAutoToolbar = YES;
     
-    [self versionData];
+//    [self versionData];
    
     return YES;
 }
