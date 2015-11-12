@@ -62,7 +62,9 @@
 	//debug信息
     NSMutableString *debugInfo;
     NSString *appid,*mchid,*spkey;
+    
 }
+@property(nonatomic,strong)NSString *payPrice;;
 //初始化函数
 -(BOOL) init:(NSString *)app_id mch_id:(NSString *)mch_id;
 -(NSString *) getDebugifo;

@@ -121,6 +121,7 @@
 		61731B481B959FA700B04D85 /* renshi.png in Resources */ = {isa = PBXBuildFile; fileRef = 61731B421B959FA700B04D85 /* renshi.png */; };
 		61731B491B959FA700B04D85 /* zulin.png in Resources */ = {isa = PBXBuildFile; fileRef = 61731B431B959FA700B04D85 /* zulin.png */; };
 		6173B7701B621BAE00E4F23A /* photoAlterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6173B76F1B621BAE00E4F23A /* photoAlterView.m */; };
+		6176729A1BF4598800B455C1 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 617672971BF4598800B455C1 /* libWeChatSDK.a */; };
 		61793A601B54A78B00CFD83A /* BigPhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61793A5F1B54A78B00CFD83A /* BigPhotoCell.m */; };
 		61793A691B54A7B000CFD83A /* BuyInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61793A621B54A7B000CFD83A /* BuyInfoCell.m */; };
 		61793A6A1B54A7B000CFD83A /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 61793A641B54A7B000CFD83A /* CommentCell.m */; };
@@ -568,6 +569,9 @@
 		61731B431B959FA700B04D85 /* zulin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zulin.png; sourceTree = "<group>"; };
 		6173B76E1B621BAE00E4F23A /* photoAlterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = photoAlterView.h; sourceTree = "<group>"; };
 		6173B76F1B621BAE00E4F23A /* photoAlterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = photoAlterView.m; sourceTree = "<group>"; };
+		617672971BF4598800B455C1 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		617672981BF4598800B455C1 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		617672991BF4598800B455C1 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		61793A5E1B54A78B00CFD83A /* BigPhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigPhotoCell.h; sourceTree = "<group>"; };
 		61793A5F1B54A78B00CFD83A /* BigPhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BigPhotoCell.m; sourceTree = "<group>"; };
 		61793A611B54A7B000CFD83A /* BuyInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BuyInfoCell.h; sourceTree = "<group>"; };
@@ -1016,6 +1020,7 @@
 				61AD6AD41BC8B5E600DA07D5 /* libUMSocial_Sdk_4.2.5.a in Frameworks */,
 				969109231BC63D4C00A54798 /* CFNetwork.framework in Frameworks */,
 				612AA4041B9ECF5A009A34EF /* libz.dylib in Frameworks */,
+				6176729A1BF4598800B455C1 /* libWeChatSDK.a in Frameworks */,
 				61AD6AE81BC8B5E700DA07D5 /* libSocialYiXin.a in Frameworks */,
 				61AD6ADF1BC8B5E700DA07D5 /* libSocialLaiWang.a in Frameworks */,
 				612AA3FA1B9ECED4009A34EF /* SystemConfiguration.framework in Frameworks */,
@@ -1179,6 +1184,7 @@
 		615B296B1B4FAF50004E7546 /* MyFramework */ = {
 			isa = PBXGroup;
 			children = (
+				617672961BF4597700B455C1 /* libWeChatSDK */,
 				61815FF31BE70B6100E8C594 /* SDCycleScrollView */,
 				61F312EF1BD6384400B8A92F /* MD5 */,
 				61AD6A961BC8B5E600DA07D5 /* umeng_ios_social_sdk_4.2-3.5_arm64_custom */,
@@ -1513,6 +1519,16 @@
 				61731B271B954D1F00B04D85 /* 办公家具.png */,
 			);
 			name = goodsBig;
+			sourceTree = "<group>";
+		};
+		617672961BF4597700B455C1 /* libWeChatSDK */ = {
+			isa = PBXGroup;
+			children = (
+				617672971BF4598800B455C1 /* libWeChatSDK.a */,
+				617672981BF4598800B455C1 /* WXApi.h */,
+				617672991BF4598800B455C1 /* WXApiObject.h */,
+			);
+			name = libWeChatSDK;
 			sourceTree = "<group>";
 		};
 		61793A6D1B54A7D800CFD83A /* UIView+Shortcut */ = {
@@ -2922,6 +2938,7 @@
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Whatsapp",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/YiXin",
+					"$(PROJECT_DIR)/Eoffice1.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -3001,6 +3018,7 @@
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/Whatsapp",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.5_arm64_custom/UMSocial_Sdk_Extra_Frameworks/YiXin",
+					"$(PROJECT_DIR)/Eoffice1.0",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
