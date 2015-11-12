@@ -114,15 +114,15 @@
     UIAlertView *alertview;
     NSString *string;
     
-    
-    if (birthdayLb.text==nil||_nickName.text==nil||sex==nil) {
-        if (birthdayLb.text==nil) {
+    NSLog(@"_nickName.text--%@",_nickName.text);
+    if ([birthdayLb.text  isEqual: @""]||[_nickName.text isEqual:@""]||[_nickName.text  isEqual: @""]||[sex isEqual:@""]) {
+        if ([birthdayLb.text  isEqual: @""]) {
             string = @"请填写生日";
         }
-        else if (_nickName.text==nil){
+        else if ([_nickName.text  isEqual: @""]){
             string = @"请输入昵称";
         }
-        else if (sex==nil){
+        else if ([sex isEqual:@""]){
             string = @"请选择性别";
         }
         alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -140,12 +140,14 @@
     
     
     NSLog(@"path--%@",path);
+        
+    NSString *escapedPath = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+    [manager GET:escapedPath parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
         NSLog(@"status--%@",dic[@"status"]);
@@ -252,11 +254,17 @@
         cell.textLabel.text = @"昵称";
         _nickName = [[UITextField alloc]initWithFrame:CGRectMake(210, 10, 100, 30)];
         _nickName.backgroundColor = [UIColor whiteColor];
-        _nickName.placeholder = [NSString stringWithFormat:@"%@",model.name];
         _nickName.clearButtonMode = UITextFieldViewModeWhileEditing;
         _nickName.delegate = self;
         _nickName.textAlignment = NSTextAlignmentCenter;
-        _nickName.text = [NSString stringWithFormat:@"%@",model.name];
+       //  _nickName.placeholder = [NSString stringWithFormat:@"%@",model.shorname];
+        NSString *string = [NSString stringWithFormat:@"%@",model.shorname];
+        if ([string isEqualToString:@"<null>"]) {
+            _nickName.text = @"";
+        }
+        else{
+        _nickName.text = [NSString stringWithFormat:@"%@",model.shorname];
+        }
         [cell addSubview:_nickName];
     }
     if (indexPath.row == 3) {
@@ -264,9 +272,23 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedSex:) name:@"mySex" object:nil];
         sexLb = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 100, 20)];
         
-        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        NSString *value = [ud objectForKey:@"mySex"];
-        sexLb.text = value;
+//        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+//        NSString *value = [ud objectForKey:@"mySex"];
+        NSString *string = [NSString stringWithFormat:@"%@",model.gender];
+        if ([string isEqualToString:@"<null>"]) {
+            sexLb.text = @"";
+        }else{
+            if ([string isEqual:@"M"]) {
+                sexLb.text = @"男";
+            }
+            if ([string isEqual:@"F"]) {
+                sexLb.text = @"女";
+            }else{
+                sexLb.text = @"保密";
+
+            }
+        
+        }
         sexLb.textAlignment = NSTextAlignmentCenter;
         sexLb.textColor = [UIColor blackColor];
         [cell addSubview:sexLb];
@@ -278,7 +300,7 @@
             sex = @"F";
         }
         if ([sexLb.text isEqual:@"保密"]) {
-            sex = @"2b";
+            sex = @"b";
             
         }
         
@@ -290,10 +312,15 @@
         
         birthdayLb = [[UILabel alloc]initWithFrame:CGRectMake(200, 15, 100, 20)];
         
-        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-        
-        NSString *value = [ud objectForKey:@"myKey"];
-        birthdayLb.text = value;
+//        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+//        
+//        NSString *value = [ud objectForKey:@"myKey"];
+        NSString *string = [NSString stringWithFormat:@"%@",model.gender];
+        if ([string isEqualToString:@"<null>"]) {
+            sexLb.text = @"";
+        }else{
+        birthdayLb.text = [NSString stringWithFormat:@"%@",model.birthday];
+        }
         
         birthdayLb.textColor = [UIColor blackColor];
         [cell addSubview:birthdayLb];
@@ -515,11 +542,11 @@
 }
 - (void)leftItemClicked{
     
-    NSString *string = [NSString stringWithFormat:@"%@",birthdayLb.text];
-    NSString *sexSt = [NSString stringWithFormat:@"%@",sexLb.text];
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:string forKey:@"myKey"];
-    [ud setObject:sexSt forKey:@"mySex"];
+//    NSString *string = [NSString stringWithFormat:@"%@",birthdayLb.text];
+//    NSString *sexSt = [NSString stringWithFormat:@"%@",sexLb.text];
+//    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+//    [ud setObject:string forKey:@"myKey"];
+//    [ud setObject:sexSt forKey:@"mySex"];
     if ([changeSucess isEqual:@"信息修改成功"]) {
        [_delegate rePersonInfor];
     }
