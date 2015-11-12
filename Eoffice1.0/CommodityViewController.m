@@ -124,7 +124,9 @@
     hud.labelText = @"Loading";
 
     NSString *path= [NSString stringWithFormat:COMMODITYMIDDLE,COMMON,_idstring];
-    
+    if ([_idstring isEqualToString:@"5"]) {
+        path = [NSString stringWithFormat:MYGOTOSEE,COMMON];
+    }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
