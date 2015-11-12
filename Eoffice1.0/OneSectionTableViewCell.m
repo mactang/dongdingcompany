@@ -78,9 +78,7 @@
                 self.pageControl.currentPage = 0;
                 //将分页控制控件加在本视图上面
                 [self.contentView addSubview:self.pageControl];
-                
             }
-            
         }
         
     else{
@@ -92,7 +90,7 @@
             [self.contentView addSubview:description];
             
             
-            priceLb = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(description), CGRectGetMaxY(description.frame), 60, 20)];
+            priceLb = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(description), CGRectGetMaxY(description.frame), SCREEN_WIDTH-70, 20)];
             priceLb.font = [UIFont systemFontOfSize:15];
             priceLb.textColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
             [self.contentView addSubview:priceLb];

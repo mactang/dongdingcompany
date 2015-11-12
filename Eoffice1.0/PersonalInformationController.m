@@ -111,6 +111,7 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path;
+    NSLog(@"%@",fileURL);
     if (fileURL == nil) {
     
         path= [NSString stringWithFormat:PERSONREVISENO,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey];
@@ -122,24 +123,17 @@
     NSLog(@"path--%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"%@",dic);
         NSLog(@"status--%@",dic[@"status"]);
         UIAlertView *alterview;
-       
         if ([dic[@"status"]integerValue]==1) {
-            
             changeSucess = @"信息修改成功";
-            
         }
         else{
-            
             changeSucess = @"信息修改失败";
-            
         }
         alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:changeSucess delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alterview show];
@@ -212,7 +206,6 @@
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     PersonInformationModel *model = self.datas[0];
-    NSLog(@"%@",model.name);
     if (indexPath.row == 0) {
         cell.textLabel.text = @"头像";
         [_imageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",model.imgUrl]]];
@@ -257,7 +250,7 @@
             sex = @"F";
         }
         if ([sexLb.text isEqual:@"保密"]) {
-            sex = @"2b";
+            sex = @"b";
             
         }
         
@@ -304,7 +297,7 @@
         sex = @"F";
     }
     if ([sexLb.text isEqual:@"保密"]) {
-        sex = @"2b";
+        sex = @"b";
         
     }
 }
@@ -462,8 +455,7 @@
         NSString *string = [NSString stringWithFormat:@"%@",subDic[@"data"][@"fileUrl"]];
         
                 fileURL = string;
-       
-        
+        NSLog(@"%@",fileURL);
     }];
     [request setFailedBlock:^{
         NSLog(@"asi error: %@",request.error.debugDescription);
