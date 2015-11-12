@@ -23,6 +23,7 @@
 
 #import "WXApiObject.h"
 #import "WXApi.h"
+#import "payRequsestHandler.h"
 
 @interface PayViewController ()<UITableViewDataSource,UITableViewDelegate,BDWalletSDKMainManagerDelegate>
 @property(nonatomic,strong)UITableView *tableView;
@@ -33,6 +34,8 @@
      UIButton *payBtn;
     UIButton *selectButton;
     NSInteger payWayMark;
+    NSString *payprice;
+   
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -53,7 +56,8 @@
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     
-    
+    //向微信注册
+    [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
     payWayMark = 0;
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -1, 320, 310) style:UITableViewStyleGrouped];
@@ -78,9 +82,10 @@
     // Do any additional setup after loading the view.
 }
 - (void)leftItemClicked{
-    
+
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
+    
     
     
 }
@@ -99,7 +104,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-            return 60;
+   return 60;
    
     
 }
@@ -131,6 +136,9 @@
         price.text = [NSString stringWithFormat:@"%.2f元",[self.totalPrice floatValue] ];
         price.font = [UIFont systemFontOfSize:13];
         [cell addSubview:price];
+        
+        payprice = [NSString stringWithFormat:@"%@",self.totalPrice];
+        
     }if (indexPath.section == 1) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;;
         if (indexPath.row == 0) {
@@ -269,7 +277,7 @@
     [req init:APP_ID mch_id:MCH_ID];
     //设置密钥
     [req setKey:PARTNER_ID];
-    
+    req.payPrice = [NSString stringWithFormat:@"%@",payprice];
     //}}}
     
     //获取到实际调起微信支付的参数后，在app端调起支付
@@ -316,7 +324,7 @@
     //订单标题
     NSString *ORDER_NAME    = @"Ios服务器端签名支付 测试";
     //订单金额，单位（元）
-    NSString *ORDER_PRICE   = @"0.01";
+    NSString *ORDER_PRICE   = [NSString stringWithFormat:@"%@",self.totalPrice];
     
     //根据服务器端编码确定是否转码
     NSStringEncoding enc;
@@ -371,13 +379,14 @@
 }
 #pragma mark  baifubao
 -(void)baifubao{
+//    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     BDWalletSDKMainManager* payMainManager = [BDWalletSDKMainManager getInstance];
     [[BDWalletSDKMainManager getInstance] setBdWalletNavTitleColor:[UIColor blackColor]];
     NSString *orderInfo = [self buildOrderInfoTest];
     payMainManager.delegate = self;
     NSLog(@"%@",orderInfo);
     [payMainManager doPayWithOrderInfo:orderInfo params:nil delegate:self];
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+    
 }
 -(NSString*)buildOrderInfoTest
 {
@@ -486,6 +495,37 @@
     NSLog(@"支付结束 接口 code:%d desc:%@",statusCode,payDesc);
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [WXApi handleOpenURL:url delegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return  [WXApi handleOpenURL:url delegate:self];
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+}
+
+
 - (void)logEventId:(NSString*)eventId eventDesc:(NSString*)eventDesc;
 {
     
@@ -498,22 +538,6 @@
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
+
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

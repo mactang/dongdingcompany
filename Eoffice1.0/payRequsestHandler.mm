@@ -152,8 +152,12 @@
     //订单标题，展示给用户
     NSString *order_name    = @"V3支付测试";
     //订单金额,单位（分）
-    NSString *order_price   = @"1";//1分钱测试
-
+    NSLog(@"_payPrice--%@",_payPrice);
+    int i = [[NSString stringWithFormat:@"%@",_payPrice]intValue];
+    int price = i*100;
+    NSString *payprice = [NSString stringWithFormat:@"%d",price];
+    NSString *order_price   = [NSString stringWithFormat:@"%@",payprice];//1分钱测试
+    
 
     //================================
     //预付单参数订单设置

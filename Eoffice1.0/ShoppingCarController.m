@@ -58,9 +58,9 @@
     UIButton *versionButton;
     NSMutableArray *btnMutableArray;
     NSMutableArray *numberIndex;
-   
-     NSMutableArray *DeleteRow;
-     NSMutableArray *remainRow;
+    
+    NSMutableArray *DeleteRow;
+    NSMutableArray *remainRow;
     int number;
     BOOL isAllDelete;
     UIButton *editorBtn;
@@ -85,7 +85,7 @@
     BOOL selectedAll;
     
     NSMutableArray *isCheck;
-   
+    
     
     NSMutableArray *cellarraydata;
     
@@ -227,19 +227,19 @@
     // Do any additional setup after loading the view.
 }
 -(void)sureShopCar{
- NSLog(@"%@",cartIdArray);
+    NSLog(@"%@",cartIdArray);
     if (cartIdArray.count != 0) {
-       [self cartData];
+        [self cartData];
     }
     else{
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请选择商品" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
-    [alert show];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请选择商品" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+        [alert show];
     }
     
     
 }
 -(void)cartData{
-
+    
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *carString = [[NSString alloc]init] ;
     NSLog(@"%@",cartIdArray);
@@ -250,7 +250,7 @@
         
     }
     NSLog(@"%@",carString);
-   
+    
     
     NSString *path= [NSString stringWithFormat:SHOPCARTID,COMMON,model.userkey,carString];
     
@@ -264,19 +264,19 @@
         if (dic[@"data"] !=[NSNull null]){
             NSDictionary *array = dic[@"data"];
             
-                ShopCartId *model = [ShopCartId modelWithDic:array];
-                NSLog(@"%lu",(unsigned long)model.list.count);
+            ShopCartId *model = [ShopCartId modelWithDic:array];
+            NSLog(@"%lu",(unsigned long)model.list.count);
             OrderController *order  = [[OrderController alloc]init];
             order.shopCartId = model.list[0][@"cartId"];
-    
+            
             for (int i = 1; i<model.list.count; i++) {
                 
                 
                 order.shopCartId = [NSString stringWithFormat:@"%@,%@",order.shopCartId,model.list[i][@"cartId"]];
-
                 
                 
-    
+                
+                
             }
             NSLog(@"%@",order.shopCartId);
             [self.navigationController pushViewController:order animated:YES];
@@ -288,10 +288,10 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-
+    
 }
 -(void)delegatePress{
-
+    
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"删除订单" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消",nil];
     //设置提示框样式（可以输入账号密码）
     alert.alertViewStyle = UIAlertViewStyleDefault;
@@ -350,16 +350,16 @@
                 
                 
                 number = i;
-        }
+            }
             [self deleteData];
             [self.datas removeAllObjects];
-             [self downData];
+            [self downData];
             totoalBL.text = @"";
             [numberIndex removeAllObjects];
         }
         if(isAllDelete == YES){
             if (allBtn.selected == YES) {
-              [self AllDeleteData];
+                [self AllDeleteData];
                 [self.datas removeAllObjects];
                 [self noData];
             }else{
@@ -368,19 +368,19 @@
                     
                     UIButton *button = remainRow[i];
                     
-                NSIndexPath *path = [NSIndexPath indexPathForRow:button.tag inSection:0];
-                
-                ShopCarCell *cell = (ShopCarCell*)[_tableView cellForRowAtIndexPath:path];
-                
-                NSUInteger row = [path row];
-                NSMutableDictionary *dic = [contacts objectAtIndex:row];
-                if ([[dic objectForKey:@"checked"] isEqualToString:@"NO"]) {
-                    [dic setObject:@"YES" forKey:@"checked"];
-                    [cell setChecked:YES];
-                }else {
-                    [dic setObject:@"YES" forKey:@"checked"];
-                    [cell setChecked:YES];
-                }
+                    NSIndexPath *path = [NSIndexPath indexPathForRow:button.tag inSection:0];
+                    
+                    ShopCarCell *cell = (ShopCarCell*)[_tableView cellForRowAtIndexPath:path];
+                    
+                    NSUInteger row = [path row];
+                    NSMutableDictionary *dic = [contacts objectAtIndex:row];
+                    if ([[dic objectForKey:@"checked"] isEqualToString:@"NO"]) {
+                        [dic setObject:@"YES" forKey:@"checked"];
+                        [cell setChecked:YES];
+                    }else {
+                        [dic setObject:@"YES" forKey:@"checked"];
+                        [cell setChecked:YES];
+                    }
                 }
                 NSLog(@"noallchoose");
                 [self remainDeleteData];
@@ -393,20 +393,20 @@
             
             
             // [self downData];
-           
+            
             
         }
         
         
-     //   [_tableView reloadData];
+        //   [_tableView reloadData];
         
         //[self deleteData];
         
     }
 }
 -(void)remainDeleteData{
-//    UIButton *button = remainRow[0];
-//    NSLog(@"%ld",(long)button.tag);
+    //    UIButton *button = remainRow[0];
+    //    NSLog(@"%ld",(long)button.tag);
     NSLog(@"%lu",(unsigned long)self.datas.count);
     
     NSMutableArray *discardedItems = [NSMutableArray array];
@@ -417,28 +417,64 @@
         NSLog(@"%ld",(long)button.tag);
         ShopCarModel *model = self.datas[button.tag];
         
-       
+        
         [discardedItems addObject:model];
-       
-//        [self.datas removeObjectAtIndex:button.tag];
-    
+        
+        //        [self.datas removeObjectAtIndex:button.tag];
+        
     }
     [remainRow removeAllObjects];
-     NSLog(@"%@",discardedItems);
+    NSLog(@"%@",discardedItems);
     NSLog(@"%@",self.datas);
     if (self.datas.count == discardedItems.count) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"未选择删除商品" message:@"请选择删除商品" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alert show];
     }else{
+        
+        [self.datas removeObjectsInArray:discardedItems];
+        NSLog(@"%@",self.datas);
+        for (int i = 0; i<self.datas.count; i++) {
+            NSLog(@"%d",number);
+            
+            ShopCarModel *model = self.datas[i];
+            
+            NSString *path= [NSString stringWithFormat:DELETESHOPCAR,COMMON,model.cartId];
+            NSLog(@"%@",path);
+            
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            
+            
+            manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+            
+            
+            [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+                if (dic[@"data"] !=[NSNull null]){
+                    NSArray *array = dic[@"status"];
+                    NSString *string = [NSString stringWithFormat:@"%@",array];
+                    NSLog(@"array--%@",string);
+                    if ([string isEqualToString:@"1"]) {
+                        
+                        
+                    }
+                    else{
+                    }
+                    
+                    
+                }
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"%@",error);
+            }];
+        }
+    }
+}
+-(void)deleteData{
     
-    [self.datas removeObjectsInArray:discardedItems];
-    NSLog(@"%@",self.datas);
-    for (int i = 0; i<self.datas.count; i++) {
+    NSLog(@"%@",DeleteRow);
+    for (int i = 0; i<DeleteRow.count; i++) {
         NSLog(@"%d",number);
-        
-        ShopCarModel *model = self.datas[i];
-        
-        NSString *path= [NSString stringWithFormat:DELETESHOPCAR,COMMON,model.cartId];
+        NSString *path= [NSString stringWithFormat:DELETESHOPCAR,COMMON,DeleteRow[i]];
         NSLog(@"%@",path);
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -466,42 +502,6 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"%@",error);
         }];
-    }
-    }
-}
--(void)deleteData{
-    
-    NSLog(@"%@",DeleteRow);
-    for (int i = 0; i<DeleteRow.count; i++) {
-    NSLog(@"%d",number);
-    NSString *path= [NSString stringWithFormat:DELETESHOPCAR,COMMON,DeleteRow[i]];
-    NSLog(@"%@",path);
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
-    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (dic[@"data"] !=[NSNull null]){
-        NSArray *array = dic[@"status"];
-        NSString *string = [NSString stringWithFormat:@"%@",array];
-        NSLog(@"array--%@",string);
-        if ([string isEqualToString:@"1"]) {
-            
-            
-        }
-        else{
-        }
-        
-        
-        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
     }
     
 }
@@ -568,16 +568,16 @@
             
             [cartIdArray addObject:model.cartId];
         }
-       
-
+        
+        
     }else{
         isAllDelete = NO;
         selectedAll = NO;
         [cartIdArray removeAllObjects];
-//        totoalBL.text = @"0";
-       // selectedAll = NO;
+        //        totoalBL.text = @"0";
+        // selectedAll = NO;
     }
-
+    
     NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
     for (int i = 0; i < [anArrayOfIndexPath count]; i++) {
         NSIndexPath *indexPath= [anArrayOfIndexPath objectAtIndex:i];
@@ -586,10 +586,10 @@
         NSLog(@"%lu",(unsigned long)row);
         NSMutableDictionary *dic = [contacts objectAtIndex:row];
         if (sender.selected == YES) {
-             [dic setObject:@"YES" forKey:@"checked"];
+            [dic setObject:@"YES" forKey:@"checked"];
             [cell setChecked:YES];
         }else {
-             [dic setObject:@"NO" forKey:@"checked"];
+            [dic setObject:@"NO" forKey:@"checked"];
             [cell setChecked:NO];
         }
     }
@@ -609,7 +609,7 @@
         }else{
             
             totoalBL.text = [NSString stringWithFormat:@"%.2f",totalEvery];
-        
+            
             
         }
         otherAllTotal = 0;
@@ -619,10 +619,10 @@
         }
         totoalBL.text = @"0";
         
-       // totalEvery = 0;
-       // [(UIButton*)sender setTitle:@"全选" forState:UIControlStateNormal];
+        // totalEvery = 0;
+        // [(UIButton*)sender setTitle:@"全选" forState:UIControlStateNormal];
     }
-
+    
     
 }
 
@@ -636,7 +636,7 @@
     
     NSString *path= [NSString stringWithFormat:SHOPCAR,COMMON,model.userkey];
     NSLog(@"%@",path);
-   
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     
@@ -646,18 +646,18 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
-        NSArray *array = dic[@"data"];
-        [self.labelsign removeFromSuperview];
+            NSArray *array = dic[@"data"];
+            [self.labelsign removeFromSuperview];
             [self.strollbutton removeFromSuperview];
-        for(NSDictionary *subDict in array)
-        {
-            ShopCarModel *model = [ShopCarModel modelWithDic:subDict];
-            [self.datas addObject:model];
-            
-            [totoalArray addObject:[NSString stringWithFormat:@"%@",model.price]];
-            [totoalCount addObject:[NSString stringWithFormat:@"%@",model.count]];
-            
-        }
+            for(NSDictionary *subDict in array)
+            {
+                ShopCarModel *model = [ShopCarModel modelWithDic:subDict];
+                [self.datas addObject:model];
+                
+                [totoalArray addObject:[NSString stringWithFormat:@"%@",model.price]];
+                [totoalCount addObject:[NSString stringWithFormat:@"%@",model.count]];
+                
+            }
             NSLog(@"%@",totoalArray);
             total = 0;
             everyCount = 0;
@@ -673,13 +673,13 @@
                 
                 
             }
-           NSLog(@"totalEvery--%f",totalEvery);
+            NSLog(@"totalEvery--%f",totalEvery);
             if (isDeleteText == YES) {
-               totoalBL.text = @"0";
+                totoalBL.text = @"0";
             }
             else{
                 
-            totoalBL.text = [NSString stringWithFormat:@"%.2f",totalEvery];
+                totoalBL.text = [NSString stringWithFormat:@"%.2f",totalEvery];
             }
             if (allBtn.selected == YES) {
                 
@@ -689,7 +689,7 @@
                     [cartIdArray addObject:model.cartId];
                 }
             }else{
-            
+                
                 [cartIdArray removeAllObjects];
             }
             
@@ -697,7 +697,7 @@
         }else {
             
             [self noData];
-        
+            
         }
         [_tableView reloadData];
         
@@ -708,7 +708,7 @@
 }
 
 -(void)noData{
-
+    
     [_tableView removeFromSuperview];
     [totView removeFromSuperview];
     if (!self.labelsign) {
@@ -744,8 +744,8 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-
-        return 120;
+    
+    return 120;
     
     
 }
@@ -770,7 +770,7 @@
     NSLog(@"%lu",(unsigned long)contacts.count);
     
     
-     static NSString * identifier = @"Cell";
+    static NSString * identifier = @"Cell";
     ShopCarCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     
     
@@ -792,12 +792,12 @@
         [dic setObject:@"YES" forKey:@"checked"];
         [cell setChecked:YES];
     }
-
+    
     
     return cell;
 }
 -(void)signMutablearray:(UIButton *)btn{
-   
+    
     NSString *checkString = [NSString stringWithFormat:@"%ld",(long)btn.tag];
     
     [isCheck addObject:checkString];
@@ -821,7 +821,7 @@
         [cartIdArray addObject:model.cartId];
         
         
-       
+        
     }else {
         
         ShopCarModel *model = self.datas[btn.tag];
@@ -838,8 +838,8 @@
     }
     
     
-   
-   
+    
+    
     NSString *string = [NSString stringWithFormat:@"%ld",(long)btn.tag];
     [numberIndex addObject:string];
     
@@ -865,17 +865,17 @@
     
     
     int m = [[NSString stringWithFormat:@"%@",subCountLB]floatValue];
-      if (selectedAll == YES || allBtn.selected == YES) {
-    totalEvery = totalEvery - m;
-    NSString *string1 = [NSString stringWithFormat:@"%f",totalEvery];
-    totoalBL.text = [NSString stringWithFormat:@"%.2f",[string1 floatValue]];
-    
-      }else{
-          NSString *string1 = [NSString stringWithFormat:@"%f",otherAllTotal-m];
-          totoalBL.text = [NSString stringWithFormat:@"%.2f",[string1 floatValue]];
-          
-          otherAllTotal = [[NSString stringWithFormat:@"%f",otherAllTotal-m]floatValue];
-      }
+    if (selectedAll == YES || allBtn.selected == YES) {
+        totalEvery = totalEvery - m;
+        NSString *string1 = [NSString stringWithFormat:@"%f",totalEvery];
+        totoalBL.text = [NSString stringWithFormat:@"%.2f",[string1 floatValue]];
+        
+    }else{
+        NSString *string1 = [NSString stringWithFormat:@"%f",otherAllTotal-m];
+        totoalBL.text = [NSString stringWithFormat:@"%.2f",[string1 floatValue]];
+        
+        otherAllTotal = [[NSString stringWithFormat:@"%f",otherAllTotal-m]floatValue];
+    }
     isAllChoose = isAllChoose - m;
     
 }
@@ -883,29 +883,29 @@
     
     
     
-  float m = [[NSString stringWithFormat:@"%@",noChooseSubCount]floatValue];
+    float m = [[NSString stringWithFormat:@"%@",noChooseSubCount]floatValue];
     if (selectedAll == YES || allBtn.selected == YES) {
-    totalEvery = totalEvery - m;
+        totalEvery = totalEvery - m;
     }
     isAllChoose = isAllChoose - m;
     
     onAllChoosePrice = 0;
 }
 -(void)addCount:(NSString *)addCountLB{
-
+    
     float m = [[NSString stringWithFormat:@"%@",addCountLB]floatValue];
     
     if (selectedAll == YES || (allBtn.selected == YES&&totalEvery!=0)) {
-    totalEvery = totalEvery + m;
-       
-    
-    totoalBL.text = [NSString stringWithFormat:@"%.2f",totalEvery];
-    
-
+        totalEvery = totalEvery + m;
+        
+        
+        totoalBL.text = [NSString stringWithFormat:@"%.2f",totalEvery];
+        
+        
     }else{
         totalEvery = totalEvery + m;
         
-       
+        
         totoalBL.text = [NSString stringWithFormat:@"%.2f",m+otherAllTotal];
         //otherAllTotal = [[NSString stringWithFormat:@"%d",m+otherAllTotal]intValue];
         
@@ -915,12 +915,12 @@
     
 }
 -(void)noChooseAddCount:(NSString *)noChooseAddCount{
- 
+    
     float m = [[NSString stringWithFormat:@"%@",noChooseAddCount]floatValue];
     
     if (selectedAll == YES || (allBtn.selected == YES&&totalEvery!=0)) {
-    //totalEvery = totalEvery + m;
-     
+        //totalEvery = totalEvery + m;
+        
     }else{
         NSLog(@"aa");
         totalEvery = totalEvery + m;
@@ -935,13 +935,13 @@
 
 -(void)chooseCount:(NSString *)chooseCountLB{
     
-   NSLog(@"%@",chooseCountLB);
+    NSLog(@"%@",chooseCountLB);
     float m = [[NSString stringWithFormat:@"%@",chooseCountLB]floatValue];
     NSLog(@"%f",m);
     choosePriceAll = m+choosePriceAll;
     
     if (selectedAll == YES &&(allBtn.selected == NO&&totalEvery!=0)) {
-    
+        
         
         totoalBL.text = [NSString stringWithFormat:@"%.2f",m+totalEvery];
         
@@ -959,7 +959,7 @@
         }
         otherAllTotal = 0;
         
-       
+        
     }else{
         
         NSLog(@"otherAllTotal--%f",m+otherAllTotal);
@@ -971,10 +971,10 @@
         if (otherAllTotal == totalEvery) {
             allBtn.selected = YES;
         }
-      
-
+        
+        
     }
-   
+    
     
     
 }
@@ -986,7 +986,7 @@
     float m = [[NSString stringWithFormat:@"%@",chooseCountLB]floatValue];
     NSLog(@"%f",m);
     if (selectedAll == YES&&(allBtn.selected == NO&&totalEvery!=0)) {
-    
+        
         onAllChoose = YES;
         
         onAllChoosePrice = m + onAllChoosePrice;
@@ -994,14 +994,14 @@
         totalEvery = totalEvery - m;
         isAllChoose =   onAllChoosePrice  + totalEvery;
         
-       
+        
         totoalBL.text = [NSString stringWithFormat:@"%.2f",totalEvery];
-       
+        
         
         
     }else{
-       
-       
+        
+        
         totoalBL.text = [NSString stringWithFormat:@"%.2f",otherAllTotal-m];
         
         
@@ -1035,8 +1035,8 @@
 
 
 -(void)colorBtnPress:(UIButton *)btn{
-
-   
+    
+    
     if (_selectButton == btn) {
         return;
     }
@@ -1064,17 +1064,17 @@
         
         
         [_tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-   
+        
         btn.selected =! btn.selected;
         
         if (!invoiceSelector) {
-             [self editorData];
-           
+            [self editorData];
+            
         }
-                return;
+        return;
     }
     if (invoiceSelector) {
-    
+        
     }
     currentbutton.selected = NO;
     btn.selected =! btn.selected;
@@ -1084,8 +1084,8 @@
     selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
     
     invoiceSelector = !invoiceSelector;
-
-
+    
+    
     [_tableView reloadRowsAtIndexPaths:@[selectIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     
     
@@ -1120,7 +1120,7 @@
                 
                 order.shopCartId = [NSString stringWithFormat:@"%@,%@",order.shopCartId,model.list[i][@"cartId"]];
                 
-
+                
             }
             NSLog(@"%@",order.shopCartId);
             [self.navigationController pushViewController:order animated:YES];
@@ -1136,7 +1136,7 @@
 }
 
 -(void)goodDetailButton:(NSInteger)goodDetail{
-
+    
     ShopCarModel *model = self.datas[goodDetail];
     SingleModel *sing = [SingleModel sharedSingleModel];
     sing.goodsId = model.goodsId;
@@ -1149,7 +1149,7 @@
 }
 
 -(void)changeCountAdd:(NSString *)addCount cartIdData:(NSInteger)cartId{
-  
+    
     ShopCarModel *model = self.datas[cartId];
     
     NSString *path= [NSString stringWithFormat:CHANGECOUNT,COMMON,model.cartId,addCount];
@@ -1165,15 +1165,15 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"%@",dic);
-                    
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
-
+    
     
 }
 -(void)changeCountRevise:(NSString *)reviseCount cartIdData:(NSInteger)cartId{
-
+    
     ShopCarModel *model = self.datas[cartId];
     
     NSString *path= [NSString stringWithFormat:CHANGECOUNT,COMMON,model.cartId,reviseCount];
@@ -1213,7 +1213,7 @@
         [dic setObject:@"NO" forKey:@"checked"];
         [cell setChecked:NO];
     }
-
+    
     
     ShopCarModel *model = self.datas[btn.tag];
     
@@ -1259,13 +1259,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

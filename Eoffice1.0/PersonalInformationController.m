@@ -111,13 +111,33 @@
     
     SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path;
-    if (fileURL == nil) {
+    UIAlertView *alertview;
+    NSString *string;
     
+    
+    if (birthdayLb.text==nil||_nickName.text==nil||sex==nil) {
+        if (birthdayLb.text==nil) {
+            string = @"请填写生日";
+        }
+        else if (_nickName.text==nil){
+            string = @"请输入昵称";
+        }
+        else if (sex==nil){
+            string = @"请选择性别";
+        }
+        alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertview show];
+    }
+    else{
+    if (fileURL == nil) {
+        
         path= [NSString stringWithFormat:PERSONREVISENO,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey];
     }else{
     
         path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey,fileURL];
     }
+    
+    
     
     NSLog(@"path--%@",path);
     
@@ -146,6 +166,7 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
+    }
 }
 - (void)downData{
     
