@@ -17,6 +17,7 @@
 #import "OrderModel.h"
 #import "AFNetworking.h"
 #import "LoginViewController.h"
+#import "RegisterViewController.h"
 #import "SingleModel.h"
 #import "UIKit+AFNetworking.h"
 #import "AllorderviewCell.h"
@@ -261,12 +262,9 @@
 -(void)reloadata{
 
     [self classifyData];
-    
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey != nil) {
-        
         self.navigationController.navigationBarHidden = NO;
-
     }
     else{
         
@@ -308,8 +306,6 @@
 
 -(void)deatailGoodId:(NSString *)goodId{
     
-    NSLog(@"%@",goodId);
-    
     SingleModel *singM = [SingleModel sharedSingleModel];
     singM.goodsId = goodId;
     singM.paraId = @"505";
@@ -318,9 +314,7 @@
     self.navigationController.navigationBarHidden = NO;
     [self.navigationController pushViewController:cmd animated:YES];
     
-    
 }
-
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if ([alertView.message isEqualToString:@"确定要删除该订单"]) {
         if (buttonIndex == 1) {
@@ -361,9 +355,7 @@
     model.serviceOrderId = [NSString stringWithFormat:@"%ld",(long)_serviceOrderId];
     ServiceViewController *service = [[ServiceViewController alloc]init];
     [self.navigationController pushViewController:service animated:YES];
-    
 }
-
 -(void)logistics{
     
     SingleModel *model = [SingleModel sharedSingleModel];
@@ -444,9 +436,7 @@
         LogisticsDetailsController *lg = [[LogisticsDetailsController alloc]init];
         
         [self.navigationController pushViewController:lg animated:YES];
-
     }
-    
     //退换货
     if (btn.tag == 1004) {
         
@@ -502,12 +492,11 @@
     SingleModel *model = [SingleModel sharedSingleModel];
   
     if (model.userkey == nil) {
+        self.navigationController.navigationBarHidden = YES;
+        login = [[LoginViewController alloc]init];
+         login.delegate = self;
+        [self.view addSubview:login.view];
        
-            self.navigationController.navigationBarHidden = YES;
-            login = [[LoginViewController alloc]init];
-            [self.view addSubview:login.view];
-            login.delegate = self;
-        
     }
     if (model.userkey != nil) {
         [login.view removeFromSuperview];
@@ -519,6 +508,11 @@
         }
        
     }
+}
+-(void)toRegister{
+    
+    RegisterViewController *registerview = [[RegisterViewController alloc]init];
+    [self.navigationController pushViewController:registerview animated:YES];
 }
 #pragma mark  baifubao
 -(void)baifubao:(NSInteger)buttonTag totalPrice:(NSString *)price{

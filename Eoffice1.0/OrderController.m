@@ -27,10 +27,7 @@
 #import "OrderSuccessController.h"
 #import "OrderTableViewCell.h"
 #import "CalculateStringSpace.h"
-
-
-
-
+#import "UIAlertView+AlerViewBlocks.h"
 @interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
@@ -531,16 +528,7 @@
             string =@"请选择是否开发票";
         }
        else{
-           if ([payWay isEqualToString:@"在线支付"]) {
-               [self sureOrder];
-               PayViewController *pay = [[PayViewController alloc]init];
-               [self.navigationController pushViewController:pay animated:YES];
-               pay.totalPrice = self.totalprice;
-           }
-           else{
-               OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
-               [self.navigationController pushViewController:orderSucc animated:YES];
-           }
+          [self sureOrder];
            return;
        }
         alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:string delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -568,15 +556,42 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         [hud hide:YES];
-        
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic[@"info"]);
-        
-       
+        if ([dic[@"status"] integerValue]==1) {
+            if ([payWay isEqualToString:@"在线支付"]) {
+                PayViewController *pay = [[PayViewController alloc]init];
+                [self.navigationController pushViewController:pay animated:YES];
+                pay.totalPrice = self.totalprice;
+            }
+            else{
+                OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
+                [self.navigationController pushViewController:orderSucc animated:YES];
+            }
+
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
+        if (error.code==-1004) {
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接服务器失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+                [self sureOrder];
+            }];
+            
+        }
+        if (error.code==-1001) {
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+            [self sureOrder];
+            }];
+            
+        }
+        if (error.code==-1005) {
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"网络连接失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+            [self sureOrder];
+            }];
+            
+        }
+
     }];
     
 }

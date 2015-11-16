@@ -15,7 +15,7 @@
 #import "CityChooseView.h"
 #import "ChangeModel.h"
 #import "Mobliejudge.h"
-@interface ChangeAddrssController ()<UITableViewDataSource,UITableViewDelegate,citychoosedelegate,districtdelegate>
+@interface ChangeAddrssController ()<UITableViewDataSource,UITableViewDelegate,citychoosedelegate,districtdelegate,UIAlertViewDelegate>
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSArray *datarray;
@@ -44,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataArray = [NSMutableArray array];
-    self.datarray = @[@"四川省成都市金牛区",self.dictionary[@"fullAddress"],self.dictionary[@"receiver"],self.dictionary[@"telphone"],@"设为默认地址",];
+    self.datarray = @[self.dictionary[@"address"],self.dictionary[@"fullAddress"],self.dictionary[@"receiver"],self.dictionary[@"telphone"],@"设为默认地址",];
     for (NSInteger i=0; i<self.datarray.count; i++) {
         [self.dataArray addObject:self.datarray[i]];
     }
@@ -91,35 +91,51 @@
     }
 }
 -(void)buttonPressed:(UIButton *)button{
-    for (NSInteger i=0; i<self.dataArray.count; i++) {
-        if ([self.dataArray[i] isKindOfClass:[NSNull class]]) {
-            self.dataArray[i] = @"";
+    if ([button.titleLabel.text isEqualToString:@"保存"]) {
+        for (NSInteger i=0; i<self.dataArray.count; i++) {
+            if ([self.dataArray[i] isKindOfClass:[NSNull class]]) {
+                self.dataArray[i] = @"";
+            }
         }
-    }
-    NSLog(@"%@",self.dataArray);
-    UIAlertView *alertview;
-    NSString *signstring;
-    if ([self.dataArray[0]isEqualToString:@""]) {
-        signstring = @"请选择区域";
-    }
-    else if ([self.dataArray[2]isEqualToString:@""]) {
-        signstring = @"请输入详细地址";
-    }
-    else if ([self.dataArray[3]isEqualToString:@""]) {
-        signstring = @"请输入姓名";
-    }
-    else if ([self.dataArray[4]isEqualToString:@""]) {
-        signstring = @"请输入手机号";
-    }
-    else if ([Mobliejudge valiMobile:self.dataArray[3]]){
-        signstring = [Mobliejudge valiMobile:self.dataArray[3]];
+        UIAlertView *alertview;
+        NSString *signstring;
+        if ([self.dataArray[0]isEqualToString:@""]) {
+            signstring = @"请选择区域";
+        }
+        else if ([self.dataArray[2]isEqualToString:@""]) {
+            signstring = @"请输入详细地址";
+        }
+        else if ([self.dataArray[3]isEqualToString:@""]) {
+            signstring = @"请输入姓名";
+        }
+        else if ([self.dataArray[4]isEqualToString:@""]) {
+            signstring = @"请输入手机号";
+        }
+        else if ([Mobliejudge valiMobile:self.dataArray[3]]){
+            signstring = [Mobliejudge valiMobile:self.dataArray[3]];
+        }
+        else{
+            [self downData];
+            return;
+        }
+        alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:signstring delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertview show];
+        
     }
     else{
-       [self downData];
-        return;
+        UIAlertView   *alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"确定要删除该地址吗" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertview show];
+        
     }
-    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:signstring delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [alertview show];
+    
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(delegateaddress:)]) {
+        [self.delegate delegateaddress:[NSString stringWithFormat:@"%@",self.dictionary[@"addressId"]]];
+    }
+     [self.navigationController popViewControllerAnimated:YES];
+
 }
 - (void)downData{
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

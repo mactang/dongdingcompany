@@ -192,8 +192,6 @@
 - (void)createTextField:(int)isPwd withView:(UIView *)text_view
 {
     
-    
-    
     UIImageView *iconImageView = [[UIImageView alloc]init];
     iconImageView.frame = CGRectMake(10, 20, 34/2, 38/2);
     [text_view addSubview:iconImageView];
