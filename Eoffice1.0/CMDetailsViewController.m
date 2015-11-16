@@ -56,6 +56,9 @@
 #import "OneSectionTableViewCell.h"
 #import "CMDetailsTableviewCell.h"
 #import "CMDimageTableViewCell.h"
+
+#import "ShopCarModel.h"
+
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
 @interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate,sharedelegate>
 
@@ -84,6 +87,7 @@
 @property(nonatomic, strong)NSString *back;
 
 @property(nonatomic, strong)NSMutableArray *parameterDatas;
+@property(nonatomic, strong)NSMutableArray *cartCount;
 
 @end
 
@@ -94,7 +98,7 @@
     // 装载所有的image
     NSMutableArray *_imagesArray;
     
-    int number;
+   
     LoginViewController *login;
     BOOL loginsucess;
     NSInteger  product;
@@ -110,7 +114,13 @@
     }
     return _datas;
 }
+-(NSMutableArray *)cartCount{
 
+    if (_cartCount == nil) {
+        _cartCount = [NSMutableArray array];
+    }
+    return _cartCount;
+}
 -(NSMutableArray *)parameterDatas{
     if (_parameterDatas == nil) {
         _parameterDatas = [NSMutableArray array];
@@ -123,7 +133,7 @@
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]){
         self.edgesForExtendedLayout = UIRectEdgeNone;
 }
-    number = 0;
+    
     reloadsucess = YES;
     dictionary = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -157,6 +167,7 @@
     _carView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_carView];
     [self shopTabBar];
+    [self cartCountData];
 
 }
 -(void)leftItemClicked{
@@ -176,7 +187,46 @@
     
     self.pageControl.currentPage = gap;
 }
+
+- (void)cartCountData{
+    
+    
+    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    
+    
+    NSString *path= [NSString stringWithFormat:SHOPCAR,COMMON,model.userkey];
+    NSLog(@"%@",path);
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    
+    
+    [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        if (dic[@"data"] !=[NSNull null]){
+            NSArray *array = dic[@"data"];
+            
+            for(NSDictionary *subDict in array)
+            {
+                ShopCarModel *model = [ShopCarModel modelWithDic:subDict];
+                [self.cartCount addObject:model];
+                
+            }
+           
+        [_numberbutton setTitle:[NSString stringWithFormat:@"%lu",(unsigned long)self.cartCount.count] forState:UIControlStateNormal];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
+}
+
 -(void)shopTabBar{
+    
     UIButton *shopCarBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 5, 40, 40)];
     // [shopCarBtn setTitle:@"购物车" forState:UIControlStateNormal];
     shopCarBtn.backgroundColor = [UIColor colorWithRed:200/255.0 green:3/255.0 blue:3/255.0 alpha:1];
@@ -204,8 +254,7 @@
     
     _numberbutton = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
     _numberbutton.titleLabel.font = [UIFont systemFontOfSize:10];
-    [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number
-                             ] forState:UIControlStateNormal];
+    [_numberbutton setTitle:@"0" forState:UIControlStateNormal];
     _numberbutton.clipsToBounds = YES;
     _numberbutton.layer.cornerRadius = 10;
     [_numberbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -251,8 +300,11 @@
             self.menuPopover.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64);
         }];
         [self.view addSubview:self.menuPopover];
-        [_numberbutton setTitle:[NSString stringWithFormat:@"%d",number+1] forState:UIControlStateNormal];
-        number = number +1;
+        
+//        int addNum = [[NSString stringWithFormat:@"%@",_numberbutton.titleLabel.text]intValue] + number;
+//        
+//        [_numberbutton setTitle:[NSString stringWithFormat:@"%d",addNum+1] forState:UIControlStateNormal];
+//        number = number +1;
     }
     else if (btn.tag == 2002){
         self.menuPopover = [[MenuPopover alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-64) menuItems:self.menuItems];
@@ -540,6 +592,7 @@
     if (model.userkey!=nil&&sucess) {
         
         [self addData:YES];
+        
     }
     if (model.userkey==nil) {
         login = [[LoginViewController alloc]init];
@@ -552,6 +605,9 @@
 }
 #pragma mark logindelegate mathds
 -(void)reloadata{
+    
+    [self.cartCount removeAllObjects];
+    [self cartCountData];
     if (loginsucess) {
         
         [login.navigationController popViewControllerAnimated:NO];
@@ -590,7 +646,9 @@
         if ([dic[@"status"] integerValue]==1) {
             if (sucess) {
                 alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:dic[@"info"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                alertview.tag = 20;
                 [self.menuPopover removeFromSuperview];
+                
             }
             else{
                 [self.menuPopover removeFromSuperview];
@@ -613,6 +671,22 @@
         [hud hide:YES];
         NSLog(@"%@",error);
     }];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (buttonIndex == 0) {
+        if (alertView.tag == 20) {
+            
+            [self.cartCount removeAllObjects];
+            [self cartCountData];
+            
+        }
+    }else{
+        
+        NSLog(@"oo");
+    }
+    
+    
 }
 #pragma mark  购物车点击事件以及代理
 -(void)clickshopcratbutton{

@@ -148,6 +148,7 @@
     [alertview show];
 }
 -(void)datarequest{
+    
     //增加地址
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

@@ -22,7 +22,7 @@
 {
     
     UITextField *text_field;
-    NSString *phoneSure;
+    NSString *registerSucess;
 }
 -(void)loadView
 {
@@ -99,12 +99,13 @@
     [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
         sender.enabled = NO;
         [self valiData];
-        [sender startWithSecond:10];
+        [sender startWithSecond:60];
         
         [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
-            NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
             
+            NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
             return title;
+            
         }];
         [sender didFinished:^NSString *(CountDownButton *countDownButton, int second) {
             countDownButton.enabled = YES;
@@ -172,11 +173,7 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"dic--%@",dic);
         NSLog(@"%@",dic[@"data"]);
-        
-        
-        
-        
-        
+    
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
@@ -313,6 +310,7 @@
     UITextField *identifying_field = (UITextField *)[self.view viewWithTag:1004];
     UITextField  *phoneNumber_field = (UITextField *)[self.view viewWithTag:VERIFICATION];
     UITextField *replace_field = (UITextField *)[self.view viewWithTag:1003];
+    UITextField *recommend_field = (UITextField *)[self.view viewWithTag:1005];
     UIAlertView *alert;
     NSString *messageString;
     if ([name_field.text isEqualToString:@""]) {
@@ -338,19 +336,19 @@
         NSLog(@"%@",path);
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-        [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":phoneNumber_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [manager POST:path parameters:@{@"username":name_field.text,@"password":pwd_field.text,@"rand":identifying_field.text,@"phone":phoneNumber_field.text,@"recommendCode":recommend_field.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
             NSLog(@"%@",dic);
             UIAlertView *alterview;
             if ([dic[@"status"]integerValue]==1) {
-                phoneSure = dic[@"info"];
+                registerSucess = dic[@"info"];
             }
             else{
-                phoneSure = dic[@"info"];
+                registerSucess = dic[@"info"];
             }
-            alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:phoneSure delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:registerSucess delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
             [alterview show];
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -361,6 +359,18 @@
     alert = [[UIAlertView alloc]initWithTitle:@"提示" message:messageString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
 }
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+        if (buttonIndex == 0) {
+           [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            
+           NSLog(@"oo");
+        }
+    
+    
+}
+
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (string.length == 0) {

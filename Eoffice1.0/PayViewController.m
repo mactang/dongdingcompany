@@ -23,7 +23,7 @@
 
 #import "WXApiObject.h"
 #import "WXApi.h"
-#import "payRequsestHandler.h"
+
 
 @interface PayViewController ()<UITableViewDataSource,UITableViewDelegate,BDWalletSDKMainManagerDelegate>
 @property(nonatomic,strong)UITableView *tableView;
@@ -58,6 +58,7 @@
     
     //向微信注册
     [WXApi registerApp:APP_ID withDescription:@"demo 2.0"];
+    
     payWayMark = 0;
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -1, 320, 310) style:UITableViewStyleGrouped];
@@ -272,12 +273,12 @@
     //本实例只是演示签名过程， 请将该过程在商户服务器上实现
     
     //创建支付签名对象
-    payRequsestHandler *req = [payRequsestHandler alloc] ;
+    payRequsestHandler *req = [[payRequsestHandler alloc]init];
     //初始化支付签名对象
     [req init:APP_ID mch_id:MCH_ID];
     //设置密钥
     [req setKey:PARTNER_ID];
-    req.payPrice = [NSString stringWithFormat:@"%@",payprice];
+    req.payPrice = payprice;
     //}}}
     
     //获取到实际调起微信支付的参数后，在app端调起支付
@@ -307,9 +308,10 @@
         req.sign                = [dict objectForKey:@"sign"];
         
         [WXApi sendReq:req];
-        [self sendPay];
     }
 }
+
+
 //客户端提示信息
 - (void)alert:(NSString *)title msg:(NSString *)msg
 {
@@ -377,6 +379,8 @@
         [self alert:@"提示信息" msg:@"服务器返回错误"];
     }
 }
+
+
 #pragma mark  baifubao
 -(void)baifubao{
 //    [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
