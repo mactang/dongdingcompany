@@ -499,7 +499,6 @@
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
-
 /**
  *  删除通知
  */
@@ -521,10 +520,8 @@
     if ([changeSucess isEqual:@"信息修改成功"]) {
        [_delegate rePersonInfor];
     }
-    
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 - (void)viewWillAppear:(BOOL)animated{
     
