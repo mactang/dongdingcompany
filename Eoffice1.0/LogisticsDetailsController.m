@@ -92,7 +92,6 @@
     
     
     static NSString *identity = @"cell";
-    
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
     
     cell.clipsToBounds = YES;

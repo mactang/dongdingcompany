@@ -19,6 +19,7 @@
 
     UITextField *validateField;
     UITextField *sureValidateField;
+    NSString *changSucess;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,7 +73,7 @@
     [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
         sender.enabled = NO;
         [self valiData];
-        [sender startWithSecond:10];
+        [sender startWithSecond:60];
         
         [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
             NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
@@ -117,6 +118,7 @@
     newValidateField.secureTextEntry = YES;
     newValidateField.layer.cornerRadius = 3;
     newValidateField.layer.borderWidth = 1;
+    newValidateField.tag = 1002;
     newValidateField.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.view addSubview:newValidateField];
     
@@ -134,6 +136,7 @@
     sureValidateField.clearButtonMode = UITextFieldViewModeAlways;
     sureValidateField.layer.cornerRadius = 3;
     sureValidateField.layer.borderWidth = 1;
+    sureValidateField.tag = 1003;
     sureValidateField.layer.borderColor = [[UIColor grayColor]CGColor];
     [self.view addSubview:sureValidateField];
     
@@ -191,9 +194,31 @@
     }];
     
 }
--(void) revisePassword{
-    SingleModel *model = [SingleModel sharedSingleModel];
+-(void)textFieldDidEndEditing:(UITextField *)textField{
     
+    NSLog(@"%ld",(long)textField.tag);
+    
+    UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
+    if (textField.tag == 1003) {
+        if (![pwd_field.text isEqualToString:textField.text]) {
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+}
+
+-(void) revisePassword{
+    UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
+    UITextField *surepwd_field = (UITextField *)[self.view viewWithTag:1003];
+    if (![pwd_field.text isEqualToString:surepwd_field.text]) {
+        
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+    }else{
+    
+        SingleModel *model = [SingleModel sharedSingleModel];
     
     NSString *path= [NSString stringWithFormat:SAFERIVESE,COMMON,model.userkey];
     NSLog(@"%@",path);
@@ -204,26 +229,24 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     
-    [manager POST:path parameters:@{@"phone":@"13618090081",@"rand":validateField.text,@"password":sureValidateField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    [manager POST:path parameters:@{@"phone":model.telphone,@"rand":validateField.text,@"password":sureValidateField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        if (dic[@"data"] !=[NSNull null]){
-        NSArray *array = dic[@"status"];
-        NSString *string = [NSString stringWithFormat:@"%@",array];
-        NSLog(@"array--%@",string);
-        if ([string isEqualToString:@"1"]) {
-            
-            [self.navigationController popToRootViewControllerAnimated:YES];
-            
+        NSLog(@"%@",dic);
+        UIAlertView *alterview;
+        if ([dic[@"status"]integerValue]==1) {
+            changSucess = dic[@"info"];
         }
         else{
-            
+            changSucess = dic[@"info"];
         }
-        }
+        alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:changSucess delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alterview show];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
+    }
 }
 
 

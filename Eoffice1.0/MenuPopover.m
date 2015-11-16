@@ -178,7 +178,7 @@
         [cell addSubview:imageView];
         
         self.deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-40, 5, 30, 30)];
-        [self.deleteBtn setImage:[UIImage imageNamed:@"cha1"] forState:UIControlStateNormal];
+        [self.deleteBtn setImage:[UIImage imageNamed:@"chaRed"] forState:UIControlStateNormal];
         [self.deleteBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [self.deleteBtn addTarget:self action:@selector(dismissMenuPopover) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:self.deleteBtn];

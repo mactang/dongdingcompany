@@ -153,9 +153,11 @@
     NSString *order_name    = @"V3支付测试";
     //订单金额,单位（分）
     NSLog(@"_payPrice--%@",_payPrice);
-    int i = [[NSString stringWithFormat:@"%@",_payPrice]intValue];
-    int price = i*100;
-    NSString *payprice = [NSString stringWithFormat:@"%d",price];
+    float i = [[NSString stringWithFormat:@"%@",_payPrice]floatValue];
+    float price = i*100;
+    NSLog(@"payprice--%f",price);
+    NSString *payprice = [NSString stringWithFormat:@"%.0f",price];
+    NSLog(@"payprice--%@",payprice);
     NSString *order_price   = [NSString stringWithFormat:@"%@",payprice];//1分钱测试
     
 

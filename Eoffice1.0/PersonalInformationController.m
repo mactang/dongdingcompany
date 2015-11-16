@@ -377,6 +377,7 @@
     }
     
     if (indexPath.row == 3) {
+        
         SixAlterView *alter=[[SixAlterView alloc]initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
         alter.rightBlock=^()
         {
@@ -510,6 +511,7 @@
         NSString *string = [NSString stringWithFormat:@"%@",subDic[@"data"][@"fileUrl"]];
         
                 fileURL = string;
+
        
         
     }];

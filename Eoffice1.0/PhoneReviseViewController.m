@@ -10,6 +10,7 @@
 #import "RDVTabBarController.h"
 #import "SingleModel.h"
 #import "AFNetworking.h"
+#import "Mobliejudge.h"
 @interface PhoneReviseViewController ()
 @property(nonatomic,strong)UILabel *phoneField;
 @end
@@ -20,6 +21,7 @@
     UITextField *validateField;
     UITextField *newPhoneField ;
     UITextField *newNalidateField;
+    NSString *changeSucess;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,7 +69,7 @@
     [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
         sender.enabled = NO;
        [self valiData];
-        [sender startWithSecond:10];
+        [sender startWithSecond:60];
         
         [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
             NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
@@ -129,21 +131,32 @@
     [self.view addSubview:_newCountDownCode];
     
     [_newCountDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
-        sender.enabled = NO;
-         [self newNaliData];
-        [sender startWithSecond:10];
+        UIAlertView *alert;
+        NSString *messageString;
         
-        [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
-            NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+        if ([Mobliejudge valiMobile:newPhoneField.text]){
+            messageString = [Mobliejudge valiMobile:newPhoneField.text];
+            alert = [[UIAlertView alloc]initWithTitle:@"提示" message:messageString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }else{
             
-            return title;
-        }];
-        [sender didFinished:^NSString *(CountDownButton *countDownButton, int second) {
-            countDownButton.enabled = YES;
-            return @"点击重新获取";
+            // [self newNaliData];
             
-        }];
-        
+            sender.enabled = NO;
+            [self valiData];
+            [sender startWithSecond:60];
+            
+            [sender didChange:^NSString *(CountDownButton *countDownButton,int second) {
+                NSString *title = [NSString stringWithFormat:@"剩余%d秒",second];
+                
+                return title;
+            }];
+            [sender didFinished:^NSString *(CountDownButton *countDownButton, int second) {
+                countDownButton.enabled = YES;
+                return @"点击重新获取";
+                
+            }];
+        }
     }];
 
     
@@ -194,32 +207,43 @@
 }
 
 -(void)newValidatePress{
-    NSLog(@"text%@",newPhoneField.text);
-    NSString  *string = [NSString stringWithFormat:@"%@",newPhoneField.text];
-    NSLog(@"length--%lu",(unsigned long)[string length]);
-    NSUInteger number = [string length];
+//    NSLog(@"text%@",newPhoneField.text);
+//    NSString  *string = [NSString stringWithFormat:@"%@",newPhoneField.text];
+//    NSLog(@"length--%lu",(unsigned long)[string length]);
+//    NSUInteger number = [string length];
+//    
+//    //手机号以13， 15，18开头，八个 \d 数字字符
+//    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
+//    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
+//    //    NSLog(@"phoneTest is %@",phoneTest);
+//    BOOL isPhtoneNumber =[phoneTest evaluateWithObject:string];
+//    
+//    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
+//    NSLog(@"bool--%lu",(unsigned long)[string length]);
+    UIAlertView *alert;
+    NSString *messageString;
     
-    //手机号以13， 15，18开头，八个 \d 数字字符
-    NSString *phoneRegex = @"^((13[0-9])|(15[^4,\\D])|(18[0,0-9]))\\d{8}$";
-    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",phoneRegex];
-    //    NSLog(@"phoneTest is %@",phoneTest);
-    BOOL isPhtoneNumber =[phoneTest evaluateWithObject:string];
+     if ([Mobliejudge valiMobile:newPhoneField.text]){
+        messageString = [Mobliejudge valiMobile:newPhoneField.text];
+     }else{
+     
+        // [self newNaliData];
+         
+     }
     
-    string = [string stringByTrimmingCharactersInSet:[NSCharacterSet decimalDigitCharacterSet]];
-    NSLog(@"bool--%lu",(unsigned long)[string length]);
+    alert = [[UIAlertView alloc]initWithTitle:@"提示" message:messageString delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
     
-    
-    
-    if (number == 11 && [string length] == 0 && isPhtoneNumber == YES) {
-        [self newNaliData];
-    }else{
-    
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"请输入正确的电话号码" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        //设置提示框样式（可以输入账号密码）
-        alert.alertViewStyle = UIAlertViewStyleDefault;
-        
-        [alert show];
-    }
+//    if (number == 11 && [string length] == 0 && isPhtoneNumber == YES) {
+//
+//    }else{
+//    
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"请输入正确的电话号码" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        //设置提示框样式（可以输入账号密码）
+//        alert.alertViewStyle = UIAlertViewStyleDefault;
+//        
+//        [alert show];
+//    }
     
 }
 
@@ -295,8 +319,17 @@
     [manager POST:path parameters:@{@"phone":_phoneField.text,@"phone1":newPhoneField.text,@"rand":newNalidateField.text,@"rand1":validateField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSString *string = [[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",string);
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
+        UIAlertView *alterview;
+        if ([dic[@"status"]integerValue]==1) {
+            changeSucess = dic[@"info"];
+        }
+        else{
+            changeSucess = dic[@"info"];
+        }
+        alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:changeSucess delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [alterview show];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);

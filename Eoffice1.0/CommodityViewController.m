@@ -58,7 +58,7 @@
     
     UIButton *cbt = [[UIButton alloc]initWithFrame:CGRectMake(5, 75, 30, 25)];
     [cbt addTarget:self action:@selector(openOrCloseLeftList) forControlEvents:UIControlEventTouchUpInside];
-    [cbt setImage:[UIImage imageNamed:@"classify1"] forState:UIControlStateNormal];
+    [cbt setImage:[UIImage imageNamed:@"classifyOne"] forState:UIControlStateNormal];
     cbt.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:cbt];
     
@@ -229,7 +229,7 @@
     int m = 20;
     int n = 160;
     
-    NSArray *imageName = @[@"pos1",@"zhizhang1",@"diannao1",@"dayingji1",@"chuanzhengji1"];
+    NSArray *imageName = @[@"pos",@"zhizhang",@"diannao",@"dayingji",@"chuanzhengji"];
     for (int i = 0; i<self.datas.count; i++) {
         if (i == 0 || i%3 != 0) {
             
