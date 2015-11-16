@@ -16,14 +16,15 @@
 #import "ChangeAddrssController.h"
 #import "ManageAddressCell.h"
 @interface AddressViewController ()<UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate,buttondelegate,reloaddelegate,reloadAddressdelegate>{
-     UIButton *anotherButton;
+    UIButton *anotherButton;
+    BOOL  delegateaddress;
 }
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *datas;
-@property(nonatomic, strong)NSString *addressId;
 @property(nonatomic,assign)NSInteger signbutton;
 @property(nonatomic,strong)NSMutableArray *dataarray;
 @property(nonatomic,strong)AddressModel *modeladdressed;
+@property(nonatomic,copy)NSString *addressid;
 @end
 
 @implementation AddressViewController
@@ -38,6 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.signbutton = 0;
+    delegateaddress = YES;
     self.dataarray = [NSMutableArray array];
     self.navigationItem.title = @"管理收货地址";
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
@@ -241,30 +243,7 @@
     alertview.delegate = self;
     [alertview show];
 }
-//- (void)isPublicBtnPress:(UIButton*)btn{
-//    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"确定删除这条地址吗" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//    //设置提示框样式（可以输入账号，密码）
-//    alertView.alertViewStyle = UIAlertViewStyleDefault;
-//    alertView.delegate = self;
-//    [alertView show];
-//    btn.selected = !btn.selected;
-//    _btnNumber = btn.tag;
-//        NSLog(@"aaa");
-//    
-//    
-//}
-//
-//-(void)delegateBtn:(UIButton *)btn{
-//    
-//   
-//    _btnNumber = btn.tag;
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"删除订单" message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消",nil];
-//    //设置提示框样式（可以输入账号密码）
-//    alert.alertViewStyle = UIAlertViewStyleDefault;
-//    
-//    [alert show];
-//    
-//}
+
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag==90) {
         return;
@@ -284,12 +263,17 @@
     }
     
 }
+-(void)delegateaddress:(NSString *)addressid{
+    self.addressid = addressid;
+    delegateaddress = NO;
+    [self deleteData];
+}
 -(void)deleteData{
   
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
-    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,COMMON,self.modeladdressed.addressId];
+    NSString *path= [NSString stringWithFormat:ADDRESSDELTE,COMMON,delegateaddress?self.modeladdressed.addressId:self.addressid];
     NSLog(@"%@",path);
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -305,7 +289,7 @@
             NSIndexPath *path;
             for (NSInteger i=0; i<self.dataarray.count; i++) {
                 AddressModel *model = self.datas[i];
-                if ([[NSString stringWithFormat:@"%@",model.addressId] isEqualToString:[NSString stringWithFormat:@"%@",self.modeladdressed.addressId]]) {
+                if ([[NSString stringWithFormat:@"%@",model.addressId] isEqualToString:[NSString stringWithFormat:@"%@",delegateaddress?self.modeladdressed.addressId:self.addressid]]) {
                      path = [NSIndexPath indexPathForRow:i inSection:0];
                     [self.datas removeObjectAtIndex:i];
                     [self.dataarray removeObjectAtIndex:i];

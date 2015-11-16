@@ -262,12 +262,9 @@
 -(void)reloadata{
 
     [self classifyData];
-    
     SingleModel *model = [SingleModel sharedSingleModel];
     if (model.userkey != nil) {
-        
         self.navigationController.navigationBarHidden = NO;
-
     }
     else{
         
