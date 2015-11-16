@@ -344,14 +344,14 @@ static const CGFloat MJDuration = 2.0;
     classifyDetailaModel *syntBT = [[classifyDetailaModel alloc]initWithFrame:CGRectMake(40, 20, 50, 30)];
     //syntBT.backgroundColor = [UIColor brownColor];
     [syntBT setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [syntBT setImage:[UIImage imageNamed:@"classify1"] forState:UIControlStateNormal];
+    [syntBT setImage:[UIImage imageNamed:@"classify"] forState:UIControlStateNormal];
     [syntBT setTitle:@"综合" forState:UIControlStateNormal];
     syntBT.titleLabel.font = [UIFont systemFontOfSize:15];
     [view addSubview:syntBT];
     
     UIButton *button  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(syntBT.frame)-10, syntBT.frame.origin.y+12, 13, 13)];
     [button setImage:[UIImage imageNamed:@"clBelow"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
+    //[button setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
     button.tag = 100;
     [view addSubview:button];
     
@@ -394,7 +394,7 @@ static const CGFloat MJDuration = 2.0;
     
     UIButton *button1  = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(screenBT.frame), screenBT.frame.origin.y+12, 13, 13)];
     [button1 setImage:[UIImage imageNamed:@"clBelow"] forState:UIControlStateNormal];
-    [button1 setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
+   // [button1 setImage:[UIImage imageNamed:@"below2"] forState:UIControlStateSelected];
     [view addSubview:button1];
     
     [self.view addSubview:view];

@@ -192,7 +192,7 @@
     
     UIButton *MaintainBtn = [[UIButton alloc]initWithFrame:CGRectMake(10, 220, SCREEN_WIDTH-20, (SCREEN_HEIGHT-CGRectGetMaxY(image.frame)-30-49)/2)];
     [MaintainBtn setTitle:@"保养维修" forState:UIControlStateNormal];
-    [MaintainBtn setImage:[UIImage imageNamed:@"保养维修1"] forState:UIControlStateNormal];
+    [MaintainBtn setImage:[UIImage imageNamed:@"保养维修"] forState:UIControlStateNormal];
     [MaintainBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [MaintainBtn addTarget:self action:@selector(btnPress:) forControlEvents:UIControlEventTouchUpInside];
     MaintainBtn.tag = 1002;
