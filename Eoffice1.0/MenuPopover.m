@@ -116,6 +116,7 @@
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         [dicdata setDictionary:dic[@"data"]];
+        NSLog(@"%@",dic);
         [self initalizeapprance];
         [menuItemsTableView reloadData];
         
