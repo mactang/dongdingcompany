@@ -166,16 +166,12 @@
         if ([dd1.textButton.titleLabel.text isEqualToString:@"已完成"]) {
             _docstatusign = @"4";
         }
-        
         dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 [self.classifyDatas removeAllObjects];
                 [testarray removeAllObjects];
                 [self classifyData];
-//              [self.tableView reloadData];
-                
             });
             
         });
@@ -225,10 +221,8 @@
             self.labelsign.textAlignment = NSTextAlignmentCenter;
             self.labelsign.font = [UIFont systemFontOfSize:17];
             [self.view addSubview:self.labelsign];
-            
             if (!self.strollbutton) {
                 self.strollbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-                
             }
             self.strollbutton.frame = CGRectMake((SCREEN_WIDTH-SCREEN_WIDTH/3.5)/2, CGRectGetMaxY(self.labelsign.frame)+10, SCREEN_WIDTH/3.5, SCREEN_WIDTH/10.5);
             self.strollbutton.layer.borderColor = [[UIColor lightGrayColor]CGColor];
@@ -422,7 +416,11 @@
             }];
             
         }
-
+        if (error.code==-1005) {
+            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"网络连接失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+                [self deleteData];
+            }];
+        }
         NSLog(@"%@",error);
     }];
 }
