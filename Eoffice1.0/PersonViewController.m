@@ -170,7 +170,7 @@
         PersonInformationModel *model = self.datas[indexPath.row];
         UIImageView *detailImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 175)];
         detailImageView.userInteractionEnabled = YES;
-        detailImageView.image = [UIImage imageNamed:@"求真像"];
+        detailImageView.image = [UIImage imageNamed:@"personPhoto"];
         NSLog(@"%@",model.imgUrl);
         [cell addSubview:detailImageView];
         
@@ -214,7 +214,7 @@
     if (indexPath.row == 4) {
         cell.textLabel.text = @"       我的银行卡";
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
-        imageView.image = [UIImage imageNamed:@"圆角矩形-1"];
+        imageView.image = [UIImage imageNamed:@"myBank"];
         [cell addSubview:imageView];
     }
     if (indexPath.row == 5) {
