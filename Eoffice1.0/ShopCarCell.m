@@ -112,7 +112,7 @@
         
         self.subNumber = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.shopNumber.frame)+65, CGRectGetMaxY(self.ImageView.frame)+15, 25, 25)];
         self.subNumber.backgroundColor = [UIColor whiteColor];
-        [self.subNumber setImage:[UIImage imageNamed:@"圆角矩形-3"] forState:UIControlStateNormal];
+        [self.subNumber setImage:[UIImage imageNamed:@"resiveNumber"] forState:UIControlStateNormal];
         
         self.subNumber.clipsToBounds = YES;
         self.subNumber.layer.cornerRadius = 3;
@@ -124,7 +124,7 @@
         
         self.addNumber = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.subNumber.frame)+60, self.subNumber.frame.origin.y, 25, 25)];
         self.addNumber.backgroundColor = [UIColor whiteColor];
-        [self.addNumber setImage:[UIImage imageNamed:@"圆角矩形-3-2"] forState:UIControlStateNormal];
+        [self.addNumber setImage:[UIImage imageNamed:@"addNumber"] forState:UIControlStateNormal];
         self.addNumber.clipsToBounds = YES;
         self.addNumber.layer.cornerRadius = 3;
         self.addNumber.layer.borderWidth = 0.8;
