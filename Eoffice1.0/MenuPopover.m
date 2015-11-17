@@ -173,9 +173,15 @@
 
     if (indexPath.row == 0) {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"userIcon"]];
-        imageView.frame = CGRectMake(10, 5, 40, 40);
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:dicdata[@"goodsImgUrl"]] placeholderImage:[UIImage imageNamed:@"userIcon"]];
         [cell addSubview:imageView];
+        
+        self.deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-40, 5, 30, 30)];
+        [self.deleteBtn setImage:[UIImage imageNamed:@"chaRed"] forState:UIControlStateNormal];
+        [self.deleteBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [self.deleteBtn addTarget:self action:@selector(dismissMenuPopover) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:self.deleteBtn];
         
         self.deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-40, 5, 30, 30)];
         [self.deleteBtn setImage:[UIImage imageNamed:@"chaRed"] forState:UIControlStateNormal];
@@ -192,7 +198,7 @@
         UILabel *stocklabel = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(pricelable), CGRectGetMaxY(pricelable.frame)+5, widgetBoundsWidth(pricelable), widgetboundsHeight(pricelable))];
         stocklabel.textColor = [UIColor grayColor];
         stocklabel.font = [UIFont systemFontOfSize:16];
-        stocklabel.text = [NSString stringWithFormat:@"库存%@件",dicdata[@"wgoodsId"]];
+        stocklabel.text = [NSString stringWithFormat:@"库存%@件",dicdata[@"count"]];
         [cell addSubview:stocklabel];
     }
     else if (indexPath.row == 1){
