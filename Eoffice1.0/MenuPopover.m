@@ -116,7 +116,6 @@
         
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         [dicdata setDictionary:dic[@"data"]];
-        NSLog(@"%@",dic);
         [self initalizeapprance];
         [menuItemsTableView reloadData];
         
@@ -168,30 +167,29 @@
 {
     static NSString *cellIdentifier = CELL_IDENTIGIER;
     
-   UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
     
-
     if (indexPath.row == 0) {
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"userIcon"]];
-        imageView.frame = CGRectMake(10, 5, 40, 40);
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 10, 60, 60)];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:dicdata[@"goodsImgUrl"]] placeholderImage:[UIImage imageNamed:@"userIcon"]];
         [cell addSubview:imageView];
-        
+    
         self.deleteBtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-40, 5, 30, 30)];
         [self.deleteBtn setImage:[UIImage imageNamed:@"chaRed"] forState:UIControlStateNormal];
         [self.deleteBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [self.deleteBtn addTarget:self action:@selector(dismissMenuPopover) forControlEvents:UIControlEventTouchUpInside];
         [cell addSubview:self.deleteBtn];
         
-        UILabel *pricelable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame)+20, 15, SCREEN_WIDTH-110, 25)];
+        UILabel *pricelable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(imageView.frame), 15, SCREEN_WIDTH-110, 25)];
         pricelable.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
-        pricelable.font = [UIFont systemFontOfSize:16];
+        pricelable.font = [UIFont systemFontOfSize:15];
         pricelable.text = [NSString stringWithFormat:@"￥%.2f",[dicdata[@"price"]floatValue]];
         [cell addSubview:pricelable];
         
         UILabel *stocklabel = [[UILabel alloc]initWithFrame:CGRectMake(widgetFrameX(pricelable), CGRectGetMaxY(pricelable.frame)+5, widgetBoundsWidth(pricelable), widgetboundsHeight(pricelable))];
         stocklabel.textColor = [UIColor grayColor];
-        stocklabel.font = [UIFont systemFontOfSize:16];
+        stocklabel.font = [UIFont systemFontOfSize:15];
         stocklabel.text = [NSString stringWithFormat:@"库存%@件",dicdata[@"wgoodsId"]];
         [cell addSubview:stocklabel];
     }
