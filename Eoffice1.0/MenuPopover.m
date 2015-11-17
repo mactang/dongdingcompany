@@ -234,14 +234,14 @@
         _numberBtn1.layer.cornerRadius = 3;
         _numberBtn1.layer.borderWidth = 0.8;
         _numberBtn1.layer.borderColor = [[UIColor grayColor] CGColor];
-        [_numberBtn1 setImage:[UIImage imageNamed:@"圆角矩形-3"] forState:UIControlStateNormal];
+        [_numberBtn1 setImage:[UIImage imageNamed:@"resiveNumber"] forState:UIControlStateNormal];
         [_numberBtn1 addTarget:self action:@selector(numBtnPress:) forControlEvents:UIControlEventTouchUpInside];
         _numberBtn1.tag = 1;
         [cell addSubview:_numberBtn1];
         
         UIButton *numberBtn2 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_numberBtn1.frame)+60, _numberBtn1.frame.origin.y, 30, 30)];
         numberBtn2.backgroundColor = [UIColor whiteColor];
-        [numberBtn2 setImage:[UIImage imageNamed:@"圆角矩形-3-2"] forState:UIControlStateNormal];        numberBtn2.clipsToBounds = YES;
+        [numberBtn2 setImage:[UIImage imageNamed:@"addNumber"] forState:UIControlStateNormal];        numberBtn2.clipsToBounds = YES;
         numberBtn2.layer.cornerRadius = 3;
         numberBtn2.layer.borderWidth = 0.8;
         numberBtn2.layer.borderColor = [[UIColor grayColor] CGColor];
