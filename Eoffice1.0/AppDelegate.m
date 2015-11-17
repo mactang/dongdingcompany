@@ -128,8 +128,8 @@
     
     UIImage *finishedImage = [UIImage imageNamed:@"bg"];
     UIImage *unfinishedImage = [UIImage imageNamed:@"bg"];
-    NSArray *tabBarItemImages = @[@"chating", @"order", @"myself"];
-     NSArray *tabBarItemImages1 = @[@"chating_select", @"order_select", @"myself_select"];
+    NSArray *tabBarItemImages1 = @[@"chating", @"order", @"myself"];
+     NSArray *tabBarItemImages = @[@"chating_select", @"order_select", @"myself_select"];
     
     NSInteger index = 0;
     for (RDVTabBarItem *item in [[tabBarController tabBar] items]) {

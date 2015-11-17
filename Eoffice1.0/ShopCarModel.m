@@ -24,6 +24,7 @@
         self.cartId = dic[@"cartId"];
         self.cartImg = dic[@"cartImg"];
         self.version = dic[@"version"];
+        self.maValue = dic[@"maValue"];
         
     }
     

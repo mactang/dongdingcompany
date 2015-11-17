@@ -23,6 +23,7 @@
     
     int mun;
     NSString *addTotal;
+    UILabel *LB;
     
     
 }
@@ -60,13 +61,13 @@
         [button addTarget:self action:@selector(pessbtn) forControlEvents:UIControlEventTouchUpInside];
         [self.ImageView addSubview:button];
         
-        UILabel *LB = [[UILabel alloc]initWithFrame:CGRectMake(235, 10, 13, 20)];
+        LB = [[UILabel alloc]initWithFrame:CGRectMake(235, 10, 13, 20)];
         LB.font = [UIFont systemFontOfSize:15];
         LB.text = @"￥";
         LB.textColor = [UIColor blackColor];
         [self.contentView addSubview:LB];
         
-        self.priceLB = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(LB.frame), 10, 40, 20)];
+        self.priceLB = [[UILabel alloc]init];
         self.priceLB.font = [UIFont systemFontOfSize:15];
         self.priceLB.textColor = [UIColor blackColor];
         [self.contentView addSubview:self.priceLB];
@@ -92,7 +93,7 @@
         
             
             self.versionButton = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(self.versionLB.frame), CGRectGetMaxY(self.nameLB.frame), 145, 30)];
-           [self.versionButton setText:@"华硕版本1"];
+          // [self.versionButton setText:@"华硕版本1"];
             [self.versionButton setTextColor:[UIColor grayColor]];
             self.versionButton.font = [UIFont systemFontOfSize:11];
             
@@ -291,6 +292,8 @@
     NowCount = [NSString stringWithFormat:@"%@",myModel.count];
     self.number.text = [NSString stringWithFormat:@"%@",myModel.count];
     
+    self.priceLB.frame = CGRectMake(CGRectGetMaxX(LB.frame), 10, SCREEN_WIDTH-[myModel.price length]-40, 20);
+    [self.versionButton setText:[NSString stringWithFormat:@"%@",myModel.maValue]];
     
     
 }
