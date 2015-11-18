@@ -19,13 +19,6 @@
  *  @param cancel  取消按钮标题
  *  @param blocks  点击按钮会调用此代码块
  */
-+ (void)showMsgWithTitle:(NSString *)title promptmessage:(NSString *)promptmessage confirm:(NSString *)confirm cancel:(NSString *)cancel blocks:(void (^)(NSInteger index))blocks;
 
-
-
-
-
-
-
-
++(void)errorcode:(NSInteger)code blocks:(void (^)(NSInteger index))blocks;;
 @end

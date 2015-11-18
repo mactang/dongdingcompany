@@ -145,10 +145,10 @@
     [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn3.titleLabel.font = [UIFont systemFontOfSize:20];
     [headerview addSubview:btn3];
-//
-//    [self.tableView beginUpdates];
-//    [self.tableView setTableHeaderView:headerview];
-//    [self.tableView endUpdates];
+    
+//  [self.tableView beginUpdates];
+//  [self.tableView setTableHeaderView:headerview];
+//  [self.tableView endUpdates];
 
 }
 - (void)leftItemClicked{
@@ -574,24 +574,10 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
-        if (error.code==-1004) {
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接服务器失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-                [self sureOrder];
-            }];
-            
-        }
-        if (error.code==-1001) {
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+        [UIAlertView errorcode:error.code blocks:^(NSInteger index) {
             [self sureOrder];
-            }];
-            
-        }
-        if (error.code==-1005) {
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"网络连接失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-            [self sureOrder];
-            }];
-        }
-    }];
+        }];
+     }];
 }
 - (void)viewWillAppear:(BOOL)animated{
     
