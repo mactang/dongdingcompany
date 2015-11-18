@@ -429,10 +429,9 @@
     [str appendString:@"&sp_uno="];
     [str appendString:@"11"];
     [str appendString:@"&total_amount="];
-    [str appendString:@"1"];
     
-    
-    
+    [str appendString:[NSString stringWithFormat:@"%.0f",[self.totalPrice floatValue]*100]];
+
     NSString *md5CapPwd = [self mD5GBK:[NSString stringWithFormat:@"%@&key=%@" , str, key]]; // 中文处理2
     
     NSMutableString *str1 = [[NSMutableString alloc]init];
@@ -454,8 +453,7 @@
     [str1 appendString:@"&sp_uno="];
     [str1 appendString:@"11"];
     [str1 appendString:@"&total_amount="];
-    [str1 appendString:@"1"];
-    
+    [str1 appendString:[NSString stringWithFormat:@"%.0f",[self.totalPrice floatValue]*100]];
     
     return [NSString stringWithFormat:@"%@&sign=%@" , str1 , md5CapPwd];
 }
