@@ -536,16 +536,20 @@
 - (void)sureOrder{
     
     SingleModel *sing = [SingleModel sharedSingleModel];
-    NSLog(@"%@",sing.addressId);
+    NSLog(@"%@",payWay);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
+    
     if ([payWay isEqualToString:@"货到付款"]) {
         paywayCount = @"0";
+        
     }else{
+    
         paywayCount = @"1";
     }
+    
     NSString *count = [NSString stringWithFormat:@"%d",_currentNumber];
     NSString *path= [NSString stringWithFormat:SUREORDER,COMMON,model.userkey,model.goodsId,count,paywayCount,sing.addressId];
     NSLog(@"%@",path);

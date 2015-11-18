@@ -248,6 +248,7 @@
     stringmodel = model.orderId;
 }
 -(void)buttonPressed:(UIButton *)button{
+    
     if ([button.titleLabel.text isEqual: @"马上付款"]) {
       
         if (_delegate&&[_delegate respondsToSelector:@selector(baifubao:totalPrice:)]) {

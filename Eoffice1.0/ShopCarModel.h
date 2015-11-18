@@ -18,6 +18,7 @@
 @property (copy,nonatomic) NSString *cartId;
 @property (copy,nonatomic) NSString *cartImg;
 @property (copy,nonatomic) NSArray *version;
+@property (copy,nonatomic) NSString *maValue;
 
 
 +(ShopCarModel *)modelWithDic:(NSDictionary *)dic;
