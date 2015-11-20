@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol messagedelegate <NSObject>
+-(void)newaddressrelaod;
+@end
 @interface OrderAddressViewController : UIViewController
-
+@property(nonatomic,assign)id<messagedelegate>delegate;
 @end

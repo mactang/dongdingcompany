@@ -22,7 +22,7 @@
 @implementation OrderTableViewCell
 + (instancetype)cellWithTableView:(UITableView *)tableview
 {
-    static NSString *ID =@"Cell";
+    static NSString *ID =@"anotherCell";
     OrderTableViewCell *cell = [tableview dequeueReusableCellWithIdentifier:ID];
     if (cell == nil) {
         cell = [[OrderTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];

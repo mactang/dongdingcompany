@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderSuccessController : UIViewController
-
+@property(nonatomic,strong)NSMutableDictionary *dicmessage;
 @end

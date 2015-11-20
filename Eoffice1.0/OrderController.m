@@ -28,12 +28,13 @@
 #import "OrderTableViewCell.h"
 #import "CalculateStringSpace.h"
 #import "UIAlertView+AlerViewBlocks.h"
-@interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@interface OrderController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,messagedelegate>
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic,strong)UITextField *textField;
 @property(nonatomic,strong)NSMutableArray *datas;
 @property(nonatomic,strong)NSMutableArray *orderlist;
 @property(nonatomic,strong)NSString *totalprice;
+@property(nonatomic,strong)NSMutableDictionary *ordermessagedictionary;
 @end
 
 @implementation OrderController
@@ -47,10 +48,8 @@
     NSString *invoice;
     NSString *dispatch;
     NSString *paywayCount ;
-    NSString *addressH;
     NSInteger signsection;
-    
-    
+    BOOL sucess;
 }
 -(NSMutableArray *)datas{
     if (_datas == nil) {
@@ -66,21 +65,18 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    sucess = YES;
+    self.ordermessagedictionary = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     TarBarButton *ligthButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 50, 100)];
     [ligthButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
     UIImage *ligthImage = [UIImage imageNamed:@"youzhixiang"];
     [ligthButton setBackgroundImage:ligthImage forState:UIControlStateNormal];
     ligthButton.frame = CGRectMake(0, 0, 20, 20);
-    // [ligthButton setTitle:@"确认订单" forState:UIControlStateNormal];
-    // [ligthButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-   // ligthButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    // ligthButton.backgroundColor = [UIColor redColor];
-    
+ 
     UIBarButtonItem *lightItem2 = [[UIBarButtonItem alloc]initWithCustomView:ligthButton];
     [self.navigationItem setLeftBarButtonItem:lightItem2];
     self.navigationItem.title = @"确认订单";
-
     [self footviewinterface];
     [self orderlistrequest];
 }
@@ -93,6 +89,7 @@
     NSString *value2 = [ud objectForKey:@"dispatch"];
     if (value != nil) {
         payWay = value;
+        [self.ordermessagedictionary setValue:payWay forKey:@"payway"];
     }else{
     
         payWay = @"";
@@ -111,8 +108,6 @@
     }
     _currentNumber = 1;
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0,64, SCREEN_WIDTH, SCREEN_HEIGHT-70-64) style:UITableViewStyleGrouped];
-//   self.automaticallyAdjustsScrollViewInsets = NO;
-//   self.edgesForExtendedLayout = UIRectEdgeNone;
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
@@ -154,13 +149,14 @@
 - (void)leftItemClicked{
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [self.ordermessagedictionary setObject:payWay forKey:@"payway"];
     [ud setObject:payWay forKey:@"payWay"];
     [ud setObject:invoice forKey:@"invoice"];
     [ud setObject:dispatch forKey:@"dispatch"];
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
+   
     return self.orderlist.count +1;;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -182,7 +178,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section==0) {
-        if ([addressH isEqualToString: @"hight"]) {
+        if (self.datas.count==0) {
             return 50;
         }else{
             AddressModel *model = self.datas[signsection];
@@ -198,7 +194,6 @@
     return 0.5;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-   
     if (section!=0) {
         return nil;
     }
@@ -219,6 +214,7 @@
                 UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH/2-30, 20)];
                 lb1.font = [UIFont systemFontOfSize:14];
                 lb1.text = [NSString stringWithFormat:@"收货人:%@",model.receiver];
+                [self.ordermessagedictionary setObject:lb1.text forKey:@"receiver"];
                 [view addSubview:lb1];
                 
                 UILabel *lb2 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(lb1.frame), 10, SCREEN_WIDTH/2-25, 20)];
@@ -227,6 +223,7 @@
                     lb2.text=@"暂无";
                 }else{
                     lb2.text = [NSString stringWithFormat:@"手机号:%@",model.telphone];
+                    [self.ordermessagedictionary setObject:lb2.text forKey:@"phone"];
                 }
                 [view addSubview:lb2];
                 
@@ -236,6 +233,7 @@
                 addressLb.font = [UIFont systemFontOfSize:14];
                 addressLb.numberOfLines = 2;
                 addressLb.text = [NSString stringWithFormat:@"地址:%@",model.address];
+                [self.ordermessagedictionary setObject:addressLb.text forKey:@"address"];
                 view.frame = CGRectMake(0, 0, SCREEN_WIDTH, size.height+50);
                 [view addSubview:addressLb];
                 
@@ -267,7 +265,11 @@
 }
 -(void)headerbuttonPressed:(UIButton *)button{
     OrderAddressViewController *addre = [[OrderAddressViewController alloc]init];
+    addre.delegate=self;
     [self.navigationController pushViewController:addre animated:YES];
+}
+-(void)newaddressrelaod{
+    [self defaultAddress];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -298,17 +300,6 @@
             _textField.delegate = self;
             _textField.backgroundColor = [UIColor whiteColor];
             [cell addSubview:_textField];
-//            //7数字键盘回收
-//            //创建一个view作为inputAcceStoryView
-//            UIView *view = [[UIView alloc]init];
-//            view.frame = CGRectMake(0, 0, 0, 40);
-//            view.backgroundColor = [UIColor grayColor];
-//            _textField.inputAccessoryView = view;
-//            UIButton *backButton = [UIButton buttonWithType:UIButtonTypeSystem];
-//            backButton.frame = CGRectMake(10, 0, 100, 40);
-//            [backButton setTitle:@"收回键盘" forState:UIControlStateNormal];
-//            [backButton addTarget:self action:@selector(keyboardReturn:) forControlEvents:UIControlEventTouchUpInside];
-//            [view addSubview:backButton];
         }
         if (indexPath.row==3){
            cell.textLabel.text = @"邀请码";
@@ -346,11 +337,12 @@
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        [self.orderlist removeAllObjects];
         if (dic[@"data"] !=[NSNull null]) {
             self.totalprice = [NSString stringWithFormat:@"%@",dic[@"data"][@"total"]];
             totalPice.text = [NSString stringWithFormat:@"合计:￥%@",self.totalprice];
+            [self.ordermessagedictionary setObject:totalPice.text forKey:@"totalprice"];
             [self.orderlist addObjectsFromArray:dic[@"data"][@"list"]];
-            
         }
         [hud hide:YES];
         [self defaultAddress];
@@ -393,11 +385,11 @@
             }
 
         }
-        else{
-        addressH = @"hight";
-        }
         [hud hide:YES];
-        [self initerfacedata];
+        if (sucess) {
+            [self initerfacedata];
+        }
+        sucess = NO;
         [_tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
@@ -411,8 +403,6 @@
     signsection = [reglarText integerValue];
     NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
     [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    
 }
 - (void)selectedPayWay:(NSNotification *)notify{
     
@@ -440,9 +430,6 @@
     invoice = reglarText;
     NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:0];
     [self.tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    
-    
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
@@ -535,7 +522,6 @@
 - (void)sureOrder{
     
     SingleModel *sing = [SingleModel sharedSingleModel];
-    NSLog(@"%@",payWay);
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
@@ -557,6 +543,7 @@
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
         [hud hide:YES];
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+    
         if ([dic[@"status"] integerValue]==1) {
             if ([payWay isEqualToString:@"在线支付"]) {
                 PayViewController *pay = [[PayViewController alloc]init];
@@ -565,6 +552,7 @@
             }
             else{
                 OrderSuccessController *orderSucc = [[OrderSuccessController alloc]init];
+                orderSucc.dicmessage = self.ordermessagedictionary;
                 [self.navigationController pushViewController:orderSucc animated:YES];
             }
 
