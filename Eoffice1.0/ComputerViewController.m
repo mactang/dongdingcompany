@@ -20,7 +20,6 @@
 #import "UIKit+AFNetworking.h"
 #import "SingleModel.h"
 #import "detailsModel.h"
-#import "SDRefresh.h"
 #import "TarBarButton.h"
 #import "MJRefresh.h"
 #import "classifyDetailaModel.h"
@@ -34,9 +33,6 @@ static const CGFloat MJDuration = 2.0;
 @property (strong,nonatomic)UICollectionView *collectionView;
 
 @property (strong, nonatomic) NSMutableArray *datas;
-
-@property (nonatomic, weak) SDRefreshHeaderView *refreshHeader;
-
 
 @property (nonatomic, weak) UIImageView *animationView;
 @property (nonatomic, weak) UIImageView *boxView;
@@ -104,89 +100,19 @@ static const CGFloat MJDuration = 2.0;
         }];
     [self.view addSubview:_collectionView];
 
-    // 2.集成刷新控件
-    [self setupHeader];
-
 }
-- (void)setupHeader
-{
-    SDRefreshHeaderView *refreshHeader = [SDRefreshHeaderView refreshViewWithStyle:SDRefreshViewStyleCustom];
-    // 默认是在navigationController环境下，如果不是在此环境下，请设置 refreshHeader.isEffectedByNavigationController = NO;
-    [refreshHeader addToScrollView:self.collectionView];
-    _refreshHeader = refreshHeader;
-    
-    __weak SDRefreshHeaderView *weakRefreshHeader = refreshHeader;
-    refreshHeader.beginRefreshingOperation = ^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self  refreshdata];
-            [weakRefreshHeader endRefreshing];
-        });
-    };
-    
-    //normal状态执行的操作
-    refreshHeader.normalStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
-        refreshView.hidden = NO;
-        if (progress == 0) {
-            _animationView.transform = CGAffineTransformMakeScale(0.1, 0.1);
-            _boxView.hidden = NO;
-            _label.text = @"下拉加载数据";
-            [_animationView stopAnimating];
-        }
-        
-        self.animationView.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation(progress * 10, -20 * progress), CGAffineTransformMakeScale(progress, progress));
-        self.boxView.transform = CGAffineTransformMakeTranslation(- progress * 85, progress * 35);
-    };
-    
-    //willRefresh状态执行的操作
-    refreshHeader.willRefreshStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
-        _boxView.hidden = YES;
-        _label.text = @"放手刷新数据";
-        _animationView.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation(10, -20), CGAffineTransformMakeScale(1, 1));
-        NSArray *images = @[[UIImage imageNamed:@"deliveryStaff0"],
-                            [UIImage imageNamed:@"deliveryStaff1"],
-                            [UIImage imageNamed:@"deliveryStaff2"],
-                            [UIImage imageNamed:@"deliveryStaff3"]
-                            ];
-        _animationView.animationImages = images;
-        [_animationView startAnimating];
-    };
-    
-    //refreshing状态执行的操作
-    refreshHeader.refreshingStateOperationBlock = ^(SDRefreshView *refreshView, CGFloat progress){
-        _label.text = @"正在加载数据";
-        [UIView animateWithDuration:1.5 animations:^{
-            self.animationView.transform = CGAffineTransformMakeTranslation(200, -20);
-        }];
-    };
     // 动画view
-    UIImageView *animationView = [[UIImageView alloc] init];
-    animationView.frame = CGRectMake(30, 45, 40, 40);
-    animationView.image = [UIImage imageNamed:@"staticDeliveryStaff"];
-    [refreshHeader addSubview:animationView];
-    _animationView = animationView;
-    NSArray *images = @[[UIImage imageNamed:@"deliveryStaff0"],
-                        [UIImage imageNamed:@"deliveryStaff1"],
-                        [UIImage imageNamed:@"deliveryStaff2"],
-                        [UIImage imageNamed:@"deliveryStaff3"]
-                        ];
-    _animationView.animationImages = images;
-    UIImageView *boxView = [[UIImageView alloc] init];
-    boxView.frame = CGRectMake(150, 10, 15, 8);
-    boxView.image = [UIImage imageNamed:@"box"];
-    [refreshHeader addSubview:boxView];
-    _boxView = boxView;
-
-    UILabel *label= [[UILabel alloc] init];
-    label.frame = CGRectMake((self.view.bounds.size.width - 200) * 0.5, 5, 200, 20);
-    label.textColor = [UIColor grayColor];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textAlignment = NSTextAlignmentCenter;
-    [refreshHeader addSubview:label];
-    _label = label;
-    
-    // 进入页面自动加载一次数据
-//    [refreshHeader beginRefreshing];
-}
+//    UIImageView *animationView = [[UIImageView alloc] init];
+//    animationView.frame = CGRectMake(30, 45, 40, 40);
+//    animationView.image = [UIImage imageNamed:@"staticDeliveryStaff"];
+//    [refreshHeader addSubview:animationView];
+//    _animationView = animationView;
+//    NSArray *images = @[[UIImage imageNamed:@"deliveryStaff0"],
+//                        [UIImage imageNamed:@"deliveryStaff1"],
+//                        [UIImage imageNamed:@"deliveryStaff2"],
+//                        [UIImage imageNamed:@"deliveryStaff3"]
+//                        ];
+//}
 -(void)leftItemClicked{
     
     self.navigationController.navigationBar.translucent = YES;
@@ -199,7 +125,6 @@ static const CGFloat MJDuration = 2.0;
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *single = [SingleModel sharedSingleModel];
-    NSLog(@"single.name--%@",single.ids);
     NSString *path= [NSString stringWithFormat:COMPUTER,COMMON,single.ids,@"0"];
     NSLog(@"path--%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -207,9 +132,7 @@ static const CGFloat MJDuration = 2.0;
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
         [self.datas removeAllObjects];
         if (dic[@"data"] !=[NSNull null]){
         NSArray *array = dic[@"data"];
@@ -217,7 +140,6 @@ static const CGFloat MJDuration = 2.0;
         {
             detailsModel *model = [detailsModel modelWithDic:subDict];
             [self.datas addObject:model];
-            NSLog(@"model.name--%@",self.datas);
         }
         }
         [self initappreance];

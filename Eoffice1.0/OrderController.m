@@ -254,7 +254,6 @@
             [headerbutton addTarget:self action:@selector(headerbuttonPressed:) forControlEvents:UIControlEventTouchUpInside];
             [control addSubview:headerbutton];
         
-            
             UIImageView *_weiboContentTextView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-30, (widgetboundsHeight(view)-15)/2, 15, 15)];
             [_weiboContentTextView setImage:[UIImage imageNamed:@"youzhixiang"]];
             _weiboContentTextView.transform=CGAffineTransformMakeRotation(M_PI);

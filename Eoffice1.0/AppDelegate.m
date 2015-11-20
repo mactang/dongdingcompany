@@ -30,7 +30,6 @@
     // Override point for customization after application launch.
  
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-    
     [self setupViewControllers];
     [self.window setRootViewController:self.viewController];
     [self customizeInterface];
@@ -119,6 +118,7 @@
     RDVTabBarController *tabBarController = [[RDVTabBarController alloc] init];
     [tabBarController setViewControllers:@[MainNavigationController, secondNavigationController,
                                            thirdNavigationController]];
+    
     self.viewController = tabBarController;
     
     [self customizeTabBarForController:tabBarController];

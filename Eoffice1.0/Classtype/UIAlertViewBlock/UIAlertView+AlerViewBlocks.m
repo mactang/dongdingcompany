@@ -14,22 +14,6 @@ static alerBlocks _alertViewBlocks;
 
 @implementation UIAlertView (AlerViewBlocks)
 
-//+ (void)showMsgWithTitle:(NSString *)title
-//                     promptmessage:(NSString *)promptmessage
-//                 confirm:(NSString *)confirm
-//                  cancel:(NSString *)cancel blocks:(void (^)(NSInteger))blocks {
-//    
-//    _alertViewBlocks = [blocks copy];
-//    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title message:promptmessage delegate:self cancelButtonTitle:confirm otherButtonTitles:cancel, nil];
-//
-////    for (int i=0; i<confirm.count; i++) {
-////        [alertView addButtonWithTitle:confirm[i]];
-////    }
-//    [alertView show];
-//    
-//}
-//
-
 +(void)errorcode:(NSInteger)code blocks:(void (^)(NSInteger index))blocks{
     NSString *messagestring;
     if (code==-1004) {

@@ -57,7 +57,6 @@
     
     [self setTabBarHidden:self.isTabBarHidden animated:NO];
 }
-
 - (NSUInteger)supportedInterfaceOrientations {
     UIInterfaceOrientationMask orientationMask = UIInterfaceOrientationMaskAll;
     for (UIViewController *viewController in [self viewControllers]) {

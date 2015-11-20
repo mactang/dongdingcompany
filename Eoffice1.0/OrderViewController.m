@@ -68,7 +68,11 @@
     }
     return self;
 }
-
+-(void)setSucess:(BOOL)sucess{
+    if (sucess) {
+        [self classifyData];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     testarray = [NSMutableArray array];
@@ -193,6 +197,7 @@
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"%@",dic);
         [self.classifyDatas removeAllObjects];
         [testarray removeAllObjects];
         if (dic[@"data"] !=[NSNull null]){
@@ -475,10 +480,11 @@
   
     if (model.userkey == nil) {
         self.navigationController.navigationBarHidden = YES;
-        login = [[LoginViewController alloc]init];
-         login.delegate = self;
-        [self.view addSubview:login.view];
-       
+        if (!login) {
+            login = [[LoginViewController alloc]init];
+            login.delegate = self;
+            [self.view addSubview:login.view];
+        }
     }
     if (model.userkey != nil) {
         [login.view removeFromSuperview];
@@ -612,12 +618,4 @@
     
     [super viewWillDisappear:animated];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-
 @end

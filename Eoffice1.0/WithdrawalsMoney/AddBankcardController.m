@@ -117,7 +117,7 @@
          [self datarequest];
         return;
     }
-    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:messagestring delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:messagestring delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [alertview show];
 //    UIWebView  *payWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH/7.8, SCREEN_WIDTH, SCREEN_HEIGHT-SCREEN_WIDTH/7.8)];
 //    payWebView.layer.anchorPoint = CGPointMake(0.5, 0.5);
@@ -152,7 +152,7 @@
         else{
             string = @"添加失败";
         }
-        alterview  =[[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        alterview  =[[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alterview show];
         [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

@@ -163,7 +163,6 @@
 //                                  @"https://ss0.baidu.com/-Po3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=a41eb338dd33c895a62bcb3bb72e47c2/5fdf8db1cb134954a2192ccb524e9258d1094a1e.jpg",
 //                                  @"http://c.hiphotos.baidu.com/image/w%3D400/sign=c2318ff84334970a4773112fa5c8d1c0/b7fd5266d0160924c1fae5ccd60735fae7cd340d.jpg"
 //                                  ];
-    
     //网络加载 --- 创建带标题的图片轮播器
     SDCycleScrollView *cycleScrollView2 = [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(12, 80, SCREEN_WIDTH-24,SCREEN_WIDTH/2-30) imageURLStringsGroup:nil]; // 模拟网络延时情景
     cycleScrollView2.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
@@ -364,25 +363,7 @@
     
 }
 - (void)viewWillAppear:(BOOL)animated{
-    
+    self.navigationController.navigationBarHidden = YES;
     [super viewWillAppear:animated];
-    
- 
-    
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
