@@ -58,9 +58,10 @@
 #import "CMDimageTableViewCell.h"
 
 #import "ShopCarModel.h"
+#import "RegisterViewController.h"
 
 #define kWidthOfScreen [UIScreen mainScreen].bounds.size.width
-@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate,sharedelegate>
+@interface CMDetailsViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,MenuPopoverDelegate,UMSocialUIDelegate,logindelegate,sharedelegate,ShoppingCarControllerDeledate,registerdelegate>
 
 @property(nonatomic,strong)UITableView *tableView;
 @property(nonatomic, strong)UIImageView *immgeView;
@@ -254,12 +255,18 @@
     
     _numberbutton = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
     _numberbutton.titleLabel.font = [UIFont systemFontOfSize:10];
-    [_numberbutton setTitle:@"0" forState:UIControlStateNormal];
+   // [_numberbutton setTitle:@"0" forState:UIControlStateNormal];
     _numberbutton.clipsToBounds = YES;
     _numberbutton.layer.cornerRadius = 10;
     [_numberbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _numberbutton.backgroundColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:0/255.0 alpha:1];
-    [_carView addSubview:_numberbutton];
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey !=nil) {
+        
+        [_carView addSubview:_numberbutton];
+        
+    }
+  
     
     UIButton *InShopBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shopCarBtn.frame)+8, 5, 120, 40)];
     [InShopBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
@@ -700,6 +707,8 @@
     }
     else{
         ShoppingCarController *shopcart = [[ShoppingCarController alloc]init];
+        shopcart.shopNumber = @"relead";
+        shopcart.delegate = self;
         [self.navigationController pushViewController:shopcart animated:YES];
         
     }
@@ -708,10 +717,21 @@
     
     [login.navigationController popViewControllerAnimated:NO];
     ShoppingCarController *shopcart = [[ShoppingCarController alloc]init];
+    shopcart.delegate = self;
     [self.navigationController pushViewController:shopcart animated:YES];
     
     
 }
+-(void)releadCartNumber{
+    [self.cartCount removeAllObjects];
+    [self cartCountData];
+}
+-(void)toRegister{
+    self.navigationController.navigationBarHidden = YES;
+    RegisterViewController *registerview = [[RegisterViewController alloc]init];
+    [self.navigationController pushViewController:registerview animated:YES];
+}
+
 //-(void)btnPress:(UIButton *)btn{
 //    
 //    if (btn.tag == 1001) {
@@ -732,7 +752,14 @@
 //}
 - (void)viewWillAppear:(BOOL)animated{
     
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey !=nil) {
+        
+        [_carView addSubview:_numberbutton];
+        
+    }
     [super viewWillAppear:animated];
+    
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
 }
 - (void)viewWillDisappear:(BOOL)animated {

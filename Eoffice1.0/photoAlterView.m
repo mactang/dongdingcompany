@@ -108,17 +108,17 @@
         
         [self.rightbtn setTitle:rigthTitle forState:UIControlStateNormal];
         [self.rightbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.rightbtn.backgroundColor = [UIColor redColor];
+        self.rightbtn.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         [self.leftbtn setTitle:leftTitle forState:UIControlStateNormal];
         
-        [self.leftbtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [self.leftbtn setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
         self.leftbtn.titleLabel.font = self.rightbtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         
         [self.leftbtn addTarget:self action:@selector(leftbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
         [self.rightbtn addTarget:self action:@selector(rightbtnclicked:) forControlEvents:UIControlEventTouchUpInside];
         self.leftbtn.layer.masksToBounds = self.rightbtn.layer.masksToBounds = YES;
         self.leftbtn.layer.cornerRadius = self.rightbtn.layer.cornerRadius = 3.0;
-        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor redColor] CGColor];
+        self.leftbtn.layer.borderColor = self.rightbtn.layer.borderColor = [[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] CGColor];
         self.leftbtn.layer.borderWidth = self.rightbtn.layer.borderWidth = 1;
         
         [self addSubview:self.leftbtn];
@@ -160,12 +160,12 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row == 0) {
         
-        UILabel *bl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
-        bl.backgroundColor = [UIColor redColor];
-        bl.font = [UIFont systemFontOfSize:20];
-        [bl setText:@"  4008888888"];
-        [bl setTextColor:[UIColor whiteColor]];
-        [cell addSubview:bl];
+        UILabel *phoneBl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
+        phoneBl.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
+        phoneBl.font = [UIFont systemFontOfSize:20];
+        [phoneBl setText:[NSString stringWithFormat:@"  %@",_phoneNumber]];
+        [phoneBl setTextColor:[UIColor whiteColor]];
+        [cell addSubview:phoneBl];
     }
     
     return cell;

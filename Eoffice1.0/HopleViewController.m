@@ -11,6 +11,7 @@
 #import "photoAlterView.h"
 #import "SingleModel.h"
 #import "AFNetworking.h"
+#import "LetfWordButton.h"
 @interface HopleViewController ()<UITextViewDelegate>
 
 @end
@@ -20,6 +21,7 @@
     UITextView *TextView;
     UILabel *LB;
     NSString *phoneSure;
+    LetfWordButton *photoBtn;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -43,17 +45,14 @@
     titleLB.textColor = [UIColor blackColor];
     [telePhone addSubview:titleLB];
     
-    UIButton *photoBtn = [[UIButton alloc]initWithFrame:CGRectMake(180, 10, 120, 40)];
+    
+    photoBtn = [[LetfWordButton alloc]initWithFrame:CGRectMake(180, 15, 120, 40)];
     [photoBtn setTitle:@"400888888" forState:UIControlStateNormal];
+    [photoBtn setImage:[UIImage imageNamed:@"dianhua"] forState:UIControlStateNormal];
     photoBtn.font = [UIFont systemFontOfSize:18];
     [photoBtn setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
     [photoBtn addTarget:self action:@selector(photoPress) forControlEvents:UIControlEventTouchUpInside];
     [telePhone addSubview:photoBtn];
-    
-    UIButton *photoBtn1 = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoBtn.frame)-10, 20, 20, 20)];
-    [photoBtn1 setImage:[UIImage imageNamed:@"dianhua"] forState:UIControlStateNormal];
-    [telePhone addSubview:photoBtn1];
-    
     
     
     UIView *idealPhone = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(telePhone.frame)+15, 320, 310)];
@@ -102,6 +101,7 @@
 }
 -(void)photoPress{
     photoAlterView *alter=[[photoAlterView alloc]initWithTitle:nil leftButtonTitle:@"取消" rightButtonTitle:@"确定"];
+    alter.phoneNumber = photoBtn.titleLabel.text ;
     alter.rightBlock=^()
     {
         NSLog(@"右边按钮被点击");

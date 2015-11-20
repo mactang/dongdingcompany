@@ -18,6 +18,6 @@
 @property (nonatomic, copy) dispatch_block_t rightBlock;
 //点击左右按钮都会触发该消失的block
 @property (nonatomic, copy) dispatch_block_t dismissBlock;
-
+@property (nonatomic, strong)NSString *phoneNumber;
 +(photoAlterView*)showmessage:(NSString *)message subtitle:(NSString *)subtitle cancelbutton:(NSString *)cancle;
 @end
