@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 @protocol ShoppingCarControllerDeledate<NSObject>
 -(void)allSelected:(UITableView *)tableView;
+-(void)releadCartNumber;
 @end
 @interface ShoppingCarController : UIViewController
+@property(nonatomic,strong)NSString *shopNumber;
 @property(nonatomic,assign)id<ShoppingCarControllerDeledate>delegate;
 @end

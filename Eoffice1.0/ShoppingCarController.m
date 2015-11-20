@@ -114,8 +114,7 @@
     
     contacts = [NSMutableArray array];
     totalPrice = [NSMutableArray array];
-    otherAllTotal = 0;
-    choosePriceAll = 0;
+   
     cellarraydata = [NSMutableArray array];
     totoalArray = [NSMutableArray array];
     totoalCount = [NSMutableArray array];
@@ -136,13 +135,12 @@
     
     remainRow = [NSMutableArray array];
     
-    invoiceSelector = 0;
+    
     isAllDelete = NO;
-    total = 0;
-    onAllChoosePrice = 0;
+    
     onAllChoose = NO;
     
-    isAllChoose = 0;
+    
     numberIndex = [NSMutableArray array];
     DeleteRow = [NSMutableArray array];
     UIButton *ligthButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -308,11 +306,10 @@
             isDeleteText = YES;
             NSLog(@"choosePriceAll--%f",choosePriceAll);
             NSLog(@"totalEvery--%f",totalEvery);
-            otherAllTotal = 0;
+            
             totoalBL.text = @"";
             
-            totalEvery = 0;
-            choosePriceAll = 0;
+            
             
             
             for (int i = 0; i<isCheck.count; i++) {
@@ -549,6 +546,14 @@
 
 - (void)leftItemClicked{
     
+    NSLog(@"%@",_shopNumber);
+    
+    if ([_shopNumber isEqualToString:@"relead"]) {
+        if (_delegate &&[_delegate respondsToSelector:@selector(releadCartNumber)]) {
+            [_delegate releadCartNumber];
+            
+        }
+    }
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];
     
@@ -605,14 +610,14 @@
             totoalBL.text = [NSString stringWithFormat:@"%.2f",totalEvery];
             
             onAllChoose = NO;
-            onAllChoosePrice = 0;
+            
         }else{
             
             totoalBL.text = [NSString stringWithFormat:@"%.2f",totalEvery];
             
             
         }
-        otherAllTotal = 0;
+        
     }else{
         for (NSDictionary *dic in contacts) {
             [dic setValue:@"NO" forKey:@"checked"];
@@ -659,9 +664,7 @@
                 
             }
             NSLog(@"%@",totoalArray);
-            total = 0;
-            everyCount = 0;
-            totalEvery = 0;
+            
             [cartIdArray removeAllObjects];
             for (int i = 0; i<totoalArray.count; i++) {
                 
@@ -929,7 +932,7 @@
     
     isAllChoose = isAllChoose +m;
     NSLog(@"isAllChoose***%d",isAllChoose);
-    onAllChoosePrice = 0;
+    
     
 }
 
@@ -949,15 +952,13 @@
         
         onAllChoosePrice = onAllChoosePrice - m;
         
-        if (onAllChoosePrice<=0) {
-            onAllChoosePrice = 0;
-        }
+        
         NSLog(@"isAllChoose***%d",isAllChoose);
         NSLog(@"totalEvery***%f",totalEvery);
         if (isAllChoose == totalEvery) {
             allBtn.selected = YES;
         }
-        otherAllTotal = 0;
+        
         
         
     }else{
@@ -1014,8 +1015,7 @@
 
 -(void)versionPress:(UIButton *)btn{
     
-    goodId = versionGoodId[(btn.tag-10)/2];
-    cartIdTwo = versionCartId[(btn.tag-10)/2];
+    
     
     if (versionSelectButton == btn) {
         return;
@@ -1196,23 +1196,9 @@
 }
 
 - (void)isPublicBtnPress:(UIButton*)btn{
-    NSLog(@"%ld",(long)btn.tag);
     
-    NSArray *anArrayOfIndexPath = [NSArray arrayWithArray:[_tableView indexPathsForVisibleRows]];
     
-    NSIndexPath *indexPath= [anArrayOfIndexPath objectAtIndex:btn.tag];
     
-    ShopCarCell *cell = (ShopCarCell*)[_tableView cellForRowAtIndexPath:indexPath];
-    
-    NSUInteger row = [indexPath row];
-    NSMutableDictionary *dic = [contacts objectAtIndex:row];
-    if ([[dic objectForKey:@"checked"] isEqualToString:@"NO"]) {
-        [dic setObject:@"YES" forKey:@"checked"];
-        [cell setChecked:YES];
-    }else {
-        [dic setObject:@"NO" forKey:@"checked"];
-        [cell setChecked:NO];
-    }
     
     
     ShopCarModel *model = self.datas[btn.tag];

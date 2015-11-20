@@ -98,6 +98,7 @@
     
     [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
         sender.enabled = NO;
+        
         [self valiData];
         [sender startWithSecond:60];
         
@@ -186,6 +187,9 @@
 //    [self dismissViewControllerAnimated:NO completion:^{
 //       
 //    }];
+    if (_detaliCome) {
+        
+    }
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -247,6 +251,7 @@
         text_field.tag = VERIFICATION;
         text_field.clearButtonMode = UITextFieldViewModeNever;
         text_field.placeholder = @"请输入手机号码";
+        text_field.keyboardType = UIKeyboardTypeNumberPad;
         iconImageView.image = [UIImage imageNamed:@"图层-11"];
         
     }
@@ -254,6 +259,7 @@
     {
         text_field.text = @"";
         text_field.tag = 1004;
+        text_field.keyboardType = UIKeyboardTypeNumberPad;
         text_field.placeholder = @"请输入验证码";
         iconImageView.image = [UIImage imageNamed:@"图层-12"];
         

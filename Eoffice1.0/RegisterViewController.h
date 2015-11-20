@@ -20,5 +20,5 @@
     
 }
 @property(nonatomic,assign)id<registerdelegate>delegate;
-
+@property(nonatomic,strong)NSString *detaliCome;
 @end
