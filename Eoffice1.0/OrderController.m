@@ -145,10 +145,10 @@
     [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn3.titleLabel.font = [UIFont systemFontOfSize:20];
     [headerview addSubview:btn3];
-//
-//    [self.tableView beginUpdates];
-//    [self.tableView setTableHeaderView:headerview];
-//    [self.tableView endUpdates];
+    
+//  [self.tableView beginUpdates];
+//  [self.tableView setTableHeaderView:headerview];
+//  [self.tableView endUpdates];
 
 }
 - (void)leftItemClicked{
@@ -346,9 +346,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {//block里面：第一个参数：是默认参数  第二个参数：得到的数据
-        
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
         if (dic[@"data"] !=[NSNull null]) {
             self.totalprice = [NSString stringWithFormat:@"%@",dic[@"data"][@"total"]];
             totalPice.text = [NSString stringWithFormat:@"合计:￥%@",self.totalprice];
@@ -361,7 +359,6 @@
         [hud hide:YES];
         NSLog(@"%@",error);
     }];
-
 }
 #pragma mark 地址网络请求
 - (void)defaultAddress{
@@ -577,40 +574,21 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
         NSLog(@"%@",error);
-        if (error.code==-1004) {
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接服务器失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-                [self sureOrder];
-            }];
-            
-        }
-        if (error.code==-1001) {
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
+        [UIAlertView errorcode:error.code blocks:^(NSInteger index) {
             [self sureOrder];
-            }];
-            
-        }
-        if (error.code==-1005) {
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"网络连接失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-            [self sureOrder];
-            }];
-            
-        }
-
-    }];
-    
+        }];
+     }];
 }
 - (void)viewWillAppear:(BOOL)animated{
     
-    
     [super viewWillAppear:animated];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedPayWay:) name:@"payway" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedDispatch:) name:@"dispatch" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedinvoice:) name:@"invoice" object:nil];
     
      self.navigationController.navigationBarHidden = NO;
-    //  self.parentViewController.tabBarController.tabBar.hidden = YES;
-    //   [(BottonTabBarController*)self.tabBarController hideTabBar:YES];
+    // self.parentViewController.tabBarController.tabBar.hidden = YES;
+    // [(BottonTabBarController*)self.tabBarController hideTabBar:YES];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedRegular:) name:@"selectedAddress" object:nil];
     

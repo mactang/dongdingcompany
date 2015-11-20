@@ -166,26 +166,9 @@
         [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [hud hide:YES];
-        if (error.code==-1004) {
-            
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接服务器失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-                [self data];
-            }];
-            
-        }
-        if (error.code==-1001) {
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"连接超时" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-                [self data];
-            }];
-        }
-        if (error.code==-1005) {
-            
-            [UIAlertView showMsgWithTitle:@"温馨提示" promptmessage:@"网络连接失败" confirm:@"点击重试" cancel:@"取消" blocks:^(NSInteger index) {
-                [self data];
-            }];
-            
-        }
-
+        [UIAlertView errorcode:error.code blocks:^(NSInteger index) {
+            [self data];
+        }];
     }];
 }
 -(void)imageviewdata:(UIButton *)buttonframe{
