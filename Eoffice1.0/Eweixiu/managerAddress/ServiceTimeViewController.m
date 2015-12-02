@@ -11,6 +11,7 @@
 #import "ButtonHeaderController.h"
 #import "MapChooseViewController.h"
 #import "DataPickerView.h"
+#import "OrederConfirmViewController.h"
 @interface ServiceTimeViewController ()<UITableViewDataSource,UITableViewDelegate,AppointmentDelegate,UITextViewDelegate>{
     UITableView *_tableview;
     UILabel *textlabel;
@@ -23,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
-     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     TarBarButton *leftButton = [[TarBarButton alloc]initWithFrame:CGRectMake(0, 0, 40, 30)];
     [leftButton addTarget:self action:@selector(leftItemClicked) forControlEvents:UIControlEventTouchUpInside];
     UIImage *ligthImage = [UIImage imageNamed:@"zuo"];
@@ -45,8 +46,7 @@
     _tableview.scrollEnabled = NO;
 //  _tableview.showsVerticalScrollIndicator =
 //    NO;
-    
-//    _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+//  _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableview.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     [_tableview registerClass:[ButtonHeaderController class] forHeaderFooterViewReuseIdentifier:@"Myheader"];
     [self.view addSubview:_tableview];
@@ -185,7 +185,8 @@
     }
 }
 -(void)chooseAddressed{
-    
+    OrederConfirmViewController *orederconfirm = [[OrederConfirmViewController alloc]init];
+    [self.navigationController pushViewController:orederconfirm animated:YES];
 }
 - (void)setExtraCellLineHidden: (UITableView *)tableView
 {

@@ -238,7 +238,6 @@
 }
 - (void)isPublicBtnPress:(UIButton*)btn{
     payWayMark = btn.tag;
-    
     UIButton *button = (UIButton *)[self.view viewWithTag:100];
     button.selected = NO;
     selectButton.selected = NO;

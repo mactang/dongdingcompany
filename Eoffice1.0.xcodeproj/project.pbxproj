@@ -373,6 +373,10 @@
 		96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D0E1B943F1500C0F1F5 /* OrderStateModel.m */; };
 		96A70D141B943FCD00C0F1F5 /* PhoneReviseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D131B943FCD00C0F1F5 /* PhoneReviseViewController.m */; };
 		96A70D171B94400000C0F1F5 /* BBBadgeBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A70D161B94400000C0F1F5 /* BBBadgeBarButtonItem.m */; };
+		96A903011C0E8FFB0000DD59 /* OrederConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A903001C0E8FFB0000DD59 /* OrederConfirmViewController.m */; };
+		96A903041C0EC3690000DD59 /* OrderConfrimTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A903031C0EC3690000DD59 /* OrderConfrimTableViewCell.m */; };
+		96A903071C0ED4950000DD59 /* OrderPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A903061C0ED4950000DD59 /* OrderPayViewController.m */; };
+		96A9030A1C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A903091C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m */; };
 		96A993FF1C0408380082F05D /* TheSameHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A993FE1C0408380082F05D /* TheSameHeaderView.m */; };
 		96A994021C0412080082F05D /* TheSameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A994011C0412080082F05D /* TheSameTableViewCell.m */; };
 		96A994061C0434C60082F05D /* OfficeEequipmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A994051C0434C60082F05D /* OfficeEequipmentViewController.m */; };
@@ -975,6 +979,14 @@
 		96A70D131B943FCD00C0F1F5 /* PhoneReviseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneReviseViewController.m; sourceTree = "<group>"; };
 		96A70D151B943FF600C0F1F5 /* BBBadgeBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBBadgeBarButtonItem.h; sourceTree = "<group>"; };
 		96A70D161B94400000C0F1F5 /* BBBadgeBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBBadgeBarButtonItem.m; sourceTree = "<group>"; };
+		96A902FF1C0E8FFB0000DD59 /* OrederConfirmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrederConfirmViewController.h; sourceTree = "<group>"; };
+		96A903001C0E8FFB0000DD59 /* OrederConfirmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrederConfirmViewController.m; sourceTree = "<group>"; };
+		96A903021C0EC3690000DD59 /* OrderConfrimTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderConfrimTableViewCell.h; sourceTree = "<group>"; };
+		96A903031C0EC3690000DD59 /* OrderConfrimTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderConfrimTableViewCell.m; sourceTree = "<group>"; };
+		96A903051C0ED4950000DD59 /* OrderPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderPayViewController.h; sourceTree = "<group>"; };
+		96A903061C0ED4950000DD59 /* OrderPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPayViewController.m; sourceTree = "<group>"; };
+		96A903081C0EE38A0000DD59 /* ChoosePayWayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoosePayWayTableViewCell.h; sourceTree = "<group>"; };
+		96A903091C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoosePayWayTableViewCell.m; sourceTree = "<group>"; };
 		96A993FD1C0408380082F05D /* TheSameHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TheSameHeaderView.h; path = ../TheSameHeaderView.h; sourceTree = "<group>"; };
 		96A993FE1C0408380082F05D /* TheSameHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TheSameHeaderView.m; path = ../TheSameHeaderView.m; sourceTree = "<group>"; };
 		96A994001C0412080082F05D /* TheSameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TheSameTableViewCell.h; path = ../TheSameTableViewCell.h; sourceTree = "<group>"; };
@@ -2282,9 +2294,25 @@
 			path = "Release-composeLib";
 			sourceTree = "<group>";
 		};
+		96A902FE1C0E8F8E0000DD59 /* orderallcontroller */ = {
+			isa = PBXGroup;
+			children = (
+				96A902FF1C0E8FFB0000DD59 /* OrederConfirmViewController.h */,
+				96A903001C0E8FFB0000DD59 /* OrederConfirmViewController.m */,
+				96A903021C0EC3690000DD59 /* OrderConfrimTableViewCell.h */,
+				96A903031C0EC3690000DD59 /* OrderConfrimTableViewCell.m */,
+				96A903051C0ED4950000DD59 /* OrderPayViewController.h */,
+				96A903061C0ED4950000DD59 /* OrderPayViewController.m */,
+				96A903081C0EE38A0000DD59 /* ChoosePayWayTableViewCell.h */,
+				96A903091C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m */,
+			);
+			path = orderallcontroller;
+			sourceTree = "<group>";
+		};
 		96A993FC1C0402290082F05D /* Eweixiu */ = {
 			isa = PBXGroup;
 			children = (
+				96A902FE1C0E8F8E0000DD59 /* orderallcontroller */,
 				96C1B58B1C08262A009F55C9 /* LoginController */,
 				96C1B58A1C080078009F55C9 /* managerAddress */,
 				96380D671C0705500093F4EA /* mapapi.bundle */,
@@ -2802,6 +2830,7 @@
 				96821FCB1B8AF5DC00EC7276 /* CityChooseView.m in Sources */,
 				96B689D01C054F350036213A /* SoftTariffViewController.m in Sources */,
 				619FCCE11B86C6890075A0AA /* AddressDetailModel.m in Sources */,
+				96A903041C0EC3690000DD59 /* OrderConfrimTableViewCell.m in Sources */,
 				615B29A01B4FB22B004E7546 /* BottonTabBarController.m in Sources */,
 				969E18F31BAE826E001DE59E /* OrderTableViewCell.m in Sources */,
 				615B29CA1B4FB3B5004E7546 /* UIView_extra.m in Sources */,
@@ -2837,6 +2866,7 @@
 				61068A781B5C9DC3008BE40A /* InvoiceAlterView.m in Sources */,
 				96B689E11C0587680036213A /* ButtonHeaderController.m in Sources */,
 				96A993FF1C0408380082F05D /* TheSameHeaderView.m in Sources */,
+				96A903011C0E8FFB0000DD59 /* OrederConfirmViewController.m in Sources */,
 				969E1EA01BC790D400CD9D02 /* CJSONSerialization.m in Sources */,
 				61793A7A1B54A8EE00CFD83A /* JHCellConfig.m in Sources */,
 				9689F7D81BCE5C1D0006954B /* CurrentrecordCell.m in Sources */,
@@ -2848,6 +2878,7 @@
 				61E971161B7367A1007F42B6 /* detailsModel.m in Sources */,
 				96B689ED1C05AC6E0036213A /* MechanicalTableViewCell.m in Sources */,
 				615B29BB1B4FB27A004E7546 /* MaintainController.m in Sources */,
+				96A9030A1C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m in Sources */,
 				61793A7E1B54AB2700CFD83A /* GeneralDetailViewController.m in Sources */,
 				96B689CD1C054ECE0036213A /* LANTariffViewController.m in Sources */,
 				96FFEE831BB9259400A22D78 /* AllorderviewCell.m in Sources */,
@@ -2915,6 +2946,7 @@
 				969E1EA91BC790D400CD9D02 /* CJSONSerializer.m in Sources */,
 				61A1FFEE1B67A1BD00AFC8C2 /* ShoppingCarController.m in Sources */,
 				61AD52DC1B579E3C0037FED8 /* MenuPopover.m in Sources */,
+				96A903071C0ED4950000DD59 /* OrderPayViewController.m in Sources */,
 				969E1E9D1BC790D400CD9D02 /* CDataScanner.m in Sources */,
 				61AD52D21B577C350037FED8 /* OrderController.m in Sources */,
 				969E1EA71BC790D400CD9D02 /* CJSONDeserializer.m in Sources */,
