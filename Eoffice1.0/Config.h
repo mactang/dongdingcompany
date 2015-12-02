@@ -37,6 +37,9 @@
 #define PASSWORD_ICON 1025
 #define SET_TXT 1030
 
+/**加载nib文件*/
+#define LOAD_NIB(_NibName_) [[NSBundle mainBundle] loadNibNamed:_NibName_ owner:nil options:nil][0]
+
 //用户注册界面
 #define VERIFICATION 1010
 

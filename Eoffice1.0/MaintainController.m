@@ -18,6 +18,8 @@
 #import "LANmaintenanceViewController.h"
 #import "MechanicalViewController.h"
 #import "OtherServicesViewController.h"
+#import "CommonAddressViewController.h"
+
 @interface MaintainController ()
 
 @end
@@ -100,8 +102,11 @@
         }
             break;
         case 6:{
-            OtherServicesViewController *otherServices = [[OtherServicesViewController alloc]init];
-            [self.navigationController pushViewController:otherServices animated:YES];
+//            OtherServicesViewController *otherServices = [[OtherServicesViewController alloc]init];
+//            [self.navigationController pushViewController:otherServices animated:YES];
+            CommonAddressViewController *commonAddress =[[CommonAddressViewController alloc]init];
+            [self.navigationController pushViewController:commonAddress animated:YES];
+            
         }
             break;
         default:
