@@ -87,6 +87,8 @@
 
 #define SUREORDER @"%@order!goodsCommit.action?userkey=%@&goodsId=%@&count=%@&payway=%@&id=%@"
 
+//phone/ordser!wbasketCommit.action?userkey=?&recommendCode=?&ids=?&payway=?&id=?&invoice=?total=?&remark=?
+
 //收货地址
 #define ADDRESS @"%@order!addressList.action?userkey=%@"
 #define ADDRESSDELTE @"%@order!delAddress.action?id=%@"

@@ -53,7 +53,6 @@
 - (id)initWithFrame:(CGRect)frame menuItems:(NSArray *)aMenuItems
 {
     self = [super initWithFrame:frame];
-    
     if (self)
     {
         NSLog(@"%@",self.dic)
@@ -394,7 +393,6 @@
   }
 }
 -(NSInteger)numBtnPress:(UIButton *)btn{
-    
     
     if (btn.tag ==1) {
         if (_currentNumber>1) {

@@ -63,6 +63,24 @@
     }
     return _orderlist;
 }
+-(void)setShopCartId:(NSString *)shopCartId{
+    if (!_shopCartId) {
+        _shopCartId = [NSString string];
+        _shopCartId = shopCartId;
+    }
+    else{
+        _shopCartId = shopCartId;
+    }
+}
+-(void)setGoodsId:(NSString *)goodsId{
+    if (!_goodsId) {
+        _goodsId = [NSString string];
+        _goodsId = goodsId;
+    }
+    else{
+        _goodsId = goodsId;
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     sucess = YES;
@@ -175,7 +193,6 @@
     }
     return 90;
 }
-
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section==0) {
         if (self.datas.count==0) {
@@ -534,7 +551,6 @@
     
         paywayCount = @"1";
     }
-    
     NSString *count = [NSString stringWithFormat:@"%d",_currentNumber];
     NSString *path= [NSString stringWithFormat:SUREORDER,COMMON,model.userkey,model.goodsId,count,paywayCount,sing.addressId];
     NSLog(@"%@",path);

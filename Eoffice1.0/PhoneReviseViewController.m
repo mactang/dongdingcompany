@@ -11,7 +11,7 @@
 #import "SingleModel.h"
 #import "AFNetworking.h"
 #import "Mobliejudge.h"
-@interface PhoneReviseViewController ()
+@interface PhoneReviseViewController ()<UITextFieldDelegate>
 @property(nonatomic,strong)UILabel *phoneField;
 @end
 
@@ -63,7 +63,7 @@
     _countDownCode.layer.cornerRadius = 3;
     _countDownCode.layer.borderColor = [[UIColor grayColor]CGColor];
     _countDownCode.layer.borderWidth = 1;
-    _countDownCode.font = [UIFont systemFontOfSize:10];
+    _countDownCode.titleLabel.font = [UIFont systemFontOfSize:10];
     [self.view addSubview:_countDownCode];
     
     [_countDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
@@ -105,7 +105,7 @@
     newValidateLB.text = @"新手机号码:";
     newValidateLB.textColor = [UIColor blackColor];
     [self.view addSubview:newValidateLB];
-    
+
     newPhoneField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(validateField.frame)+25, 155, 30)];
     newPhoneField.backgroundColor = [UIColor whiteColor];
     newPhoneField.clipsToBounds = YES;
@@ -127,7 +127,7 @@
     _newCountDownCode.layer.cornerRadius = 3;
     _newCountDownCode.layer.borderColor = [[UIColor grayColor]CGColor];
     _newCountDownCode.layer.borderWidth = 1;
-    _newCountDownCode.font = [UIFont systemFontOfSize:10];
+    _newCountDownCode.titleLabel.font = [UIFont systemFontOfSize:10];
     [self.view addSubview:_newCountDownCode];
     
     [_newCountDownCode addToucheHandler:^(CountDownButton*sender, NSInteger tag) {
@@ -165,7 +165,7 @@
     newNalidateLB.text = @"验证码：";
     newNalidateLB.textColor = [UIColor blackColor];
     [self.view addSubview:newNalidateLB];
-    
+ 
     newNalidateField = [[UITextField alloc]initWithFrame:CGRectMake(CGRectGetMaxX(newValidateLB.frame), CGRectGetMaxY(newValidateLB.frame)+23, 155, 30)];
     newNalidateField.backgroundColor = [UIColor whiteColor];
     newNalidateField.clipsToBounds = YES;
@@ -182,7 +182,7 @@
     sureButton.clipsToBounds = YES;
     sureButton.layer.cornerRadius = 5;
     
-    sureButton.font = [UIFont systemFontOfSize:15];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:15];
     
     [sureButton addTarget:self action:@selector(surePress) forControlEvents:UIControlEventTouchUpInside];
     [sureButton setTitle:@"确定" forState:UIControlStateNormal];
@@ -303,41 +303,53 @@
     [self phoneData];
 }
 -(void)phoneData{
-    
-    SingleModel *model = [SingleModel sharedSingleModel];
-    
-    
-    NSString *path= [NSString stringWithFormat:SAFENEWPHONE,COMMON,model.userkey];
-    NSLog(@"%@",validateField.text);
-    
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
-    [manager POST:path parameters:@{@"phone":_phoneField.text,@"phone1":newPhoneField.text,@"rand":newNalidateField.text,@"rand1":validateField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    UIAlertView *titlealerview;
+    NSString *titlestring;
+    if ([validateField.text isEqualToString:@""]) {
+        titlestring = @"请输入原手机号验证码";
+    }
+    else if ([newPhoneField.text isEqualToString:@""]){
+        titlestring = @"请输入新手机号";
+    }
+    else if ([Mobliejudge valiMobile:newPhoneField.text]){
+        titlestring = [Mobliejudge valiMobile:newPhoneField.text];
+    }
+    else if ([newNalidateField.text isEqualToString:@""]){
+        titlestring = @"请输入新手机验证码";
+    }
+    else{
+        SingleModel *model = [SingleModel sharedSingleModel];
+        NSString *path= [NSString stringWithFormat:SAFENEWPHONE,COMMON,model.userkey];
+        NSLog(@"%@",validateField.text);
         
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
-        UIAlertView *alterview;
-        if ([dic[@"status"]integerValue]==1) {
-            changeSucess = dic[@"info"];
-        }
-        else{
-            changeSucess = dic[@"info"];
-        }
-        alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:changeSucess delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alterview show];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"%@",error);
-    }];
-    
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        
+        
+        [manager POST:path parameters:@{@"phone":_phoneField.text,@"phone1":newPhoneField.text,@"rand":newNalidateField.text,@"rand1":validateField.text} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            
+        } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"%@",dic);
+            UIAlertView *alterview;
+            if ([dic[@"status"]integerValue]==1) {
+                changeSucess = dic[@"info"];
+            }
+            else{
+                changeSucess = dic[@"info"];
+            }
+            alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:changeSucess delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+            [alterview show];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"%@",error);
+        }];
+        return;
+    }
+    titlealerview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:titlestring delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+    [titlealerview show];
 }
-
-
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];

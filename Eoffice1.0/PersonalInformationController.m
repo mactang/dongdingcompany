@@ -231,7 +231,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
     
     cell.clipsToBounds = YES;
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -302,9 +302,7 @@
         }
         if ([sexLb.text isEqual:@"保密"]) {
             sex = @"b";
-            
         }
-        
     }
     if (indexPath.row == 4) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedBirthday:) name:@"birthday" object:nil];

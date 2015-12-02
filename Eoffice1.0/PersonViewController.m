@@ -188,7 +188,6 @@
     if (indexPath.row == 1) {
         
         cell.textLabel.text = @"       个人信息";
-        
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"个人信息"];
         [cell addSubview:imageView];

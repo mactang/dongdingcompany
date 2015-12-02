@@ -70,12 +70,11 @@
     [scrollViewImage addSubview:activityIndicatorView];
     [activityIndicatorView startAnimating];
     imageArray = [NSMutableArray array];
-
-    for(int i=0;i<1;i++)
-    {
-       
-        [imageArray addObject:[NSString stringWithFormat:@"%d.jpg",i+1]];
-    }
+    
+    [imageArray addObject:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.ebangon.com/images/b1.png"]]];
+    [imageArray addObject:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.ebangon.com/images/b2.png"]]];
+    [imageArray addObject:[NSURL URLWithString:[NSString stringWithFormat:@"http://www.ebangon.com/images/b3.png"]]];
+    
     [self loadImage];
     [self startTimer];
 
@@ -290,7 +289,7 @@
         {
             imagePath = imageArray[currentPage];
         }
-//        [imageView sd_setImageWithURL:imagePath];
+        [imageView sd_setImageWithURL:imagePath];
         [scrollViewImage addSubview:imageView];
         
     }
@@ -301,29 +300,29 @@
 {
     [scrollViewImage setContentOffset:CGPointMake(SCREEN_WIDTH-24, 0) animated:NO];
     [scrollViewImage.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-//    NSURL *imagePath = nil ;
+    NSURL *imagePath = nil ;
     for (int i = -1; i <= 1; i++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(scrollViewImage.bounds.size.width * (i+1), 0, scrollViewImage.bounds.size.width, scrollViewImage.bounds.size.height)];
         imageView.contentMode = UIViewContentModeScaleToFill;
         if (currentPage + i < 0 ) {
-//            imagePath = imageArray[[imageArray count]- 1];
-            [imageView setImage: IMAGE_MYSELF(imageArray[[imageArray count]- 1])];
+            imagePath = imageArray[[imageArray count]- 1];
+//            [imageView setImage: IMAGE_MYSELF(imageArray[[imageArray count]- 1])];
         }
         else if (currentPage + i > [imageArray count] - 1 ) {
-//            imagePath = imageArray[0];
-            [imageView setImage: IMAGE_MYSELF(imageArray[0])];
+            imagePath = imageArray[0];
+//            [imageView setImage: IMAGE_MYSELF(imageArray[0])];
             
         }
         else
         {
-//            imagePath = imageArray[currentPage+i];
-            [imageView setImage: IMAGE_MYSELF(imageArray[currentPage+i])];
+            imagePath = imageArray[currentPage+i];
+//            [imageView setImage: IMAGE_MYSELF(imageArray[currentPage+i])];
         }
 //        SDWebImageManager *manager = [SDWebImageManager sharedManager];
 //        UIImage *cachedImage = [manager imageCache:imagePath]; // 将需要缓存的图片加载进来
 //        if (cachedImage) { // 如果Cache命中，则直接利用缓存的图片进行有关操作 // Use the cached image immediatly } else { // 如果Cache没有命中，则去下载指定网络位置的图片，并且给出一个委托方法 // Start an async download  [manager downloadWithURL:url delegate:self];
 //        }
-//        [imageView sd_setImageWithURL:imagePath placeholderImage:[UIImage imageNamed:@"默认.jpg"]];
+        [imageView sd_setImageWithURL:imagePath placeholderImage:[UIImage imageNamed:@"默认.jpg"]];
         [scrollViewImage addSubview:imageView];
        
     }

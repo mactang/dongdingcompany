@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MainViewController.h"
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,BMKGeneralDelegate>
 {
     UINavigationController *nav_controller;
 }

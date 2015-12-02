@@ -150,7 +150,7 @@
     cm = [[CalendarManager alloc]init];
     
     NSLog(@"%@",_datePicker.date);
-        _resultString=[NSString stringWithFormat:@"%@",_datePicker.date];
+    _resultString=[NSString stringWithFormat:@"%@",_datePicker.date];
     
     NSString *string =  [cm stringFromDate:_datePicker.date WithFormat:@"yyyy-MM-dd"];
     

@@ -49,7 +49,7 @@
     photoBtn = [[LetfWordButton alloc]initWithFrame:CGRectMake(180, 15, 120, 40)];
     [photoBtn setTitle:@"400888888" forState:UIControlStateNormal];
     [photoBtn setImage:[UIImage imageNamed:@"dianhua"] forState:UIControlStateNormal];
-    photoBtn.font = [UIFont systemFontOfSize:18];
+    photoBtn.titleLabel.font = [UIFont systemFontOfSize:18];
     [photoBtn setTitleColor:[UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1] forState:UIControlStateNormal];
     [photoBtn addTarget:self action:@selector(photoPress) forControlEvents:UIControlEventTouchUpInside];
     [telePhone addSubview:photoBtn];
@@ -126,19 +126,14 @@
 -(void)feedData{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    
-    
-   
-    
-    
     NSString *string = [NSString stringWithFormat:@"%@",TextView.text];
     
-//     NSString *transString = [NSString stringWithString:[string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-//    NSString *utfString = [string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-  //  const char* utfString = [string UTF8String];
+//  NSString *transString = [NSString stringWithString:[string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//  NSString *utfString = [string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//  const char* utfString = [string UTF8String];
     NSString *path= [NSString stringWithFormat:FEEDBACK,COMMON,model.userkey,string];
     NSLog(@"%@",path);
-  //  [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//  [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *escapedPath = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
