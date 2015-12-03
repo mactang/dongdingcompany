@@ -377,8 +377,6 @@
 		96A903041C0EC3690000DD59 /* OrderConfrimTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A903031C0EC3690000DD59 /* OrderConfrimTableViewCell.m */; };
 		96A903071C0ED4950000DD59 /* OrderPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A903061C0ED4950000DD59 /* OrderPayViewController.m */; };
 		96A9030A1C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A903091C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m */; };
-		96A993FF1C0408380082F05D /* TheSameHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A993FE1C0408380082F05D /* TheSameHeaderView.m */; };
-		96A994021C0412080082F05D /* TheSameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A994011C0412080082F05D /* TheSameTableViewCell.m */; };
 		96A994061C0434C60082F05D /* OfficeEequipmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A994051C0434C60082F05D /* OfficeEequipmentViewController.m */; };
 		96A994091C045F490082F05D /* SoftwareSystemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A994081C045F490082F05D /* SoftwareSystemViewController.m */; };
 		96A9940C1C045F970082F05D /* ComputerCleaningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A9940B1C045F970082F05D /* ComputerCleaningViewController.m */; };
@@ -413,6 +411,19 @@
 		96BDF2511BD7974E0095E660 /* BankdetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96BDF2501BD7974E0095E660 /* BankdetailViewController.m */; };
 		96C1B58E1C082665009F55C9 /* LoginViewMobileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C1B58D1C082665009F55C9 /* LoginViewMobileController.m */; };
 		96C1B5911C082699009F55C9 /* AddressListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C1B5901C082699009F55C9 /* AddressListViewController.m */; };
+		96E24A0C1C0FD12B00BDBA9A /* TheSameHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A091C0FD12B00BDBA9A /* TheSameHeaderView.m */; };
+		96E24A0D1C0FD12B00BDBA9A /* TheSameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A0B1C0FD12B00BDBA9A /* TheSameTableViewCell.m */; };
+		96E24A211C0FD15300BDBA9A /* CommonAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A111C0FD15300BDBA9A /* CommonAddressViewController.m */; };
+		96E24A221C0FD15300BDBA9A /* CreateCommonAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A131C0FD15300BDBA9A /* CreateCommonAddressViewController.m */; };
+		96E24A231C0FD15300BDBA9A /* CreateCommonAddressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96E24A141C0FD15300BDBA9A /* CreateCommonAddressViewController.xib */; };
+		96E24A241C0FD15300BDBA9A /* ServiceAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A161C0FD15300BDBA9A /* ServiceAddressViewController.m */; };
+		96E24A251C0FD15300BDBA9A /* CommonAddressFootView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A191C0FD15300BDBA9A /* CommonAddressFootView.m */; };
+		96E24A261C0FD15300BDBA9A /* CommonAddressFootView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96E24A1A1C0FD15300BDBA9A /* CommonAddressFootView.xib */; };
+		96E24A271C0FD15300BDBA9A /* CommonAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A1C1C0FD15300BDBA9A /* CommonAddressTableViewCell.m */; };
+		96E24A281C0FD15300BDBA9A /* CommonAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96E24A1D1C0FD15300BDBA9A /* CommonAddressTableViewCell.xib */; };
+		96E24A291C0FD15300BDBA9A /* ServiceAddressTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A1F1C0FD15300BDBA9A /* ServiceAddressTableViewCell.m */; };
+		96E24A2A1C0FD15300BDBA9A /* ServiceAddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96E24A201C0FD15300BDBA9A /* ServiceAddressTableViewCell.xib */; };
+		96E24A2D1C0FD67300BDBA9A /* AllSameTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E24A2C1C0FD67300BDBA9A /* AllSameTopViewController.m */; };
 		96EC75E71B8C598700AB448B /* ChangeAddrssController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E61B8C598700AB448B /* ChangeAddrssController.m */; };
 		96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EC75E91B8C5AC500AB448B /* ChangeAddressCell.m */; };
 		96F47B251BC7B79A0063A975 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96F47B241BC7B79A0063A975 /* CoreLocation.framework */; };
@@ -987,10 +998,6 @@
 		96A903061C0ED4950000DD59 /* OrderPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderPayViewController.m; sourceTree = "<group>"; };
 		96A903081C0EE38A0000DD59 /* ChoosePayWayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoosePayWayTableViewCell.h; sourceTree = "<group>"; };
 		96A903091C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoosePayWayTableViewCell.m; sourceTree = "<group>"; };
-		96A993FD1C0408380082F05D /* TheSameHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TheSameHeaderView.h; path = ../TheSameHeaderView.h; sourceTree = "<group>"; };
-		96A993FE1C0408380082F05D /* TheSameHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TheSameHeaderView.m; path = ../TheSameHeaderView.m; sourceTree = "<group>"; };
-		96A994001C0412080082F05D /* TheSameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TheSameTableViewCell.h; path = ../TheSameTableViewCell.h; sourceTree = "<group>"; };
-		96A994011C0412080082F05D /* TheSameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TheSameTableViewCell.m; path = ../TheSameTableViewCell.m; sourceTree = "<group>"; };
 		96A994041C0434C60082F05D /* OfficeEequipmentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficeEequipmentViewController.h; sourceTree = "<group>"; };
 		96A994051C0434C60082F05D /* OfficeEequipmentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficeEequipmentViewController.m; sourceTree = "<group>"; };
 		96A994071C045F490082F05D /* SoftwareSystemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareSystemViewController.h; sourceTree = "<group>"; };
@@ -1051,6 +1058,28 @@
 		96C1B58D1C082665009F55C9 /* LoginViewMobileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewMobileController.m; sourceTree = "<group>"; };
 		96C1B58F1C082699009F55C9 /* AddressListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressListViewController.h; sourceTree = "<group>"; };
 		96C1B5901C082699009F55C9 /* AddressListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressListViewController.m; sourceTree = "<group>"; };
+		96E24A081C0FD12B00BDBA9A /* TheSameHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheSameHeaderView.h; sourceTree = "<group>"; };
+		96E24A091C0FD12B00BDBA9A /* TheSameHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheSameHeaderView.m; sourceTree = "<group>"; };
+		96E24A0A1C0FD12B00BDBA9A /* TheSameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheSameTableViewCell.h; sourceTree = "<group>"; };
+		96E24A0B1C0FD12B00BDBA9A /* TheSameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheSameTableViewCell.m; sourceTree = "<group>"; };
+		96E24A101C0FD15300BDBA9A /* CommonAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonAddressViewController.h; sourceTree = "<group>"; };
+		96E24A111C0FD15300BDBA9A /* CommonAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonAddressViewController.m; sourceTree = "<group>"; };
+		96E24A121C0FD15300BDBA9A /* CreateCommonAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateCommonAddressViewController.h; sourceTree = "<group>"; };
+		96E24A131C0FD15300BDBA9A /* CreateCommonAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateCommonAddressViewController.m; sourceTree = "<group>"; };
+		96E24A141C0FD15300BDBA9A /* CreateCommonAddressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateCommonAddressViewController.xib; sourceTree = "<group>"; };
+		96E24A151C0FD15300BDBA9A /* ServiceAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceAddressViewController.h; sourceTree = "<group>"; };
+		96E24A161C0FD15300BDBA9A /* ServiceAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceAddressViewController.m; sourceTree = "<group>"; };
+		96E24A181C0FD15300BDBA9A /* CommonAddressFootView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonAddressFootView.h; sourceTree = "<group>"; };
+		96E24A191C0FD15300BDBA9A /* CommonAddressFootView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonAddressFootView.m; sourceTree = "<group>"; };
+		96E24A1A1C0FD15300BDBA9A /* CommonAddressFootView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonAddressFootView.xib; sourceTree = "<group>"; };
+		96E24A1B1C0FD15300BDBA9A /* CommonAddressTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonAddressTableViewCell.h; sourceTree = "<group>"; };
+		96E24A1C1C0FD15300BDBA9A /* CommonAddressTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonAddressTableViewCell.m; sourceTree = "<group>"; };
+		96E24A1D1C0FD15300BDBA9A /* CommonAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CommonAddressTableViewCell.xib; sourceTree = "<group>"; };
+		96E24A1E1C0FD15300BDBA9A /* ServiceAddressTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceAddressTableViewCell.h; sourceTree = "<group>"; };
+		96E24A1F1C0FD15300BDBA9A /* ServiceAddressTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceAddressTableViewCell.m; sourceTree = "<group>"; };
+		96E24A201C0FD15300BDBA9A /* ServiceAddressTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServiceAddressTableViewCell.xib; sourceTree = "<group>"; };
+		96E24A2B1C0FD67300BDBA9A /* AllSameTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllSameTopViewController.h; sourceTree = "<group>"; };
+		96E24A2C1C0FD67300BDBA9A /* AllSameTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllSameTopViewController.m; sourceTree = "<group>"; };
 		96EC75E51B8C598700AB448B /* ChangeAddrssController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddrssController.h; sourceTree = "<group>"; };
 		96EC75E61B8C598700AB448B /* ChangeAddrssController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeAddrssController.m; sourceTree = "<group>"; };
 		96EC75E81B8C5AC500AB448B /* ChangeAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeAddressCell.h; sourceTree = "<group>"; };
@@ -2312,6 +2341,7 @@
 		96A993FC1C0402290082F05D /* Eweixiu */ = {
 			isa = PBXGroup;
 			children = (
+				96E24A0E1C0FD15300BDBA9A /* AddressInFo */,
 				96A902FE1C0E8F8E0000DD59 /* orderallcontroller */,
 				96C1B58B1C08262A009F55C9 /* LoginController */,
 				96C1B58A1C080078009F55C9 /* managerAddress */,
@@ -2342,10 +2372,12 @@
 		96A994031C0433300082F05D /* Allfengzhuang */ = {
 			isa = PBXGroup;
 			children = (
-				96A993FD1C0408380082F05D /* TheSameHeaderView.h */,
-				96A993FE1C0408380082F05D /* TheSameHeaderView.m */,
-				96A994001C0412080082F05D /* TheSameTableViewCell.h */,
-				96A994011C0412080082F05D /* TheSameTableViewCell.m */,
+				96E24A081C0FD12B00BDBA9A /* TheSameHeaderView.h */,
+				96E24A091C0FD12B00BDBA9A /* TheSameHeaderView.m */,
+				96E24A0A1C0FD12B00BDBA9A /* TheSameTableViewCell.h */,
+				96E24A0B1C0FD12B00BDBA9A /* TheSameTableViewCell.m */,
+				96E24A2B1C0FD67300BDBA9A /* AllSameTopViewController.h */,
+				96E24A2C1C0FD67300BDBA9A /* AllSameTopViewController.m */,
 			);
 			path = Allfengzhuang;
 			sourceTree = "<group>";
@@ -2448,6 +2480,45 @@
 				96C1B58D1C082665009F55C9 /* LoginViewMobileController.m */,
 			);
 			path = LoginController;
+			sourceTree = "<group>";
+		};
+		96E24A0E1C0FD15300BDBA9A /* AddressInFo */ = {
+			isa = PBXGroup;
+			children = (
+				96E24A0F1C0FD15300BDBA9A /* Controller */,
+				96E24A171C0FD15300BDBA9A /* View */,
+			);
+			path = AddressInFo;
+			sourceTree = "<group>";
+		};
+		96E24A0F1C0FD15300BDBA9A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				96E24A101C0FD15300BDBA9A /* CommonAddressViewController.h */,
+				96E24A111C0FD15300BDBA9A /* CommonAddressViewController.m */,
+				96E24A121C0FD15300BDBA9A /* CreateCommonAddressViewController.h */,
+				96E24A131C0FD15300BDBA9A /* CreateCommonAddressViewController.m */,
+				96E24A141C0FD15300BDBA9A /* CreateCommonAddressViewController.xib */,
+				96E24A151C0FD15300BDBA9A /* ServiceAddressViewController.h */,
+				96E24A161C0FD15300BDBA9A /* ServiceAddressViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		96E24A171C0FD15300BDBA9A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				96E24A181C0FD15300BDBA9A /* CommonAddressFootView.h */,
+				96E24A191C0FD15300BDBA9A /* CommonAddressFootView.m */,
+				96E24A1A1C0FD15300BDBA9A /* CommonAddressFootView.xib */,
+				96E24A1B1C0FD15300BDBA9A /* CommonAddressTableViewCell.h */,
+				96E24A1C1C0FD15300BDBA9A /* CommonAddressTableViewCell.m */,
+				96E24A1D1C0FD15300BDBA9A /* CommonAddressTableViewCell.xib */,
+				96E24A1E1C0FD15300BDBA9A /* ServiceAddressTableViewCell.h */,
+				96E24A1F1C0FD15300BDBA9A /* ServiceAddressTableViewCell.m */,
+				96E24A201C0FD15300BDBA9A /* ServiceAddressTableViewCell.xib */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		96EC75E41B8C598700AB448B /* ChangeAddress */ = {
@@ -2565,6 +2636,7 @@
 				615DDC2F1BF9BAB10060CFFF /* massegeNumber.png in Resources */,
 				615DDCEC1BF9BC1A0060CFFF /* option_icon.png in Resources */,
 				615DDC201BF9BAB10060CFFF /* 蓝色确认40.png in Resources */,
+				96E24A261C0FD15300BDBA9A /* CommonAddressFootView.xib in Resources */,
 				615DDC2E1BF9BAB10060CFFF /* link.jpg in Resources */,
 				613269911BFAD0F9004FF6B8 /* 个人信息@2x.png in Resources */,
 				615DDC041BF9B9770060CFFF /* youzhixiang@2x.png in Resources */,
@@ -2590,6 +2662,7 @@
 				615DDCAC1BF9BB750060CFFF /* personPhoto.png in Resources */,
 				615B29531B4FAE4B004E7546 /* Images.xcassets in Resources */,
 				615DDD001BF9C4F50060CFFF /* 办公文具@2x.png in Resources */,
+				96E24A281C0FD15300BDBA9A /* CommonAddressTableViewCell.xib in Resources */,
 				615DDC501BF9BAFC0060CFFF /* sousou1.png in Resources */,
 				96380D511C06B0560093F4EA /* zuo@2x.png in Resources */,
 				615DDD551BF9D9BE0060CFFF /* chaRed.png in Resources */,
@@ -2605,6 +2678,7 @@
 				615DDBD91BF9B9250060CFFF /* 下箭头.png in Resources */,
 				613269791BFACAD0004FF6B8 /* my_comment@2x.png in Resources */,
 				615DDC881BF9BB480060CFFF /* cha1.png in Resources */,
+				96E24A2A1C0FD15300BDBA9A /* ServiceAddressTableViewCell.xib in Resources */,
 				615DDD2B1BF9D1FA0060CFFF /* classify@2x.png in Resources */,
 				613269711BFAC4C2004FF6B8 /* order_select@2x.png in Resources */,
 				615DDC8A1BF9BB480060CFFF /* chuanzhenji.png in Resources */,
@@ -2620,6 +2694,7 @@
 				615DDCEF1BF9BC1A0060CFFF /* userIcon_highlight.png in Resources */,
 				615DDC7C1BF9BB480060CFFF /* 大勾.png in Resources */,
 				615DDC371BF9BAE50060CFFF /* 图层-9.png in Resources */,
+				96E24A231C0FD15300BDBA9A /* CreateCommonAddressViewController.xib in Resources */,
 				615DDBC31BF9B8D90060CFFF /* bank.png in Resources */,
 				615DDD2F1BF9D2A10060CFFF /* below2.png in Resources */,
 				615DDC0C1BF9B9A30060CFFF /* 办公文具.png in Resources */,
@@ -2859,13 +2934,13 @@
 				61A7D1A71B6203D4009AADFC /* HopleViewController.m in Sources */,
 				61793A771B54A81600CFD83A /* Model.m in Sources */,
 				618FD7571B8747B200090608 /* BackReasonModel.m in Sources */,
+				96E24A291C0FD15300BDBA9A /* ServiceAddressTableViewCell.m in Sources */,
 				61B0FF9C1B5F4641002CF349 /* DispatchingView.m in Sources */,
 				96B28C0E1C0C45CE0072F95E /* DataPickerView.m in Sources */,
 				619FCCDB1B86B3FA0075A0AA /* AddressModel.m in Sources */,
 				9689F7D51BCE30110006954B /* MyMoneybackViewController.m in Sources */,
 				61068A781B5C9DC3008BE40A /* InvoiceAlterView.m in Sources */,
 				96B689E11C0587680036213A /* ButtonHeaderController.m in Sources */,
-				96A993FF1C0408380082F05D /* TheSameHeaderView.m in Sources */,
 				96A903011C0E8FFB0000DD59 /* OrederConfirmViewController.m in Sources */,
 				969E1EA01BC790D400CD9D02 /* CJSONSerialization.m in Sources */,
 				61793A7A1B54A8EE00CFD83A /* JHCellConfig.m in Sources */,
@@ -2876,8 +2951,10 @@
 				969E1EA21BC790D400CD9D02 /* CDataScanner_Extensions.m in Sources */,
 				967FC3341BD0970E00E06BD9 /* WithdrawalsViewController.m in Sources */,
 				61E971161B7367A1007F42B6 /* detailsModel.m in Sources */,
+				96E24A0C1C0FD12B00BDBA9A /* TheSameHeaderView.m in Sources */,
 				96B689ED1C05AC6E0036213A /* MechanicalTableViewCell.m in Sources */,
 				615B29BB1B4FB27A004E7546 /* MaintainController.m in Sources */,
+				96E24A241C0FD15300BDBA9A /* ServiceAddressViewController.m in Sources */,
 				96A9030A1C0EE38A0000DD59 /* ChoosePayWayTableViewCell.m in Sources */,
 				61793A7E1B54AB2700CFD83A /* GeneralDetailViewController.m in Sources */,
 				96B689CD1C054ECE0036213A /* LANTariffViewController.m in Sources */,
@@ -2908,6 +2985,7 @@
 				614EC0981BD4E5880001015B /* LetfWordButton.m in Sources */,
 				615B29A51B4FB22B004E7546 /* PersonViewController.m in Sources */,
 				61B0FFA31B5F7EB0002CF349 /* DropDown1.m in Sources */,
+				96E24A0D1C0FD12B00BDBA9A /* TheSameTableViewCell.m in Sources */,
 				615B29481B4FAE4B004E7546 /* main.m in Sources */,
 				618FD7501B87058400090608 /* HMSegmentedControl.m in Sources */,
 				96B7E65B1C031159005C1CDD /* Titlebutton.m in Sources */,
@@ -2917,12 +2995,12 @@
 				615B29A11B4FB22B004E7546 /* LoginViewController.m in Sources */,
 				6165C3201B535CD000FF71FB /* CMDetailsViewController.m in Sources */,
 				6197F0831B58DD29000EC83E /* RDVTabBar.m in Sources */,
-				96A994021C0412080082F05D /* TheSameTableViewCell.m in Sources */,
 				618342511B5658720097E8A4 /* UIViewController+LewPopupViewController.m in Sources */,
 				61B854631BE6F4590018FE25 /* MainBanner.m in Sources */,
 				615B29BA1B4FB27A004E7546 /* LogisticsController.m in Sources */,
 				96B689DD1C0552E70036213A /* TariffHeaderController.m in Sources */,
 				615C50401BCE6C7C00A6E204 /* RecommCodeGenerator.m in Sources */,
+				96E24A2D1C0FD67300BDBA9A /* AllSameTopViewController.m in Sources */,
 				61A1CB981BAFA6FE00903122 /* classifyButton.m in Sources */,
 				96B689E41C05AC100036213A /* HardwareTableViewCell.m in Sources */,
 				9689F7DB1BCE5C500006954B /* PresentdetailsCell.m in Sources */,
@@ -2934,13 +3012,16 @@
 				6183424C1B5658720097E8A4 /* LewPopupBackgroundView.m in Sources */,
 				969E1EA81BC790D400CD9D02 /* CJSONScanner.m in Sources */,
 				6197F0841B58DD29000EC83E /* RDVTabBarController.m in Sources */,
+				96E24A211C0FD15300BDBA9A /* CommonAddressViewController.m in Sources */,
 				61D54ABE1B7D7DB1002DE544 /* LTableViewCell.m in Sources */,
 				96EC75EA1B8C5AC500AB448B /* ChangeAddressCell.m in Sources */,
 				61EBC6CF1B68E9D2002D0373 /* ExchangeViewController.m in Sources */,
 				96B689C11C054E700036213A /* OfficeTariffViewController.m in Sources */,
 				61DA8F4E1BA1210900824499 /* NewButton.m in Sources */,
+				96E24A251C0FD15300BDBA9A /* CommonAddressFootView.m in Sources */,
 				6172F5431B6C6ADB007BDBD2 /* AddAddressController.m in Sources */,
 				618342501B5658720097E8A4 /* LewPopupViewAnimationSpring.m in Sources */,
+				96E24A271C0FD15300BDBA9A /* CommonAddressTableViewCell.m in Sources */,
 				615B29A31B4FB22B004E7546 /* MemberViewController.m in Sources */,
 				96747BF21BD49A510060704C /* BanklistTableViewCell.m in Sources */,
 				969E1EA91BC790D400CD9D02 /* CJSONSerializer.m in Sources */,
@@ -2956,6 +3037,7 @@
 				615B29B71B4FB27A004E7546 /* CommodityViewController.m in Sources */,
 				619A7E041B69EF53005F4DA4 /* ServiceViewController.m in Sources */,
 				618149321B5E29DE00E39900 /* NickNameController.m in Sources */,
+				96E24A221C0FD15300BDBA9A /* CreateCommonAddressViewController.m in Sources */,
 				618FD7541B8717FD00090608 /* MXPullDownMenu.m in Sources */,
 				96A70D0F1B943F1500C0F1F5 /* OrderStateModel.m in Sources */,
 				96A994121C0460050082F05D /* LANmaintenanceViewController.m in Sources */,
