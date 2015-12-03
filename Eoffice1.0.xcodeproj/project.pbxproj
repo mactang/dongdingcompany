@@ -3127,7 +3127,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "2645423d-62ed-44dd-8e33-e3111cccbdb9";
+				PROVISIONING_PROFILE = "97078e4f-fb66-4e0f-8a07-db23b4f4f674";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
@@ -3170,7 +3170,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
-				PROVISIONING_PROFILE = "2645423d-62ed-44dd-8e33-e3111cccbdb9";
+				PROVISIONING_PROFILE = "97078e4f-fb66-4e0f-8a07-db23b4f4f674";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
@@ -3186,8 +3186,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3252,7 +3253,7 @@
 					"\"SystemConfiguration\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2645423d-62ed-44dd-8e33-e3111cccbdb9";
+				PROVISIONING_PROFILE = "97078e4f-fb66-4e0f-8a07-db23b4f4f674";
 				SDKROOT = iphoneos8.3;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -3266,9 +3267,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: you zhao guo (4C3PKGG9YF)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Eoffice1.0/umeng_ios_social_sdk_4.2-3.3_arm64_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3333,7 +3334,7 @@
 					"\"SystemConfiguration\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2645423d-62ed-44dd-8e33-e3111cccbdb9";
+				PROVISIONING_PROFILE = "97078e4f-fb66-4e0f-8a07-db23b4f4f674";
 				SDKROOT = iphoneos8.3;
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};

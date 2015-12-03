@@ -8,8 +8,22 @@
 
 #import "MapChooseViewController.h"
 #import "TarBarButton.h"
-#import <BaiduMapAPI_Map/BMKMapComponent.h>
-#import <BaiduMapAPI_Location/BMKLocationComponent.h>
+
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
+
+#import <BaiduMapAPI_Map/BMKMapComponent.h>//引入地图功能所有的头文件
+
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>//引入检索功能所有的头文件
+
+#import <BaiduMapAPI_Cloud/BMKCloudSearchComponent.h>//引入云检索功能所有的头文件
+
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>//引入定位功能所有的头文件
+
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>//引入计算工具所有的头文件
+
+#import <BaiduMapAPI_Radar/BMKRadarComponent.h>//引入周边雷达功能所有的头文件
+
+#import <BaiduMapAPI_Map/BMKMapView.h>//只引入所需的单个头文件
 @interface MapChooseViewController ()<UIGestureRecognizerDelegate,BMKMapViewDelegate,BMKLocationServiceDelegate>{
      BMKMapView *_mapView;
      BMKLocationService* _locService;
@@ -142,7 +156,6 @@
      */
     NSLog(@"my handleDoubleTap");
 }
-
 /**
  *在地图View将要启动定位时，会调用此函数
  *@param mapView 地图View
@@ -168,9 +181,18 @@
  */
 - (void)didUpdateBMKUserLocation:(BMKUserLocation *)userLocation
 {
-    //    NSLog(@"didUpdateUserLocation lat %f,long %f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    NSLog(@"当前位置%f,%f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
     [_mapView updateLocationData:userLocation];
-//    _mapView.centerCoordinate = userLocation.location.coordinate;
+    
+    _mapView.centerCoordinate = userLocation.location.coordinate;
+    CLLocationCoordinate2D loc = [userLocation.location coordinate];
+    //放大地图到自身的经纬度位置。
+    BMKCoordinateRegion viewRegion = BMKCoordinateRegionMake(loc, BMKCoordinateSpanMake(0.02f,0.02f));
+    BMKCoordinateRegion adjustedRegion = [_mapView regionThatFits:viewRegion];
+    [_mapView setRegion:adjustedRegion animated:YES];
+    [_locService stopUserLocationService];
+//    [_mapView updateLocationData:userLocation];
+
 
 }
 /**

@@ -139,7 +139,6 @@
         [self addSubview:self.rightbtn];
         self.alertTitleLabel.text = title;
         
-        
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     }
     return self;
@@ -210,7 +209,6 @@
     [[UIApplication sharedApplication].keyWindow addSubview:self];
     
 }
-
 /**
  *  设置PickView的颜色
  */
