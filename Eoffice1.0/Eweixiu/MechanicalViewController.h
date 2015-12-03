@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 gl. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "AllSameTopViewController.h"
 
-@interface MechanicalViewController : UIViewController
+@interface MechanicalViewController : AllSameTopViewController
 
 @end
