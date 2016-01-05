@@ -18,6 +18,7 @@
 #import "SingleModel.h"
 #import "IQKeyboardManager.h"
 #import "AFNetworking.h"
+#import "ViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -31,10 +32,13 @@
  
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    [self setupViewControllers];
-    [self.window setRootViewController:self.viewController];
-    [self customizeInterface];
-    self.window.backgroundColor = [UIColor whiteColor];
+   // [self setupViewControllers];
+//    [self.window setRootViewController:self.viewController];
+//    [self customizeInterface];
+    ViewController *view = [[ViewController alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:view];
+    [self.window setRootViewController: nav];
+  //  self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
     IQKeyboardManager *manager = [IQKeyboardManager sharedManager];

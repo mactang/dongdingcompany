@@ -40,8 +40,8 @@
 //用户注册界面
 #define VERIFICATION 1010
 
-//#define COMMON @"http://120.26.124.171/phone/"
-#define COMMON @"http://192.168.0.65:8080/phone/"
+#define COMMON @"http://120.26.124.171/phone/"
+//#define COMMON @"http://192.168.0.65:8080/phone/"
 
 #define OFFICE @"http://121.43.193.193"
 

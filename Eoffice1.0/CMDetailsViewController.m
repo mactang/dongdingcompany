@@ -602,6 +602,7 @@
         
     }
     if (model.userkey==nil) {
+        
         login = [[LoginViewController alloc]init];
         login.delegate = self;
         login.iflogin = NO;
