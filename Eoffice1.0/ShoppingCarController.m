@@ -545,14 +545,8 @@
 }
 
 - (void)leftItemClicked{
-    
-    NSLog(@"%@",_shopNumber);
-    
-    if ([_shopNumber isEqualToString:@"relead"]) {
-        if (_delegate &&[_delegate respondsToSelector:@selector(releadCartNumber)]) {
+    if (_delegate &&[_delegate respondsToSelector:@selector(releadCartNumber)]) {
             [_delegate releadCartNumber];
-            
-        }
     }
     self.navigationController.navigationBar.translucent = YES;
     [self.navigationController popViewControllerAnimated:YES];

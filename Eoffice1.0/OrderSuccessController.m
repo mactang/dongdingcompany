@@ -17,7 +17,15 @@
 @end
 
 @implementation OrderSuccessController
-
+-(void)setDicmessage:(NSMutableDictionary *)dicmessage{
+    if (!_dicmessage) {
+        _dicmessage = [NSMutableDictionary dictionary];
+        _dicmessage = dicmessage;
+    }
+    else{
+        _dicmessage = dicmessage;
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithRed:237./255 green:237./255 blue:237./255 alpha:1];
@@ -41,7 +49,7 @@
     [button setImage:[UIImage imageNamed:@"大勾"] forState:UIControlStateNormal];
     button.selected = NO;
     [view addSubview:button];
-    
+   
     UILabel *lb1 = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(button.frame)+10, 30, 130, 22)];
     lb1.text = @"订单提交成功 !";
     lb1.font = [UIFont systemFontOfSize:18];
@@ -76,7 +84,7 @@
     [view addSubview:nameLb];
     
     UILabel *name = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(nameLb.frame)+4, CGRectGetMaxY(order.frame)+7, 150, 20)];
-    name.text = @"东鼎泰和";
+    name.text = _dicmessage[@"receiver"];
     name.font = [UIFont systemFontOfSize:12];
     name.textColor = [UIColor blackColor];
     [view addSubview:name];
@@ -88,7 +96,7 @@
     [view addSubview:phoneLb];
     
     UILabel *phone = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(phoneLb.frame)+2, CGRectGetMaxY(name.frame)+7, 150, 20)];
-    phone.text = @"12345678901";
+    phone.text = _dicmessage[@"phone"];
     phone.font = [UIFont systemFontOfSize:12];
     phone.textColor = [UIColor blackColor];
     [view addSubview:phone];
@@ -100,7 +108,7 @@
     [view addSubview:addressLb];
     
     UILabel *address = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(addressLb.frame)+2, CGRectGetMaxY(phone.frame)+7, 200, 20)];
-    address.text = @"成都市丰德国际广场B1座12楼";
+    address.text = _dicmessage[@"address"];
     address.font = [UIFont systemFontOfSize:12];
     address.textColor = [UIColor blackColor];
     [view addSubview:address];
@@ -112,7 +120,7 @@
     [view addSubview:payWayLb];
     
     UILabel *payWay = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(payWayLb.frame)+2, CGRectGetMaxY(address.frame)+7, 150, 20)];
-    payWay.text = @"货到付款";
+    payWay.text = _dicmessage[@"payway"];
     payWay.font = [UIFont systemFontOfSize:12];
     payWay.textColor = [UIColor blackColor];
     [view addSubview:payWay];
@@ -124,7 +132,7 @@
     [view addSubview:amountLb];
     
     UILabel *amount = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(amountLb.frame)+4, CGRectGetMaxY(payWay.frame)+7, 150, 20)];
-    amount.text = @"888888.000";
+    amount.text = _dicmessage[@"totalprice"];
     amount.font = [UIFont systemFontOfSize:12];
     amount.textColor = [UIColor blackColor];
     [view addSubview:amount];
@@ -169,26 +177,20 @@
     
     UILabel *photoLB1 = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(photoLB.frame)-20, 300, 80)];
     photoLB1.font = [UIFont systemFontOfSize:22];
-    photoLB1.text = @"400-88888888";
+    photoLB1.text = @"4000-456-423";
     photoLB1.textColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
     [view1 addSubview:photoLB1];
     // Do any additional setup after loading the view.
 }
 -(void)backOrderPress{
-
-//  UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
-//  self.navigationItem.backBarButtonItem = backItem;
-    OrderViewController *order = [[OrderViewController alloc]init];
+     self.rdv_tabBarController.selectedIndex = 1;
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
-    [self.navigationController pushViewController:order animated:YES];
 }
 -(void)surePress{
-    
-    
+
     MainViewController *main = [[MainViewController alloc]init];
     [self.navigationController pushViewController:main animated:YES];
-    
-    
 }
 -(void)leftItemClicked{
     
@@ -209,20 +211,5 @@
     
     [super viewWillDisappear:animated];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

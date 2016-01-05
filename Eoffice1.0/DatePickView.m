@@ -139,7 +139,6 @@
         [self addSubview:self.rightbtn];
         self.alertTitleLabel.text = title;
         
-        
         self.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     }
     return self;
@@ -150,7 +149,7 @@
     cm = [[CalendarManager alloc]init];
     
     NSLog(@"%@",_datePicker.date);
-        _resultString=[NSString stringWithFormat:@"%@",_datePicker.date];
+    _resultString=[NSString stringWithFormat:@"%@",_datePicker.date];
     
     NSString *string =  [cm stringFromDate:_datePicker.date WithFormat:@"yyyy-MM-dd"];
     
@@ -210,7 +209,6 @@
     [[UIApplication sharedApplication].keyWindow addSubview:self];
     
 }
-
 /**
  *  设置PickView的颜色
  */

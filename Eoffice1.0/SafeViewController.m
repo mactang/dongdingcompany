@@ -117,11 +117,7 @@
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     self.navigationController.navigationBarHidden = NO;
-    
-    
 }
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:NO animated:YES];
     self.navigationController.navigationBarHidden = NO;

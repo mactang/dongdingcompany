@@ -10,6 +10,7 @@
 #import "RDVTabBarController.h"
 #import "SingleModel.h"
 #import "AFNetworking.h"
+#define kAlphaNum  @"0123456789"
 @interface PassWordViewController ()<UITextFieldDelegate>
 
 @end
@@ -44,19 +45,6 @@
     photoLB.textColor = [UIColor blackColor];
     [self.view addSubview:photoLB];
     
-//    UIButton *validateButton = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(photoLB.frame)+10,photoLB.frame.origin.y-5, 100, 35)];
-//    validateButton.backgroundColor = [UIColor whiteColor];
-//    validateButton.clipsToBounds = YES;
-//    validateButton.layer.cornerRadius = 3;
-//    validateButton.layer.borderColor = [[UIColor grayColor]CGColor];
-//    validateButton.layer.borderWidth = 1;
-//    validateButton.font = [UIFont systemFontOfSize:14];
-//    
-//    [validateButton addTarget:self action:@selector(validatePress:) forControlEvents:UIControlEventTouchUpInside];
-//    [validateButton setTitle:@"发送验证码" forState:UIControlStateNormal];
-//    [validateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [self.view addSubview:validateButton];
-    
     _countDownCode = [CountDownButton buttonWithType:UIButtonTypeCustom];
     _countDownCode.frame = CGRectMake(SCREEN_WIDTH-120,photoLB.frame.origin.y-5, 100, 30);
     [_countDownCode setTitle:@"发送验证码" forState:UIControlStateNormal];
@@ -66,7 +54,7 @@
     _countDownCode.layer.cornerRadius = 3;
     _countDownCode.layer.borderColor = [[UIColor grayColor]CGColor];
     _countDownCode.layer.borderWidth = 1;
-    _countDownCode.font = [UIFont systemFontOfSize:13];
+    _countDownCode.titleLabel.font = [UIFont systemFontOfSize:13];
     [self.view addSubview:_countDownCode];
     
     
@@ -87,8 +75,6 @@
         }];
         
     }];
-    
-    
     UILabel *validateLB = [[UILabel alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(photoLB.frame)+30, 60, 20)];
     validateLB.font = [UIFont systemFontOfSize:14];
     validateLB.text = @"验证码：";
@@ -146,7 +132,7 @@
     sureButton.clipsToBounds = YES;
     sureButton.layer.cornerRadius = 5;
     
-    sureButton.font = [UIFont systemFontOfSize:15];
+    sureButton.titleLabel.font = [UIFont systemFontOfSize:15];
     
     [sureButton addTarget:self action:@selector(revisePassword) forControlEvents:UIControlEventTouchUpInside];
     [sureButton setTitle:@"确定" forState:UIControlStateNormal];
@@ -168,21 +154,14 @@
 -(void)validatePress:(UIButton *)btn{
     [self valiData];
 }
-
 -(void)valiData{
     
     SingleModel *model = [SingleModel sharedSingleModel];
-    
-    
     NSString *path= [NSString stringWithFormat:SAFEVALIDATE,COMMON,model.userkey];
     NSLog(@"%@",path);
     
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    
     [manager POST:path parameters:@{@"phoneNo":model.telphone} constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -194,35 +173,47 @@
     }];
     
 }
--(void)textFieldDidEndEditing:(UITextField *)textField{
-    
-    NSLog(@"%ld",(long)textField.tag);
-    
-    UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
-    if (textField.tag == 1003) {
-        if (![pwd_field.text isEqualToString:textField.text]) {
-            
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if (string.length == 0) {
+        return YES;
+    }
+    if(textField.tag == 1002||textField.tag==1003){
+        if (toBeString.length >20 && range.length!=1) {
+            textField.text = [toBeString substringToIndex:20];
+            UIAlertView *alterview = [[UIAlertView alloc]initWithTitle:@"提示" message:@"密码长度不能超过20位" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alterview show];
+            return NO;
         }
     }
-}
+    else if ([kAlphaNum rangeOfString:string].location == NSNotFound) {
+        return NO;
+    }
 
+    return YES;
+}
 -(void) revisePassword{
+    UIAlertView *alert;
+    NSString *titlestring;
     UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
     UITextField *surepwd_field = (UITextField *)[self.view viewWithTag:1003];
-    if (![pwd_field.text isEqualToString:surepwd_field.text]) {
-        
-            
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-    }else{
-    
-        SingleModel *model = [SingleModel sharedSingleModel];
-    
+    if ([validateField.text isEqualToString:@""]) {
+        titlestring = @"请输入验证码";
+    }
+    else if ([pwd_field.text isEqualToString:@""]){
+        titlestring = @"请输入密码";
+    }
+    else if ([surepwd_field.text isEqualToString:@""]){
+        titlestring = @"请确认密码";
+    }
+   else  if (![pwd_field.text isEqualToString:surepwd_field.text]) {
+       titlestring = @"两次输入密码不一致,请重新输入";
+    }
+   else{
+    SingleModel *model = [SingleModel sharedSingleModel];
     NSString *path= [NSString stringWithFormat:SAFERIVESE,COMMON,model.userkey];
     NSLog(@"%@",path);
-    
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
@@ -246,19 +237,18 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
+       return;
     }
+    alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:titlestring delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+    
 }
-
-
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
-    
-    
+
 }
-
-
 - (void)viewWillDisappear:(BOOL)animated {
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
     

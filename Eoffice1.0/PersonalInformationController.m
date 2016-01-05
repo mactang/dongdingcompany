@@ -73,7 +73,7 @@
     
     self.view.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1];
     self.navigationItem.title = @"个人信息";
-    [self downData];
+   
     
     _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 344) style:UITableViewStylePlain];
     _tableView.scrollEnabled = NO;
@@ -95,11 +95,8 @@
     [self.view addSubview:sureButton];
     
     _imageView = [[UIImageView alloc]initWithFrame:CGRectMake(230, 5, 70, 70)];
-    
-   // _imageView.backgroundColor = [UIColor redColor];
     [_tableView addSubview:_imageView];
-    
-    // Do any additional setup after loading the view.
+     [self downData];
 }
 -(void)rightItemClicked{
     
@@ -136,13 +133,12 @@
     
         path= [NSString stringWithFormat:PERSONREVISE,COMMON,birthdayLb.text,sex,_nickName.text,model.userkey,fileURL];
     }
-    
-    
-    
     NSLog(@"path--%@",path);
         
     NSString *escapedPath = [path stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -154,29 +150,30 @@
         UIAlertView *alterview;
        
         if ([dic[@"status"]integerValue]==1) {
-            
             changeSucess = @"信息修改成功";
-            
         }
         else{
-            
             changeSucess = @"信息修改失败";
-            
         }
         alterview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:changeSucess delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
         [alterview show];
+        [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
+        [UIAlertView errorcode:error.code blocks:^(NSInteger index) {
+            [self reviseData];
+        }];
     }];
     }
 }
 - (void)downData{
-    
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     NSString *path= [NSString stringWithFormat:PERSONCONME,COMMON,model.userkey];
     NSLog(@"%@",path);
-    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -191,9 +188,13 @@
             NSLog(@"%@",self.datas);
         }
         [_tableView reloadData];
-        
+        [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [hud hide:YES];
         NSLog(@"%@",error);
+        [UIAlertView errorcode:error.code blocks:^(NSInteger index) {
+            [self downData];
+        }];
     }];
     
 }
@@ -230,7 +231,7 @@
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identity];
     
     cell.clipsToBounds = YES;
-    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
@@ -301,9 +302,7 @@
         }
         if ([sexLb.text isEqual:@"保密"]) {
             sex = @"b";
-            
         }
-        
     }
     if (indexPath.row == 4) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectedBirthday:) name:@"birthday" object:nil];

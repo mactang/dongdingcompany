@@ -133,8 +133,7 @@
     [super viewDidLoad];
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]){
         self.edgesForExtendedLayout = UIRectEdgeNone;
-}
-    
+   }
     reloadsucess = YES;
     dictionary = [NSMutableDictionary dictionary];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -168,8 +167,10 @@
     _carView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_carView];
     [self shopTabBar];
-    [self cartCountData];
-
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey!=nil) {
+       [self cartCountData];
+    }
 }
 -(void)leftItemClicked{
     
@@ -190,11 +191,8 @@
 }
 
 - (void)cartCountData{
-    
-    
-    
+
     SingleModel *model = [SingleModel sharedSingleModel];
-    
     
     NSString *path= [NSString stringWithFormat:SHOPCAR,COMMON,model.userkey];
     NSLog(@"%@",path);
@@ -209,7 +207,12 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         if (dic[@"data"] !=[NSNull null]){
             NSArray *array = dic[@"data"];
-            
+            if (array.count==0) {
+                _numberbutton.backgroundColor = [UIColor clearColor];
+            }
+            else{
+                _numberbutton.backgroundColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:0/255.0 alpha:1];
+            }
             for(NSDictionary *subDict in array)
             {
                 ShopCarModel *model = [ShopCarModel modelWithDic:subDict];
@@ -251,22 +254,19 @@
     lb1.text = @"购物车";
     lb1.userInteractionEnabled = NO;
     lb1.textColor = [UIColor whiteColor];
+
     [shopCarBtn addSubview:lb1];
     
     _numberbutton = [[UIButton alloc]initWithFrame:CGRectMake(32, 1, 20, 20)];
     _numberbutton.titleLabel.font = [UIFont systemFontOfSize:10];
-   // [_numberbutton setTitle:@"0" forState:UIControlStateNormal];
     _numberbutton.clipsToBounds = YES;
     _numberbutton.layer.cornerRadius = 10;
     [_numberbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _numberbutton.backgroundColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:0/255.0 alpha:1];
     SingleModel *model = [SingleModel sharedSingleModel];
-    if (model.userkey !=nil) {
-        
-        [_carView addSubview:_numberbutton];
-        
+    if (model.userkey!=nil) {
+        _numberbutton.backgroundColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:0/255.0 alpha:1];
     }
-  
+    [_carView addSubview:_numberbutton];
     
     UIButton *InShopBtn = [[UIButton alloc]initWithFrame:CGRectMake(CGRectGetMaxX(shopCarBtn.frame)+8, 5, 120, 40)];
     [InShopBtn setTitle:@"加入购物车" forState:UIControlStateNormal];
@@ -629,11 +629,10 @@
     }
 }
 -(void)ordercpntroller:(NSNumber *)orderid{
-    
-//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"确认订单" style:UIBarButtonItemStylePlain target:nil action:nil];
-//    self.navigationItem.backBarButtonItem = backItem;
+    SingleModel *model = [SingleModel sharedSingleModel];
     OrderController *order = [[OrderController alloc]init];
     order.shopCartId = [NSString stringWithFormat:@"%@",orderid];
+    order.goodsId = [NSString stringWithFormat:@"%@",model.goodsId];
     [self.navigationController pushViewController:order animated:YES];
     
 }
@@ -649,6 +648,7 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     [manager GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         UIAlertView *alertview;
         if ([dic[@"status"] integerValue]==1) {
@@ -720,8 +720,6 @@
     ShoppingCarController *shopcart = [[ShoppingCarController alloc]init];
     shopcart.delegate = self;
     [self.navigationController pushViewController:shopcart animated:YES];
-    
-    
 }
 -(void)releadCartNumber{
     [self.cartCount removeAllObjects];
@@ -732,35 +730,13 @@
     RegisterViewController *registerview = [[RegisterViewController alloc]init];
     [self.navigationController pushViewController:registerview animated:YES];
 }
-
-//-(void)btnPress:(UIButton *)btn{
-//    
-//    if (btn.tag == 1001) {
-//        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell_03"]];
-//        imageView.backgroundColor = [UIColor clearColor];
-//        imageView.frame = CGRectMake(0, -140, 320, 300);
-//        
-//        [_detailView addSubview:imageView];
-//    }
-//    
-//    else if (btn.tag == 1002) {
-//        UIImageView *imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"cell_04"]];
-//        imageView.frame = CGRectMake(0, -140, 320, 300);
-//        imageView.backgroundColor = [UIColor clearColor];
-//        [_detailView addSubview:imageView];
-//    }
-//    
-//}
 - (void)viewWillAppear:(BOOL)animated{
     
-    SingleModel *model = [SingleModel sharedSingleModel];
-    if (model.userkey !=nil) {
-        
-        [_carView addSubview:_numberbutton];
-        
-    }
     [super viewWillAppear:animated];
-    
+    SingleModel *model = [SingleModel sharedSingleModel];
+    if (model.userkey!=nil) {
+        _numberbutton.backgroundColor = [UIColor colorWithRed:255/255.0 green:204/255.0 blue:0/255.0 alpha:1];
+    }
     [[self rdv_tabBarController] setTabBarHidden:YES animated:YES];
 }
 - (void)viewWillDisappear:(BOOL)animated {

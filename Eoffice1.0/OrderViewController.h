@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderViewController : UIViewController
-
+@property(nonatomic,assign)BOOL sucess;
 @end

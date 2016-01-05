@@ -280,32 +280,9 @@
     [textField resignFirstResponder];
     return YES;
 }
--(void)textFieldDidEndEditing:(UITextField *)textField{
 
-    NSLog(@"%ld",(long)textField.tag);
-    
-    UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
-    if (textField.tag == 1003) {
-        if (![pwd_field.text isEqualToString:textField.text]) {
-            
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }
-}
 - (void)surePress{
-    
-    UITextField *pwd_field = (UITextField *)[self.view viewWithTag:1002];
-    UITextField *replace_field = (UITextField *)[self.view viewWithTag:1003];
-    
-        if (![pwd_field.text isEqualToString:replace_field.text]) {
-            
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"两个输入密码不一致" message:@"请重新输入密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alert show];
-        }else{
-        
-            [self sureRgister];
-        }
+    [self sureRgister];
 }
 -(void)sureRgister{
 
@@ -371,10 +348,7 @@
             
            NSLog(@"oo");
         }
-    
-    
 }
-
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (string.length == 0) {
@@ -391,7 +365,6 @@
     }
     return YES;
 }
-
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];

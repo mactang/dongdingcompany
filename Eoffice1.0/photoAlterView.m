@@ -71,9 +71,6 @@
     };
     return alert;
 }
-
-
-
 - (id)initWithTitle:(NSString *)title
     leftButtonTitle:(NSString *)leftTitle
    rightButtonTitle:(NSString *)rigthTitle
@@ -159,11 +156,11 @@
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row == 0) {
-        
         UILabel *phoneBl = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 300, 50)];
         phoneBl.backgroundColor = [UIColor colorWithRed:204/255.0 green:0/255.0 blue:0/255.0 alpha:1];
         phoneBl.font = [UIFont systemFontOfSize:20];
-        [phoneBl setText:[NSString stringWithFormat:@"  %@",_phoneNumber]];
+        phoneBl.textAlignment = NSTextAlignmentCenter;
+        [phoneBl setText:[NSString stringWithFormat:@"%@",_phoneNumber]];
         [phoneBl setTextColor:[UIColor whiteColor]];
         [cell addSubview:phoneBl];
     }

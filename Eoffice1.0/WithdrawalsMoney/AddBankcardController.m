@@ -117,7 +117,7 @@
          [self datarequest];
         return;
     }
-    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:messagestring delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    alertview = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:messagestring delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [alertview show];
 //    UIWebView  *payWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, SCREEN_WIDTH/7.8, SCREEN_WIDTH, SCREEN_HEIGHT-SCREEN_WIDTH/7.8)];
 //    payWebView.layer.anchorPoint = CGPointMake(0.5, 0.5);
@@ -131,15 +131,14 @@
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Loading";
     SingleModel *model = [SingleModel sharedSingleModel];
-//  NSString *path= [NSString stringWithFormat:ADDBANKCARD,COMMON,model.userkey,name,bankcard,banknumber,bankaddress];
+    NSString *path= [NSString stringWithFormat:@"%@user!addBand.action?",COMMON];
 //  NSLog(@"%@",path);
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
 //  @"%@user!addBand.action?userkey=%@&name=%@&bankName=%@&bankNo=%@&bankAddress=%@"
     NSDictionary *dicdata = [NSDictionary dictionaryWithObjectsAndKeys:model.userkey,@"userkey",name,@"name",bankcard,@"bankName",banknumber,@"bankNo",bankaddress,@"bankAddress", nil];
-    [manager POST:@"http://192.168.0.65:8080/phone/user!addBand.action?" parameters:dicdata success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:path parameters:dicdata success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"%@",dic);
         UIAlertView *alterview;
         NSString *string;
         if ([dic[@"status"]integerValue]==1) {
@@ -152,7 +151,7 @@
         else{
             string = @"添加失败";
         }
-        alterview  =[[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        alterview  =[[UIAlertView alloc]initWithTitle:@"温馨提示" message:string delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alterview show];
         [hud hide:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

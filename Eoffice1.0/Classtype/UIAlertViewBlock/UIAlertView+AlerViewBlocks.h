@@ -20,5 +20,5 @@
  *  @param blocks  点击按钮会调用此代码块
  */
 
-+(void)errorcode:(NSInteger)code blocks:(void (^)(NSInteger index))blocks;;
++(void)errorcode:(NSInteger)code blocks:(void (^)(NSInteger index))blocks;
 @end

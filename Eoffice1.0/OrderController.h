@@ -12,5 +12,5 @@
 
 
 @property(strong,nonatomic)NSString *shopCartId;
-
+@property(strong,nonatomic)NSString *goodsId;
 @end

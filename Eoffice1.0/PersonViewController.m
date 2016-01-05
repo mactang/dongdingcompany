@@ -109,21 +109,16 @@
         if (!login) {
             login = [[LoginViewController alloc]init];
             login.delegate = self;
-            
             [self.view addSubview:login.view];
-          //  [self downData];
            
         }
         
     }else{
-//        if (login) {
             [login.view removeFromSuperview];
             if (refresh) {
                 [self downData];
                 refresh = NO;
             }
-//        }
-
     }
     [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
@@ -193,7 +188,6 @@
     if (indexPath.row == 1) {
         
         cell.textLabel.text = @"       个人信息";
-        
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, 15, 22, 22)];
         imageView.image = [UIImage imageNamed:@"个人信息"];
         [cell addSubview:imageView];
@@ -301,20 +295,5 @@
    // self.navigationController.navigationBarHidden = NO;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
